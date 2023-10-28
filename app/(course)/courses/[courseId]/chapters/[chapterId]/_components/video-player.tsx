@@ -1,7 +1,6 @@
 "use client";
 
 import axios from "axios";
-import MuxPlayer from "@mux/mux-player-react";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -11,27 +10,40 @@ import { cn } from "@/lib/utils";
 import { useConfettiStore } from "@/hooks/use-confetti-store";
 
 interface VideoPlayerProps {
-  playbackId: string;
+  playbackId?: string;
   courseId: string;
   chapterId: string;
   nextChapterId?: string;
   isLocked: boolean;
   completeOnEnd: boolean;
   title: string;
+  vimeoUrl: string;
 };
 
 export const VideoPlayer = ({
-  playbackId,
   courseId,
   chapterId,
   nextChapterId,
   isLocked,
   completeOnEnd,
   title,
+  videoUrl,
 }: VideoPlayerProps) => {
   const [isReady, setIsReady] = useState(false);
   const router = useRouter();
   const confetti = useConfettiStore();
+
+  if (!videoUrl) {
+    console.error("Vimeo URL is not provided!");
+    return null;
+  }
+  const vimeoId = extractVimeoId(videoUrl);
+  
+
+  function extractVimeoId(url: string): string | null {
+    const match = url.match(/https:\/\/vimeo\.com\/(\d+)/);
+    return match ? match[1] : null;
+  }
 
   const onEnd = async () => {
     try {
@@ -72,16 +84,18 @@ export const VideoPlayer = ({
         </div>
       )}
       {!isLocked && (
-        <MuxPlayer
-          title={title}
-          className={cn(
-            !isReady && "hidden"
-          )}
-          onCanPlay={() => setIsReady(true)}
-          onEnded={onEnd}
-          autoPlay
-          playbackId={playbackId}
-        />
+        <div style={{ padding: "56.25% 0 0 0", position: "relative" }}>
+          <iframe 
+            src={`https://player.vimeo.com/video/${extractVimeoId(videoUrl)!}`} 
+            style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }} 
+            frameborder="0" 
+            allow="autoplay; fullscreen" 
+            allowfullscreen
+            onLoad={() => setIsReady(true)}
+            onEnded={onEnd}
+            title={title}
+          ></iframe>
+        </div>
       )}
     </div>
   )

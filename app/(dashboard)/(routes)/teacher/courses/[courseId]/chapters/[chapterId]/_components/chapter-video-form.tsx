@@ -1,8 +1,6 @@
 "use client";
-
 import * as z from "zod";
 import axios from "axios";
-import MuxPlayer from "@mux/mux-player-react";
 import { Pencil, PlusCircle, Video } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -29,10 +27,29 @@ export const ChapterVideoForm = ({
   chapterId,
 }: ChapterVideoFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [vimeoUrl, setVimeoUrl] = useState<string | null>(initialData.videoUrl || null);
+  const router = useRouter();
+
+  function extractVimeoId(url: string): string | null {
+    const match = url.match(/https:\/\/vimeo\.com\/(\d+)/);
+    return match ? match[1] : null;
+  }
+
+  function VimeoPreview({ videoId }: { videoId: string }) {
+    return (
+      <div style={{ padding: "56.25% 0 0 0", position: "relative" }}>
+        <iframe 
+          src={`https://player.vimeo.com/video/${videoId}`} 
+          style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }} 
+          frameborder="0" 
+          allow="autoplay; fullscreen" 
+          allowfullscreen>
+        </iframe>
+      </div>
+    );
+  }
 
   const toggleEdit = () => setIsEditing((current) => !current);
-
-  const router = useRouter();
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
@@ -50,54 +67,50 @@ export const ChapterVideoForm = ({
       <div className="font-medium flex items-center justify-between">
         Chapter video
         <Button onClick={toggleEdit} variant="ghost">
-          {isEditing && (
-            <>Cancel</>
-          )}
-          {!isEditing && !initialData.videoUrl && (
+          {isEditing ? <>Cancel</> : initialData.videoUrl ? (
+            <>
+              <Pencil className="h-4 w-4 mr-2" />
+              Edit video
+            </>
+          ) : (
             <>
               <PlusCircle className="h-4 w-4 mr-2" />
               Add a video
             </>
           )}
-          {!isEditing && initialData.videoUrl && (
-            <>
-              <Pencil className="h-4 w-4 mr-2" />
-              Edit video
-            </>
-          )}
         </Button>
       </div>
+
       {!isEditing && (
-        !initialData.videoUrl ? (
+        vimeoUrl ? (
+          <VimeoPreview videoId={extractVimeoId(vimeoUrl)!} />
+        ) : (
           <div className="flex items-center justify-center h-60 bg-slate-200 rounded-md">
             <Video className="h-10 w-10 text-slate-500" />
           </div>
-        ) : (
-          <div className="relative aspect-video mt-2">
-            <MuxPlayer
-              playbackId={initialData?.muxData?.playbackId || ""}
-            />
-          </div>
         )
       )}
+
       {isEditing && (
         <div>
-          <FileUpload
-            endpoint="chapterVideo"
-            onChange={(url) => {
-              if (url) {
-                onSubmit({ videoUrl: url });
+          <input 
+            type="text"
+            placeholder="Vimeo Share Link"
+            onChange={(e) => {
+              const videoId = extractVimeoId(e.target.value);
+              if (videoId) {
+                setVimeoUrl(e.target.value);
+                onSubmit({ videoUrl: e.target.value });
               }
             }}
           />
-          <div className="text-xs text-muted-foreground mt-4">
-           Upload this chapter&apos;s video
-          </div>
+          {vimeoUrl && <VimeoPreview videoId={extractVimeoId(vimeoUrl)!} />}
         </div>
       )}
-      {initialData.videoUrl && !isEditing && (
+
+      {vimeoUrl && !isEditing && (
         <div className="text-xs text-muted-foreground mt-2">
-          Videos can take a few minutes to process. Refresh the page if video does not appear.
+          Refresh the page if video does not appear.
         </div>
       )}
     </div>
