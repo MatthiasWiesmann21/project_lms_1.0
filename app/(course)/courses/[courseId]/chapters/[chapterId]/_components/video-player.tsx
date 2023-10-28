@@ -18,6 +18,7 @@ interface VideoPlayerProps {
   completeOnEnd: boolean;
   title: string;
   vimeoUrl: string;
+  videoUrl: string;
 };
 
 export const VideoPlayer = ({
