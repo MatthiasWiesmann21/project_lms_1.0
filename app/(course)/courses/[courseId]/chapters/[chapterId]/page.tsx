@@ -44,6 +44,8 @@ const ChapterIdPage = async ({
   const isLocked = !chapter.isFree && !purchase;
   const completeOnEnd = !!purchase && !userProgress?.isCompleted;
 
+
+
   return ( 
     <div>
       {userProgress?.isCompleted && (
@@ -60,16 +62,17 @@ const ChapterIdPage = async ({
       )}
       <div className="flex flex-col max-w-4xl mx-auto pb-20">
         <div className="p-4">
+          
         <VideoPlayer
           chapterId={params.chapterId}
           title={chapter.title}
           courseId={params.courseId}
           nextChapterId={nextChapter?.id}
+          // @ts-ignore
           videoUrl={chapter.videoUrl} // Hier fügen wir die Vimeo-URL aus den chapter Daten hinzu.
           isLocked={isLocked}
           completeOnEnd={completeOnEnd}
 />
-
         </div>
         <div>
           <div className="p-4 flex flex-col md:flex-row items-center justify-between">
