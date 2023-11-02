@@ -92,7 +92,8 @@ export const ChapterVideoForm = ({
 
       {isEditing && (
         <div>
-          <input 
+          <input
+            className="mb-2 flex items-center rounded-md p-1 w-full"
             type="text"
             placeholder="Vimeo Share Link"
             onChange={(e) => {
