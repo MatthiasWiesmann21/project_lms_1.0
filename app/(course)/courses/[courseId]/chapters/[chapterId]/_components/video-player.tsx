@@ -17,7 +17,6 @@ interface VideoPlayerProps {
   isLocked: boolean;
   completeOnEnd: boolean;
   title: string;
-  vimeoUrl: string;
   videoUrl: string;
 };
 
