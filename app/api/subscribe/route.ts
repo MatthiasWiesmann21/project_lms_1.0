@@ -17,7 +17,6 @@ export async function POST(
 
     const subscription = await db.newsletterSubscription.create({
       data: {
-        userId,
         email,
       },
     });

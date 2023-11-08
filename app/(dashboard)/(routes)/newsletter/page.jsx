@@ -1,6 +1,8 @@
-"use client"
+"use client";
+
 import { Button } from '@/components/ui/button';
 import { PlusCircle } from 'lucide-react';
+import toast from "react-hot-toast";
 // components/EmailForm.js
 import React, { useState } from 'react';
 
@@ -21,12 +23,12 @@ const EmailForm = () => {
       });
       if (response.ok) {
         setEmail('');
-        setMessage('Vielen Dank für Ihre Anmeldung!');
+        toast.success("Welcome to the newsletter");
       } else {
         throw new Error('Ein Fehler ist aufgetreten');
       }
     } catch (error) {
-      setMessage('Es gab ein Problem mit Ihrer Anmeldung.');
+      toast.error("Something went wrong");
     }
   };
 
@@ -42,10 +44,10 @@ const EmailForm = () => {
             placeholder="Enter an email address"
             className="px-4 py-3 w-72 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border border-gray-300 rounded-l-md"
           />
-          <Button type='submit' variant="signMe" size="inputlg">
+          <button type='submit' className='bg-emerald-400 text-white hover:bg-emerald-400/80 text-lg h-13 rounded-md px-10 ml-4 flex justify-center items-center'>
             <PlusCircle className="h-4 w-4 mr-2" />
             Sign up
-          </Button>          
+          </button>          
       </form>
       </div>
     </div>
