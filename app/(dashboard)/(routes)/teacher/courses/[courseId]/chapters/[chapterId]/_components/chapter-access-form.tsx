@@ -86,7 +86,7 @@ export const ChapterAccessForm = ({
           !initialData.isFree && "text-slate-500 italic"
         )}>
           {initialData.isFree ? (
-            <>This chapter is free for preview.</>
+            <>This chapter is free.</>
           ) : (
             <>This chapter is not free.</>
           )}
@@ -111,7 +111,7 @@ export const ChapterAccessForm = ({
                   </FormControl>
                   <div className="space-y-1 leading-none">
                     <FormDescription>
-                      Check this box if you want to make this chapter free for preview
+                      Check this box if you want to make this chapter free.
                     </FormDescription>
                   </div>
                 </FormItem>

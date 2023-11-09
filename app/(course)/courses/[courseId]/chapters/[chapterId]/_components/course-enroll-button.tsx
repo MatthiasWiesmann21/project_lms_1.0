@@ -32,8 +32,21 @@ export const CourseEnrollButton = ({
     }
   }
 
-  return (
-    <Button
+  if(price === 0) {
+    return (
+      <Button
+      onClick={onClick}
+      disabled={isLoading}
+      size="sm"
+      className="w-full md:w-auto bg-emerald-500 hover:bg-emerald-600"
+    >
+      Enroll for Free
+    </Button>
+    )
+  }
+  else {
+    return (
+      <Button
       onClick={onClick}
       disabled={isLoading}
       size="sm"
@@ -41,5 +54,6 @@ export const CourseEnrollButton = ({
     >
       Enroll for {formatPrice(price)}
     </Button>
-  )
+    )
+  }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChart, Compass, Layout, List, Mail } from "lucide-react";
+import { BarChart, Compass, Globe, Globe2, Layout, List, Mail } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { SidebarItem } from "./sidebar-item";
@@ -17,10 +17,15 @@ const guestRoutes = [
     href: "/search",
   },
   {
+    icon: Globe2,
+    label: "Social Media",
+    href: "/social-media",
+  },
+  {
     icon: Mail,
     label: "Newsletter",
     href: "/newsletter",
-  },
+  }
 ];
 
 const teacherRoutes = [

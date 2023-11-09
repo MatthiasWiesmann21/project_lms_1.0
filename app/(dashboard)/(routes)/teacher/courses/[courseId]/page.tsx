@@ -59,7 +59,6 @@ const CourseIdPage = async ({
     course.title,
     course.description,
     course.imageUrl,
-    course.price,
     course.categoryId,
     course.chapters.some(chapter => chapter.isPublished),
   ];
@@ -85,7 +84,7 @@ const CourseIdPage = async ({
               Course setup
             </h1>
             <span className="text-sm text-slate-700">
-              Complete all fields {completionText}
+              Complete all required fields {completionText}
             </span>
           </div>
           <Actions
@@ -101,6 +100,7 @@ const CourseIdPage = async ({
               <h2 className="text-xl">
                 Customize your course
               </h2>
+              <span className="pl-1 text-xs text-rose-600">*required</span>
             </div>
             <TitleForm
               initialData={course}
@@ -129,6 +129,7 @@ const CourseIdPage = async ({
                 <IconBadge icon={ListChecks} />
                 <h2 className="text-xl">
                   Course chapters
+                  <span className="pl-1 text-xs text-rose-600">*required</span>
                 </h2>
               </div>
               <ChaptersForm
