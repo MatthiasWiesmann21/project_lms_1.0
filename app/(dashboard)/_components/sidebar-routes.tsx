@@ -34,6 +34,11 @@ const teacherRoutes = [
     label: "Analytics",
     href: "/teacher/analytics",
   },
+  {
+    icon: Mail,
+    label: "Mail List",
+    href: "/teacher/mail-list",
+  },
 ]
 
 export const SidebarRoutes = () => {

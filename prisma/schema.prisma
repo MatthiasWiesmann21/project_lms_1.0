@@ -126,6 +126,7 @@ model StripeCustomer {
 
 model NewsletterSubscription {
   id        String   @id @default(uuid())
+  userId    String   @unique
   email     String   @unique
   createdAt DateTime @default(now())
 }

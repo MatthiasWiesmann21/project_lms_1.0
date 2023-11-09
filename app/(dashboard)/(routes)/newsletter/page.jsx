@@ -21,11 +21,13 @@ const EmailForm = () => {
         },
         body: JSON.stringify({ email }),
       });
+
       if (response.ok) {
-        setEmail('');
         toast.success("Welcome to the newsletter");
       } else {
-        throw new Error('Ein Fehler ist aufgetreten');
+        toast('You have already subscribed', {
+          icon: '⚠️',
+        });
       }
     } catch (error) {
       toast.error("Something went wrong");
@@ -43,8 +45,9 @@ const EmailForm = () => {
             type="email"
             placeholder="Enter an email address"
             className="px-4 py-3 w-72 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border border-gray-300 rounded-l-md"
+            onChange={(e) => setEmail(e.target.value)}
           />
-          <button type='submit' className='bg-emerald-400 text-white hover:bg-emerald-400/80 text-lg h-13 rounded-md px-10 ml-4 flex justify-center items-center'>
+          <button onClick={handleSubmit} className='bg-emerald-400 text-white hover:bg-emerald-400/80 text-lg h-13 rounded-md px-10 ml-4 flex justify-center items-center'>
             <PlusCircle className="h-4 w-4 mr-2" />
             Sign up
           </button>          
