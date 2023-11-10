@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "email": "email dev --dir components/emails"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.23.5",
@@ -25,8 +26,9 @@
     "@radix-ui/react-progress": "^1.0.3",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
-    "@react-email/button": "^0.0.11",
-    "@react-email/html": "^0.0.6",
+    "@react-email/button": "0.0.11",
+    "@react-email/components": "^0.0.11",
+    "@react-email/html": "0.0.6",
     "@tanstack/react-table": "^8.9.11",
     "@types/node": "20.6.0",
     "@types/react": "18.2.21",
@@ -47,6 +49,7 @@
     "react-confetti": "^6.1.0",
     "react-dom": "18.2.0",
     "react-dropzone": "^14.2.3",
+    "react-email": "1.9.5",
     "react-hook-form": "^7.46.1",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.11.0",
