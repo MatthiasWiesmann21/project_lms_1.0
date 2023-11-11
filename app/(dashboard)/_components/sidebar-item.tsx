@@ -42,7 +42,7 @@ export const SidebarItem = ({
           size={22}
           className={cn(
             "text-slate-500",
-            isActive && "text-sky-700 animate-spin-once"
+            isActive && "text-sky-700 animate-rotate-y"
           )}
         />
         {label}

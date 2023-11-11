@@ -18,6 +18,15 @@ module.exports = withUt({
       },
     },
     extend: {
+      keyframes: {
+        rotateLeftRight: {
+          '0%, 100%': { transform: 'rotate(0deg)' },
+          '50%': { transform: 'rotate(-10deg)' },
+        },
+      },
+      animation: {
+        'rotate-left-right': 'rotateLeftRight 0.5s ease-in-out',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -60,12 +69,12 @@ module.exports = withUt({
       },
       keyframes: {
         "accordion-down": {
-          from: { height: 0 },
+          from: { height: 1 },
           to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: 0 },
+          to: { height: -1 },
         },
       },
       animation: {
@@ -74,5 +83,5 @@ module.exports = withUt({
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animated")],
 });

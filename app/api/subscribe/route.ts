@@ -9,7 +9,9 @@ export async function POST(
 // POST /api/subscribe
   try {
     const { userId } = auth();
-    const { email } = await req.json();
+    const requestBody = await req.json();
+    const { name, email, message } = requestBody;
+    
 
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -18,7 +20,9 @@ export async function POST(
     const subscription = await db.newsletterSubscription.create({
       data: {
         userId,
+        name,
         email,
+        message,
       },
     });
     return NextResponse.json(subscription);

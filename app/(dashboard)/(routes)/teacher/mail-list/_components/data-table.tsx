@@ -1,17 +1,20 @@
 // components/DataTable.js
 "use client"
+import { ArrowDownUp } from 'lucide-react';
 import React, { useState } from 'react';
 
 type DataItem = {
+  name: string;
   email: string;
-  createdAt: string; // oder Date, je nachdem wie Sie es handhaben möchten
+  message: string;
+  createdAt: Date;
 };
 
 interface DataTableProps<TData> {
   data: TData[]
 }
 
-type SortField = 'email' | 'createdAt';
+type SortField ='name' | 'email' | 'message' | 'createdAt';
 
 export function DataTable<TData>({ data }: DataTableProps<TData>) {
   const [sortedData, setSortedData] = useState<DataItem[]>(data as DataItem[]);
@@ -37,27 +40,51 @@ export function DataTable<TData>({ data }: DataTableProps<TData>) {
   };
 
   return (
-    <table className="min-w-full table-auto">
-      <thead>
-        <tr className="bg-gray-100">
-          <th onClick={() => sortByField('email')} className="cursor-pointer px-4 py-2">Email</th>
-          <th onClick={() => sortByField('createdAt')} className="cursor-pointer px-4 py-2">Created At</th>
-          <th className="px-4 py-2"></th>
+    <table className="min-w-full table-auto rounded-lg overflow-hidden border-1">
+    <thead>
+    <tr className="bg-gray-100">
+      <th onClick={() => sortByField('name')} className="cursor-pointer px-4 py-2 w-1/4 text-left">
+        <div className="flex items-center space-x-2">
+          <span>Name</span>
+          <ArrowDownUp size={18}/>
+        </div>
+      </th>
+      <th onClick={() => sortByField('email')} className="cursor-pointer px-4 py-2 w-1/4 text-left">
+        <div className="flex items-center space-x-2">
+          <span>Email</span>
+          <ArrowDownUp size={18} />
+        </div>
+      </th>
+      <th onClick={() => sortByField('message')} className="cursor-pointer px-4 py-2 w-1/4 text-left">
+        <div className="flex items-center space-x-2">
+          <span>Message</span>
+          <ArrowDownUp size={18}/>
+        </div>
+      </th>
+      <th onClick={() => sortByField('createdAt')} className="cursor-pointer px-4 py-2 w-1/4 text-left">
+        <div className="flex items-center space-x-2">
+          <span>Created At</span>
+          <ArrowDownUp size={18}/>
+        </div>
+      </th>
+      <th className="px-4 py-2 w-1/4 text-left"></th>
+    </tr>
+  </thead>
+    <tbody>
+      {sortedData.map((item) => (
+        <tr key={item.email} className="border-b">
+          <td className="px-4 py-4 text-left text-sm">{item.name}</td>
+          <td className="px-4 py-4 text-left text-sm">{item.email}</td>
+          <td className="px-4 py-4 text-left text-sm">{item.message}</td>
+          <td className="px-4 py-4 text-left text-sm">{new Date(item.createdAt).toLocaleString()}</td>
+          <td className="px-4 py-4 text-left text-sm"><a href={mailTo(item.email)} className="px-1 py-1 rounded-md bg-blue-500 text-white hover:text-blue-200">
+              Kontaktieren
+            </a>
+          </td>
         </tr>
-      </thead>
-      <tbody>
-        {sortedData.map((item) => (
-          <tr key={item.email} className="border-b">
-            <td className="px-4 py-2">{item.email}</td>
-            <td className="px-4 py-2">{new Date(item.createdAt).toLocaleString()}</td>
-            <td className="px-4 py-2"><a href={mailTo(item.email)} className="px-1 py-1 rounded-md bg-blue-500 text-white hover:text-blue-200">
-                Email senden
-              </a></td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-
+      ))}
+    </tbody>
+  </table>
   );
 };
 
