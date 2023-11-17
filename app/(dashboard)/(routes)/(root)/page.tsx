@@ -6,8 +6,20 @@ import { getDashboardCourses } from "@/actions/get-dashboard-courses";
 import { CoursesList } from "@/components/courses-list";
 
 import { InfoCard } from "./_components/info-card";
+import { getSearchCourses } from "@/actions/get-searchcourses";
+import exp from "constants";
+import { db } from "@/lib/db";
 
-export default async function Dashboard() {
+interface SearchPageProps {
+  searchParams: {
+    title: string;
+    categoryId: string;
+  }
+};
+
+const Dashboard = async ({
+  searchParams
+}: SearchPageProps) => {
   const { userId } = auth();
 
   if (!userId) {
@@ -18,6 +30,14 @@ export default async function Dashboard() {
     completedCourses,
     coursesInProgress
   } = await getDashboardCourses(userId);
+
+  const courses = await getSearchCourses({
+    userId,
+    ...searchParams,
+  });
+
+  const purchasedCourses = courses.filter(course => course.isPurchased);
+
 
   return (
     <div className="p-6 space-y-4">
@@ -35,8 +55,10 @@ export default async function Dashboard() {
        />
       </div>
       <CoursesList
-        items={[...coursesInProgress, ...completedCourses]}
+        items={...purchasedCourses}
       />
     </div>
   )
 }
+
+export default Dashboard;
