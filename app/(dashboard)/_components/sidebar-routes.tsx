@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChart, Compass, Globe, Globe2, Layout, List, Mail } from "lucide-react";
+import { BarChart, Compass, Globe, Globe2, Layout, List, Mail, MessageCircle } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { SidebarItem } from "./sidebar-item";
@@ -25,7 +25,12 @@ const guestRoutes = [
     icon: Mail,
     label: "Newsletter",
     href: "/newsletter",
-  }
+  },
+  {
+    icon: MessageCircle,
+    label: "Chat",
+    href: "/chat",
+  },
 ];
 
 const teacherRoutes = [
