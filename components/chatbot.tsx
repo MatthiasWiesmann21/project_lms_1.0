@@ -24,7 +24,7 @@ const Chatbot = () => {
                 {
                     margin: 8,
                 }
-            } className={`fixed bottom-0 right-0 w-full md:w-[420px] border bg-neutral-800 border-none rounded-xl overflow-hidden transition-all duration-500 ${isChatOpen ? 'h-[520px]' : 'h-0'}`}>
+            } className={`fixed bottom-0 right-0 w-full md:w-[400px] border bg-neutral-800 border-none rounded-xl overflow-hidden transition-all duration-500 ${isChatOpen ? 'h-[520px]' : 'h-0'}`}>
                 {isChatOpen && <ChatGptPage onClose={handleClose} />}
             </div>
         </div>

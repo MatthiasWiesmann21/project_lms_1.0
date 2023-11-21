@@ -7,7 +7,7 @@ body,
 :root {
   height: 100%;
 }
- 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -85,4 +85,11 @@ body,
   font-size: 16px !important;
 }
 
-@import "~@uploadthing/react/styles.css"
+.str-chat__channel-search.str-chat__channel-search--width-results.str-chat__channle-search--inline {
+  height: fit-content;
+}
+
+@import "~stream-chat-react/dist/css/v2/index.css";
+
+@import "~@uploadthing/react/styles.css";
+
