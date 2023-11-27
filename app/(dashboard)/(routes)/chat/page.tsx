@@ -11,9 +11,14 @@ import ChatSidebar from './_components/ChatSidebar';
 import useInitializeChatClient from './_components/useInitializeChatClient';
 import { registerserviceWorker } from '@/utils/serviceWorker';
 import { set } from 'zod';
+import { getCurrentPushSubscription, sendPushSubscriptionToServer } from '@/notifications/pushService';
+import PushMessageListener from './_components/PushMessageListener';
 
+interface ChatPageProps {
+    searchParams: { channelId?: string }
+}
 
-export default function ChatPage() {
+export default function ChatPage({searchParams: {channelId}}: ChatPageProps) {
     const chatClient = useInitializeChatClient();
     const { user } = useUser();
 
@@ -26,10 +31,6 @@ export default function ChatPage() {
         if (windowSize.width >= mdBreakpoint) setChatSidebarOpen(false);
     }, [windowSize.width]);
 
-    const handleSidebarOnClose = useCallback(() => {
-        setChatSidebarOpen(false);
-    }, []);
-
     useEffect(() => {
         async function setUpserviceWorker() {
             try {
@@ -39,6 +40,30 @@ export default function ChatPage() {
             }
         }
         setUpserviceWorker();
+    }, []);
+
+    useEffect(() => {
+        async function syncPushSubscription() {
+            try {
+                const subscription = await getCurrentPushSubscription();
+                if (subscription) {
+                    await sendPushSubscriptionToServer(subscription);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        syncPushSubscription();
+    }, []);
+
+    useEffect(() => {
+        if (channelId) {
+            history.replaceState(null, "", "/chat")
+        }
+    }, [channelId])
+
+    const handleSidebarOnClose = useCallback(() => {
+        setChatSidebarOpen(false);
     }, []);
 
     if (!chatClient || !user) {
@@ -63,9 +88,10 @@ export default function ChatPage() {
                     </button>
                 </div>
                 <div className='flex flex-row h-full overflow-y-auto'>
-                    <ChatSidebar user={user} show={isLargeScreen || chatsidebarOpen} onClose={handleSidebarOnClose}/>
+                    <ChatSidebar user={user} show={isLargeScreen || chatsidebarOpen} onClose={handleSidebarOnClose} customActiveChannel={channelId}/>
                     <ChatChannel show={!chatsidebarOpen || chatsidebarOpen} hideChannelOnThread={!isLargeScreen}/>
                 </div>
+                <PushMessageListener />
             </Chat>
         </div>
     );

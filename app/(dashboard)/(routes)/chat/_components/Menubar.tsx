@@ -3,6 +3,8 @@
 import { getCurrentPushSubscription, registerPushNotification, unregisterPushNotification } from "@/notifications/pushService";
 import { BellOff, BellRing, Users } from "lucide-react";
 import { useEffect, useState } from "react";
+import { LoadingIndicator } from "stream-chat-react";
+import DisappearingMessage from "./DisappearingMessage";
 
 interface MenubarProps {
   onUserMenuClick: () => void;
@@ -25,6 +27,10 @@ function PushSubscriptionToggleButton() {
   const [hasActivePushSubscription, setHasActivePushSubscription] =
     useState<boolean>(false);
 
+    const [loading, setLoading] = useState(false);
+
+    const [confirmationMessage, setConfirmationMessage] = useState<string>();
+
   useEffect(() => {
     async function getActivePushSubscription() {
       const subscription = await getCurrentPushSubscription();
@@ -34,12 +40,17 @@ function PushSubscriptionToggleButton() {
   }, []);
 
   async function setPushNotificationEnabled(enabled: boolean) {
+    if (loading) return;
+    setLoading(true);
+    setConfirmationMessage(undefined);
+
     try {
       if (enabled) {
         await registerPushNotification();
       } else {
         await unregisterPushNotification();
       }
+      setConfirmationMessage("Push notifications " + [enabled ? "enabled" : "disabled"])
       setHasActivePushSubscription(enabled);
     } catch (error) {
       console.log(error);
@@ -48,25 +59,37 @@ function PushSubscriptionToggleButton() {
       } else {
         alert("Something went wrong, please try again later");
       }
+    } finally {
+      setLoading(false);
     }
   }
 
   if (hasActivePushSubscription === undefined) return null;
 
   return (
-    <div>
+    <div className="relative">
+      {loading && (
+        <span className="absolute left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 py-2">
+          <LoadingIndicator />
+        </span>
+      )}
+      {confirmationMessage && (
+        <DisappearingMessage classname="absolute left-1/2 top-8 z-10 -translate-x-1/2 rounded-lg bg-white px-2 py-1 shadow-md">
+          {confirmationMessage}
+        </DisappearingMessage>
+      )}
       {hasActivePushSubscription ? (
         <span title="Disable push notifications on this device">
           <BellOff
             onClick={() => setPushNotificationEnabled(false)}
-            className="cursor-pointer"
+            className={`cursor-pointer ${loading ? "opacity-10" : ""}`}
           />
         </span>
       ) : (
         <span title="Enable push notifications on this device">
           <BellRing
             onClick={() => setPushNotificationEnabled(true)}
-            className="cursor-pointer"
+            className={`cursor-pointer ${loading ? "opacity-10" : ""}`}
           />
         </span>
       )}
