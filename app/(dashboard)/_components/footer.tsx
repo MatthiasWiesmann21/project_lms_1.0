@@ -18,9 +18,9 @@ const Footer = () => {
                     Privacy Policy
                 </a>
                 
-                    <div className="absolute bottom-0 right-0 m-4 ">
+{/*                     <div className="absolute bottom-0 right-0 m-4 ">
                         <Chatbot />
-                    </div>
+                    </div> */}
             </footer>
         </div>
     );
