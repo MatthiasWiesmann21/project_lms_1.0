@@ -58,7 +58,7 @@ function ChannelNotificationToggleButton({user, channelId}: ChannelNotificationT
 
     return (
         <div className="me-6">
-            {!channelMuted ? (
+            {/* {!channelMuted ? (
                 <span title="Mute channel notifications">
                     <BellOff className="cursor-pointer" onClick={() => setChannelMuted(channelId, true)} />
                 </span>
@@ -66,7 +66,7 @@ function ChannelNotificationToggleButton({user, channelId}: ChannelNotificationT
                 <span title="Unmute channel notifications">
                     <Bell className="cursor-pointer" onClick={() => setChannelMuted(channelId, false)}/>
                 </span>
-            )}
+            )} */}
         </div>
     )
 }

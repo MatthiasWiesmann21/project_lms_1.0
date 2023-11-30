@@ -12,7 +12,7 @@ interface MenubarProps {
 
 export default function Menubar({ onUserMenuClick }: MenubarProps) {
   return (
-    <div className="flex items-center justify-between gap-3 border-e bg-white p-3">
+    <div className="flex items-center justify-start border-e bg-white py-3">
       <div className="flex gap-6">
         <PushSubscriptionToggleButton />
         <span title="Show users">
@@ -69,16 +69,16 @@ function PushSubscriptionToggleButton() {
   return (
     <div className="relative">
       {loading && (
-        <span className="absolute left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 py-2">
+        <span className="absolute right-1/2 z-10 -translate-x-1/2 -translate-y-1/2 py-2">
           <LoadingIndicator />
         </span>
       )}
       {confirmationMessage && (
-        <DisappearingMessage classname="absolute left-1/2 top-8 z-10 -translate-x-1/2 rounded-lg bg-white px-2 py-1 shadow-md">
+        <DisappearingMessage classname="absolute right-1/2 top-8 z-10 -translate-x-1/2 rounded-lg bg-white px-2 py-1 shadow-md">
           {confirmationMessage}
         </DisappearingMessage>
       )}
-      {hasActivePushSubscription ? (
+      {/* {hasActivePushSubscription ? (
         <span title="Disable push notifications on this device">
           <BellOff
             onClick={() => setPushNotificationEnabled(false)}
@@ -92,7 +92,7 @@ function PushSubscriptionToggleButton() {
             className={`cursor-pointer ${loading ? "opacity-10" : ""}`}
           />
         </span>
-      )}
+      )} */}
     </div>
   );
 }
