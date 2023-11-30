@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChart, Compass, Globe, Globe2, Layout, List, Mail, MessageCircle } from "lucide-react";
+import { BarChart, Compass, FolderOpen, Globe, Globe2, Layout, List, Mail, MessageCircle } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { SidebarItem } from "./sidebar-item";
@@ -30,6 +30,11 @@ const guestRoutes = [
     icon: MessageCircle,
     label: "Chat",
     href: "/chat",
+  },
+  {
+    icon: FolderOpen,
+    label: "Documents",
+    href: "/documents",
   },
 ];
 
