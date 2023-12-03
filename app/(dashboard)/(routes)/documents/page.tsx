@@ -1,12 +1,9 @@
-import NextcloudIframe from './_components/nextcloud-iframe';
-
-
-const DocumentsPage = () => {
-    return (
+const DocumentPage = () => {
+    return ( 
         <div>
-          <NextcloudIframe src="https://nextcloud.matthiasdev.com/index.php/s/TbjxbKHGFJNT3sY" width="100%" height="800px" />
-    </div>
-    );
+            <h1>Document Page</h1>
+        </div>
+     );
 }
  
-export default DocumentsPage;
+export default DocumentPage;

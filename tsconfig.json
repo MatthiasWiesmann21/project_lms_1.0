@@ -23,6 +23,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(dashboard)/(routes)/newsletter/page.jsx", "app/(dashboard)/(routes)/documents/_components/nextcloud-iframe.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(dashboard)/(routes)/newsletter/page.jsx", "app/(dashboard)/(routes)/documents/_components/nextcloud-iframe.jsx", "app/(dashboard)/(routes)/documents/page.js", "hooks/fetchFolderName.jsx", "hooks/fetchFiles.js", "app/(dashboard)/(routes)/documents/_components/CreateFolderButton.jsx", "app/(dashboard)/(routes)/documents/_components/FileList.jsx", "app/(dashboard)/(routes)/documents/_components/UploadButton.jsx"],
   "exclude": ["node_modules"]
 }
