@@ -1,9 +1,12 @@
+"use client";
 import Link from "next/link";
-import FolderTree, { FolderTreeProps } from "./_components/folder-tree";
-import PathMaker from "./_components/path-maker";
+import FolderTree, { FolderTreeProps } from "../_components/folder-tree";
+import PathMaker from "../_components/path-maker";
 import { usePathname } from "next/navigation";
 import { headers } from "next/headers";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+import axios from "axios";
 
 const folderStructure: FolderTreeProps = {
   name: "Root Folder",
@@ -55,10 +58,21 @@ const folderStructure: FolderTreeProps = {
 };
 
 const DocumentPage = () => {
+  const create = async () => {
+    try {
+      const response = await axios.post(`/api/documents/upload`, {});
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const handleClick = () => {
+    create();
+  };
+
   return (
     <div>
-      <div className="my-4 ml-2">
-        <h1>Root</h1>
+      <div className="my-4 ml-2" onClick={handleClick}>
+        <PathMaker />
       </div>
       <div className="ml-2 ">
         <FolderTree

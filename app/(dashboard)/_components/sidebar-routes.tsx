@@ -34,7 +34,7 @@ const guestRoutes = [
   {
     icon: FolderOpen,
     label: "Documents",
-    href: "/documents",
+    href: "/documents/root",
   },
 ];
 
