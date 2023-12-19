@@ -56,7 +56,7 @@ export async function POST(req: Request) {
     const requestBody = await req.json();
 
     // FolderId null means it will upload in root folder
-    const { folderId, folderName } = requestBody;
+    const { folderId, fileName } = requestBody;
 
     // create or  get a folder if not exist
 
@@ -69,18 +69,17 @@ export async function POST(req: Request) {
     const file = await db.file.create({
       data: {
         key: fileKey,
-        name: folderName,
+        name: fileName,
         userId: userId,
-        status: FileStatus.PENDING,
+        folderId: parentFolder.id,
       },
     });
 
-    const s3UploadUrl = await (async () => {});
+    // Upload File here
 
     return NextResponse.json({
       data: {
         file: file,
-        url: s3UploadUrl,
       },
     });
   } catch (error) {

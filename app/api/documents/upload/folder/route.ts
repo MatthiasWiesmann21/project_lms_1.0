@@ -70,6 +70,7 @@ export async function POST(req: Request) {
         key: folderKey,
         name: folderName,
         userId: userId,
+        parentFolderId: parentFolder.id,
       },
     });
 

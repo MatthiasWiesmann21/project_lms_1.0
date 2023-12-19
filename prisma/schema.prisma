@@ -140,7 +140,7 @@ model File {
   type     String?
   name     String
   key      String  @db.Text
-  userId   String  @unique
+  userId   String 
   folderId Int
   folder   Folder? @relation(fields: [folderId], references: [id], onDelete: Cascade)
 
@@ -161,7 +161,7 @@ model Folder {
   id             Int     @id @default(autoincrement())
   name           String
   key            String  @db.Text
-  userId         String  @unique
+  userId         String  
   files          File[]
   parentFolderId Int?
   parentFolder   Folder? @relation("SubFolders", fields: [parentFolderId], references: [id], onDelete: NoAction, onUpdate: NoAction)

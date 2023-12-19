@@ -5,59 +5,14 @@ import PathMaker from "../_components/path-maker";
 import { usePathname } from "next/navigation";
 import { headers } from "next/headers";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-
-const folderStructure: FolderTreeProps = {
-  name: "Root Folder",
-  _id: "root",
-  childrens: [
-    {
-      name: "File1.xlxs",
-      _id: "file1",
-    },
-    {
-      name: "File2.txt",
-      _id: "file2",
-    },
-    {
-      name: "Subfolder1",
-      _id: "subfolder1",
-      childrens: [
-        {
-          name: "File3.txt",
-          _id: "file3",
-        },
-        {
-          name: "File4.ext",
-          _id: "file4",
-        },
-      ],
-    },
-    {
-      name: "Subfolder2",
-      _id: "subfolder2",
-      childrens: [
-        {
-          name: "Subfolder2.1",
-          _id: "subfolder2.1",
-          childrens: [
-            {
-              name: "File7.txt",
-              _id: "file7",
-            },
-            {
-              name: "File8.ext",
-              _id: "file8",
-            },
-          ],
-        },
-      ],
-    },
-  ],
-};
+import { DocumentFolderTree } from "../page";
 
 const DocumentPage = () => {
+  const [folderStructure, setFolderStructure] =
+    useState<DocumentFolderTree | null>(null);
+
   const create = async () => {
     try {
       const response = await axios.post(`/api/documents/upload`, {});
@@ -65,9 +20,20 @@ const DocumentPage = () => {
       console.log(e);
     }
   };
+  const getFolder = async () => {
+    const response = await axios.get(`/api/documents/list`);
+    console.log(response);
+    setFolderStructure(response.data.data);
+  };
+  useEffect(() => {
+    getFolder();
+  }, []);
   const handleClick = () => {
     create();
   };
+  if (folderStructure == null) {
+    return <div> Loading</div>;
+  }
 
   return (
     <div>
@@ -77,8 +43,10 @@ const DocumentPage = () => {
       <div className="ml-2 ">
         <FolderTree
           name={folderStructure.name}
-          _id={folderStructure._id}
-          childrens={folderStructure.childrens}
+          id={folderStructure.id}
+          subFolders={folderStructure.subFolders}
+          files={folderStructure.files}
+          key={folderStructure.key}
         />
       </div>
     </div>
