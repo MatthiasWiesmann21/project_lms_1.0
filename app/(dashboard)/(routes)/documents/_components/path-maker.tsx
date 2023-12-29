@@ -10,7 +10,9 @@ const currentDocPath = basePath + "/documents/";
 const PathMaker = () => {
   const { slug } = useParams() as Params;
 
-  let lastPath = "";
+ 
+ 
+ 
 
   return (
     <div className="flex">

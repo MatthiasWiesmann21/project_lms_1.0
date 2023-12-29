@@ -2,14 +2,20 @@
 import Link from "next/link";
 import FolderTree, { FolderTreeProps } from "../_components/folder-tree";
 import PathMaker from "../_components/path-maker";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { headers } from "next/headers";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { DocumentFolderTree } from "../page";
 
+type Params = {
+  slug: string[];
+};
 const DocumentPage = () => {
+  const { slug } = useParams() as Params;
+  
+
   const [folderStructure, setFolderStructure] =
     useState<DocumentFolderTree | null>(null);
 
@@ -21,7 +27,8 @@ const DocumentPage = () => {
     }
   };
   const getFolder = async () => {
-    const response = await axios.get(`/api/documents/list`);
+    
+    const response = await axios.get(`/api/documents/list/?key=${slug}`);
     console.log(response);
     setFolderStructure(response.data.data);
   };

@@ -133,6 +133,8 @@ model NewsletterSubscription {
   createdAt DateTime @default(now())
 }
 
+
+
 // Document Uploading 
 
 model File {

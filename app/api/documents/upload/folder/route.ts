@@ -61,12 +61,12 @@ export async function POST(req: Request) {
 
     const parentFolder = await getOrCreateParentFolder(folderId);
 
-    const folderKey = `${parentFolder.key}/${uuidv4()}`;
+    const folderKey = `${parentFolder.key}/${folderName}`;
 
     // create folder
 
     const folder = await db.folder.create({
-      data: {
+      data: { 
         key: folderKey,
         name: folderName,
         userId: userId,
