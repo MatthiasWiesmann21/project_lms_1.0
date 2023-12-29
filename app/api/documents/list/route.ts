@@ -101,7 +101,7 @@ export async function GET(req: NextApiRequest) {
 
     return NextResponse.json({ data: data });
   } catch (error) {
-    console.log("[SUBSCRIPTION]", error);
+    console.log("[SUBSCRIPTION] aa", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

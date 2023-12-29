@@ -13,8 +13,11 @@ type Params = {
   slug: string[];
 };
 const DocumentPage = () => {
-  const { slug } = useParams() as Params;
+
+  const parentKey = usePathname()
+ 
   
+ 
 
   const [folderStructure, setFolderStructure] =
     useState<DocumentFolderTree | null>(null);
@@ -28,8 +31,9 @@ const DocumentPage = () => {
   };
   const getFolder = async () => {
     
-    const response = await axios.get(`/api/documents/list/?key=${slug}`);
-    console.log(response);
+   
+    const response = await axios.get(`/api/documents/list/?key=${parentKey.replace('/documents/','')}`);
+    console.log(response.data.data);
     setFolderStructure(response.data.data);
   };
   useEffect(() => {
