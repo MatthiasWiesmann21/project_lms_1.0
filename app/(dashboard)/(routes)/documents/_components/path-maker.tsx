@@ -11,15 +11,20 @@ const PathMaker = () => {
   const { slug } = useParams() as Params;
 
   let lastPath = "";
- 
- 
 
   return (
     <div className="flex">
       {slug.map((item, index) => {
         lastPath += item + "/";
+        if (index == 0) {
+          return (
+            <Link href={`/documents`} className="font-bold ">
+              &nbsp;root/
+            </Link>
+          );
+        }
         return (
-          <Link href={`${currentDocPath}/${lastPath}`} className="font-bold ">
+          <Link href={`/documents/${lastPath}`} className="font-bold ">
             &nbsp;{item}/
           </Link>
         );

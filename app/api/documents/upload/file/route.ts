@@ -7,7 +7,6 @@ import { v4 as uuidv4, v4 } from "uuid";
 import { createReadStream } from "fs";
 import { getS3Client } from "@/app/vendor/aws/s3/getS3Client";
 import { Upload } from "@aws-sdk/lib-storage";
-import formidable from "formidable-serverless";
 import { NextApiResponse } from "next";
 
 const getOrCreateParentFolder = async (parentKey?: string) => {
@@ -77,7 +76,7 @@ export async function POST(req: Request, res: NextApiResponse) {
 
     const parentFolder = await getOrCreateParentFolder(parentKey);
 
-    const fileKey = `${parentFolder.key}/${uuidv4()}`;
+    const fileKey = `${parentFolder.key}${uuidv4()}`;
 
     // create file
     const file = await db.file.create({

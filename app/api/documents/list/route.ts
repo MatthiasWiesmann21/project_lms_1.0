@@ -64,8 +64,9 @@ async function getFolderAndFiles(key: string | null) {
         files: true,
       },
     });
-    return folder;
   }
+
+  console.log({ folder });
 
   return folder;
 }
@@ -74,20 +75,26 @@ type QueryParams = {
   key: string;
 };
 
-export async function GET(req: NextApiRequest) {
+export async function GET(req: any) {
   // POST /api/upload
   try {
     const { userId } = auth();
 
-    const { key } = (req.query as unknown as QueryParams) ?? {};
+    const key = req.nextUrl.searchParams.get("key");
 
-    console.log(key);
     if (userId == null) {
       throw new Error("Un Authorized");
     }
 
     await getOrCreateParentFolder();
-    const data = await getFolderAndFiles(key);
+    let parseKey = key
+    if(parseKey != null ){
+      parseKey = key?.charAt(key.length - 1) !== `/` ? `${key}/` : key;
+    }
+
+    console.log(parseKey);
+    const data = await getFolderAndFiles(parseKey);
+
     if (data == null) {
       return NextResponse.json(
         {

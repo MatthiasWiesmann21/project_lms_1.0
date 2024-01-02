@@ -31,6 +31,7 @@ const DocumentPage = () => {
         folderName: folderName,
       });
       setFolderName("");
+      await getFolder();
     } catch (e) {
       console.log(e);
     }
@@ -72,25 +73,31 @@ const DocumentPage = () => {
           },
         }
       );
+      await getFolder();
     } catch (e) {
       console.log(e);
     }
   };
   return (
-    <div>
-      <div className=" my-4 ml-2 flex">
-        <h1 className="mr-8  font-bold">Root</h1>
+    <div className="  ml-2">
+      <div className=" my-4  flex">
         <input type="file" onChange={handleFileChange} />
         <button className="mr-3 font-bold" onClick={handleFileUpload}>
           Upload File
         </button>
 
-        <input type="text" className="  border-black border-2 mr-2 ml-2" onChange={handleFolderNameChange} />
-        <button className="mr-3 font-bold  "  onClick={createFolder}>
+        <input
+          type="text"
+          className="  ml-2 mr-2 border-2 border-black"
+          onChange={handleFolderNameChange}
+        />
+        <button className="mr-3 font-bold  " onClick={createFolder}>
           Create Folder
         </button>
       </div>
-      <div className="ml-2 ">
+      <h1 className="mb-4 font-bold">Root</h1>
+
+      <div className="  ">
         <FolderTree
           name={folderStructure.name}
           id={folderStructure.id}

@@ -4,6 +4,7 @@ import TreeNodeIcon from "./tree-node-icon";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { DocumentFolderTree } from "../page";
+import { Button } from "@/components/ui/button";
 
 export interface FolderTreeProps {
   name: string;
@@ -11,6 +12,8 @@ export interface FolderTreeProps {
   _id: string;
 }
 
+const basePath = process.env.BASE_PATH ?? "http://localhost:3000/";
+const currentDocPath = basePath + "/documents/";
 const FolderTree: React.FC<DocumentFolderTree> = ({
   name,
   files,
@@ -28,20 +31,29 @@ const FolderTree: React.FC<DocumentFolderTree> = ({
   const toggleFolder = () => {
     setIsOpen(!isOpen);
   };
+  const handleDownload = () => {
+    //TODO: Download logic here
+  };
 
   return (
     <div>
       {files.map((item) => {
         return (
-          <div className="mt-2  flex">
-            <Link href={`${pathname}/${item.key}`} className="flex">
+          <div className="mt-2  flex flex-row   items-center   ">
+            <div className="flex   " onClick={handleDownload}>
               <TreeNodeIcon
                 className="mr-2"
                 name={item.name}
                 isFolder={false}
               />
               {item.name}
-            </Link>
+            </div>
+            <Button
+              className="ml-2 bg-white font-bold text-black hover:bg-black hover:text-white"
+              onClick={handleDownload}
+            >
+              Download
+            </Button>
           </div>
         );
       })}
@@ -49,7 +61,7 @@ const FolderTree: React.FC<DocumentFolderTree> = ({
       {subFolders.map((item) => {
         return (
           <div className="mt-2  flex">
-            <Link href={`${pathname}/${item.key}`} className="flex">
+            <Link href={`${currentDocPath}${item.key}`} className="flex">
               <TreeNodeIcon className="mr-2" name={item.name} isFolder={true} />
               {item.name}
             </Link>
