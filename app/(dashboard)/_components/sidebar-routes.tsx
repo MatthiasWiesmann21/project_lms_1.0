@@ -1,6 +1,16 @@
 "use client";
 
-import { BarChart, Compass, FolderOpen, Globe, Globe2, Layout, List, Mail, MessageCircle } from "lucide-react";
+import {
+  BarChart,
+  Compass,
+  FolderOpen,
+  Globe,
+  Globe2,
+  Layout,
+  List,
+  Mail,
+  MessageCircle,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { SidebarItem } from "./sidebar-item";
@@ -34,7 +44,7 @@ const guestRoutes = [
   {
     icon: FolderOpen,
     label: "Documents",
-    href: "/documents/root",
+    href: "/documents",
   },
 ];
 
@@ -54,7 +64,7 @@ const teacherRoutes = [
     label: "Mail List",
     href: "/teacher/mail-list",
   },
-]
+];
 
 export const SidebarRoutes = () => {
   const pathname = usePathname();
@@ -64,7 +74,7 @@ export const SidebarRoutes = () => {
   const routes = isTeacherPage ? teacherRoutes : guestRoutes;
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex w-full flex-col">
       {routes.map((route) => (
         <SidebarItem
           key={route.href}
@@ -74,5 +84,5 @@ export const SidebarRoutes = () => {
         />
       ))}
     </div>
-  )
-}
+  );
+};
