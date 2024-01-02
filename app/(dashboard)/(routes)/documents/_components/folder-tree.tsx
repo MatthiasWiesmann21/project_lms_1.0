@@ -1,10 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import TreeNodeIcon from "./tree-node-icon";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { DocumentFolderTree } from "../page";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
+import { Progress } from "@/components/ui/progress";
 
 export interface FolderTreeProps {
   name: string;
@@ -22,25 +24,32 @@ const FolderTree: React.FC<DocumentFolderTree> = ({
   key,
 }) => {
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
+  const [downloading, setDownloading] = useState(false);
 
-  const getRemoteFiles = () => {
-    // CALL AWS S3 against the route
-  };
-
-  const toggleFolder = () => {
-    setIsOpen(!isOpen);
-  };
-  const handleDownload = () => {
+  const handleDownload = useCallback(async (key: string , name:string) => {
     //TODO: Download logic here
-  };
+    setDownloading(true);
+    const response = await axios.get(`/api/documents/download/file?key=${key}`);
+    console.log(response.data.data);
+
+    const downloadURL = response.data.data.downloadUrl;
+    const downloadLink = document.createElement('a');
+    downloadLink.href = downloadURL;
+    downloadLink.download = name;
+    document.body.appendChild(downloadLink);
+    console.log(downloadLink)
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+    
+    setDownloading(false);
+  }, []);
 
   return (
     <div>
       {files.map((item) => {
         return (
           <div className="mt-2  flex flex-row   items-center   ">
-            <div className="flex   " onClick={handleDownload}>
+            <div className="flex   ">
               <TreeNodeIcon
                 className="mr-2"
                 name={item.name}
@@ -48,12 +57,15 @@ const FolderTree: React.FC<DocumentFolderTree> = ({
               />
               {item.name}
             </div>
-            <Button
+            {
+              downloading ? <Progress />:   <Button
               className="ml-2 bg-white font-bold text-black hover:bg-black hover:text-white"
-              onClick={handleDownload}
+              onClick={() => handleDownload(item.key,item.name)}
             >
               Download
             </Button>
+            }
+         
           </div>
         );
       })}

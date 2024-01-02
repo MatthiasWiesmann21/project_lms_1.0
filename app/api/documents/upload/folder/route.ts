@@ -44,7 +44,6 @@ const getOrCreateParentFolder = async (parentKey?: string) => {
   return rootFolder;
 };
 
-
 export async function POST(req: Request) {
   // POST /api/upload
   try {
@@ -62,13 +61,21 @@ export async function POST(req: Request) {
 
     const parentFolder = await getOrCreateParentFolder(parentKey);
 
-    
     const folderKey = `${parentFolder.key}${folderName}/`;
 
+    // Check if folder already exist
+    const tempFolder = await db.folder.findFirst({
+      where: {
+        key: folderKey,
+      },
+    });
+    if (tempFolder != null) {
+      return new NextResponse("Folder already created", { status: 200 });
+    }
     // create folder
 
     const folder = await db.folder.create({
-      data: { 
+      data: {
         key: folderKey,
         name: folderName,
         userId: userId,
