@@ -66,7 +66,7 @@ async function getFolderAndFiles(key: string | null) {
     });
   }
 
-  console.log({ folder });
+ 
 
   return folder;
 }
@@ -92,7 +92,7 @@ export async function GET(req: any) {
       parseKey = key?.charAt(key.length - 1) !== `/` ? `${key}/` : key;
     }
 
-    console.log(parseKey);
+ 
     const data = await getFolderAndFiles(parseKey);
 
     if (data == null) {

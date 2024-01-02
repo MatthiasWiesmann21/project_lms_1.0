@@ -69,6 +69,7 @@ export async function POST(req: Request) {
         key: folderKey,
       },
     });
+    console.log({tempFolder})
     if (tempFolder != null) {
       return new NextResponse("Folder already created", { status: 200 });
     }

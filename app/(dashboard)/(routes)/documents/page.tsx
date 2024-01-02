@@ -26,6 +26,9 @@ const DocumentPage = () => {
     useState<DocumentFolderTree | null>(null);
 
   const createFolder = async () => {
+    if (folderName == null || folderName.length< 1) {
+      return;
+    }
     try {
       const response = await axios.post(`/api/documents/upload/folder`, {
         folderName: folderName,
@@ -80,20 +83,37 @@ const DocumentPage = () => {
   };
   return (
     <div className="  ml-2">
-      <div className=" my-4  flex">
-        <input type="file" onChange={handleFileChange} />
-        <button className="mr-3 font-bold" onClick={handleFileUpload}>
-          Upload File
-        </button>
-
-        <input
-          type="text"
-          className="  ml-2 mr-2 border-2 border-black"
-          onChange={handleFolderNameChange}
-        />
-        <button className="mr-3 font-bold  " onClick={createFolder}>
-          Create Folder
-        </button>
+      <div className=" my-4  flex flex-col">
+        <form className="flex">
+          <input
+            required
+            type="file"
+            className=" mr-6  w-2/6"
+            onChange={handleFileChange}
+          />
+          <button
+            className="flex items-center justify-center rounded-md bg-emerald-400  px-10 py-2 text-lg text-white hover:bg-emerald-400/80"
+            onClick={handleFileUpload}
+          >
+            Upload File
+          </button>
+        </form>
+        <form className="my-4 flex ">
+          <input
+            type="text"
+            value={folderName}
+            className=" mr-6   w-2/6 border-2 border-black"
+            onChange={handleFolderNameChange}
+            required
+          />
+          <button
+            type="submit"
+            className="flex items-center justify-center rounded-md bg-emerald-400 px-10 py-2 text-lg text-white hover:bg-emerald-400/80"
+            onClick={createFolder}
+          >
+            Create Folder
+          </button>
+        </form>
       </div>
       <h1 className="mb-4 font-bold">Root</h1>
 

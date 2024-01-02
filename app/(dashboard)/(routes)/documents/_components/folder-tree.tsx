@@ -58,7 +58,8 @@ const FolderTree: React.FC<DocumentFolderTree> = ({
               {item.name}
             </div>
             {
-              downloading ? <Progress />:   <Button
+               <Button
+               disabled ={downloading}
               className="ml-2 bg-white font-bold text-black hover:bg-black hover:text-white"
               onClick={() => handleDownload(item.key,item.name)}
             >
