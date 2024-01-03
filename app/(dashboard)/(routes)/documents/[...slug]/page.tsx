@@ -1,56 +1,47 @@
 "use client";
-
-import FolderTree, { FolderTreeProps } from "./_components/folder-tree";
-
+import Link from "next/link";
+import FolderTree, { FolderTreeProps } from "../_components/folder-tree";
+import PathMaker from "../_components/path-maker";
+import { useParams, usePathname } from "next/navigation";
+import { headers } from "next/headers";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-export type DocumentFolderTree = {
-  name: string;
-  id: string;
-  key: string;
-  subFolders: DocumentFolderTree[];
-  files: DocumentFile[];
-};
-export type DocumentFile = {
-  name: string;
-  id: string;
-  key: string;
-  folder: DocumentFolderTree;
-};
+import { DocumentFolderTree } from "../page";
 
 const DocumentPage = () => {
   const [file, setFile] = useState(null);
   const [folderName, setFolderName] = useState("");
+
+  const parentKey = usePathname();
+
   const [folderStructure, setFolderStructure] =
     useState<DocumentFolderTree | null>(null);
 
   const createFolder = async () => {
-    if (folderName == null || folderName.length< 1) {
+    if (folderName == null || folderName.length<1) {
       return;
     }
+    console.log({folderName})
     try {
       const response = await axios.post(`/api/documents/upload/folder`, {
         folderName: folderName,
+        parentKey: parentKey.replace("/documents/", "") + "/", // remove documents and add slash at the end
       });
       setFolderName("");
-      await getFolder();
     } catch (e) {
       console.log(e);
     }
   };
   const getFolder = async () => {
-    const response = await axios.get(`/api/documents/list`);
-    console.log(response);
+    const response = await axios.get(
+      `/api/documents/list?key=${parentKey.replace("/documents/", "")}`
+    );
     setFolderStructure(response.data.data);
   };
   useEffect(() => {
     getFolder();
   }, []);
-
-  if (folderStructure == null) {
-    return <div>Loading</div>;
-  }
 
   const handleFolderNameChange = (event: any) => {
     setFolderName(event.target.value);
@@ -65,6 +56,7 @@ const DocumentPage = () => {
     try {
       const formData = new FormData();
       formData.append("file", file);
+      formData.append("parentKey", parentKey.replace("/documents/", "") + "/");
 
       // formData.append('parentKey', )
       const response = await axios.post(
@@ -76,14 +68,18 @@ const DocumentPage = () => {
           },
         }
       );
-      await getFolder();
     } catch (e) {
       console.log(e);
     }
   };
+
+  if (folderStructure == null) {
+    return <div> Loading</div>;
+  }
+
   return (
-    <div className="  ml-2">
-      <div className=" my-4  flex flex-col">
+    <div className="ml-2 ">
+      <div className=" my-4  flex-col">
         <form className="flex">
           <input
             required
@@ -115,9 +111,10 @@ const DocumentPage = () => {
           </button>
         </form>
       </div>
-      <h1 className="mb-4 font-bold">Root</h1>
-
-      <div className="  ">
+      <div className="my-4 ">
+        <PathMaker />
+      </div>
+      <div className="ml-2 ">
         <FolderTree
           name={folderStructure.name}
           id={folderStructure.id}
