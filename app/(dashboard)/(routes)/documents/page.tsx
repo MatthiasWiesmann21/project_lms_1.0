@@ -4,6 +4,7 @@ import FolderTree, { FolderTreeProps } from "./_components/folder-tree";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import AssetsTable from "./_components/asset-table";
 
 export type DocumentFolderTree = {
   name: string;
@@ -26,7 +27,7 @@ const DocumentPage = () => {
     useState<DocumentFolderTree | null>(null);
 
   const createFolder = async () => {
-    if (folderName == null || folderName.length< 1) {
+    if (folderName == null || folderName.length < 1) {
       return;
     }
     try {
@@ -82,8 +83,8 @@ const DocumentPage = () => {
     }
   };
   return (
-    <div className="  ml-2">
-      <div className=" my-4  flex flex-col">
+    <div className="  ml-2 h-screen">
+      {/* <div className=" my-4  flex flex-col">
         <form className="flex">
           <input
             required
@@ -125,7 +126,10 @@ const DocumentPage = () => {
           files={folderStructure.files}
           key={folderStructure.key}
         />
-      </div>
+      </div> */}
+      <AssetsTable
+        folderStructure={folderStructure}
+      ></AssetsTable>
     </div>
   );
 };
