@@ -37,7 +37,7 @@ const AssetsTable = (props: any) => {
     };
 
     return (
-        <div className="px-4 sm:px-6 lg:px-8">
+        <div className="px-4 sm:px-2 lg:px-4 py-4">
             <div className="sm:flex sm:items-center my-2">
                 <div className="sm:flex-auto">
                     <h1 className="text-2xl font-semibold leading-6 text-gray-600 ">Document Hub</h1>
@@ -68,9 +68,9 @@ const AssetsTable = (props: any) => {
                             <table className="min-w-full table-fixed divide-y divide-gray-300">
                                 <thead>
                                     <tr>
-                                        <th scope="col" className="relative px-7 sm:w-12 sm:px-6">
-                                            <input type="checkbox" className="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
-                                            <span className="ml-3 text-xs">Type</span>
+                                        <th scope="col" className="relative px-8 sm:w-12 sm:px-6">
+                                            <input type="checkbox" className="absolute left-1 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
+                                            <span className="min-w-[12rem] py-3 text-sm font-semibold text-gray-900">Type</span>
                                         </th>
                                         <th scope="col" className="min-w-[12rem] py-3.5 pr-3 text-left text-sm font-semibold text-gray-900">Name</th>
                                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Created At</th>
@@ -81,7 +81,7 @@ const AssetsTable = (props: any) => {
                                         return (
                                             <tr key={i}>
                                                 <td className="relative px-7 sm:w-12 sm:px-6">
-                                                    <input type="checkbox" className="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
+                                                    <input type="checkbox" className="absolute left-1 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
                                                     <div onClick={() => location.href = `${currentDocPath}${item.key}`} className="p-2 bg-pink-100 ml-3 rounded cursor-pointer">
                                                         <svg className="mx-auto h-7 w-7 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                                             <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
@@ -137,7 +137,7 @@ const AssetsTable = (props: any) => {
                                         return (
                                             <tr key={i}>
                                                 <td className="relative px-7 sm:w-12 sm:px-6">
-                                                    <input type="checkbox" className="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
+                                                    <input type="checkbox" className="absolute left-1 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
                                                     <div onClick={() => location.href = `${currentDocPath}${item.key}`} className="p-2 bg-pink-100 ml-3 rounded cursor-pointer">
                                                         <svg className="h-7 w-7 text-gray-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                             <g id="SVGRepo_bgCarrier" stroke-width="0">
