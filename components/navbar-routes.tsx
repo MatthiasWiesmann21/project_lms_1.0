@@ -29,9 +29,7 @@ export const NavbarRoutes = () => {
           <SearchInput />
         </div> )}
       <div className="flex gap-x-2 ml-auto">
-        <div>
           <ModeToggle />
-        </div>
         {isTeacherPage || isCoursePage ? (
           <Link href="/">
             <Button size="sm" variant="ghost">
