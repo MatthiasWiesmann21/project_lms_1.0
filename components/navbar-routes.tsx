@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { isTeacher } from "@/lib/teacher";
 
 import { SearchInput } from "./search-input";
+import { ModeToggle } from "./mode-toggle";
 
 export const NavbarRoutes = () => {
   const { userId } = useAuth();
@@ -16,16 +17,21 @@ export const NavbarRoutes = () => {
 
   const isTeacherPage = pathname?.startsWith("/teacher");
   const isCoursePage = pathname?.includes("/courses");
-  const isSearchPage = pathname === "/search" || "/";
+  const isDashboardPage = pathname === "/dashboard";
+  const isSearchPage = pathname === "/search";
 
   return (
     <>
-      {isSearchPage && (
-        <div className="hidden md:block">
+      {isSearchPage && (<div className="hidden md:block">
           <SearchInput />
-        </div>
-      )}
+        </div> )}
+        {isDashboardPage && (<div className="hidden md:block">
+          <SearchInput />
+        </div> )}
       <div className="flex gap-x-2 ml-auto">
+        <div>
+          <ModeToggle />
+        </div>
         {isTeacherPage || isCoursePage ? (
           <Link href="/">
             <Button size="sm" variant="ghost">
