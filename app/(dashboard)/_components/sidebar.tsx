@@ -4,11 +4,11 @@ import { SidebarRoutes } from "./sidebar-routes"
 
 export const Sidebar = () => {
   return (
-    <div className="h-full border-r flex flex-col overflow-y-auto bg-white shadow-sm">
+    <div className="h-full border-r flex flex-col overflow-y-auto bg-white dark:bg-[#313338] shadow-sm">
       <div className="p-6">
         <Logo />
       </div>
-      <div className="flex flex-col w-full border-t">
+      <div className="flex flex-col w-full border-t ">
         <SidebarRoutes />
       </div>
       <div className="flex-grow flex justify-center items-end pb-5">

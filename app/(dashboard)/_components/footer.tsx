@@ -4,7 +4,7 @@ import Chatbot from "@/components/chatbot";
 const Footer = () => {
     return (
         <div className="md:pl-72">
-            <footer className="p-4 w-full bg-white border-t flex flex-col lg:flex-row items-start justify-around lg:items-center">
+            <footer className="p-4 w-full bg-white dark:bg-[#313338] border-t flex flex-col lg:flex-row items-start justify-around lg:items-center">
                 <div className="text-xs text-muted-foreground py-2 px-4 lg:flex-1">
                 © 2023 ENRA d.o.o. All rights reserved.
                 </div>
