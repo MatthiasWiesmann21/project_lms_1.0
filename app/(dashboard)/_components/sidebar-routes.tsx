@@ -1,15 +1,17 @@
 "use client";
 
 import {
-  BarChart,
+  BarChartIcon,
   Compass,
   FolderOpen,
-  Globe,
   Globe2,
   Layout,
-  List,
+  ListIcon,
   Mail,
+  MailIcon,
   MessageCircle,
+  PaletteIcon,
+  UserCircle2Icon,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -50,19 +52,29 @@ const guestRoutes = [
 
 const teacherRoutes = [
   {
-    icon: List,
+    icon: ListIcon,
     label: "Courses",
     href: "/teacher/courses",
   },
   {
-    icon: BarChart,
+    icon: BarChartIcon,
     label: "Analytics",
     href: "/teacher/analytics",
   },
   {
-    icon: Mail,
+    icon: MailIcon,
     label: "Mail List",
     href: "/teacher/mail-list",
+  },
+  {
+    icon: PaletteIcon,
+    label: "Customize",
+    href: "/teacher/customize",
+  },
+  {
+    icon: UserCircle2Icon,
+    label: "Users",
+    href: "/teacher/users",
   },
 ];
 
