@@ -141,6 +141,7 @@ model File {
   id       Int     @id @default(autoincrement())
   type     String?
   name     String
+  isPublic Boolean
   key      String  @db.Text
   userId   String 
   folderId Int
@@ -162,6 +163,7 @@ enum FileStatus{
 model Folder {
   id             Int     @id @default(autoincrement())
   name           String
+  isPublic       Boolean
   key            String  @db.Text
   userId         String  
   files          File[]

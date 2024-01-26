@@ -36,7 +36,7 @@ const DocumentPage = () => {
   };
   const getFolder = async () => {
     const response = await axios.get(
-      `/api/documents/list?key=${parentKey.replace("/documents/", "")}`
+      `/api/documents/list?key=${parentKey.replace("/documents/", "")}&isPublicDirectory=${true}`
     );
     setFolderStructure(response.data.data);
   };

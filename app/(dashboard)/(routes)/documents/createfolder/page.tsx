@@ -25,6 +25,7 @@ const DocumentCreatePage = () => {
         try {
           const response = await axios.post(`/api/documents/upload/folder`, {
             folderName: folderName,
+            isPublic: isPublic,
           });
           location.href = "/documents";
           setFolderName("");

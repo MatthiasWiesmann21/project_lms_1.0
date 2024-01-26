@@ -4,12 +4,12 @@ import { auth } from "@clerk/nextjs";
 import { NextApiRequest } from "next";
 import { NextRequest, NextResponse } from "next/server";
 
-const getOrCreateParentFolder = async (userId:string,parentKey?: string) => {
+const getOrCreateParentFolder = async (userId: string, parentKey?: string) => {
   if (parentKey != null) {
     const parentFolder = await db.folder.findFirst({
       where: {
         key: parentKey,
-        userId:userId
+        userId: userId
       },
     });
     if (parentFolder == null) {
@@ -22,7 +22,7 @@ const getOrCreateParentFolder = async (userId:string,parentKey?: string) => {
   let rootFolder = await db.folder.findFirst({
     where: {
       parentFolder: null,
-      userId:userId
+      userId: userId
     },
   });
   if (rootFolder == null) {
@@ -47,7 +47,7 @@ const getOrCreateParentFolder = async (userId:string,parentKey?: string) => {
   return rootFolder;
 };
 
-async function getFolderAndFiles(key: string | null, userId: string | null, isPublicDirectory?: boolean) {
+async function getFolderAndFiles(key: string | null, userId: string | null) {
   let folder;
 
   if (userId == null) {
@@ -55,27 +55,31 @@ async function getFolderAndFiles(key: string | null, userId: string | null, isPu
   }
 
   if (key == null) {
-    folder = await db.folder.findFirst({
-      where: { parentFolderId: null , userId:userId },
+    folder = await db.folder.findMany({
+      where: { parentFolderId: null,  isPublic: false },
+      // where: {
+      //   OR: [
+      //     { parentFolderId: null },
+      //     { isPublic: true }
+      //   ],
+      // },
       include: {
-        subFolders: true,
+        subFolders: {
+          where: {  isPublic: true },
+        },
         files: true,
       },
     });
   }
-  if (key != null && !isPublicDirectory) {
-    folder = await db.folder.findFirst({
-      where: { key: key, userId: userId },
-      include: {
-        subFolders: true,
-        files: true,
-      },
-    });
-  }
-
-  if (key != null && isPublicDirectory) {
-    folder = await db.folder.findFirst({
-      where: { key: key },
+  if (key != null) {
+    folder = await db.folder.findMany({
+      where: { key: key,  isPublic: true },
+      // where: {
+      //   OR: [
+      //     { key: key },
+      //     { isPublic: true }
+      //   ],
+      // },
       include: {
         subFolders: {
           where: {  isPublic: true },
@@ -85,7 +89,7 @@ async function getFolderAndFiles(key: string | null, userId: string | null, isPu
     });
   }
 
- 
+
 
   return folder;
 }
@@ -100,20 +104,19 @@ export async function GET(req: any) {
     const { userId } = auth();
 
     const key = req.nextUrl.searchParams.get("key");
-    const isPublicDirectory = req.nextUrl.searchParams.get("isPublicDirectory");
 
     if (userId == null) {
       throw new Error("Un Authorized");
     }
 
-    await getOrCreateParentFolder(userId);
+    //await getOrCreateParentFolder(userId);
     let parseKey = key
-    if(parseKey != null ){
+    if (parseKey != null) {
       parseKey = key?.charAt(key.length - 1) !== `/` ? `${key}/` : key;
     }
 
- 
-    const data = await getFolderAndFiles(parseKey, userId, isPublicDirectory);
+
+    const data = await getFolderAndFiles(parseKey, userId);
 
     if (data == null) {
       return NextResponse.json(
