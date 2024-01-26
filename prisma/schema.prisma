@@ -176,4 +176,6 @@ model Folder {
   @@index([parentFolderId])
 }
 
+// TODO: Global Color Settings
+
 

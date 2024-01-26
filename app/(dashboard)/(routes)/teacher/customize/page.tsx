@@ -1,8 +1,11 @@
+import ColorPicker from "@/components/color-picker";
+
+// Bad code must be done soon.
 const CustomizeSettingsPage = () => {
     return ( 
-        <div>
-            Customize Settings Page
-        </div>
+        <div className="flex justify-center h-screen">
+        <ColorPicker />
+      </div>
      );
 }
  
