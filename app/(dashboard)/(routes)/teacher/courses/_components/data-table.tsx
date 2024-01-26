@@ -62,7 +62,7 @@ export function DataTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn("title")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-sm border-[#000000] dark:border-[#ffffff]"
         />
         <Link href="/teacher/create">
           <Button>
@@ -71,14 +71,14 @@ export function DataTable<TData, TValue>({
           </Button>
         </Link>
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md border border-[#000000] dark:border-[#ffffff]">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="border-[#000000] dark:border-[#ffffff]">
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id} className="text-[#000000] dark:text-[#ffffff]">
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -95,6 +95,7 @@ export function DataTable<TData, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
+                  className="border-[#000000] dark:border-[#ffffff]"
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >

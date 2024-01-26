@@ -38,7 +38,7 @@ export const CourseCard = ({
 
   return (
     <Link href={`/courses/${id}`}>
-      <div className="group hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full">
+      <div className="group hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full dark:border-[#ffffff]">
         <div className="relative w-full aspect-video rounded-md overflow-hidden">
           <Image
             fill
@@ -51,13 +51,13 @@ export const CourseCard = ({
           <div className="text-lg md:text-base font-medium group-hover:text-sky-700 transition line-clamp-2">
             {title}
           </div>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-muted-foreground text-[#000000] dark:text-[#ffffff]">
             {category}
           </p>
           <div className="my-3 flex items-center gap-x-2 text-sm md:text-xs">
             <div className="flex items-center gap-x-1 text-slate-500">
               <IconBadge size="sm" icon={BookOpen} />
-              <span>
+              <span className="text-[#000000] dark:text-[#ffffff]">
                 {chaptersLength} {chaptersLength === 1 ? "Chapter" : "Chapters"}
               </span>
             </div>
