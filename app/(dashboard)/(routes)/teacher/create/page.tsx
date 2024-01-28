@@ -53,7 +53,7 @@ const CreatePage = () => {
         <h1 className="text-2xl">
           Name your course
         </h1>
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-slate-600 dark:text-[#ffffff]">
           What would you like to name your course? Don&apos;t worry, you can change this later.
         </p>
         <Form {...form}>
@@ -76,7 +76,7 @@ const CreatePage = () => {
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription>
+                  <FormDescription className="dark:text-[#ffffff]">
                     What will you teach in this course?
                   </FormDescription>
                   <FormMessage />
@@ -84,7 +84,7 @@ const CreatePage = () => {
               )}
             />
             <div className="flex items-center gap-x-2">
-              <Link href="/">
+              <Link href="/teacher/courses">
                 <Button
                   type="button"
                   variant="ghost"

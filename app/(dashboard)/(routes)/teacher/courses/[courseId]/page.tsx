@@ -83,7 +83,7 @@ const CourseIdPage = async ({
             <h1 className="text-2xl font-medium">
               Course setup
             </h1>
-            <span className="text-sm text-slate-700">
+            <span className="text-sm text-slate-700 dark:text-[#ffffff]">
               Complete all required fields {completionText}
             </span>
           </div>
