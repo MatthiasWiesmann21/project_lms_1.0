@@ -10,7 +10,9 @@ import {
   Mail,
   MailIcon,
   MessageCircle,
+  NewspaperIcon,
   PaletteIcon,
+  PinIcon,
   UserCircle2Icon,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
@@ -65,6 +67,11 @@ const teacherRoutes = [
     icon: MailIcon,
     label: "Mail List",
     href: "/teacher/mail-list",
+  },
+  {
+    icon: NewspaperIcon,
+    label: "Posts",
+    href: "/teacher/posts",
   },
   {
     icon: PaletteIcon,

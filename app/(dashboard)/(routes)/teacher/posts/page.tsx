@@ -6,14 +6,14 @@ import { db } from "@/lib/db";
 import { DataTable } from "./_components/data-table";
 import { columns } from "./_components/columns";
 
-const CoursesPage = async () => {
+const PostsPage = async () => {
   const { userId } = auth();
 
   if (!userId) {
-    return redirect("/dashboard");
+    return redirect("/");
   }
 
-  const courses = await db.course.findMany({
+  const posts = await db.post.findMany({
     where: {
       userId,
     },
@@ -24,9 +24,9 @@ const CoursesPage = async () => {
 
   return ( 
     <div className="p-6">
-      <DataTable columns={columns} data={courses} />
+      <DataTable columns={columns} data={posts} />
     </div>
    );
 }
  
-export default CoursesPage;
+export default PostsPage;
