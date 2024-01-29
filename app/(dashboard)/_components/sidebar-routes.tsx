@@ -32,8 +32,8 @@ const guestRoutes = [
   },
   {
     icon: Globe2,
-    label: "Social Media",
-    href: "/social-media",
+    label: "News",
+    href: "/news",
   },
   {
     icon: Mail,
