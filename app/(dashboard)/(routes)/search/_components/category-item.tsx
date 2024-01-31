@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 interface CategoryItemProps {
   label: string;
   value?: string;
-  colorCode?: string;
+  colorCode: string;
 };
 
 export const CategoryItem = ({

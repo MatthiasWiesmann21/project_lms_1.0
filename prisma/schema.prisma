@@ -35,7 +35,7 @@ model Course {
 model Category {
   id      String   @id @default(uuid())
   name    String   @unique
-  colorCode   String? @default("#000000")
+  colorCode   String @default("#000000")
   isPublished Boolean @default(false)
   
   courses Course[]
