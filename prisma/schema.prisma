@@ -35,8 +35,15 @@ model Course {
 model Category {
   id      String   @id @default(uuid())
   name    String   @unique
+  isPublished Boolean @default(false)
+  
   courses Course[]
   posts Post[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([name])
 }
 
 model Attachment {

@@ -6,6 +6,8 @@ import {
   FolderOpen,
   Globe2,
   Layout,
+  LayoutDashboard,
+  LayoutGridIcon,
   ListIcon,
   Mail,
   MailIcon,
@@ -59,9 +61,14 @@ const teacherRoutes = [
     href: "/teacher/courses",
   },
   {
-    icon: BarChartIcon,
-    label: "Analytics",
-    href: "/teacher/analytics",
+    icon: NewspaperIcon,
+    label: "Posts",
+    href: "/teacher/posts",
+  },
+  {
+    icon: LayoutGridIcon,
+    label: "Categories",
+    href: "/teacher/categories",
   },
   {
     icon: MailIcon,
@@ -69,9 +76,9 @@ const teacherRoutes = [
     href: "/teacher/mail-list",
   },
   {
-    icon: NewspaperIcon,
-    label: "Posts",
-    href: "/teacher/posts",
+    icon: BarChartIcon,
+    label: "Analytics",
+    href: "/teacher/analytics",
   },
   {
     icon: PaletteIcon,
