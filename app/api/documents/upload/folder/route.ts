@@ -4,11 +4,12 @@ import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import { v4 as uuidv4, v4 } from "uuid";
 
-const getOrCreateParentFolder = async (parentKey?: string) => {
+const getOrCreateParentFolder = async (userId: string, parentKey?: string, ) => {
   if (parentKey != null) {
     const parentFolder = await db.folder.findFirst({
       where: {
         key: parentKey,
+        userId: userId
       },
     });
     if (parentFolder == null) {
@@ -21,10 +22,11 @@ const getOrCreateParentFolder = async (parentKey?: string) => {
   let rootFolder = await db.folder.findFirst({
     where: {
       parentFolder: null,
+      userId: userId
     },
   });
   if (rootFolder == null) {
-    const { userId } = auth();
+    // const { userId } = auth();
     if (userId == null) {
       throw new Error("Login first to access");
     }
@@ -36,6 +38,7 @@ const getOrCreateParentFolder = async (parentKey?: string) => {
       data: {
         name: key,
         key: key,
+        isPublic: false,
         userId: userId,
       },
     });
@@ -55,11 +58,11 @@ export async function POST(req: Request) {
     const requestBody = await req.json();
 
     // FolderId null means it will upload in root folder
-    const { parentKey, folderName } = requestBody;
+    const { parentKey, folderName, isPublic } = requestBody;
 
     // create or  get a folder if not exist
 
-    const parentFolder = await getOrCreateParentFolder(parentKey);
+    const parentFolder = await getOrCreateParentFolder(userId);
 
     const folderKey = `${parentFolder.key}${folderName}/`;
 
@@ -80,6 +83,7 @@ export async function POST(req: Request) {
         key: folderKey,
         name: folderName,
         userId: userId,
+        isPublic: isPublic,
         parentFolderId: parentFolder.id,
       },
     });

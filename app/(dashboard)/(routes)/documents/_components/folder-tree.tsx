@@ -46,9 +46,9 @@ const FolderTree: React.FC<DocumentFolderTree> = ({
 
   return (
     <div>
-      {files.map((item) => {
+      {files.map((item, index) => {
         return (
-          <div className="mt-2  flex flex-row   items-center   ">
+          <div className="mt-2  flex flex-row   items-center   " key={index}>
             <div className="flex   ">
               <TreeNodeIcon
                 className="mr-2"
@@ -71,9 +71,9 @@ const FolderTree: React.FC<DocumentFolderTree> = ({
         );
       })}
 
-      {subFolders.map((item) => {
+      {subFolders.map((item, index) => {
         return (
-          <div className="mt-2  flex">
+          <div className="mt-2  flex" key={index}>
             <Link href={`${currentDocPath}${item.key}`} className="flex">
               <TreeNodeIcon className="mr-2" name={item.name} isFolder={true} />
               {item.name}

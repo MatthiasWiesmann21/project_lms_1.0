@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { DocumentFolderTree } from "../page";
+import AssetsTable from "./../_components/asset-table";
 
 const DocumentPage = () => {
   const [file, setFile] = useState(null);
@@ -19,10 +20,10 @@ const DocumentPage = () => {
     useState<DocumentFolderTree | null>(null);
 
   const createFolder = async () => {
-    if (folderName == null || folderName.length<1) {
+    if (folderName == null || folderName.length < 1) {
       return;
     }
-    console.log({folderName})
+    console.log({ folderName })
     try {
       const response = await axios.post(`/api/documents/upload/folder`, {
         folderName: folderName,
@@ -35,7 +36,7 @@ const DocumentPage = () => {
   };
   const getFolder = async () => {
     const response = await axios.get(
-      `/api/documents/list?key=${parentKey.replace("/documents/", "")}`
+      `/api/documents/list?key=${parentKey.replace("/documents/", "")}&isPublicDirectory=${true}`
     );
     setFolderStructure(response.data.data);
   };
@@ -79,7 +80,7 @@ const DocumentPage = () => {
 
   return (
     <div className="ml-2 ">
-      <div className=" my-4  flex-col">
+      {/* <div className=" my-4  flex-col">
         <form className="flex">
           <input
             required
@@ -122,7 +123,13 @@ const DocumentPage = () => {
           files={folderStructure.files}
           key={folderStructure.key}
         />
+      </div> */}
+      <div className="my-4 ">
+        <PathMaker />
       </div>
+      <AssetsTable
+        folderStructure={folderStructure}
+      ></AssetsTable>
     </div>
   );
 };

@@ -5,6 +5,8 @@ import FolderTree, { FolderTreeProps } from "./_components/folder-tree";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import AssetsTable from "./_components/asset-table";
+import Tabs from "./_components/tabs";
+import PublicAssetsTable from "./_components/public-asset-table";
 
 export type DocumentFolderTree = {
   name: string;
@@ -23,7 +25,10 @@ export type DocumentFile = {
 const DocumentPage = () => {
   const [file, setFile] = useState(null);
   const [folderName, setFolderName] = useState("");
+  const [currentTab, setCurrentTab] = useState(1);
   const [folderStructure, setFolderStructure] =
+    useState<DocumentFolderTree | null>(null);
+  const [publicFolderStructure, setPublicFolderStructure] =
     useState<DocumentFolderTree | null>(null);
 
   const createFolder = async () => {
@@ -42,11 +47,16 @@ const DocumentPage = () => {
   };
   const getFolder = async () => {
     const response = await axios.get(`/api/documents/list`);
-    console.log(response);
     setFolderStructure(response.data.data);
+  };
+  const getPublicFolder = async () => {
+    const response = await axios.get(`/api/documents/publiclist`);
+    console.log(response);
+    setPublicFolderStructure(response.data.data);
   };
   useEffect(() => {
     getFolder();
+    getPublicFolder();
   }, []);
 
   if (folderStructure == null) {
@@ -127,9 +137,17 @@ const DocumentPage = () => {
           key={folderStructure.key}
         />
       </div> */}
-      <AssetsTable
-        folderStructure={folderStructure}
-      ></AssetsTable>
+      {/* <Tabs currentTab={currentTab} setCurrentTab={setCurrentTab}></Tabs> */}
+      {currentTab == 1 && (
+        <AssetsTable
+          folderStructure={folderStructure}
+        ></AssetsTable>
+      )}
+      {/* {currentTab == 2 && (
+        <PublicAssetsTable
+        folderStructureList={publicFolderStructure}
+        ></PublicAssetsTable>
+      )} */}
     </div>
   );
 };
