@@ -41,6 +41,7 @@ const getOrCreateParentFolder = async (parentKey?: string) => {
       data: {
         name: key,
         key: key,
+        isPublic: false,
         userId: userId,
       },
     });
@@ -62,12 +63,21 @@ export async function POST(req: Request, res: NextApiResponse) {
     const formData = await req.formData();
 
     const formFile = formData.get("file");
+    const formIsPublic = formData.get("isPublic");
+    const formFileName = formData.get("name");
+    const isPublic = typeof formIsPublic === "string" ? (formIsPublic === "true" ? true : false) : false;
+
+    console.log(formIsPublic)
     const parentKey = formData.get("parentKey")?.toString();
 
     if (formFile == null) {
       throw new Error(" Invalid file");
     }
-    const fileName = formFile.name;
+
+    const fileName = typeof formFileName === "string" ? formFileName : `${formFileName}`;
+
+
+    //const fileName = formFileName === null ? '' : formFileName;
 
     console.log("here: ", fileName);
     // parentKey null means it will upload in root folder
@@ -84,6 +94,7 @@ export async function POST(req: Request, res: NextApiResponse) {
         key: fileKey,
         name: fileName,
         userId: userId,
+        isPublic: isPublic,
         folderId: parentFolder.id,
       },
     });

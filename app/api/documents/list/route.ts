@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { NextApiRequest } from "next";
 import { NextRequest, NextResponse } from "next/server";
+import { isTeacher } from "@/lib/teacher";
 
 const getOrCreateParentFolder = async (userId:string,parentKey?: string) => {
   if (parentKey != null) {
@@ -56,19 +57,35 @@ async function getFolderAndFiles(key: string | null, userId: string | null, isPu
 
   if (key == null) {
     folder = await db.folder.findFirst({
-      where: { parentFolderId: null , userId:userId },
+      where: { parentFolderId: null },
       include: {
-        subFolders: true,
-        files: true,
+        subFolders: {
+          where: {
+            OR: [
+              { isPublic: true },
+              { userId: userId },
+            ],
+          },
+        },
+        files: {
+          where: {
+            OR: [
+              { isPublic: true },
+              { userId: userId },
+            ],
+          },
+        },
       },
     });
   }
   if (key != null && !isPublicDirectory) {
     folder = await db.folder.findFirst({
-      where: { key: key, userId: userId },
+      where: { key: key },
       include: {
         subFolders: true,
-        files: true,
+        files: {
+          where: {  isPublic: true },
+        },
       },
     });
   }
@@ -80,7 +97,9 @@ async function getFolderAndFiles(key: string | null, userId: string | null, isPu
         subFolders: {
           where: {  isPublic: true },
         },
-        files: true,
+        files: {
+          where: {  isPublic: true },
+        },
       },
     });
   }
@@ -106,7 +125,10 @@ export async function GET(req: any) {
       throw new Error("Un Authorized");
     }
 
-    await getOrCreateParentFolder(userId);
+    if(isTeacher(userId)){
+      await getOrCreateParentFolder(userId);
+    }
+    
     let parseKey = key
     if(parseKey != null ){
       parseKey = key?.charAt(key.length - 1) !== `/` ? `${key}/` : key;

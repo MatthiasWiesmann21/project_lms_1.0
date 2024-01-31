@@ -137,17 +137,17 @@ const DocumentPage = () => {
           key={folderStructure.key}
         />
       </div> */}
-      <Tabs currentTab={currentTab} setCurrentTab={setCurrentTab}></Tabs>
+      {/* <Tabs currentTab={currentTab} setCurrentTab={setCurrentTab}></Tabs> */}
       {currentTab == 1 && (
         <AssetsTable
           folderStructure={folderStructure}
         ></AssetsTable>
       )}
-      {currentTab == 2 && (
+      {/* {currentTab == 2 && (
         <PublicAssetsTable
         folderStructureList={publicFolderStructure}
         ></PublicAssetsTable>
-      )}
+      )} */}
     </div>
   );
 };
