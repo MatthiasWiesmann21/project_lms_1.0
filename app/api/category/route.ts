@@ -9,7 +9,7 @@ export async function POST(
 ) {
   try {
     const { userId } = auth();
-    const { name } = await req.json();
+    const { name, color } = await req.json();
 
     if (!userId || !isTeacher(userId)) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -18,6 +18,7 @@ export async function POST(
     const category = await db.category.create({
       data: {
         name: name,
+        colorCode: color
       }
     });
 

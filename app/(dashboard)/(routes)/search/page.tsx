@@ -25,6 +25,9 @@ const SearchPage = async ({
   }
 
   const categories = await db.category.findMany({
+    where: {
+      isPublished: true
+    },
     orderBy: {
       name: "asc"
     }

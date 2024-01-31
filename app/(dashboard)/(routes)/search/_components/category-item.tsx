@@ -13,13 +13,13 @@ import { cn } from "@/lib/utils";
 interface CategoryItemProps {
   label: string;
   value?: string;
-  icon?: IconType;
+  colorCode?: string;
 };
 
 export const CategoryItem = ({
   label,
   value,
-  icon: Icon,
+  colorCode,
 }: CategoryItemProps) => {
   const pathname = usePathname();
   const router = useRouter();
@@ -45,12 +45,17 @@ export const CategoryItem = ({
     <button
       onClick={onClick}
       className={cn(
-        "py-2 px-3 text-sm border border-slate-200 rounded-full flex items-center gap-x-1 hover:border-sky-700 transition",
-        isSelected && "border-sky-700 bg-sky-200/20 text-sky-800"
+        "py-2 px-2 text-sm border border-slate-300 rounded-full flex items-center gap-x-1 hover:border-sky-700 transition"
       )}
+      style={ isSelected ? { borderColor: colorCode } : { borderColor: "#cbd5e1" } }
       type="button"
     >
-      {Icon && <Icon size={20} />}
+      {colorCode && (
+        <div
+          style={{ backgroundColor: colorCode }}
+          className="rounded-full w-5 h-5"
+        />
+      )}
       <div className="truncate">
         {label}
       </div>

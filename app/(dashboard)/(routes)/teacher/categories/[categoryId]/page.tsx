@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { CircleDollarSign, File, LayoutDashboard, ListChecks } from "lucide-react";
+import { LayoutGridIcon } from "lucide-react";
 
 import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
@@ -8,6 +8,7 @@ import { Banner } from "@/components/banner";
 
 import { TitleForm } from "./_components/title-form";
 import { Actions } from "./_components/actions";
+import { ColorForm } from "./_components/color-form";
 
 const CategoryIdPage = async ({
   params
@@ -67,13 +68,17 @@ const CategoryIdPage = async ({
         <div className="mt-16">
           <div>
             <div className="flex items-center gap-x-2">
-              <IconBadge icon={LayoutDashboard} />
+              <IconBadge icon={LayoutGridIcon} />
               <h2 className="text-xl">
                 Name your Category
               </h2>
               <span className="pl-1 text-xs text-rose-600">*required</span>
             </div>
             <TitleForm
+              initialData={category}
+              categoryId={category.id}
+            />
+            <ColorForm
               initialData={category}
               categoryId={category.id}
             />
