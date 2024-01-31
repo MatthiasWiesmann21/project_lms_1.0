@@ -23,8 +23,26 @@ const currentDocPath = basePath + "/documents/";
 const AssetsTable = (props: any) => {
     const { folderStructure } = props;
     const { userId } = useAuth();
+    const [downloading, setDownloading] = useState(false);
 
-    console.log(isTeacher(userId))
+    const handleDownload = useCallback(async (key: string , name:string) => {
+        //TODO: Download logic here
+        setDownloading(true);
+        const response = await axios.get(`/api/documents/download/file?key=${key}`);
+        console.log(response.data.data);
+    
+        const downloadURL = response.data.data.downloadUrl;
+        const downloadLink = document.createElement('a');
+        downloadLink.href = downloadURL;
+        downloadLink.download = name;
+        document.body.appendChild(downloadLink);
+        console.log(downloadLink)
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        
+        setDownloading(false);
+      }, []);
+
     const formatDate = (dateTimeString: string) => {
         const options: Intl.DateTimeFormatOptions = {
             year: '2-digit',
@@ -46,7 +64,7 @@ const AssetsTable = (props: any) => {
                 <div className="sm:flex-auto">
                     <h1 className="text-2xl font-semibold leading-6 text-gray-600 ">Document Hub</h1>
                 </div>
-                
+
                 <div className={`${isTeacher(userId) ? 'block' : 'hidden'} mt-4 sm:ml-16 sm:mt-0 sm:flex-none`}>
                     <ContextMenuTrigger
                         id="my-context-menu-2"
@@ -90,7 +108,7 @@ const AssetsTable = (props: any) => {
                                                 </td>
                                                 <td onClick={() => location.href = `${currentDocPath}${item.key}`} className="whitespace-nowrap py-4 pr-3 text-sm font-medium text-gray-900 cursor-pointer">{item.name}</td>
                                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{formatDate(item.createdAt)}</td>
-                                                <td className={`${!isTeacher(userId) && 'hidden'} relative whitespace-nowrap px-3 text-sm text-gray-500 cursor-pointer`}>
+                                                <td className={`${!isTeacher(userId) && 'hidden'} relative whitespace-nowrap px-3 text-sm text-gray-500`}>
                                                     <div className=" ">
                                                         <ContextMenuTrigger
                                                             id="my-context-menu-1"
@@ -133,7 +151,6 @@ const AssetsTable = (props: any) => {
                                                         </ContextMenu>
                                                     </div>
                                                 </td>
-
                                             </tr>
                                         )
                                     })}
@@ -156,7 +173,7 @@ const AssetsTable = (props: any) => {
                                                 </td>
                                                 <td className="whitespace-nowrap py-4 pr-3 text-sm font-medium text-gray-900">{item.name}</td>
                                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{formatDate(item.createdAt)}</td>
-                                                <td className={`${!isTeacher(userId) && 'hidden'} relative whitespace-nowrap px-3 text-sm text-gray-500 cursor-pointer`}>
+                                                <td className={`${!isTeacher(userId) && 'hidden'} relative whitespace-nowrap px-3 text-sm text-gray-500`}>
                                                     <div className=" ">
                                                         <ContextMenuTrigger
                                                             id="my-context-menu-1"
@@ -197,6 +214,11 @@ const AssetsTable = (props: any) => {
                                                                 </div>
                                                             </ContextMenuItem>
                                                         </ContextMenu>
+                                                    </div>
+                                                </td>
+                                                <td className={`${!isTeacher(userId) && 'hidden'} relative whitespace-nowrap px-3 text-sm text-gray-500 cursor-pointer`}>
+                                                    <div className=" " onClick={() => handleDownload(item.key,item.name)}>
+                                                        <AppSVGIcon customclass={'h-5'} icon={'downloadIcon'}></AppSVGIcon>
                                                     </div>
                                                 </td>
 
