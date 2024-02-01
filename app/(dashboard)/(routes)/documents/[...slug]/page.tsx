@@ -129,6 +129,7 @@ const DocumentPage = () => {
       </div>
       <AssetsTable
         folderStructure={folderStructure}
+        root={false}
       ></AssetsTable>
     </div>
   );

@@ -5,6 +5,7 @@ import FolderTree, { FolderTreeProps } from "../_components/folder-tree";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import AssetsTable from "../_components/asset-table";
+import { useParams, usePathname } from "next/navigation";
 
 
 
@@ -14,25 +15,49 @@ const DocumentCreatePage = () => {
     const [fileName, setFileName] = useState("");
     const [isPublic, setPublic] = useState(false);
 
+    const parentKey = usePathname();
+
     const handleFileChange = (event: any) => {
         setFile(event.target.files[0]);
     };
 
     const createFolder = async () => {
         if (folderName == null || folderName.length < 1) {
-          return;
+            return;
         }
         try {
-          const response = await axios.post(`/api/documents/upload/folder`, {
-            folderName: folderName,
-            isPublic: isPublic,
-          });
-          location.href = "/documents";
-          setFolderName("");
+            const response = await axios.post(`/api/documents/upload/folder`, {
+                folderName: folderName,
+                isPublic: isPublic,
+                parentKey: getLocalStorageItem('parentKey'),
+            });
+            removeLocalStorageItem('parentKey')
+            location.href = "/documents";
+            setFolderName("");
         } catch (e) {
-          console.log(e);
+            console.log(e);
+        }
+    };
+
+    const getLocalStorageItem = (key: string) => {
+        try {
+          const storedValue = localStorage.getItem(key);
+          return storedValue ? JSON.parse(storedValue) : null;
+        } catch (error) {
+          console.error('Error getting local storage item:', error);
+          return null;
         }
       };
+
+
+    const removeLocalStorageItem = (key: string) => {
+        try {
+          localStorage.removeItem(key);
+        } catch (error) {
+          console.error('Error removing local storage item:', error);
+        }
+      };
+
     return (
         <div className="mx-4 my-4">
             <div className="sm:flex-auto my-2">
