@@ -62,7 +62,7 @@ export async function POST(req: Request) {
 
     // create or  get a folder if not exist
 
-    const parentFolder = await getOrCreateParentFolder(userId);
+    const parentFolder = await getOrCreateParentFolder(userId, parentKey);
 
     const folderKey = `${parentFolder.key}${folderName}/`;
 

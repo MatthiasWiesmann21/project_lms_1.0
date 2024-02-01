@@ -34,6 +34,8 @@ const DocumentCreatePage = () => {
       formData.append("isPublic", `${isPublic}`);
       formData.append("name", `${fileName}`);
       formData.append("file", file);
+      formData.append("parentKey", getLocalStorageItem('parentKey'));
+
       // formData.append('parentKey', )
       const response = await axios.post(
         `/api/documents/upload/file`,
@@ -44,11 +46,33 @@ const DocumentCreatePage = () => {
           },
         }
       );
+      removeLocalStorageItem('parentKey')
       location.href = "/documents";
     } catch (e) {
       console.log(e);
     }
   };
+
+
+  const getLocalStorageItem = (key: string) => {
+    try {
+      const storedValue = localStorage.getItem(key);
+      return storedValue ? JSON.parse(storedValue) : null;
+    } catch (error) {
+      console.error('Error getting local storage item:', error);
+      return null;
+    }
+  };
+
+
+  const removeLocalStorageItem = (key: string) => {
+    try {
+      localStorage.removeItem(key);
+    } catch (error) {
+      console.error('Error removing local storage item:', error);
+    }
+  };
+
   return (
     <div className="mx-4 my-4">
       <div className="sm:flex-auto my-2">
@@ -69,10 +93,10 @@ const DocumentCreatePage = () => {
         </svg>
         <span className="mt-2 block text-sm font-semibold text-gray-900">Upload file</span>
       </button>
-      
+
       <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">{
-      //@ts-ignore
-      file?.name}</label>
+        //@ts-ignore
+        file?.name}</label>
       <div className="flex items-center my-2">
         <button onClick={() => setPublic(!isPublic)} type="button" className={`${isPublic && "bg-sky-600"} ${!isPublic && "bg-gray-200"} relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out`} role="switch" aria-checked="false" aria-labelledby="annual-billing-label">
           <span aria-hidden="true" className={`${isPublic && "translate-x-5"} ${!isPublic && "translate-x-0"} pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out`}></span>

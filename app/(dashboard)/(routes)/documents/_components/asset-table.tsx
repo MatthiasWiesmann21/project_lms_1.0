@@ -11,6 +11,8 @@ import { ContextMenuTrigger, ContextMenu, ContextMenuItem } from 'rctx-contextme
 import AppSVGIcon from "@/components/appsvgicon";
 import { isTeacher } from "@/lib/teacher";
 import { UserButton, useAuth } from "@clerk/nextjs";
+import FlyoutMenuCreate from "./flyout-menu-create";
+import FlyoutMenuSetting from "./flyout-menu-setting";
 
 export interface FolderTreeProps {
     name: string;
@@ -66,17 +68,7 @@ const AssetsTable = (props: any) => {
                 </div>
 
                 <div className={`${isTeacher(userId) ? 'block' : 'hidden'} mt-4 sm:ml-16 sm:mt-0 sm:flex-none`}>
-                    <ContextMenuTrigger
-                        id="my-context-menu-2"
-                    >
-                        <button type="button" className="block flex text-gray-600 rounded-md px-3 py-2 bg-gray-300 text-center text-sm font-semibold shadow-xl hover:bg-gray-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                            {/* <svg className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-                            </svg> */}
-                            <AppSVGIcon customclass={'h-5 w-5 text-gray-400'} icon={'plusIcon'}></AppSVGIcon>
-                            Create
-                        </button>
-                    </ContextMenuTrigger>
+                    <FlyoutMenuCreate></FlyoutMenuCreate>
                 </div>
             </div>
             <div className="mt-8 flow-root">
@@ -87,7 +79,7 @@ const AssetsTable = (props: any) => {
                                 <thead>
                                     <tr>
                                         <th scope="col" className="relative px-8 sm:w-12 sm:px-6">
-                                            <input type="checkbox" className="absolute left-1 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
+                                            {/* <input type="checkbox" className="absolute left-1 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" /> */}
                                             <span className="min-w-[12rem] py-3 text-sm font-semibold text-gray-900">Type</span>
                                         </th>
                                         <th scope="col" className="min-w-[12rem] py-3.5 pr-3 text-left text-sm font-semibold text-gray-900">Name</th>
@@ -99,7 +91,7 @@ const AssetsTable = (props: any) => {
                                         return (
                                             <tr key={i}>
                                                 <td className="relative px-7 sm:w-12 sm:px-6">
-                                                    <input type="checkbox" className="absolute left-1 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
+                                                    {/* <input type="checkbox" className="absolute left-1 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" /> */}
                                                     <div onClick={() => location.href = `${currentDocPath}${item.key}`} className="p-2 bg-pink-100 ml-3 rounded cursor-pointer">
                                                         {/* <svg className="mx-auto h-7 w-7 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                                             <path vector-effect="non-scaling-stroke" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
@@ -110,45 +102,7 @@ const AssetsTable = (props: any) => {
                                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{formatDate(item.createdAt)}</td>
                                                 <td className={`${!isTeacher(userId) && 'hidden'} relative whitespace-nowrap px-3 text-sm text-gray-500`}>
                                                     <div className=" ">
-                                                        <ContextMenuTrigger
-                                                            id="my-context-menu-1"
-                                                        >
-                                                            {/* <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                                <path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 8.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM11.5 15.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z" />
-                                                            </svg> */}
-                                                            <AppSVGIcon customclass={'h-5'} icon={'contextMenuIcon'}></AppSVGIcon>
-                                                        </ContextMenuTrigger>
-                                                        <ContextMenu id="my-context-menu-1">
-                                                            <ContextMenuItem>
-                                                                <div className="flex">
-                                                                    {/* <svg className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                                        <path d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z" />
-                                                                        <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z" />
-                                                                    </svg> */}
-                                                                    <AppSVGIcon customclass={'mr-3 h-5'} icon={'editIcon'}></AppSVGIcon>
-                                                                    Edit
-                                                                </div>
-                                                            </ContextMenuItem>
-                                                            <ContextMenuItem>
-                                                                <div className="flex">
-                                                                    {/* <svg className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                                        <path d="M7 3.5A1.5 1.5 0 018.5 2h3.879a1.5 1.5 0 011.06.44l3.122 3.12A1.5 1.5 0 0117 6.622V12.5a1.5 1.5 0 01-1.5 1.5h-1v-3.379a3 3 0 00-.879-2.121L10.5 5.379A3 3 0 008.379 4.5H7v-1z" />
-                                                                        <path d="M4.5 6A1.5 1.5 0 003 7.5v9A1.5 1.5 0 004.5 18h7a1.5 1.5 0 001.5-1.5v-5.879a1.5 1.5 0 00-.44-1.06L9.44 6.439A1.5 1.5 0 008.378 6H4.5z" />
-                                                                    </svg> */}
-                                                                    <AppSVGIcon customclass={'mr-3 h-5'} icon={'renameIcon'}></AppSVGIcon>
-                                                                    Rename
-                                                                </div>
-                                                            </ContextMenuItem>
-                                                            <ContextMenuItem>
-                                                                <div className="flex">
-                                                                    {/* <svg className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                                        <path fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 006 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 10.23 1.482l.149-.022.841 10.518A2.75 2.75 0 007.596 19h4.807a2.75 2.75 0 002.742-2.53l.841-10.52.149.023a.75.75 0 00.23-1.482A41.03 41.03 0 0014 4.193V3.75A2.75 2.75 0 0011.25 1h-2.5zM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4zM8.58 7.72a.75.75 0 00-1.5.06l.3 7.5a.75.75 0 101.5-.06l-.3-7.5zm4.34.06a.75.75 0 10-1.5-.06l-.3 7.5a.75.75 0 101.5.06l.3-7.5z" clip-rule="evenodd" />
-                                                                    </svg> */}
-                                                                    <AppSVGIcon customclass={'mr-3 h-5'} icon={'deleteIcon'}></AppSVGIcon>
-                                                                    Delete
-                                                                </div>
-                                                            </ContextMenuItem>
-                                                        </ContextMenu>
+                                                        <FlyoutMenuSetting></FlyoutMenuSetting>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -158,8 +112,8 @@ const AssetsTable = (props: any) => {
                                         return (
                                             <tr key={i}>
                                                 <td className="relative px-7 sm:w-12 sm:px-6">
-                                                    <input type="checkbox" className="absolute left-1 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
-                                                    <div onClick={() => location.href = `${currentDocPath}${item.key}`} className="p-2 bg-pink-100 ml-3 rounded cursor-pointer">
+                                                    {/* <input type="checkbox" className="absolute left-1 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" /> */}
+                                                    <div className="p-2 bg-pink-100 ml-3 rounded cursor-not-allowed">
                                                         {/* <svg className="h-7 w-7 text-gray-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                             <g id="SVGRepo_bgCarrier" strokeWidth="0">
                                                             </g>
@@ -171,49 +125,11 @@ const AssetsTable = (props: any) => {
                                                         <AppSVGIcon customclass={'mx-auto h-7'} icon={'fileIcon'}></AppSVGIcon>
                                                     </div>
                                                 </td>
-                                                <td className="whitespace-nowrap py-4 pr-3 text-sm font-medium text-gray-900">{item.name}</td>
+                                                <td className="whitespace-nowrap py-4 pr-3 text-sm font-medium text-gray-900 cursor-not-allowed">{item.name}</td>
                                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{formatDate(item.createdAt)}</td>
                                                 <td className={`${!isTeacher(userId) && 'hidden'} relative whitespace-nowrap px-3 text-sm text-gray-500`}>
                                                     <div className=" ">
-                                                        <ContextMenuTrigger
-                                                            id="my-context-menu-1"
-                                                        >
-                                                            {/* <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                                <path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 8.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM11.5 15.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z" />
-                                                            </svg> */}
-                                                            <AppSVGIcon customclass={'h-5'} icon={'contextMenuIcon'}></AppSVGIcon>
-                                                        </ContextMenuTrigger>
-                                                        <ContextMenu id="my-context-menu-1">
-                                                            <ContextMenuItem>
-                                                                <div className="flex">
-                                                                    {/* <svg className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                                        <path d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z" />
-                                                                        <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z" />
-                                                                    </svg> */}
-                                                                    <AppSVGIcon customclass={'mr-3 h-5'} icon={'editIcon'}></AppSVGIcon>
-                                                                    Edit
-                                                                </div>
-                                                            </ContextMenuItem>
-                                                            <ContextMenuItem>
-                                                                <div className="flex">
-                                                                    {/* <svg className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                                        <path d="M7 3.5A1.5 1.5 0 018.5 2h3.879a1.5 1.5 0 011.06.44l3.122 3.12A1.5 1.5 0 0117 6.622V12.5a1.5 1.5 0 01-1.5 1.5h-1v-3.379a3 3 0 00-.879-2.121L10.5 5.379A3 3 0 008.379 4.5H7v-1z" />
-                                                                        <path d="M4.5 6A1.5 1.5 0 003 7.5v9A1.5 1.5 0 004.5 18h7a1.5 1.5 0 001.5-1.5v-5.879a1.5 1.5 0 00-.44-1.06L9.44 6.439A1.5 1.5 0 008.378 6H4.5z" />
-                                                                    </svg> */}
-                                                                    <AppSVGIcon customclass={'mr-3 h-5'} icon={'renameIcon'}></AppSVGIcon>
-                                                                    Rename
-                                                                </div>
-                                                            </ContextMenuItem>
-                                                            <ContextMenuItem>
-                                                                <div className="flex">
-                                                                    {/* <svg className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                                        <path fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 006 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 10.23 1.482l.149-.022.841 10.518A2.75 2.75 0 007.596 19h4.807a2.75 2.75 0 002.742-2.53l.841-10.52.149.023a.75.75 0 00.23-1.482A41.03 41.03 0 0014 4.193V3.75A2.75 2.75 0 0011.25 1h-2.5zM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4zM8.58 7.72a.75.75 0 00-1.5.06l.3 7.5a.75.75 0 101.5-.06l-.3-7.5zm4.34.06a.75.75 0 10-1.5-.06l-.3 7.5a.75.75 0 101.5.06l.3-7.5z" clip-rule="evenodd" />
-                                                                    </svg> */}
-                                                                    <AppSVGIcon customclass={'mr-3 h-5'} icon={'deleteIcon'}></AppSVGIcon>
-                                                                    Delete
-                                                                </div>
-                                                            </ContextMenuItem>
-                                                        </ContextMenu>
+                                                    <FlyoutMenuSetting></FlyoutMenuSetting>
                                                     </div>
                                                 </td>
                                                 <td className={`${!isTeacher(userId) && 'hidden'} relative whitespace-nowrap px-3 text-sm text-gray-500 cursor-pointer`}>
@@ -232,26 +148,6 @@ const AssetsTable = (props: any) => {
                     </div>
                 </div>
             </div>
-            <ContextMenu id="my-context-menu-2">
-                <ContextMenuItem>
-                    <div className="flex" onClick={() => location.href = '/documents/createfile'}>
-                        <svg className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z" />
-                            <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z" />
-                        </svg>
-                        File
-                    </div>
-                </ContextMenuItem>
-                <ContextMenuItem>
-                    <div className="flex items-center" onClick={() => location.href = '/documents/createfolder'}>
-                        <svg className="mr-3 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path vector-effect="non-scaling-stroke" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                        </svg>
-                        Folder
-                    </div>
-                </ContextMenuItem>
-            </ContextMenu>
-
         </div>
 
     );
