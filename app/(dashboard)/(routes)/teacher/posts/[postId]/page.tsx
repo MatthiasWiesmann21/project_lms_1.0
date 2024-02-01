@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { CircleDollarSign, File, LayoutDashboard, ListChecks } from "lucide-react";
+import { CircleDollarSign, File, Image, LayoutDashboard, LayoutGridIcon, ListChecks } from "lucide-react";
 
 import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
@@ -77,10 +77,10 @@ const PostIdPage = async ({
             isPublished={post.isPublished}
           />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
+        <div className="grid grid-cols-2 md:grid-cols-2 gap-6 mt-16">
           <div>
             <div className="flex items-center gap-x-2">
-              <IconBadge icon={LayoutDashboard} />
+              <IconBadge icon={LayoutGridIcon} />
               <h2 className="text-xl">
                 Customize your Post
               </h2>
@@ -94,10 +94,6 @@ const PostIdPage = async ({
               initialData={post}
               postId={post.id}
             />
-            <ImageForm
-              initialData={post}
-              postId={post.id}
-            />
             <CategoryForm
               initialData={post}
               postId={post.id}
@@ -106,6 +102,19 @@ const PostIdPage = async ({
                 value: category.id,
               }))}
             />
+          </div>
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={Image} />
+              <h2 className="text-xl">
+                Add an Image to your Post
+              </h2>
+              <span className="pl-1 text-xs text-rose-600">*required</span>
+            </div>
+            <ImageForm
+              initialData={post}
+              postId={post.id}
+              />
           </div>
         </div>
       </div>
