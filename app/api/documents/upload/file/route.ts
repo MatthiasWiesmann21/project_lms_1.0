@@ -9,14 +9,14 @@ import { getS3Client } from "@/app/vendor/aws/s3/getS3Client";
 import { Upload } from "@aws-sdk/lib-storage";
 import { NextApiResponse } from "next";
 
-const getOrCreateParentFolder = async (parentKey?: string) => {
+const getOrCreateParentFolder = async (parentKey?: string | null) => {
   if (parentKey != null) {
     const parentFolder = await db.folder.findFirst({
       where: {
         key: parentKey,
       },
     });
-    if (parentFolder == null) {
+    if (parentFolder == null) { 
       throw new Error("Parent Folder Not Found");
     }
     return parentFolder;
@@ -67,8 +67,19 @@ export async function POST(req: Request, res: NextApiResponse) {
     const formFileName = formData.get("name");
     const isPublic = typeof formIsPublic === "string" ? (formIsPublic === "true" ? true : false) : false;
 
-    console.log(formIsPublic)
-    const parentKey = formData.get("parentKey")?.toString();
+    const id = formData.get("id")?.toString();
+
+    let parentKey = null
+    if (id) {
+      const keyData = await db.folder.findFirst({
+        select: {
+          key: true,
+        },
+        where: { id: parseInt(id) },
+      });
+      //@ts-ignore
+      parentKey = keyData.key;
+    }
 
     if (formFile == null) {
       throw new Error(" Invalid file");
@@ -79,7 +90,6 @@ export async function POST(req: Request, res: NextApiResponse) {
 
     //const fileName = formFileName === null ? '' : formFileName;
 
-    console.log("here: ", fileName);
     // parentKey null means it will upload in root folder
 
     // create or  get a folder if not exist

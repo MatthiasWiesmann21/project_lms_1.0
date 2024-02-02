@@ -4,7 +4,7 @@ import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import { v4 as uuidv4, v4 } from "uuid";
 
-const getOrCreateParentFolder = async (userId: string, parentKey?: string, ) => {
+const getOrCreateParentFolder = async (userId: string, parentKey?: string | null, ) => {
   if (parentKey != null) {
     const parentFolder = await db.folder.findFirst({
       where: {
@@ -58,7 +58,18 @@ export async function POST(req: Request) {
     const requestBody = await req.json();
 
     // FolderId null means it will upload in root folder
-    const { parentKey, folderName, isPublic } = requestBody;
+    const { id, folderName, isPublic } = requestBody;
+    let parentKey = null
+    if (id) {
+      const keyData = await db.folder.findFirst({
+        select: {
+          key: true,
+        },
+        where: { id: parseInt(id) },
+      });
+      //@ts-ignore
+      parentKey = keyData.key;
+    }
 
     // create or  get a folder if not exist
 
