@@ -29,7 +29,8 @@ const CourseIdPage = async ({
   const course = await db.course.findUnique({
     where: {
       id: params.courseId,
-      userId
+      userId,
+      containerId: process.env.CONTAINER_ID,
     },
     include: {
       chapters: {
@@ -46,6 +47,9 @@ const CourseIdPage = async ({
   });
 
   const categories = await db.category.findMany({
+    where: {
+      containerId: process.env.CONTAINER_ID,
+    },
     orderBy: {
       name: "asc",
     },

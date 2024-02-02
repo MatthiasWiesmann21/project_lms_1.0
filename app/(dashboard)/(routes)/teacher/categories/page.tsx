@@ -12,7 +12,13 @@ const CategoriesPage = async () => {
     return redirect("/");
   }
 
-  const category = await db.category.findMany();
+  const category = await db.category.findMany(
+    {
+      where: {
+        containerId: process.env.CONTAINER_ID,
+      },
+    }
+  );
 
   return ( 
     <div className="p-6">

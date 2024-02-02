@@ -19,6 +19,7 @@ export async function POST(
       data: {
         userId,
         title,
+        containerId: process.env.CONTAINER_ID || '',
       }
     });
 

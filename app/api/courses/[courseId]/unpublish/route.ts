@@ -18,6 +18,7 @@ export async function PATCH(
       where: {
         id: params.courseId,
         userId,
+        containerId: process.env.CONTAINER_ID,
       },
     });
 
@@ -29,6 +30,7 @@ export async function PATCH(
       where: {
         id: params.courseId,
         userId,
+        containerId: process.env.CONTAINER_ID,
       },
       data: {
         isPublished: false,

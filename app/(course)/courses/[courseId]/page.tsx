@@ -9,6 +9,7 @@ const CourseIdPage = async ({
   const course = await db.course.findUnique({
     where: {
       id: params.courseId,
+      containerId: process.env.CONTAINER_ID,
     },
     include: {
       chapters: {

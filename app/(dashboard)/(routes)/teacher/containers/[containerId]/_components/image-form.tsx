@@ -6,15 +6,15 @@ import { Pencil, PlusCircle, ImageIcon } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Post } from "@prisma/client";
+import { Container } from "@prisma/client";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/file-upload";
 
 interface ImageFormProps {
-  initialData: Post
-  postId: string;
+  initialData: Container
+  containerId: string;
 };
 
 const formSchema = z.object({
@@ -25,7 +25,7 @@ const formSchema = z.object({
 
 export const ImageForm = ({
   initialData,
-  postId
+  containerId
 }: ImageFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
@@ -35,8 +35,8 @@ export const ImageForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/posts/${postId}`, values);
-      toast.success("Post updated");
+      await axios.patch(`/api/containers/${containerId}`, values);
+      toast.success("Container updated");
       toggleEdit();
       router.refresh();
     } catch {
@@ -47,7 +47,7 @@ export const ImageForm = ({
   return (
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Post image
+        Container Image
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing && (
             <>Cancel</>
@@ -85,7 +85,7 @@ export const ImageForm = ({
       {isEditing && (
         <div>
           <FileUpload
-            endpoint="PostImage"
+            endpoint="ContainerImage"
             onChange={(url) => {
               if (url) {
                 onSubmit({ imageUrl: url });

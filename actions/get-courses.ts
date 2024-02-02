@@ -13,6 +13,7 @@ type GetCourses = {
   userId: string;
   title?: string;
   categoryId?: string;
+  containerId?: string;
 };
 
 export const getCourses = async ({
@@ -28,6 +29,7 @@ export const getCourses = async ({
           contains: title,
         },
         categoryId,
+        containerId: process.env.CONTAINER_ID,
       },
       include: {
         category: true,

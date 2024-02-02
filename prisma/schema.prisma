@@ -9,6 +9,20 @@ generator client {
   previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
+model Container {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  link        String?  @db.Text
+  imageUrl    String?  @db.Text
+  
+  courses     Course[]
+  categories  Category[]
+  posts       Post[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 model Course {
   id          String  @id @default(uuid())
   userId      String
@@ -17,6 +31,9 @@ model Course {
   imageUrl    String? @db.Text
   price       Float?  @default(0)
   isPublished Boolean @default(false)
+
+  containerId   String
+  container     Container @relation(fields: [containerId], references: [id])
 
   categoryId String?
   category   Category? @relation(fields: [categoryId], references: [id])
@@ -29,6 +46,7 @@ model Course {
   updatedAt DateTime @updatedAt
 
   @@index([categoryId])
+  @@index([containerId])
   @@fulltext([title])
 }
 
@@ -37,6 +55,9 @@ model Category {
   name    String   @unique
   colorCode   String @default("#000000")
   isPublished Boolean @default(false)
+
+  containerId   String
+  container     Container @relation(fields: [containerId], references: [id])
   
   courses Course[]
   posts Post[]
@@ -45,6 +66,7 @@ model Category {
   updatedAt DateTime @updatedAt
 
   @@index([name])
+  @@index([containerId])
 }
 
 model Attachment {
@@ -199,6 +221,9 @@ model Post {
   imageUrl    String? @db.Text
   isPublished Boolean @default(false)
 
+  containerId   String
+  container     Container @relation(fields: [containerId], references: [id])
+
   categoryId String?
   category   Category? @relation(fields: [categoryId], references: [id])
 
@@ -206,5 +231,6 @@ model Post {
   updatedAt DateTime @updatedAt
 
   @@index([categoryId])
+  @@index([containerId])
   @@fulltext([title])
 }

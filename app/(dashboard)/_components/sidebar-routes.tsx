@@ -15,6 +15,8 @@ import {
   NewspaperIcon,
   PaletteIcon,
   PinIcon,
+  Server,
+  ServerIcon,
   UserCircle2Icon,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
@@ -89,6 +91,11 @@ const teacherRoutes = [
     icon: UserCircle2Icon,
     label: "Users",
     href: "/teacher/users",
+  },
+  {
+    icon: ServerIcon,
+    label: "Clients",
+    href: "/teacher/containers",
   },
 ];
 

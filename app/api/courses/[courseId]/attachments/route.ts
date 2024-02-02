@@ -19,6 +19,7 @@ export async function POST(
       where: {
         id: params.courseId,
         userId: userId,
+        containerId: process.env.CONTAINER_ID,
       }
     });
 

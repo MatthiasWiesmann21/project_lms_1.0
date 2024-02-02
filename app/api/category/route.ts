@@ -18,7 +18,8 @@ export async function POST(
     const category = await db.category.create({
       data: {
         name: name,
-        colorCode: color
+        colorCode: color,
+        containerId: process.env.CONTAINER_ID || '',
       }
     });
 

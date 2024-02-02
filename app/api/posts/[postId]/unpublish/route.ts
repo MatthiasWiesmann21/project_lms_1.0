@@ -19,6 +19,7 @@ export async function DELETE(
       where: {
         id: params.postId,
         userId: userId,
+        containerId: process.env.CONTAINER_ID,
       }
     });
 
@@ -29,6 +30,7 @@ export async function DELETE(
     const deletedPost = await db.post.delete({
       where: {
         id: params.postId,
+        containerId: process.env.CONTAINER_ID,
       },
     });
 
@@ -55,7 +57,8 @@ export async function PATCH(
     const post = await db.post.update({
       where: {
         id: postId,
-        userId
+        userId,
+        containerId: process.env.CONTAINER_ID,
       },
       data: {
         ...values,

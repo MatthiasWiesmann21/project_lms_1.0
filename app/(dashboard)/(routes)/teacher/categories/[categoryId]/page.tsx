@@ -24,6 +24,7 @@ const CategoryIdPage = async ({
   const category = await db.category.findUnique({
     where: {
       id: params.categoryId,
+      containerId: process.env.CONTAINER_ID,
     },
   });
 

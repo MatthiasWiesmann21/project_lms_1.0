@@ -6,16 +6,16 @@ import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
 import { Banner } from "@/components/banner";
 
-import { TitleForm } from "./_components/title-form";
-import { DescriptionForm } from "./_components/description-form";
-import { ImageForm } from "./_components/image-form";
-import { CategoryForm } from "./_components/category-form";
-import { Actions } from "./_components/actions";
 
-const PostIdPage = async ({
+import { ImageForm } from "./_components/image-form";
+import { Actions } from "./_components/actions";
+import { TitleForm } from "./_components/title-form";
+import { LinkForm } from "./_components/link-form";
+
+const ContainerIdPage = async ({
   params
 }: {
-  params: { postId: string }
+  params: { containerId: string }
 }) => {
   const { userId } = auth();
 
@@ -23,32 +23,19 @@ const PostIdPage = async ({
     return redirect("/");
   }
 
-  const post = await db.post.findUnique({
+  const container = await db.container.findUnique({
     where: {
-      id: params.postId,
-      userId,
-      containerId: process.env.CONTAINER_ID,
+      id: params.containerId,
     }
   });
 
-  const categories = await db.category.findMany({
-    where: {
-      containerId: process.env.CONTAINER_ID,
-    },
-    orderBy: {
-      name: "asc",
-    },
-  });
-
-  if (!post) {
+  if (!container) {
     return redirect("/");
   }
 
   const requiredFields = [
-    post.title,
-    post.description,
-    post.imageUrl,
-    post.categoryId,
+    container.name,
+    container.imageUrl,
   ];
 
   const totalFields = requiredFields.length;
@@ -60,16 +47,11 @@ const PostIdPage = async ({
 
   return (
     <>
-      {!post.isPublished && (
-        <Banner
-          label="This course is unpublished. It will not be visible to the students."
-        />
-      )}
       <div className="p-6">
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2">
             <h1 className="text-2xl font-medium">
-              Post setup
+              Container setup
             </h1>
             <span className="text-sm text-slate-700 dark:text-[#ffffff]">
               Complete all required fields {completionText}
@@ -77,8 +59,7 @@ const PostIdPage = async ({
           </div>
           <Actions
             disabled={!isComplete}
-            postId={params.postId}
-            isPublished={post.isPublished}
+            containerId={params.containerId}
           />
         </div>
         <div className="grid grid-cols-2 md:grid-cols-2 gap-6 mt-16">
@@ -91,20 +72,12 @@ const PostIdPage = async ({
               <span className="pl-1 text-xs text-rose-600">*required</span>
             </div>
             <TitleForm
-              initialData={post}
-              postId={post.id}
+              initialData={container}
+              containerId={container.id}
             />
-            <DescriptionForm
-              initialData={post}
-              postId={post.id}
-            />
-            <CategoryForm
-              initialData={post}
-              postId={post.id}
-              options={categories.map((category) => ({
-                label: category.name,
-                value: category.id,
-              }))}
+            <LinkForm
+                initialData={{ link: container.link || "" }}
+                containerId={container.id}
             />
           </div>
           <div>
@@ -116,8 +89,8 @@ const PostIdPage = async ({
               <span className="pl-1 text-xs text-rose-600">*required</span>
             </div>
             <ImageForm
-              initialData={post}
-              postId={post.id}
+              initialData={container}
+              containerId={container.id}
               />
           </div>
         </div>
@@ -126,4 +99,4 @@ const PostIdPage = async ({
    );
 }
  
-export default PostIdPage;
+export default ContainerIdPage;

@@ -24,6 +24,7 @@ export async function DELETE(
       where: {
         id: params.courseId,
         userId: userId,
+        containerId: process.env.CONTAINER_ID,
       },
       include: {
         chapters: {
@@ -47,6 +48,7 @@ export async function DELETE(
     const deletedCourse = await db.course.delete({
       where: {
         id: params.courseId,
+        containerId: process.env.CONTAINER_ID,
       },
     });
 
@@ -73,7 +75,8 @@ export async function PATCH(
     const course = await db.course.update({
       where: {
         id: courseId,
-        userId
+        userId,
+        containerId: process.env.CONTAINER_ID,
       },
       data: {
         ...values,

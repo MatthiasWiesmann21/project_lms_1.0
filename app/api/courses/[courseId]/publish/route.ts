@@ -18,6 +18,7 @@ export async function PATCH(
       where: {
         id: params.courseId,
         userId,
+        containerId: process.env.CONTAINER_ID,
       },
       include: {
         chapters: {
@@ -42,6 +43,7 @@ export async function PATCH(
       where: {
         id: params.courseId,
         userId,
+        containerId: process.env.CONTAINER_ID,
       },
       data: {
         isPublished: true,

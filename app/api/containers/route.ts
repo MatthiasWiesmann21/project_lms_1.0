@@ -9,21 +9,21 @@ export async function POST(
 ) {
   try {
     const { userId } = auth();
-    const { title } = await req.json();
+    const { name, imageUrl, link } = await req.json();
 
     if (!userId || !isTeacher(userId)) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const post = await db.post.create({
+    const container = await db.container.create({
       data: {
-        userId,
-        title,
-        containerId: process.env.CONTAINER_ID || '',
+        name,
+        imageUrl,
+        link,
       }
     });
 
-    return NextResponse.json(post);
+    return NextResponse.json(container);
   } catch (error) {
     console.log("[COURSES]", error);
     return new NextResponse("Internal Error", { status: 500 });

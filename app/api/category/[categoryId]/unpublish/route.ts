@@ -18,6 +18,7 @@ export async function DELETE(
     const category = await db.category.findUnique({
       where: {
         id: params.categoryId,
+        containerId: process.env.CONTAINER_ID,
       }
     });
 
@@ -28,6 +29,7 @@ export async function DELETE(
     const deletedCategory = await db.category.delete({
       where: {
         id: params.categoryId,
+        containerId: process.env.CONTAINER_ID,
       },
     });
 
@@ -52,6 +54,7 @@ export async function PATCH(
     const category = await db.category.findUnique({
       where: {
         id: params.categoryId,
+        containerId: process.env.CONTAINER_ID,
       }
     });
 
@@ -62,6 +65,7 @@ export async function PATCH(
     const publishedCategory = await db.category.update({
       where: {
         id: params.categoryId,
+        containerId: process.env.CONTAINER_ID,
       },
       data: {
         isPublished: false,
