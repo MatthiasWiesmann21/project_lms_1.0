@@ -29,10 +29,9 @@ export const ourFileRouter = {
   postAttachment: f(["text", "image", "video", "audio", "pdf"])
     .middleware(() => handleAuth())
     .onUploadComplete(() => {}),
-  chapterVideo: f({ video: { maxFileCount: 1, maxFileSize: "512GB" } })
+  chapterVideo: f({ video: { maxFileCount: 1, maxFileSize: "4GB" } })
     .middleware(() => handleAuth())
     .onUploadComplete(() => {})
-    
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;
