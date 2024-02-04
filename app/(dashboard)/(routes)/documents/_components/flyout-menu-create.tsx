@@ -2,9 +2,14 @@ import React, { useState } from 'react';
 import AppSVGIcon from "@/components/appsvgicon";
 import { useParams, usePathname } from "next/navigation";
 
+type Params = {
+    id: string;
+  };
+
 const FlyoutMenuCreate = () => {
     const [isMenuOpen, setMenuOpen] = useState(false);
-
+    const { id } = useParams() as Params;
+    console.log(id)
     const handleButtonClick = () => {
         setMenuOpen(!isMenuOpen);
     };
@@ -21,20 +26,20 @@ const FlyoutMenuCreate = () => {
     };
 
     const onCLickCreateFile = async() => {
-        if(parentKey === '/documents'){
+        if(!id){
             location.href = "/documents/createfile";
         }else{
-            setLocalStorageItem('parentKey', parentKey.replace('/documents/', '') + '/');
-            location.href = "/documents/createfile";
+            //setLocalStorageItem('parentKey', parentKey.replace('/documents/', '') + '/');
+            location.href = `/documents/${id}/createfile`;
         }
     }
 
     const onCLickCreateFolder = async() => {
-        if(parentKey === '/documents'){
+        if(!id){
             location.href = "/documents/createfolder";
         }else{
-            setLocalStorageItem('parentKey', parentKey.replace('/documents/', '') + '/');
-            location.href = "/documents/createfolder";
+            //setLocalStorageItem('parentKey', parentKey.replace('/documents/', '') + '/');
+            location.href = `/documents/${id}/createfolder`;
         }
     }
 

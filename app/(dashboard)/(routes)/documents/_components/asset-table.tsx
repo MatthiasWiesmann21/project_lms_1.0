@@ -20,8 +20,7 @@ export interface FolderTreeProps {
     _id: string;
 }
 
-const basePath = process.env.BASE_PATH ?? "http://localhost:3000/";
-const currentDocPath = basePath + "/documents/";
+const currentDocPath = "/documents/";
 const AssetsTable = (props: any) => {
     const { folderStructure } = props;
     const { userId } = useAuth();
@@ -31,7 +30,6 @@ const AssetsTable = (props: any) => {
         //TODO: Download logic here
         setDownloading(true);
         const response = await axios.get(`/api/documents/download/file?key=${key}`);
-        console.log(response.data.data);
     
         const downloadURL = response.data.data.downloadUrl;
         const downloadLink = document.createElement('a');
@@ -92,13 +90,13 @@ const AssetsTable = (props: any) => {
                                             <tr key={i}>
                                                 <td className="relative px-7 sm:w-12 sm:px-6">
                                                     {/* <input type="checkbox" className="absolute left-1 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" /> */}
-                                                    <div onClick={() => location.href = `${currentDocPath}${item.key}`} className="p-2 bg-pink-100 ml-3 rounded cursor-pointer">
+                                                    <div onClick={() => location.href = `${currentDocPath}${item.id}`} className="p-2 bg-pink-100 ml-3 rounded cursor-pointer">
                                                         {/* <svg className="mx-auto h-7 w-7 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                                             <path vector-effect="non-scaling-stroke" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
                                                         </svg> */}
                                                         <AppSVGIcon customclass={'mx-auto h-7'} icon={'folderIcon'}></AppSVGIcon>                                                    </div>
                                                 </td>
-                                                <td onClick={() => location.href = `${currentDocPath}${item.key}`} className="whitespace-nowrap py-4 pr-3 text-sm font-medium text-gray-900 cursor-pointer">{item.name}</td>
+                                                <td onClick={() => location.href = `${currentDocPath}${item.id}`} className="whitespace-nowrap py-4 pr-3 text-sm font-medium text-gray-900 cursor-pointer">{item.name}</td>
                                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{formatDate(item.createdAt)}</td>
                                                 <td className={`${!isTeacher(userId) && 'hidden'} relative whitespace-nowrap px-3 text-sm text-gray-500`}>
                                                     <div className=" ">

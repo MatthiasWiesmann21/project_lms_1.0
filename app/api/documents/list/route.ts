@@ -5,12 +5,12 @@ import { NextApiRequest } from "next";
 import { NextRequest, NextResponse } from "next/server";
 import { isTeacher } from "@/lib/teacher";
 
-const getOrCreateParentFolder = async (userId:string,parentKey?: string) => {
+const getOrCreateParentFolder = async (userId: string, parentKey?: string) => {
   if (parentKey != null) {
     const parentFolder = await db.folder.findFirst({
       where: {
         key: parentKey,
-        userId:userId
+        userId: userId
       },
     });
     if (parentFolder == null) {
@@ -23,7 +23,7 @@ const getOrCreateParentFolder = async (userId:string,parentKey?: string) => {
   let rootFolder = await db.folder.findFirst({
     where: {
       parentFolder: null,
-      userId:userId
+      userId: userId
     },
   });
   if (rootFolder == null) {
@@ -84,7 +84,7 @@ async function getFolderAndFiles(key: string | null, userId: string | null, isPu
       include: {
         subFolders: true,
         files: {
-          where: {  isPublic: true },
+          where: { isPublic: true },
         },
       },
     });
@@ -95,16 +95,16 @@ async function getFolderAndFiles(key: string | null, userId: string | null, isPu
       where: { key: key },
       include: {
         subFolders: {
-          where: {  isPublic: true },
+          where: { isPublic: true },
         },
         files: {
-          where: {  isPublic: true },
+          where: { isPublic: true },
         },
       },
     });
   }
 
- 
+
 
   return folder;
 }
@@ -118,23 +118,33 @@ export async function GET(req: any) {
   try {
     const { userId } = auth();
 
-    const key = req.nextUrl.searchParams.get("key");
+    const id = req.nextUrl.searchParams.get("key");
     const isPublicDirectory = req.nextUrl.searchParams.get("isPublicDirectory");
+    let key = null;
+    if (id) {
+      const keyData = await db.folder.findFirst({
+        select: {
+          key: true,
+        },
+        where: { id: parseInt(id) },
+      });
+      //@ts-ignore
+      key = keyData.key;
+    }
 
     if (userId == null) {
       throw new Error("Un Authorized");
     }
 
-    if(isTeacher(userId)){
+    if (isTeacher(userId)) {
       await getOrCreateParentFolder(userId);
     }
-    
+
     let parseKey = key
-    if(parseKey != null ){
+    if (parseKey != null) {
       parseKey = key?.charAt(key.length - 1) !== `/` ? `${key}/` : key;
     }
 
- 
     const data = await getFolderAndFiles(parseKey, userId, isPublicDirectory);
 
     if (data == null) {
@@ -150,7 +160,7 @@ export async function GET(req: any) {
 
     return NextResponse.json({ data: data });
   } catch (error) {
-    console.log("[SUBSCRIPTION] aa", error);
+    console.log("[SUBSCRIPTION]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
