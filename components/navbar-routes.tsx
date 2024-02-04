@@ -32,7 +32,7 @@ export const NavbarRoutes = () => {
           <ModeToggle />
         {isTeacherPage || isCoursePage ? (
           <Link href="/dashboard">
-            <Button size="sm" variant="ghost">
+            <Button size="default" variant="ghost">
               <LogOut className="h-4 w-4 mr-2" />
               Exit
             </Button>
