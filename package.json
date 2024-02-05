@@ -38,6 +38,7 @@
     "@react-email/html": "0.0.6",
     "@svgr/webpack": "^8.1.0",
     "@t3-oss/env-nextjs": "^0.7.1",
+    "@talkjs/react": "^0.1.5",
     "@tanstack/react-table": "^8.9.11",
     "@types/luxon": "^3.3.7",
     "@types/node": "20.6.0",
