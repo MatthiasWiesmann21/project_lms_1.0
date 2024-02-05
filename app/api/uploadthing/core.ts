@@ -31,6 +31,12 @@ export const ourFileRouter = {
     .onUploadComplete(() => {}),
   chapterVideo: f({ video: { maxFileCount: 1, maxFileSize: "4GB" } })
     .middleware(() => handleAuth())
+    .onUploadComplete(() => {}),
+  serverImage: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
+    .middleware(() => handleAuth())
+    .onUploadComplete(() => {}),
+  messageFile: f(["image", "pdf"])
+    .middleware(() => handleAuth())
     .onUploadComplete(() => {})
 } satisfies FileRouter;
 

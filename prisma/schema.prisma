@@ -22,9 +22,32 @@ model Container {
   courses     Course[]
   categories  Category[]
   posts       Post[]
+  servers     Server[]
   
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model Server {
+  id String @id @default(uuid())
+  name String
+  imageUrl String @db.Text
+  inviteCode String @unique
+
+  profileId String
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  members Member[]
+  channels Channel[]
+
+  containerId   String
+  container     Container @relation(fields: [containerId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([profileId])
+  @@index([containerId])
 }
 
 model Profile {
@@ -37,6 +60,7 @@ model Profile {
   containerId   String
   container     Container @relation(fields: [containerId], references: [id])
 
+  servers Server[]
   members Member[]
   channels Channel[]
 
@@ -62,6 +86,9 @@ model Member {
   containerId   String
   container     Container @relation(fields: [containerId], references: [id])
 
+  serverId String
+  server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
   messages Message[]
   directMessages DirectMessage[]
 
@@ -73,6 +100,7 @@ model Member {
 
   @@index([profileId])
   @@index([containerId])
+  @@index([serverId])
 }
 
 model Course {
@@ -306,6 +334,9 @@ model Channel {
   containerId   String
   container     Container @relation(fields: [containerId], references: [id])
 
+  serverId String
+  server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
   messages Message[]
 
   createdAt DateTime @default(now())
@@ -313,6 +344,7 @@ model Channel {
 
   @@index([profileId])
   @@index([containerId])
+  @@index([serverId])
 }
 
 model Message {
