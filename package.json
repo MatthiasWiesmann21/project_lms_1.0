@@ -84,8 +84,6 @@
     "react-usestateref": "^1.0.8",
     "recharts": "^2.8.0",
     "resend": "^2.0.0",
-    "stream-chat": "^8.14.2",
-    "stream-chat-react": "^10.20.0",
     "stripe": "^13.6.0",
     "svix": "^1.14.0",
     "tailwind-merge": "^1.14.0",
@@ -94,7 +92,6 @@
     "typescript": "5.2.2",
     "uploadthing": "^6.3.3",
     "uuid": "^9.0.1",
-    "web-push": "^3.6.6",
     "zod": "^3.22.4",
     "zustand": "^4.4.1"
   },
