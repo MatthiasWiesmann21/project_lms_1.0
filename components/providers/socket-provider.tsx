@@ -31,8 +31,8 @@ export const SocketProvider = ({
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    const socketInstance = new (ClientIO as any)(process.env.NEXT_PUBLIC_SITE_URL!, {
-      path: "/api/chat/socket/io",
+    const socketInstance = new (ClientIO as any)(process.env.NEXT_PUBLIC_APP_URL!, {
+      path: "/pages/api/socket/io",
       addTrailingSlash: false,
     });
 

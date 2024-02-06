@@ -29,7 +29,6 @@ export default async function handler(
       return res.status(400).json({ error: "Content missing" });
     }
 
-
     const conversation = await db.conversation.findFirst({
       where: {
         id: conversationId as string,

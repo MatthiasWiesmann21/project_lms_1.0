@@ -41,6 +41,7 @@ export const ServerSidebar = async ({
   const server = await db.server.findUnique({
     where: {
       id: serverId,
+      containerId: process.env.CONTAINER_ID,
     },
     include: {
       channels: {
