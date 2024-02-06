@@ -2,7 +2,7 @@
 const nextConfig = {
   images: {
     domains: [
-      "utfs.io", "localhost:3000/"
+      "utfs.io", "localhost:3000/", "uploadthings.io"
     ]
   },
   webpack: (config) => {
@@ -12,6 +12,11 @@ const nextConfig = {
     });
 
     return config;
+  },
+  images: {
+    domains: [
+      "utfs.io", "localhost:3000/", "uploadthings.io"
+    ]
   },
 }
 
