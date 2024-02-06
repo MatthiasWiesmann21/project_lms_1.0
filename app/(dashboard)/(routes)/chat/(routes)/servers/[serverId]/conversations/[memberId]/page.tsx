@@ -33,6 +33,7 @@ const MemberIdPage = async ({
     where: {
       serverId: params.serverId,
       profileId: profile.id,
+      containerId: process.env.CONTAINER_ID,
     },
     include: {
       profile: true,
@@ -75,10 +76,10 @@ const MemberIdPage = async ({
             name={otherMember.profile.name}
             chatId={conversation.id}
             type="conversation"
-            apiUrl="/api/direct-messages"
+            apiUrl="/api/chat/direct-messages"
             paramKey="conversationId"
             paramValue={conversation.id}
-            socketUrl="/api/socket/direct-messages"
+            socketUrl="/pages/api/socket/direct-messages"
             socketQuery={{
               conversationId: conversation.id,
             }}
@@ -86,7 +87,7 @@ const MemberIdPage = async ({
           <ChatInput
             name={otherMember.profile.name}
             type="conversation"
-            apiUrl="/api/socket/direct-messages"
+            apiUrl="/pages/api/socket/direct-messages"
             query={{
               conversationId: conversation.id,
             }}

@@ -67,6 +67,7 @@
     "eslint-config-prettier": "^9.0.0",
     "firebase": "^10.7.0",
     "formidable-serverless": "^1.1.1",
+    "http": "^0.0.1-security",
     "livekit-client": "^1.15.11",
     "livekit-server-sdk": "^2.0.0",
     "lucide-react": "^0.276.0",

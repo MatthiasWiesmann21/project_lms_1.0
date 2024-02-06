@@ -22,9 +22,11 @@ const ServerIdPage = async ({
   const server = await db.server.findUnique({
     where: {
       id: params.serverId,
+      containerId: process.env.CONTAINER_ID,
       members: {
         some: {
           profileId: profile.id,
+          containerId: process.env.CONTAINER_ID,
         }
       }
     },
