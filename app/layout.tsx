@@ -40,12 +40,7 @@ export default function RootLayout({
           
           <ConfettiProvider />
             <ToastProvider />
-            <SocketProvider>
-            <ModalProvider />
-              <QueryProvider>
-                {children}
-              </QueryProvider>
-            </SocketProvider>
+              {children}
           </ThemeProvider>
         </body>
       </html>
