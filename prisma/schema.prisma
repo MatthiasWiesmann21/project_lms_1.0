@@ -14,6 +14,7 @@ model Container {
   name        String   @unique
   link        String?  @db.Text
   imageUrl    String?  @db.Text
+  clientPackage String? @db.Text
   
 
   profiles    Profile[]
@@ -50,12 +51,20 @@ model Server {
   @@index([containerId])
 }
 
+enum ProfileRole {
+  ADMIN
+  OPERATOR
+  MODERATOR
+  USER
+}
+
 model Profile {
   id String @id @default(uuid())
   userId String @unique
   name String
   imageUrl String @db.Text
   email String @db.Text
+  role ProfileRole @default(USER)
 
   containerId   String
   container     Container @relation(fields: [containerId], references: [id])

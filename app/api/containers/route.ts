@@ -9,7 +9,7 @@ export async function POST(
 ) {
   try {
     const { userId } = auth();
-    const { name, imageUrl, link } = await req.json();
+    const { name, imageUrl, link, clientPackage } = await req.json();
 
     if (!userId || !isTeacher(userId)) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -20,6 +20,7 @@ export async function POST(
         name,
         imageUrl,
         link,
+        clientPackage,
       }
     });
 

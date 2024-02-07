@@ -3,6 +3,7 @@ import Link from "next/link";
 import { BookOpen } from "lucide-react";
 
 import { IconBadge } from "@/components/icon-badge";
+import { UserAvatar } from "./user-avatar";
 
 interface PostCardProps {
   id: string;
@@ -25,12 +26,15 @@ export const PostCard = ({
   return (
       <div className="group hover:shadow-sm overflow-hidden border rounded-lg p-3 m-5 h-full dark:border-[#ffffff]">
         <div className="flex flex-col pt-2">
+          <div>
+          <UserAvatar src={imageUrl}/>
           <div className="text-lg md:text-base font-medium line-clamp-2">
             {title}
           </div>
           <p className="text-xs pb-2 text-muted-foreground text-[#000000] dark:text-[#ffffff]">
             {category}
           </p>
+          </div>
           <p className="text-xs pb-2 text-muted-foreground text-[#000000] dark:text-[#ffffff]">
             {description}
           </p>

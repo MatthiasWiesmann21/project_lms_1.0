@@ -29,6 +29,20 @@ export const columns: ColumnDef<Container>[] = [
     },
   },
   {
+    accessorKey: "clientPackage",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Package
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+  },
+  {
     accessorKey: "createdAt",
     header: ({ column }) => {
       return (

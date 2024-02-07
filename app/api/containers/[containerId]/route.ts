@@ -34,7 +34,7 @@ export async function DELETE(
 
     return NextResponse.json(deletedContainer);
   } catch (error) {
-    console.log("[COURSE_ID_DELETE]", error);
+    console.log("[CONTAINER_ID_DELETE]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
@@ -46,7 +46,7 @@ export async function PATCH(
   try {
     const { userId } = auth();
     const { containerId } = params;
-    const values = await req.json();
+    const { values } = await req.json();
 
     if (!userId || !isTeacher(userId)) {
         return new NextResponse("Unauthorized", { status: 401 });
@@ -57,13 +57,13 @@ export async function PATCH(
         id: containerId,
       },
       data: {
-        ...values,
+        ...values
       }
     });
 
     return NextResponse.json(container);
   } catch (error) {
-    console.log("[COURSE_ID]", error);
+    console.log("[CONTAINER_ID]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
