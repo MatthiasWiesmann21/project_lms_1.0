@@ -61,7 +61,7 @@ enum ProfileRole {
 model Profile {
   id String @id @default(uuid())
   userId String @unique
-  name String
+  name String @db.Text
   imageUrl String @db.Text
   email String @db.Text
   role ProfileRole @default(USER)
