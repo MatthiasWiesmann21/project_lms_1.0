@@ -1,4 +1,3 @@
-import Mux from "@mux/mux-node";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
@@ -55,6 +54,7 @@ export async function PATCH(
     const profile = await db.profile.update({
       where: {
         id: profileId,
+        containerId: process.env.CONTAINER_ID,
       },
       data: {
         ...values
@@ -63,7 +63,7 @@ export async function PATCH(
 
     return NextResponse.json(profile);
   } catch (error) {
-    console.log("[CONTAINER_ID]", error);
+    console.log("[PROFILE_ID]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

@@ -28,7 +28,7 @@ interface TitleFormProps {
 
 const formSchema = z.object({
   name: z.string().min(1, {
-    message: "Title is required",
+    message: "Name is required",
   }),
 });
 

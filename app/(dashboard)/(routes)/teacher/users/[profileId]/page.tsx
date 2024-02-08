@@ -25,12 +25,15 @@ const UserIdPage = async ({
   const profile = await db.profile.findUnique({
     where: {
       id: params.profileId,
-      containerId: process.env.CONTAINER_ID
     }
   });
 
   if (!profile) {
     return redirect("/");
+  }
+
+  if (profile) {
+    console.log(profile);
   }
 
   const requiredFields = [
