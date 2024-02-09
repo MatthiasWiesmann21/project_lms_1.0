@@ -17,7 +17,6 @@ export async function DELETE(
     const post = await db.post.findUnique({
       where: {
         id: params.postId,
-        userId: userId,
         containerId: process.env.CONTAINER_ID,
       }
     });
@@ -56,7 +55,6 @@ export async function PATCH(
     const post = await db.post.update({
       where: {
         id: postId,
-        userId,
         containerId: process.env.CONTAINER_ID,
       },
       data: {

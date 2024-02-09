@@ -51,13 +51,15 @@ export async function PATCH(
         return new NextResponse("Unauthorized", { status: 401 });
     }
 
+    console.log(values);
+
     const profile = await db.profile.update({
       where: {
         id: profileId,
         containerId: process.env.CONTAINER_ID,
       },
       data: {
-        ...values
+        role: values
       }
     });
 

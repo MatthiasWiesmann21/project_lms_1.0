@@ -28,7 +28,7 @@ interface RoleFormProps {
 
 const formSchema = z.object({
   role: z.string().min(1, {
-    message: "Role is required",
+    message: "Title is required",
   }),
 });
 
@@ -52,7 +52,7 @@ export const RoleForm = ({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.patch(`/api/profile/${profileId}`, values);
-      toast.success("User updated");
+      toast.success("Profile updated");
       toggleEdit();
       router.refresh();
     } catch {
@@ -63,7 +63,7 @@ export const RoleForm = ({
   return (
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        User Role
+        Profile Role
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>

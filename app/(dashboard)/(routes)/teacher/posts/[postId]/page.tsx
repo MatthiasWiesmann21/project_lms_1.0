@@ -54,8 +54,6 @@ const PostIdPage = async ({
   const requiredFields = [
     post.title,
     post.description,
-    post.imageUrl,
-    post.categoryId,
   ];
 
   const totalFields = requiredFields.length;

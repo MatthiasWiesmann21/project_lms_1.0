@@ -7,8 +7,8 @@ import { IconBadge } from "@/components/icon-badge";
 
 
 import { Actions } from "./_components/actions";
-import { TitleForm } from "./_components/title-form";
-import { MailForm } from "./_components/link-form";
+import { ShowUserName } from "./_components/title-form";
+import { ShowUserMail } from "./_components/showUserMail";
 import { RoleForm } from "./_components/role-form";
 
 const UserIdPage = async ({
@@ -30,10 +30,6 @@ const UserIdPage = async ({
 
   if (!profile) {
     return redirect("/");
-  }
-
-  if (profile) {
-    console.log(profile);
   }
 
   const requiredFields = [
@@ -74,18 +70,15 @@ const UserIdPage = async ({
               </h2>
               <span className="pl-1 text-xs text-rose-600">*required</span>
             </div>
-            <TitleForm
+            <ShowUserName
               initialData={profile}
               profileId={profile.id}
             />
-            <MailForm
-                initialData={{ email: profile.email || "" }}
-                profileId={profile.id}
-            />
+            <ShowUserMail initialData={profile} profileId={profile.id} />
             <RoleForm
               initialData={profile}
               profileId={profile.id}
-              />
+            />
           </div>
         </div>
       </div>

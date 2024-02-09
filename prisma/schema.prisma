@@ -51,20 +51,13 @@ model Server {
   @@index([containerId])
 }
 
-enum ProfileRole {
-  ADMIN
-  OPERATOR
-  MODERATOR
-  USER
-}
-
 model Profile {
   id String @id @default(uuid())
   userId String @unique
   name String @db.Text
   imageUrl String @db.Text
   email String @db.Text
-  role ProfileRole @default(USER)
+  role String @default("USER")
 
   containerId   String
   container     Container @relation(fields: [containerId], references: [id])

@@ -16,8 +16,7 @@ export async function DELETE(
 
     const post = await db.post.findUnique({
       where: {
-        id: params.postId,
-        userId: userId,
+        id: params.postId,        
         containerId: process.env.CONTAINER_ID,
       }
     });

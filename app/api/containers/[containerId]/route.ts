@@ -51,6 +51,8 @@ export async function PATCH(
         return new NextResponse("Unauthorized", { status: 401 });
     }
 
+    console.log(values);
+
     const container = await db.container.update({
       where: {
         id: containerId,
