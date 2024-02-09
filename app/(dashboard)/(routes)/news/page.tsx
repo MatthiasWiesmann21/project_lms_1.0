@@ -1,5 +1,5 @@
 import { getPosts } from "@/actions/get-posts";
-import { PostList } from "@/components/post-list";
+import { PostList } from "./_components/post-list";
 import { UserAvatar } from "@/components/user-avatar";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";

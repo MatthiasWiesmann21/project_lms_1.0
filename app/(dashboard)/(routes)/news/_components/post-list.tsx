@@ -1,6 +1,6 @@
 import { Category, Post } from "@prisma/client";
 
-import { PostCard } from "@/components/post-card";
+import { PostCard } from "./post-card";
 
 type PostWithProgressWithCategory = Post & {
   category: Category | null;
@@ -26,6 +26,9 @@ export const PostList = ({
             imageUrl={item.imageUrl!}
             category={item?.category?.name!}
             description={item.description ?? ''}
+            createdAt={item.createdAt.toDateString()}
+            publisherName={item.publisherName!}
+            publisherImageUrl={item.publisherImageUrl!}
           />
         ))}
       </div>

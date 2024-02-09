@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
@@ -14,10 +14,16 @@ export async function PATCH(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
+    const profile = await db.profile.findUnique({
+      where: {
+        userId,
+        containerId: process.env.CONTAINER_ID,
+      }
+    })
+
     const post = await db.post.findUnique({
       where: {
         id: params.postId,
-        userId,
         containerId: process.env.CONTAINER_ID,
       }
     });
@@ -29,11 +35,12 @@ export async function PATCH(
     const publishedPost = await db.post.update({
       where: {
         id: params.postId,
-        userId,
         containerId: process.env.CONTAINER_ID,
       },
       data: {
         isPublished: true,
+        publisherName: profile?.name,
+        publisherImageUrl: profile?.imageUrl,
       }
     });
 

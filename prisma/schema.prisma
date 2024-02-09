@@ -293,7 +293,10 @@ model Folder {
 
 model Post {
   id          String  @id @default(uuid())
-  userId      String
+
+  publisherName String? @db.Text
+  publisherImageUrl String? @db.Text
+
   title       String  @db.Text
   description String? @db.Text
   imageUrl    String? @db.Text

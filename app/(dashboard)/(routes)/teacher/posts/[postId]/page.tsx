@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { CircleDollarSign, File, Image, LayoutDashboard, LayoutGridIcon, ListChecks } from "lucide-react";
 
@@ -26,7 +26,6 @@ const PostIdPage = async ({
   const post = await db.post.findUnique({
     where: {
       id: params.postId,
-      userId,
       containerId: process.env.CONTAINER_ID,
     }
   });
@@ -39,6 +38,14 @@ const PostIdPage = async ({
       name: "asc",
     },
   });
+
+  const profile = await db.profile.findUnique({
+    where: {
+      userId: userId,
+      containerId: process.env.CONTAINER_ID,
+    },
+  });
+
 
   if (!post) {
     return redirect("/");

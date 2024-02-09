@@ -15,7 +15,6 @@ const PostsPage = async () => {
 
   const posts = await db.post.findMany({
     where: {
-      userId,
       containerId: process.env.CONTAINER_ID,
     },
     orderBy: {

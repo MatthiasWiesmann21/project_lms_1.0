@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
@@ -17,7 +17,6 @@ export async function POST(
 
     const post = await db.post.create({
       data: {
-        userId,
         title,
         containerId: process.env.CONTAINER_ID || '',
       }

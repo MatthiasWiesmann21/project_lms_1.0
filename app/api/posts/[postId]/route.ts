@@ -56,7 +56,6 @@ export async function PATCH(
     const post = await db.post.update({
       where: {
         id: postId,
-        userId,
         containerId: process.env.CONTAINER_ID,
       },
       data: {
