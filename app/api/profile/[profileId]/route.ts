@@ -45,7 +45,7 @@ export async function PATCH(
   try {
     const { userId } = auth();
     const { profileId } = params;
-    const { values } = await req.json();
+    const values = await req.json();
 
     if (!userId || !isTeacher(userId)) {
         return new NextResponse("Unauthorized", { status: 401 });
@@ -59,7 +59,7 @@ export async function PATCH(
         containerId: process.env.CONTAINER_ID,
       },
       data: {
-        role: values
+        ...values
       }
     });
 

@@ -9,5 +9,4 @@ export default async function Home() {
   } else {
     return redirectToSignIn();
   }
-  // Redirects automatically users which goes to the root of the app
 }

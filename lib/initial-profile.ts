@@ -8,7 +8,7 @@ export const initialProfile = async () => {
   if (!user) {
     return redirectToSignIn();
   }
-
+  
   const profile = await db.profile.findUnique({
     where: {
       userId: user.id,
@@ -24,19 +24,20 @@ if (profile) {
 }
 
 const updateProfile = await db.profile.update({
-    where: {
-        userId: user.id,
-    },
-    data: {
-        name: `${user.username}`,
-        imageUrl: user.imageUrl,
-        email: user.emailAddresses[0].emailAddress,
-        containerId: process.env.CONTAINER_ID
-    }
+  where: {
+      userId: user.id,
+      containerId: process.env.CONTAINER_ID,
+  },
+  data: {
+      name: `${user.username}`,
+      imageUrl: user.imageUrl,
+      email: user.emailAddresses[0].emailAddress,
+      containerId: process.env.CONTAINER_ID,
+  }
 });
 
 if (updateProfile) {
-    return updateProfile;
+  return updateProfile;
 }
 
 const newProfile = await db.profile.create({
@@ -46,7 +47,6 @@ const newProfile = await db.profile.create({
         imageUrl: user.imageUrl,
         email: user.emailAddresses[0].emailAddress,
         containerId: process.env.CONTAINER_ID || '',
-        role: 'USER'
     }
 });
 

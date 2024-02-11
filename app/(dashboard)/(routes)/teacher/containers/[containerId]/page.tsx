@@ -11,6 +11,8 @@ import { ImageForm } from "./_components/image-form";
 import { Actions } from "./_components/actions";
 import { TitleForm } from "./_components/title-form";
 import { LinkForm } from "./_components/link-form";
+import { ShowContainerId } from "./_components/containerid-widget";
+import { PackageForm } from "./_components/package-form";
 
 const ContainerIdPage = async ({
   params
@@ -79,6 +81,9 @@ const ContainerIdPage = async ({
                 initialData={{ link: container.link || "" }}
                 containerId={container.id}
             />
+            <ShowContainerId
+            initialData={container}
+            />
           </div>
           <div>
             <div className="flex items-center gap-x-2">
@@ -92,6 +97,10 @@ const ContainerIdPage = async ({
               initialData={container}
               containerId={container.id}
               />
+            <PackageForm
+              initialData={{ clientPackage: container.clientPackage || "" }}
+              containerId={container.id}
+            />
           </div>
         </div>
       </div>
