@@ -9,7 +9,6 @@ import { UserAvatar } from "@/components/user-avatar";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { Separator } from "@/components/ui/separator";
-import { useState } from "react";
 
 interface PostCardProps {
   id: string;
@@ -22,13 +21,6 @@ interface PostCardProps {
   publisherImageUrl: string;
 };
 
-interface Comment {
-  id: string;
-  text: string;
-  createdAt: string;
-  authorName: string; // Adjust according to your actual data structure
-}
-
 export const PostCard = async ({
   id,
   title,
@@ -39,8 +31,6 @@ export const PostCard = async ({
   publisherName,
   publisherImageUrl
 }: PostCardProps) => {
-  const [comments, setComments] = useState<Comment[]>([]);
-  const [newComment, setNewComment] = useState('');
 
   return (
       <div className="group hover:shadow-sm overflow-hidden border rounded-lg p-3 m-5 h-full dark:border-[#ffffff]">
