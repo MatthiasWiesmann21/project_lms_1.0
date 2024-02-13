@@ -13,12 +13,15 @@ interface PostListProps {
 export const PostList = ({
   items
 }: PostListProps) => {
+  const sortedItems = items.sort((a, b) => {
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
   return (
     // Use flex layout to center the content
     <div className="flex flex-col items-center justify-center">
       {/* Add responsive padding, and max-width to center on large screens */}
       <div className="px-5 w-full max-w-2xl">
-        {items.map((item) => (
+        {sortedItems.map((item) => (
           <PostCard
             key={item.id}
             id={item.id}

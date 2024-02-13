@@ -65,6 +65,8 @@ model Profile {
   servers Server[]
   members Member[]
   channels Channel[]
+  comments Comment[]
+  likes Like[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -282,7 +284,7 @@ model Folder {
 
 // TODO: Global Color Settings
 
-// TODO: Post Model
+// TODO: News Post Models
 
 model Post {
   id          String  @id @default(uuid())
@@ -301,6 +303,9 @@ model Post {
   categoryId String?
   category   Category? @relation(fields: [categoryId], references: [id])
 
+  comments    Comment[]
+  likes       Like[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -308,6 +313,45 @@ model Post {
   @@index([containerId])
   @@fulltext([title])
 }
+
+model Comment {
+  id          String   @id @default(uuid())
+  text        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  postId      String
+  post        Post     @relation(fields: [postId], references: [id])
+
+  profileId   String
+  profile     Profile  @relation(fields: [profileId], references: [id])
+
+  likes       Like[]
+
+  @@index([postId])
+  @@index([profileId])
+}
+
+model Like {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+
+  profileId   String
+  profile     Profile  @relation(fields: [profileId], references: [id])
+
+  postId      String?
+  post        Post?    @relation(fields: [postId], references: [id])
+
+  commentId   String?
+  comment     Comment? @relation(fields: [commentId], references: [id])
+
+  @@index([profileId])
+  @@index([postId])
+  @@index([commentId])
+  @@unique([profileId, postId, commentId])
+}
+
+
 
 // TODO: Chat & Conversation Models
 
