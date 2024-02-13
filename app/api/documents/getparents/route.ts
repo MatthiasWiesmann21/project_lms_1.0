@@ -5,10 +5,10 @@ import { NextApiRequest } from "next";
 import { NextRequest, NextResponse } from "next/server";
 import { isTeacher } from "@/lib/teacher";
 
-const getFolderAndParents = async (id: number) => {
+const getFolderAndParents = async (id: string) => {
   const folderAndParents = [] as any;
 
-  const recursivelyFetchParents = async (folderId: number) => {
+  const recursivelyFetchParents = async (folderId: string) => {
     const result = await db.folder.findUnique({
       select: {
         id: true,

@@ -8,15 +8,31 @@ type Params = {
   id: string;
   action: string;
 };
-const uuidPattern =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 const basePath = process.env.BASE_PATH ?? "http://localhost:3000/";
 const currentDocPath = basePath + "/documents/";
 const PathMaker = () => {
+  const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   const encodedObj = useParams()?.id as string;
-  const id = uuidPattern?.test(useParams()?.id as string)
-    ? useParams()?.id
-    : (JSON?.parse(atob(encodedObj?.replace(/%3D/g, "=")))?.id as Params);
+
+  // Initialize id and action with default values
+  let id: string | string[];
+  let action: string | undefined;
+
+  if (uuidPattern.test(useParams().id as string)) {
+    // If the id matches the pattern, use it directly
+    id = encodedObj;
+  } else {
+    try {
+      // Otherwise, decode the encoded object
+      const decodedObj = JSON.parse(atob(encodedObj?.replace(/%3D/g, '='))) as Params;
+      id = decodedObj.id;
+      action = decodedObj.action;
+    } catch (error) {
+      // Handle any decoding errors here
+      console.error('Error decoding object:', error);
+    }
+  }
   const [slug, setSlug] = useState([] as any);
 
   let lastPath = "";

@@ -20,13 +20,27 @@ const DocumentCreatePage = () => {
   const [parentId, setParentId] = useState("");
   const [isPublic, setPublic] = useState(false);
   const [loading, setLoading] = useState(false);
-  const uuidPattern =
-    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   const encodedObj = useParams()?.id as string;
-  //@ts-ignore
-  const { id, action } = uuidPattern?.test(useParams()?.id as string)
-    ? useParams()?.id
-    : (JSON?.parse(atob(encodedObj?.replace(/%3D/g, "="))) as Params);
+
+  // Initialize id and action with default values
+  let id: string | string[];
+  let action: string | undefined;
+
+  if (uuidPattern.test(useParams()?.id as string)) {
+    // If the id matches the pattern, use it directly
+    id = encodedObj;
+  } else {
+    try {
+      // Otherwise, decode the encoded object
+      const decodedObj = JSON.parse(atob(encodedObj?.replace(/%3D/g, '='))) as Params;
+      id = decodedObj.id;
+      action = decodedObj.action;
+    } catch (error) {
+      // Handle any decoding errors here
+      console.error('Error decoding object:', error);
+    }
+  }
 
   const isEdit = action === "edit";
 
