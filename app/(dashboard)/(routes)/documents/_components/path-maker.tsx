@@ -6,30 +6,34 @@ import axios from "axios";
 
 type Params = {
   id: string;
+  action: string;
 };
+const uuidPattern =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const basePath = process.env.BASE_PATH ?? "http://localhost:3000/";
 const currentDocPath = basePath + "/documents/";
 const PathMaker = () => {
-  const { id } = useParams() as Params;
+  const encodedObj = useParams()?.id as string;
+  const id = uuidPattern?.test(useParams()?.id as string)
+    ? useParams()?.id
+    : (JSON?.parse(atob(encodedObj?.replace(/%3D/g, "=")))?.id as Params);
   const [slug, setSlug] = useState([] as any);
 
   let lastPath = "";
 
-  const getChildToParent = async() => {
-    const response = await axios.get(
-      `/api/documents/getparents?id=${id}`
-    );
-    return response.data.data
-  }
+  const getChildToParent = async () => {
+    const response = await axios.get(`/api/documents/getparents?id=${id}`);
+    return response.data.data;
+  };
 
   useEffect(() => {
     extractFolders();
   }, []);
 
-  const extractFolders = async() => {
+  const extractFolders = async () => {
     const path = await getChildToParent();
     // const folders = await path.split('/').filter(Boolean);
-    setSlug(path)
+    setSlug(path);
   };
 
   return (
@@ -51,33 +55,62 @@ const PathMaker = () => {
       })} */}
       <nav className="flex" aria-label="Breadcrumb">
         <ol role="list" className="flex items-center space-x-4">
-          {slug.slice().reverse().map((item: any, index: number) => {
-            lastPath += item + "/";
-            if (index == 0) {
+          {slug
+            .slice()
+            .reverse()
+            .map((item: any, index: number) => {
+              lastPath += item + "/";
+              if (index == 0) {
+                return (
+                  <li key={index}>
+                    <div>
+                      <a
+                        href={`/documents`}
+                        className="text-gray-400 hover:text-gray-500"
+                      >
+                        <svg
+                          className="h-5 w-5 flex-shrink-0"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          aria-hidden="true"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 11h-1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-6H3a1 1 0 01-.707-1.707l7-7z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                        <span className="sr-only">Home</span>
+                      </a>
+                    </div>
+                  </li>
+                );
+              }
               return (
                 <li key={index}>
-                  <div>
-                    <a href={`/documents`} className="text-gray-400 hover:text-gray-500">
-                      <svg className="h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 11h-1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-6H3a1 1 0 01-.707-1.707l7-7z" clip-rule="evenodd" />
-                      </svg>
-                      <span className="sr-only">Home</span>
+                  <div className="flex items-center">
+                    <svg
+                      className="h-5 w-5 flex-shrink-0 text-gray-400"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <a
+                      href={`/documents/${item.id}`}
+                      className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
+                    >
+                      {item.name}
                     </a>
                   </div>
                 </li>
               );
-            }
-            return (
-              <li key={index}>
-                <div className="flex items-center">
-                  <svg className="h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
-                  </svg>
-                  <a href={`/documents/${item.id}`} className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700">{item.name}</a>
-                </div>
-              </li>
-            );
-          })}
+            })}
           {/* <li>
             <div className="flex items-center">
               <svg className="h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

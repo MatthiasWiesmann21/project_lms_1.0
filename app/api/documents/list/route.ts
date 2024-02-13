@@ -10,7 +10,7 @@ const getOrCreateParentFolder = async (userId: string, parentKey?: string) => {
     const parentFolder = await db.folder.findFirst({
       where: {
         key: parentKey,
-        userId: userId
+        userId: userId,
       },
     });
     if (parentFolder == null) {
@@ -23,7 +23,7 @@ const getOrCreateParentFolder = async (userId: string, parentKey?: string) => {
   let rootFolder = await db.folder.findFirst({
     where: {
       parentFolder: null,
-      userId: userId
+      userId: userId,
     },
   });
   if (rootFolder == null) {
@@ -39,7 +39,7 @@ const getOrCreateParentFolder = async (userId: string, parentKey?: string) => {
       data: {
         name: key,
         key: key,
-        isPublic: false,
+        isPublic: true,
         userId: userId,
       },
     });
@@ -48,63 +48,116 @@ const getOrCreateParentFolder = async (userId: string, parentKey?: string) => {
   return rootFolder;
 };
 
-async function getFolderAndFiles(key: string | null, userId: string | null, isPublicDirectory?: boolean) {
+async function getFolderAndFiles(
+  key: string | null,
+  userId: string | null,
+  isPublicDirectory?: boolean
+) {
   let folder;
 
   if (userId == null) {
     throw new Error("Login first to access");
   }
 
-  if (key == null) {
-    folder = await db.folder.findFirst({
-      where: { parentFolderId: null },
-      include: {
-        subFolders: {
-          where: {
-            OR: [
-              { isPublic: true },
-              { userId: userId },
-            ],
+  // console.log("============");
+
+  if (isTeacher(userId)) {
+    if (key == null) {
+      console.log("key", { key, userId });
+      folder = await db.folder.findFirst({
+        where: {
+          parentFolderId: null,
+          userId: userId,
+        },
+        include: {
+          subFolders: {
+            where: {
+              OR: [{ isPublic: true }, { userId: userId }],
+            },
+          },
+          files: {
+            where: {
+              OR: [{ isPublic: true }, { userId: userId }],
+            },
           },
         },
-        files: {
-          where: {
-            OR: [
-              { isPublic: true },
-              { userId: userId },
-            ],
+      });
+    }
+    if (key != null) {
+      folder = await db.folder.findFirst({
+        where: { key: key },
+        include: {
+          subFolders: {
+            where: {
+              OR: [{ isPublic: true }, { userId: userId }],
+            },
+          },
+          files: {
+            where: {
+              OR: [{ isPublic: true }, { userId: userId }],
+            },
           },
         },
-      },
-    });
-  }
-  if (key != null && !isPublicDirectory) {
-    folder = await db.folder.findFirst({
-      where: { key: key },
-      include: {
-        subFolders: true,
-        files: {
-          where: { isPublic: true },
-        },
-      },
-    });
-  }
+      });
+    }
 
-  if (key != null && isPublicDirectory) {
-    folder = await db.folder.findFirst({
-      where: { key: key },
-      include: {
-        subFolders: {
-          where: { isPublic: true },
+    // if (key != null && isPublicDirectory) {
+    //   folder = await db.folder.findFirst({
+    //     where: { key: key },
+    //     include: {
+    //       subFolders: {
+    //         where: { isPublic: true },
+    //       },
+    //       files: {
+    //         where: { isPublic: true },
+    //       },
+    //     },
+    //   });
+    // }
+  } else {
+    if (key == null) {
+      folder = await db.folder.findFirst({
+        where: { parentFolderId: null },
+        include: {
+          subFolders: {
+            where: {
+              OR: [{ isPublic: true }, { userId: userId }],
+            },
+          },
+          files: {
+            where: {
+              OR: [{ isPublic: true }, { userId: userId }],
+            },
+          },
         },
-        files: {
-          where: { isPublic: true },
+      });
+    }
+    if (key != null && !isPublicDirectory) {
+      folder = await db.folder.findFirst({
+        where: { key: key },
+        include: {
+          subFolders: true,
+          files: {
+            where: { isPublic: true },
+          },
         },
-      },
-    });
+      });
+    }
+
+    if (key != null && isPublicDirectory) {
+      folder = await db.folder.findFirst({
+        where: { key: key },
+        include: {
+          subFolders: {
+            where: { isPublic: true },
+          },
+          files: {
+            where: { isPublic: true },
+          },
+        },
+      });
+    }
   }
-
-
 
   return folder;
 }
@@ -120,16 +173,17 @@ export async function GET(req: any) {
 
     const id = req.nextUrl.searchParams.get("key");
     const isPublicDirectory = req.nextUrl.searchParams.get("isPublicDirectory");
+
     let key = null;
     if (id) {
       const keyData = await db.folder.findFirst({
         select: {
           key: true,
         },
-        where: { id: parseInt(id) },
+        where: { id: id },
       });
       //@ts-ignore
-      key = keyData.key;
+      key = keyData?.key;
     }
 
     if (userId == null) {
@@ -140,7 +194,7 @@ export async function GET(req: any) {
       await getOrCreateParentFolder(userId);
     }
 
-    let parseKey = key
+    let parseKey = key || null;
     if (parseKey != null) {
       parseKey = key?.charAt(key.length - 1) !== `/` ? `${key}/` : key;
     }
@@ -150,7 +204,7 @@ export async function GET(req: any) {
     if (data == null) {
       return NextResponse.json(
         {
-          message: `Requested ${key} not found`,
+          message: `Requested resource not found`,
         },
         {
           status: 404,
@@ -164,3 +218,5 @@ export async function GET(req: any) {
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
+ 
+

@@ -242,13 +242,13 @@ model NewsletterSubscription {
 // Document Uploading 
 
 model File {
-  id       Int     @id @default(autoincrement())
+  id      String   @id @default(uuid())
   type     String?
   name     String
   isPublic Boolean
   key      String  @db.Text
   userId   String 
-  folderId Int
+  folderId String
   folder   Folder? @relation(fields: [folderId], references: [id], onDelete: Cascade)
 
   status  FileStatus @default(PENDING )
@@ -265,13 +265,13 @@ enum FileStatus{
  
  
 model Folder {
-  id             Int     @id @default(autoincrement())
+  id      String   @id @default(uuid())
   name           String
   isPublic       Boolean
   key            String  @db.Text
   userId         String  
   files          File[]
-  parentFolderId Int?
+  parentFolderId String?
   parentFolder   Folder? @relation("SubFolders", fields: [parentFolderId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   subFolders Folder[] @relation("SubFolders") // Define the opposite relation here

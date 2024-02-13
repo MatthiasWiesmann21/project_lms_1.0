@@ -13,7 +13,7 @@ export async function POST(req: any, res: any) {
     const { id } = requestBody;
 
     let key = null;
-    const keyData = await db.file.findFirst({
+    const keyData = await db.folder.findFirst({
       select: {
         key: true,
       },
@@ -22,9 +22,9 @@ export async function POST(req: any, res: any) {
     //@ts-ignore
     key = keyData.key;
 
-    const removeFile = await deleteFile(key);
+    //const removeFile = await deleteFile(key);
 
-    const result = await db.file.delete({
+    const result = await db.folder.delete({
       where: { id: id },
     });
 

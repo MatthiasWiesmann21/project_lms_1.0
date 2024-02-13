@@ -7,6 +7,9 @@ import axios from "axios";
 import AssetsTable from "./_components/asset-table";
 import Tabs from "./_components/tabs";
 import PublicAssetsTable from "./_components/public-asset-table";
+import Image from "next/image";
+import noFolder from "../../../../assets/icons/no folder.png";
+import { useParams, usePathname } from "next/navigation";
 
 export type DocumentFolderTree = {
   name: string;
@@ -23,11 +26,11 @@ export type DocumentFile = {
 };
 
 const DocumentPage = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [file, setFile] = useState(null);
   const [folderName, setFolderName] = useState("");
   const [currentTab, setCurrentTab] = useState(1);
-  const [folderStructure, setFolderStructure] =
-    useState<DocumentFolderTree | null>(null);
+  const [folderStructure, setFolderStructure] = useState<any>(null);
   const [publicFolderStructure, setPublicFolderStructure] =
     useState<DocumentFolderTree | null>(null);
 
@@ -46,22 +49,24 @@ const DocumentPage = () => {
     }
   };
   const getFolder = async () => {
-    const response = await axios.get(`/api/documents/list`);
-    setFolderStructure(response.data.data);
+    try {
+      const response = await axios.get(`/api/documents/list`);
+      setIsLoading(false);
+      setFolderStructure(response.data.data);
+    } catch (e) {
+      setIsLoading(false);
+    }
   };
   const getPublicFolder = async () => {
     const response = await axios.get(`/api/documents/publiclist`);
+    if (response) setIsLoading(false);
     console.log(response);
     setPublicFolderStructure(response.data.data);
   };
   useEffect(() => {
     getFolder();
-    getPublicFolder();
+    //getPublicFolder();
   }, []);
-
-  if (folderStructure == null) {
-    return <div>Loading</div>;
-  }
 
   const handleFolderNameChange = (event: any) => {
     setFolderName(event.target.value);
@@ -92,9 +97,18 @@ const DocumentPage = () => {
       console.log(e);
     }
   };
-  return (
-    <div className="  ml-2 h-screen">
-      {/* <div className=" my-4  flex flex-col">
+  if (isLoading) {
+    return <div>Loading</div>;
+  } else if (folderStructure == null) {
+    return (
+      <div className="flex h-full w-full items-center justify-around">
+        <Image src={noFolder} alt="wqer" />
+      </div>
+    );
+  } else
+    return (
+      <div className="  ml-2 h-full">
+        {/* <div className=" my-4  flex flex-col">
         <form className="flex">
           <input
             required
@@ -137,19 +151,19 @@ const DocumentPage = () => {
           key={folderStructure.key}
         />
       </div> */}
-      {/* <Tabs currentTab={currentTab} setCurrentTab={setCurrentTab}></Tabs> */}
-      {currentTab == 1 && (
+        {/* <Tabs currentTab={currentTab} setCurrentTab={setCurrentTab}></Tabs> */}
+
         <AssetsTable
+          //@ts-ignore
           folderStructure={folderStructure}
         ></AssetsTable>
-      )}
-      {/* {currentTab == 2 && (
+        {/* {currentTab == 2 && (
         <PublicAssetsTable
         folderStructureList={publicFolderStructure}
         ></PublicAssetsTable>
       )} */}
-    </div>
-  );
+      </div>
+    );
 };
 
 export default DocumentPage;

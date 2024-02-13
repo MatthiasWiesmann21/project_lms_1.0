@@ -16,6 +16,8 @@ const DocumentPage = () => {
 
   const parentKey = usePathname();
 
+  console.log({parentKey})
+
   const [folderStructure, setFolderStructure] =
     useState<DocumentFolderTree | null>(null);
 
@@ -23,7 +25,7 @@ const DocumentPage = () => {
     if (folderName == null || folderName.length < 1) {
       return;
     }
-    console.log({ folderName })
+    console.log({ folderName });
     try {
       const response = await axios.post(`/api/documents/upload/folder`, {
         folderName: folderName,
@@ -35,9 +37,7 @@ const DocumentPage = () => {
     }
   };
   const getFolder = async () => {
-    const response = await axios.get(
-      `/api/documents/list?key=${parentKey.replace("/documents/", "")}&isPublicDirectory=${true}`
-    );
+    const response = await axios.get(`/api/documents/list?key=${parentKey.replace('/documents/', '')}`);
     setFolderStructure(response.data.data);
   };
   useEffect(() => {
@@ -128,9 +128,8 @@ const DocumentPage = () => {
         <PathMaker />
       </div>
       <AssetsTable
-        folderStructure={folderStructure}
-        root={false}
-      ></AssetsTable>
+      //@ts-ignore
+       folderStructure={folderStructure} root={false}></AssetsTable>
     </div>
   );
 };

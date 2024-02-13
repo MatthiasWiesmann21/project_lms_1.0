@@ -65,7 +65,7 @@ export async function POST(req: Request) {
         select: {
           key: true,
         },
-        where: { id: parseInt(id) },
+        where: { id: id },
       });
       //@ts-ignore
       parentKey = keyData.key;

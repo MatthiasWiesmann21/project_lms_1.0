@@ -1,71 +1,107 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import AppSVGIcon from "@/components/appsvgicon";
 import { useParams, usePathname } from "next/navigation";
 
 type Params = {
-    id: string;
-  };
+  id: string;
+};
 
 const FlyoutMenuCreate = () => {
-    const [isMenuOpen, setMenuOpen] = useState(false);
-    const { id } = useParams() as Params;
-    console.log(id)
-    const handleButtonClick = () => {
-        setMenuOpen(!isMenuOpen);
+  const [isMenuOpen, setMenuOpen] = useState(false);
+  const { id } = useParams() as Params;
+
+  const handleButtonClick = () => {
+    setMenuOpen(!isMenuOpen);
+  };
+
+  const parentKey = usePathname();
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const targetElement = event.target as Element; // Cast event.target to Element
+      // Close the flyout menu if clicked outside
+      if (targetElement && !targetElement.closest(".flyout-menu")) {
+        setMenuOpen(false);
+      }
     };
 
-    const parentKey = usePathname();
+    document.addEventListener("click", handleClickOutside);
 
-
-    const setLocalStorageItem = (key: string, value: string) => {
-        try {
-            localStorage.setItem(key, JSON.stringify(value));
-        } catch (error) {
-            console.error('Error setting local storage item:', error);
-        }
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
     };
+  }, []);
 
-    const onCLickCreateFile = async() => {
-        if(!id){
-            location.href = "/documents/createfile";
-        }else{
-            //setLocalStorageItem('parentKey', parentKey.replace('/documents/', '') + '/');
-            location.href = `/documents/${id}/createfile`;
-        }
+  const setLocalStorageItem = (key: string, value: string) => {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+      console.error("Error setting local storage item:", error);
     }
+  };
 
-    const onCLickCreateFolder = async() => {
-        if(!id){
-            location.href = "/documents/createfolder";
-        }else{
-            //setLocalStorageItem('parentKey', parentKey.replace('/documents/', '') + '/');
-            location.href = `/documents/${id}/createfolder`;
-        }
+  const onCLickCreateFile = async () => {
+    if (!id) {
+      location.href = "/documents/createfile";
+    } else {
+      location.href = `/documents/${id}/createfile`;
     }
+  };
 
-    return (
-        <div className="relative">
-            <button onClick={handleButtonClick} type="button" className="block flex text-gray-600 rounded-md px-3 py-2 bg-gray-300 text-center text-sm font-semibold shadow-xl hover:bg-gray-200">
-                <AppSVGIcon customclass={'h-5 w-5 text-gray-400'} icon={'plusIcon'}></AppSVGIcon>
-                Create
+  const onCLickCreateFolder = async () => {
+    if (!id) {
+      location.href = "/documents/createfolder";
+    } else {
+      location.href = `/documents/${id}/createfolder`;
+    }
+  };
+
+  const handleMenuClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
+  return (
+    <div className="flyout-menu relative" onClick={handleMenuClick}>
+      <button
+        onClick={handleButtonClick}
+        type="button"
+        className="block flex rounded-md bg-gray-300 px-3 py-2 text-center text-sm font-semibold text-gray-600 shadow-xl hover:bg-gray-200"
+      >
+        <AppSVGIcon
+          customclass={"h-5 w-5 text-gray-400"}
+          icon={"plusIcon"}
+        ></AppSVGIcon>
+        Create
+      </button>
+
+      {isMenuOpen && (
+        <div className="absolute left-2 z-10 mt-5 flex w-screen max-w-min -translate-x-1/2 px-4">
+          <div className="w-max shrink rounded-xl bg-white p-4 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5">
+            <button
+              onClick={() => onCLickCreateFile()}
+              className="flex justify-start p-1"
+            >
+              <AppSVGIcon
+                customclass={"h-5 w-5 text-gray-400 mr-2"}
+                icon={"fileIcon"}
+              ></AppSVGIcon>
+              Create File
             </button>
-
-            {isMenuOpen && (
-                <div className="absolute left-2 z-10 mt-5 flex w-screen max-w-min -translate-x-1/2 px-4">
-                    <div className="w-max shrink rounded-xl bg-white p-4 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5">
-                        <button onClick={() => onCLickCreateFile()} className="flex p-1 justify-start">
-                            <AppSVGIcon customclass={'h-5 w-5 text-gray-400 mr-2'} icon={'fileIcon'}></AppSVGIcon>
-                            Create File
-                        </button>
-                        <button onClick={() => onCLickCreateFolder()} className="flex p-1 justify-start">
-                            <AppSVGIcon customclass={'h-5 w-5 text-gray-400 mr-2'} icon={'folderIcon'}></AppSVGIcon>
-                            Create Folder
-                        </button>
-                    </div>
-                </div>
-            )}
+            <button
+              onClick={() => onCLickCreateFolder()}
+              className="flex justify-start p-1"
+            >
+              <AppSVGIcon
+                customclass={"h-5 w-5 text-gray-400 mr-2"}
+                icon={"folderIcon"}
+              ></AppSVGIcon>
+              Create Folder
+            </button>
+          </div>
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
 export default FlyoutMenuCreate;
