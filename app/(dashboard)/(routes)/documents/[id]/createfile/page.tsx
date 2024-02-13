@@ -102,7 +102,7 @@ const DocumentCreatePage = () => {
   };
 
   useEffect(() => {
-    if (!id) return;
+    if (!id || !isEdit) return;
     const getFileDetails = async () => {
       const response = await axios?.get(`/api/documents/get/file?id=${id}`);
       console.log(response.data.data)

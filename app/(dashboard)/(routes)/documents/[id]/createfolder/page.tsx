@@ -49,7 +49,7 @@ const DocumentCreatePage = () => {
   };
 
   useEffect(() => {
-    if (!id) return;
+    if (!id || !isEdit) return;
     const getFolderDetails = async () => {
       const response = await axios?.get(`/api/documents/get/folder?id=${id}`);
       setFolderName(response?.data?.data?.name);
