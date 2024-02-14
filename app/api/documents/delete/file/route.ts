@@ -1,4 +1,3 @@
-import createFolder from "@/app/vendor/aws/s3/createFolder";
 import deleteFile from "@/app/vendor/aws/s3/deleteFile";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";

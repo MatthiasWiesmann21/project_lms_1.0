@@ -1,4 +1,3 @@
-import createFolder from "@/app/vendor/aws/s3/createFolder";
 import getS3SignedUrl from "@/app/vendor/aws/s3/getS3SignedUrl";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";

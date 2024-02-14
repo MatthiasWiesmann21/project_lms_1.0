@@ -1,6 +1,6 @@
 "use client";
-import Link from "next/link";
-import { useParams, usePathname, useRouter } from "next/navigation";
+
+import { useParams  } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 

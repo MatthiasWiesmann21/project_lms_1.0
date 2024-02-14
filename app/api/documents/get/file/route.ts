@@ -1,9 +1,6 @@
-import createFolder from "@/app/vendor/aws/s3/createFolder";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
-import { NextApiRequest } from "next";
-import { NextRequest, NextResponse } from "next/server";
-import { isTeacher } from "@/lib/teacher";
+import { NextResponse } from "next/server";
 
 export async function GET(req: any) {
   // POST /api/upload

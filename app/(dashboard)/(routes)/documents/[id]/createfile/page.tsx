@@ -1,12 +1,9 @@
 "use client";
 
-import FolderTree, { FolderTreeProps } from "../../_components/folder-tree";
-
 import { useEffect, useState } from "react";
 import axios from "axios";
-import AssetsTable from "../../_components/asset-table";
 import PathMaker from "../../_components/path-maker";
-import { useParams, usePathname } from "next/navigation";
+import { useParams } from "next/navigation";
 
 type Params = {
   id: string;
@@ -15,7 +12,6 @@ type Params = {
 
 const DocumentCreatePage = () => {
   const [file, setFile] = useState(null);
-  const [folderName, setFolderName] = useState("");
   const [fileName, setFileName] = useState("");
   const [parentId, setParentId] = useState("");
   const [isPublic, setPublic] = useState(false);

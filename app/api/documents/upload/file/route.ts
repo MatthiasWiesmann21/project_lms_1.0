@@ -1,10 +1,8 @@
 import createFolder from "@/app/vendor/aws/s3/createFolder";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
-import { FileStatus } from "@prisma/client";
 import { NextResponse } from "next/server";
 import { v4 as uuidv4, v4 } from "uuid";
-import { createReadStream } from "fs";
 import { getS3Client } from "@/app/vendor/aws/s3/getS3Client";
 import { Upload } from "@aws-sdk/lib-storage";
 import { NextApiResponse } from "next";
