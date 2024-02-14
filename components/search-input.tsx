@@ -14,9 +14,9 @@ export const SearchInput = () => {
 
   const searchParams = useSearchParams();
   const router = useRouter();
-  const pathname = usePathname();
+  const pathname = usePathname() ?? '';
 
-  const currentCategoryId = searchParams.get("categoryId");
+  const currentCategoryId = searchParams?.get("categoryId"); // Add null check using optional chaining operator
 
   useEffect(() => {
     const url = qs.stringifyUrl({
