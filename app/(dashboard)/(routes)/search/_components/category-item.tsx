@@ -25,13 +25,14 @@ export const CategoryItem = ({
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const currentCategoryId = searchParams.get("categoryId");const currentTitle = searchParams.get("title");
+  const currentCategoryId = searchParams?.get("categoryId");
+  const currentTitle = searchParams?.get("title");
 
   const isSelected = currentCategoryId === value;
 
   const onClick = () => {
     const url = qs.stringifyUrl({
-      url: pathname,
+      url: pathname || "", // Ensure pathname is of type string
       query: {
         title: currentTitle,
         categoryId: isSelected ? null : value,
