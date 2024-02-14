@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import AppSVGIcon from "@/components/appsvgicon";
+import { Files, FilesIcon, MoreVertical, PencilIcon, Trash2Icon, TrashIcon } from "lucide-react";
 
 interface FlyoutMenuSettingProps {
   index: number;
@@ -51,7 +52,7 @@ const FlyoutMenuSetting: React.FC<FlyoutMenuSettingProps> = ({
   return (
     <div className="flyout-create relative">
       <div onClick={handleButtonClick} className="cursor-pointer">
-        <AppSVGIcon customclass={"h-5"} icon={"contextMenuIcon"}></AppSVGIcon>
+        <MoreVertical />
       </div>
 
       {isMenuOpen === `${index}${type}` && (
@@ -59,33 +60,24 @@ const FlyoutMenuSetting: React.FC<FlyoutMenuSettingProps> = ({
           className="absolute left-2 z-50 mt-5 flex w-screen max-w-min -translate-x-1/2 px-4"
           onClick={handleMenuClick}
         >
-          <div className="w-max shrink rounded-xl bg-white p-4 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5">
+          <div className="w-max shrink rounded-xl bg-white p-2 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5">
             {/* <a href="#" className="flex justify-start p-1"> */}
             <a onClick={onEditClick} className="flex justify-start p-1">
-              <AppSVGIcon
-                customclass={"mr-3 h-5"}
-                icon={"editIcon"}
-              ></AppSVGIcon>
+              <PencilIcon className="mr-3 h-6" size={18} />
               Edit
             </a>
             <button
               className="flex justify-start p-1"
               onClick={() => onRenameClick()}
             >
-              <AppSVGIcon
-                customclass={"mr-3 h-5"}
-                icon={"renameIcon"}
-              ></AppSVGIcon>
+              <FilesIcon className="mr-3 h-5" size={18} />
               Rename
             </button>
             <button
               className="flex justify-start p-1"
               onClick={() => onDeleteClick()}
             >
-              <AppSVGIcon
-                customclass={"mr-3 h-5"}
-                icon={"deleteIcon"}
-              ></AppSVGIcon>
+              <Trash2Icon className="mr-3 h-5" size={18} />
               Delete
             </button>
           </div>

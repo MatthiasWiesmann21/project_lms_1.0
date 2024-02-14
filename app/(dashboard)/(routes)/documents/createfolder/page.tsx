@@ -49,16 +49,16 @@ const DocumentCreatePage = () => {
   };
 
   return (
-    <div className="mx-4 my-4">
+    <div className="mx-4 my-5">
       <div className="my-2 sm:flex-auto">
-        <h1 className="text-2xl font-semibold leading-6 text-gray-600 ">
+        <h1 className="text-2xl font-semibold leading-6 text-gray-600 dark:text-gray-200">
           Create a Folder
         </h1>
       </div>
       <div>
         <label
           htmlFor="name"
-          className="block text-sm font-medium leading-6 text-gray-900"
+          className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
         >
           Name *
         </label>
@@ -68,7 +68,7 @@ const DocumentCreatePage = () => {
             name="name"
             id="name"
             onChange={(e) => setFolderName(e.target.value)}
-            className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+            className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
             placeholder="Please enter folder name"
           />
         </div>
@@ -77,8 +77,8 @@ const DocumentCreatePage = () => {
         <button
           onClick={() => setPublic(!isPublic)}
           type="button"
-          className={`${isPublic && "bg-sky-600"} ${
-            !isPublic && "bg-gray-200"
+          className={`${isPublic && "bg-sky-600 dark:bg-gray-600"} ${
+            !isPublic && "bg-gray-200 dark:bg-gray-400"
           } relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out`}
           role="switch"
           aria-checked="false"
@@ -92,7 +92,7 @@ const DocumentCreatePage = () => {
           ></span>
         </button>
         <span className="ml-3 text-sm" id="annual-billing-label">
-          <span className="font-medium text-gray-900">Public</span>
+          <span className="font-medium text-gray-900 dark:text-gray-300">Public</span>
         </span>
       </div>
       <div className="mt-4 flex flex-row-reverse">

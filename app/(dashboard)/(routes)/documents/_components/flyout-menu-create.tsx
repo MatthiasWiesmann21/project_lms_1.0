@@ -67,17 +67,17 @@ const FlyoutMenuCreate = () => {
           <div className="w-max shrink rounded-xl bg-white p-4 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5">
             <button
               onClick={() => onCLickCreateFile()}
-              className="flex justify-start py-1"
+              className="flex justify-start py-1 group"
             >
-              <FilePlus className="mr-1 hover:text-gray-400"/>
-              <p className="hover:text-gray-400">Create File</p>
+              <FilePlus className="mr-1 group-hover:text-gray-400"/>
+              <p className="group-hover:text-gray-400">Create File</p>
             </button>
             <button
               onClick={() => onCLickCreateFolder()}
-              className="flex justify-start py-1"
+              className="flex justify-start py-1 group"
             >
-              <FolderPlus className="mr-1 hover:text-gray-400"/>
-              <p className="hover:text-gray-400">Create Folder</p>
+              <FolderPlus className="mr-1 group-hover:text-gray-400 "/>
+              <p className="group-hover:text-gray-400">Create Folder</p>
             </button>
           </div>
         </div>

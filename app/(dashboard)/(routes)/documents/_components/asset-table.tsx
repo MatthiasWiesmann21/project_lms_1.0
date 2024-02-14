@@ -8,7 +8,7 @@ import { useAuth } from "@clerk/nextjs";
 import FlyoutMenuCreate from "./flyout-menu-create";
 import FlyoutMenuSetting from "./flyout-menu-setting";
 import Modal from "react-modal";
-import { Download, FolderOpen } from "lucide-react";
+import { Download, File, FileText, FolderOpen } from "lucide-react";
 
 export interface FolderTreeProps {
   name: string;
@@ -161,7 +161,7 @@ const AssetsTable: React.FC = (props: any) => {
   };
 
   return (
-    <div className="overflow-hidden px-4 py-4 sm:px-2 lg:px-4 dark:bg-[#313338]">
+    <div className="overflow-hidden px-2 py-4 sm:px-2 lg:px-2 dark:bg-[#313338]">
       <Modal
         isOpen={modalIsOpen && renamingItem !== null}
         onRequestClose={closeModal}
@@ -180,7 +180,7 @@ const AssetsTable: React.FC = (props: any) => {
               type="text"
               name="name"
               id="name"
-              className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
               placeholder="Enter the new name"
               defaultValue={renamingItem?.name}
               onChange={(e) => {
@@ -216,7 +216,7 @@ const AssetsTable: React.FC = (props: any) => {
         contentLabel="Rename Modal"
       >
         <div>
-          <p>Are you sure you want to delete?</p>
+          <p className="dark:text-gray-900">Are you sure you want to delete?</p>
         </div>
         <div className="mt-4 flex justify-center">
           <button
@@ -319,7 +319,7 @@ const AssetsTable: React.FC = (props: any) => {
                               onClick={() =>
                                 (location.href = `${currentDocPath}${item.id}`)
                               }
-                              className="p-2 mr-3 cursor-pointer rounded bg-slate-300 dark:bg-slate-600"
+                              className="p-3 mr-3 m-1 cursor-pointer rounded bg-slate-300 dark:bg-slate-600"
                             >
                               <FolderOpen />
                             </div>
@@ -334,6 +334,10 @@ const AssetsTable: React.FC = (props: any) => {
                           </td>
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-200">
                             {formatDate(item.createdAt)}
+                          </td>
+                          <td
+                            className={`relative whitespace-nowrap px-3 text-sm text-gray-500`}
+                          >
                           </td>
                           <td
                             className={`${!isTeacher(userId) && "hidden"
@@ -367,8 +371,8 @@ const AssetsTable: React.FC = (props: any) => {
                         <tr key={i}>
                           <td className="relative px-7 sm:w-12 sm:px-6">
                             {/* <input type="checkbox" className="absolute left-1 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" /> */}
-                            <div className="p-2 mr-3 cursor-not-allowed rounded bg-slate-300 dark:bg-slate-600">
-                              <FolderOpen />
+                            <div className="p-3 mr-3 m-1 cursor-not-allowed rounded bg-slate-300 dark:bg-slate-600">
+                              <File />
                             </div>
                           </td>
                           <td className="cursor-not-allowed whitespace-nowrap py-4 pr-3 text-sm font-medium text-gray-900 dark:text-gray-200">
@@ -376,6 +380,18 @@ const AssetsTable: React.FC = (props: any) => {
                           </td>
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-200">
                             {formatDate(item.createdAt)}
+                          </td>
+                          <td
+                            className={`relative cursor-pointer whitespace-nowrap px-3 text-sm text-gray-500`}
+                          >
+                            <div
+                              className=" "
+                              onClick={() =>
+                                handleDownload(item.key, item.name)
+                              }
+                            >
+                              <Download className="text-gray-200" />
+                            </div>
                           </td>
                           <td
                             className={`${!isTeacher(userId) && "hidden"
@@ -399,18 +415,7 @@ const AssetsTable: React.FC = (props: any) => {
                               />
                             </div>
                           </td>
-                          <td
-                            className={`relative cursor-pointer whitespace-nowrap px-3 text-sm text-gray-500`}
-                          >
-                            <div
-                              className=" "
-                              onClick={() =>
-                                handleDownload(item.key, item.name)
-                              }
-                            >
-                              <Download />
-                            </div>
-                          </td>
+                          
                         </tr>
                       )
                   )}
