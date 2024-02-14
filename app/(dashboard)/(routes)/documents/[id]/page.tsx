@@ -1,13 +1,16 @@
 "use client";
 
 import PathMaker from "../_components/path-maker";
-import { usePathname } from "next/navigation";
+import { usePathname, useParams } from "next/navigation";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { DocumentFolderTree } from "../page";
 import AssetsTable from "./../_components/asset-table";
 
 const DocumentPage = () => {
+  const [file, setFile] = useState(null);
+  const [folderName, setFolderName] = useState("");
   const parentKey = usePathname();
 
   console.log({parentKey})
@@ -15,7 +18,27 @@ const DocumentPage = () => {
   const [folderStructure, setFolderStructure] =
     useState<DocumentFolderTree | null>(null);
 
+const createFolder = async () => {
+  if (folderName == null || folderName.length < 1) {
+    return;
+  }
+  console.log({ folderName });
+  try {
+    const parentKeyWithSlash = parentKey ? parentKey.replace("/documents/", "") + "/" : "";
+    const response = await axios.post(`/api/documents/upload/folder`, {
+      folderName: folderName,
+      parentKey: parentKeyWithSlash,
+    });
+    setFolderName("");
+  } catch (e) {
+    console.log(e);
+  }
+};
+
   const getFolder = async () => {
+    if (parentKey == null) {
+      return;
+    }
     const response = await axios.get(`/api/documents/list?key=${parentKey.replace('/documents/', '')}`);
     setFolderStructure(response.data.data);
   };
