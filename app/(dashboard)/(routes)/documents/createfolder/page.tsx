@@ -1,24 +1,13 @@
 "use client";
 
-import FolderTree, { FolderTreeProps } from "../_components/folder-tree";
-
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
-import AssetsTable from "../_components/asset-table";
-import { useParams, usePathname } from "next/navigation";
 
 const DocumentCreatePage = () => {
-  const [file, setFile] = useState(null);
   const [folderName, setFolderName] = useState("");
-  const [fileName, setFileName] = useState("");
   const [isPublic, setPublic] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const parentKey = usePathname();
-
-  const handleFileChange = (event: any) => {
-    setFile(event.target.files[0]);
-  };
 
   const createFolder = async () => {
     if (folderName == null || folderName.length < 1) {

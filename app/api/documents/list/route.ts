@@ -1,8 +1,7 @@
 import createFolder from "@/app/vendor/aws/s3/createFolder";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
-import { NextApiRequest } from "next";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { isTeacher } from "@/lib/teacher";
 
 const getOrCreateParentFolder = async (userId: string, parentKey?: string) => {

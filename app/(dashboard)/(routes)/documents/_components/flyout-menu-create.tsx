@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AppSVGIcon from "@/components/appsvgicon";
-import { useParams, usePathname } from "next/navigation";
+import { useParams } from "next/navigation";
+import { FilePlus, FolderPlus, Plus, PlusIcon } from "lucide-react";
 
 type Params = {
   id: string;
@@ -13,8 +14,6 @@ const FlyoutMenuCreate = () => {
   const handleButtonClick = () => {
     setMenuOpen(!isMenuOpen);
   };
-
-  const parentKey = usePathname();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -31,14 +30,6 @@ const FlyoutMenuCreate = () => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
-
-  const setLocalStorageItem = (key: string, value: string) => {
-    try {
-      localStorage.setItem(key, JSON.stringify(value));
-    } catch (error) {
-      console.error("Error setting local storage item:", error);
-    }
-  };
 
   const onCLickCreateFile = async () => {
     if (!id) {
@@ -65,12 +56,9 @@ const FlyoutMenuCreate = () => {
       <button
         onClick={handleButtonClick}
         type="button"
-        className="block flex rounded-md bg-gray-300 px-3 py-2 text-center text-sm font-semibold text-gray-600 shadow-xl hover:bg-gray-200"
+        className="flex rounded-md bg-gray-300 px-3 py-2 text-center text-sm font-semibold text-gray-600 shadow-md hover:bg-gray-100"
       >
-        <AppSVGIcon
-          customclass={"h-5 w-5 text-gray-400"}
-          icon={"plusIcon"}
-        ></AppSVGIcon>
+        <PlusIcon />
         Create
       </button>
 
@@ -79,23 +67,17 @@ const FlyoutMenuCreate = () => {
           <div className="w-max shrink rounded-xl bg-white p-4 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5">
             <button
               onClick={() => onCLickCreateFile()}
-              className="flex justify-start p-1"
+              className="flex justify-start py-1"
             >
-              <AppSVGIcon
-                customclass={"h-5 w-5 text-gray-400 mr-2"}
-                icon={"fileIcon"}
-              ></AppSVGIcon>
-              Create File
+              <FilePlus className="mr-1 hover:text-gray-400"/>
+              <p className="hover:text-gray-400">Create File</p>
             </button>
             <button
               onClick={() => onCLickCreateFolder()}
-              className="flex justify-start p-1"
+              className="flex justify-start py-1"
             >
-              <AppSVGIcon
-                customclass={"h-5 w-5 text-gray-400 mr-2"}
-                icon={"folderIcon"}
-              ></AppSVGIcon>
-              Create Folder
+              <FolderPlus className="mr-1 hover:text-gray-400"/>
+              <p className="hover:text-gray-400">Create Folder</p>
             </button>
           </div>
         </div>

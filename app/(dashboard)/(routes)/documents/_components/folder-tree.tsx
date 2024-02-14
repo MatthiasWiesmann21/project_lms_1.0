@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import { DocumentFolderTree } from "../page";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
-import { Progress } from "@/components/ui/progress";
 
 export interface FolderTreeProps {
   name: string;

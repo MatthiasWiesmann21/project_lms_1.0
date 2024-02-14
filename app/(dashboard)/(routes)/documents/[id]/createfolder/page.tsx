@@ -1,11 +1,8 @@
 "use client";
 
-import FolderTree, { FolderTreeProps } from "../../_components/folder-tree";
-
 import { useEffect, useState } from "react";
 import axios from "axios";
-import AssetsTable from "../../_components/asset-table";
-import { useParams, usePathname } from "next/navigation";
+import { useParams } from "next/navigation";
 import PathMaker from "../../_components/path-maker";
 
 type Params = {
@@ -14,9 +11,7 @@ type Params = {
 };
 
 const DocumentCreatePage = () => {
-  const [file, setFile] = useState(null);
   const [folderName, setFolderName] = useState("");
-  const [fileName, setFileName] = useState("");
   const [isPublic, setPublic] = useState(false);
   const [loading, setLoading] = useState(false);
   const [parentId, setParentId] = useState("");
@@ -43,10 +38,6 @@ const DocumentCreatePage = () => {
     }
   }
   const isEdit = action === "edit";
-
-  const handleFileChange = (event: any) => {
-    setFile(event.target.files[0]);
-  };
 
   useEffect(() => {
     if (!id || !isEdit) return;
@@ -88,24 +79,6 @@ const DocumentCreatePage = () => {
     } catch (e) {
       console.log(e);
       setLoading(false);
-    }
-  };
-
-  const getLocalStorageItem = (key: string) => {
-    try {
-      const storedValue = localStorage.getItem(key);
-      return storedValue ? JSON.parse(storedValue) : null;
-    } catch (error) {
-      console.error("Error getting local storage item:", error);
-      return null;
-    }
-  };
-
-  const removeLocalStorageItem = (key: string) => {
-    try {
-      localStorage.removeItem(key);
-    } catch (error) {
-      console.error("Error removing local storage item:", error);
     }
   };
 
