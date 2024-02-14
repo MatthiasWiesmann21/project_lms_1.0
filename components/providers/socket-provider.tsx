@@ -32,8 +32,19 @@ export const SocketProvider = ({
 
   useEffect(() => {
     const socketInstance = new (ClientIO as any)(process.env.NEXT_PUBLIC_SITE_URL!, {
-      path: "/api/chat/socket/io",
+      path: "/api/socket/io",
       addTrailingSlash: false,
+    });
+
+    socketInstance.on("connect_error", (err: any) => {
+      // the reason of the error, for example "xhr poll error"
+      console.log(err.message);
+    
+      // some additional description, for example the status code of the initial HTTP response
+      console.log(err.description);
+    
+      // some additional context, for example the XMLHttpRequest object
+      console.log(err);
     });
 
     socketInstance.on("connect", () => {

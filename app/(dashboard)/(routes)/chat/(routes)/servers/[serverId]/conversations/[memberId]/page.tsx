@@ -76,10 +76,10 @@ const MemberIdPage = async ({
             name={otherMember.profile.name}
             chatId={conversation.id}
             type="conversation"
-            apiUrl="/api/chat/socket/direct-messages"
+            apiUrl="/api/socket/direct-messages"
             paramKey="conversationId"
             paramValue={conversation.id}
-            socketUrl="/api/chat/socket/direct-messages"
+            socketUrl="/api/socket/direct-messages"
             socketQuery={{
               conversationId: conversation.id,
             }}
@@ -87,7 +87,7 @@ const MemberIdPage = async ({
           <ChatInput
             name={otherMember.profile.name}
             type="conversation"
-            apiUrl="/api/chat/socket/direct-messages"
+            apiUrl="/api/socket/direct-messages"
             query={{
               conversationId: conversation.id,
             }}
