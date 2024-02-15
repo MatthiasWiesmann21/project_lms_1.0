@@ -50,7 +50,8 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
           variant="success"
         />
       </div>
-      <CoursesList items={...purchasedCourses} />
+    
+      <CoursesList items={purchasedCourses}/>
     </div>
   );
 };

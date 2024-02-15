@@ -10,11 +10,6 @@ import PublicAssetsTable from "./_components/public-asset-table";
 import Image from "next/image";
 import noFolder from "../../../../assets/icons/no folder.png";
 import { useParams, usePathname } from "next/navigation";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: 'Documents',
-}
 
 export type DocumentFolderTree = {
   name: string;
