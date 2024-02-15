@@ -2,6 +2,11 @@ import { NavigationSidebar } from "@/components/navigation/navigation-sidebar";
 import { ModalProvider } from "@/components/providers/modal-provider";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { SocketProvider } from "@/components/providers/socket-provider";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Chat',
+}
 
 const MainLayout = async ({
   children

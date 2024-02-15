@@ -7,6 +7,11 @@ import { getCourses } from "@/actions/get-courses";
 import { CoursesList } from "@/components/courses-list";
 
 import { Categories } from "./_components/categories";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Browse',
+}
 
 interface SearchPageProps {
   searchParams: {

@@ -3,6 +3,11 @@ import { PostList } from "./_components/post-list";
 import { UserAvatar } from "@/components/user-avatar";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: 'News',
+  }
 
 const NewsPage = async () => {
 
