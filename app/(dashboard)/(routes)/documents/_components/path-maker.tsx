@@ -1,9 +1,8 @@
 "use client";
 
-import { useParams  } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Chevron } from "@livekit/components-react";
 import { ChevronRight, HomeIcon } from "lucide-react";
 
 type Params = {

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import AppSVGIcon from "@/components/appsvgicon";
-import { Files, FilesIcon, MoreVertical, PencilIcon, Trash2Icon, TrashIcon } from "lucide-react";
+import { FilesIcon, MoreVertical, PencilIcon, Trash2Icon, } from "lucide-react";
 
 interface FlyoutMenuSettingProps {
   index: number;

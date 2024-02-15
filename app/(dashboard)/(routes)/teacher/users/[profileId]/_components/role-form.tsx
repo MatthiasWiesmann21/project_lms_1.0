@@ -8,6 +8,7 @@ import { Pencil } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { Course, Profile } from "@prisma/client";
 
 import {
   Form,
@@ -16,26 +17,26 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { Textarea } from "@/components/ui/textarea";
+import { Combobox } from "@/components/ui/combobox";
 
-interface RoleFormProps {
-  initialData: {
-    role: string;
-  };
+interface CategoryFormProps {
+  initialData: Profile;
   profileId: string;
+  options: { label: string; value: string; }[];
 };
 
 const formSchema = z.object({
-  role: z.string().min(1, {
-    message: "Title is required",
-  }),
+  role: z.string().min(1),
 });
 
 export const RoleForm = ({
   initialData,
-  profileId
-}: RoleFormProps) => {
+  profileId,
+  options,
+}: CategoryFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const toggleEdit = () => setIsEditing((current) => !current);
@@ -44,7 +45,9 @@ export const RoleForm = ({
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData,
+    defaultValues: {
+      role: initialData?.role || ""
+    },
   });
 
   const { isSubmitting, isValid } = form.formState;
@@ -60,6 +63,8 @@ export const RoleForm = ({
     }
   }
 
+  const selectedOption = options.find((option) => option.value === initialData.role);
+
   return (
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
@@ -70,14 +75,17 @@ export const RoleForm = ({
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit title
+              Edit category
             </>
           )}
         </Button>
       </div>
       {!isEditing && (
-        <p className="text-sm mt-2">
-          {initialData.role}
+        <p className={cn(
+          "text-sm mt-2",
+          !initialData.role && "text-slate-500 italic"
+        )}>
+          {selectedOption?.label || "No category"}
         </p>
       )}
       {isEditing && (
@@ -92,9 +100,8 @@ export const RoleForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      disabled={isSubmitting}
-                      placeholder="e.g. 'Advanced web development'"
+                    <Combobox
+                      options={...options}
                       {...field}
                     />
                   </FormControl>

@@ -8,6 +8,7 @@ import { Pencil } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { Course, Profile } from "@prisma/client";
 
 import {
   Form,
@@ -16,26 +17,28 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { Textarea } from "@/components/ui/textarea";
+import { Combobox } from "@/components/ui/combobox";
 
-interface PackageFormProps {
+interface CategoryFormProps {
   initialData: {
     clientPackage: string;
   };
   containerId: string;
+  options: { label: string; value: string; }[];
 };
 
 const formSchema = z.object({
-  clientPackage: z.string().min(1, {
-    message: "Title is required",
-  }),
+  clientPackage: z.string().min(1),
 });
 
 export const PackageForm = ({
   initialData,
-  containerId
-}: PackageFormProps) => {
+  containerId,
+  options,
+}: CategoryFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const toggleEdit = () => setIsEditing((current) => !current);
@@ -44,7 +47,9 @@ export const PackageForm = ({
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData,
+    defaultValues: {
+      clientPackage: initialData?.clientPackage || ""
+    },
   });
 
   const { isSubmitting, isValid } = form.formState;
@@ -60,24 +65,29 @@ export const PackageForm = ({
     }
   }
 
+  const selectedOption = options.find((option) => option.value === initialData.clientPackage);
+
   return (
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Client Package
+        Container Package
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit title
+              Edit category
             </>
           )}
         </Button>
       </div>
       {!isEditing && (
-        <p className="text-sm mt-2">
-          {initialData.clientPackage}
+        <p className={cn(
+          "text-sm mt-2",
+          !initialData.clientPackage && "text-slate-500 italic"
+        )}>
+          {selectedOption?.label || "No category"}
         </p>
       )}
       {isEditing && (
@@ -92,9 +102,8 @@ export const PackageForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      disabled={isSubmitting}
-                      placeholder="e.g. 'Advanced web development'"
+                    <Combobox
+                      options={...options}
                       {...field}
                     />
                   </FormControl>

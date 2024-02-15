@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import AppSVGIcon from "@/components/appsvgicon";
 import { useParams } from "next/navigation";
 import { FilePlus, FolderPlus, Plus, PlusIcon } from "lucide-react";
 
@@ -64,7 +63,7 @@ const FlyoutMenuCreate = () => {
 
       {isMenuOpen && (
         <div className="absolute left-2 z-10 mt-5 flex w-screen max-w-min -translate-x-1/2 px-4">
-          <div className="w-max shrink rounded-xl bg-white p-4 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5">
+          <div className="w-max shrink rounded-xl bg-white p-3 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5">
             <button
               onClick={() => onCLickCreateFile()}
               className="flex justify-start py-1 group"
@@ -76,7 +75,7 @@ const FlyoutMenuCreate = () => {
               onClick={() => onCLickCreateFolder()}
               className="flex justify-start py-1 group"
             >
-              <FolderPlus className="mr-1 group-hover:text-gray-400 "/>
+              <FolderPlus className="mr-1 group-hover:text-gray-400"/>
               <p className="group-hover:text-gray-400">Create Folder</p>
             </button>
           </div>

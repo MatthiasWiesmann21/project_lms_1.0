@@ -14,12 +14,14 @@ export const SearchInput = () => {
 
   const searchParams = useSearchParams();
   const router = useRouter();
-  const pathname = usePathname() ?? '';
+  const pathname = usePathname();
 
-  const currentCategoryId = searchParams?.get("categoryId"); // Add null check using optional chaining operator
+  // @ts-ignore
+  const currentCategoryId = searchParams.get("categoryId");
 
   useEffect(() => {
     const url = qs.stringifyUrl({
+      // @ts-ignore
       url: pathname,
       query: {
         categoryId: currentCategoryId,

@@ -100,6 +100,11 @@ const ContainerIdPage = async ({
             <PackageForm
               initialData={{ clientPackage: container.clientPackage || "" }}
               containerId={container.id}
+              options={[
+                { label: "STARTER", value: "STARTER" },
+                { label: "COMMUNITY", value: "COMMUNITY" },
+                { label: "EXPERT", value: "EXPERT" },
+              ]}
             />
           </div>
         </div>

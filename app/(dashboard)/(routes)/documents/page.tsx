@@ -1,10 +1,15 @@
 "use client";
 
+import FolderTree, { FolderTreeProps } from "./_components/folder-tree";
+
 import { useEffect, useState } from "react";
 import axios from "axios";
 import AssetsTable from "./_components/asset-table";
+import Tabs from "./_components/tabs";
+import PublicAssetsTable from "./_components/public-asset-table";
 import Image from "next/image";
 import noFolder from "../../../../assets/icons/no folder.png";
+import { useParams, usePathname } from "next/navigation";
 
 export type DocumentFolderTree = {
   name: string;
@@ -23,10 +28,26 @@ export type DocumentFile = {
 const DocumentPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [file, setFile] = useState(null);
+  const [folderName, setFolderName] = useState("");
+  const [currentTab, setCurrentTab] = useState(1);
   const [folderStructure, setFolderStructure] = useState<any>(null);
   const [publicFolderStructure, setPublicFolderStructure] =
     useState<DocumentFolderTree | null>(null);
 
+  const createFolder = async () => {
+    if (folderName == null || folderName.length < 1) {
+      return;
+    }
+    try {
+      const response = await axios.post(`/api/documents/upload/folder`, {
+        folderName: folderName,
+      });
+      setFolderName("");
+      await getFolder();
+    } catch (e) {
+      console.log(e);
+    }
+  };
   const getFolder = async () => {
     try {
       const response = await axios.get(`/api/documents/list`);
@@ -47,6 +68,12 @@ const DocumentPage = () => {
     //getPublicFolder();
   }, []);
 
+  const handleFolderNameChange = (event: any) => {
+    setFolderName(event.target.value);
+  };
+  const handleFileChange = (event: any) => {
+    setFile(event.target.files[0]);
+  };
   const handleFileUpload = async () => {
     if (file == null) {
       return;

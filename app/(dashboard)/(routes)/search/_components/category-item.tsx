@@ -32,7 +32,8 @@ export const CategoryItem = ({
 
   const onClick = () => {
     const url = qs.stringifyUrl({
-      url: pathname || "", // Ensure pathname is of type string
+      // @ts-ignore
+      url: pathname,
       query: {
         title: currentTitle,
         categoryId: isSelected ? null : value,

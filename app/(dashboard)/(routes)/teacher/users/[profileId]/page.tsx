@@ -78,6 +78,12 @@ const UserIdPage = async ({
             <RoleForm
               initialData={profile}
               profileId={profile.id}
+              options={[
+                { label: "ADMIN", value: "ADMIN" },
+                { label: "OPERATOR", value: "OPERATOR" },
+                { label: "MODERATOR", value: "MODERATOR" },
+                { label: "USER", value: "USER" },
+              ]}
             />
           </div>
         </div>
