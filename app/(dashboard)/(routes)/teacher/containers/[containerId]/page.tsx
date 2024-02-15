@@ -7,10 +7,8 @@ import { IconBadge } from "@/components/icon-badge";
 import { Banner } from "@/components/banner";
 
 
-import { ImageForm } from "./_components/image-form";
 import { Actions } from "./_components/actions";
 import { TitleForm } from "./_components/title-form";
-import { LinkForm } from "./_components/link-form";
 import { ShowContainerId } from "./_components/containerid-widget";
 import { PackageForm } from "./_components/package-form";
 
@@ -69,17 +67,13 @@ const ContainerIdPage = async ({
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LayoutGridIcon} />
               <h2 className="text-xl">
-                Customize your Post
+                Customize your Container
               </h2>
               <span className="pl-1 text-xs text-rose-600">*required</span>
             </div>
             <TitleForm
               initialData={container}
               containerId={container.id}
-            />
-            <LinkForm
-                initialData={{ link: container.link || "" }}
-                containerId={container.id}
             />
             <ShowContainerId
             initialData={container}
@@ -93,10 +87,6 @@ const ContainerIdPage = async ({
               </h2>
               <span className="pl-1 text-xs text-rose-600">*required</span>
             </div>
-            <ImageForm
-              initialData={container}
-              containerId={container.id}
-              />
             <PackageForm
               initialData={{ clientPackage: container.clientPackage || "" }}
               containerId={container.id}
