@@ -9,6 +9,7 @@ import { Banner } from "@/components/banner";
 
 import { ImageForm } from "./_components/image-form";
 import { LinkForm } from "./_components/link-form";
+import { ColorForm } from "./_components/color-form";
 
 const CustomizeSettingsPage = async () => {
   const { userId } = auth();
@@ -64,6 +65,10 @@ const CustomizeSettingsPage = async () => {
             <LinkForm
                 initialData={{ link: container.link || "" }}
                 containerId={container.id}
+            />
+            <ColorForm
+                initialData={{ primaryColor: container.primaryColor || "#0369a0" }}
+                containerId={container.id} 
             />
           </div>
           <div>

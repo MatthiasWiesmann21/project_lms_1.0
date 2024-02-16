@@ -15,6 +15,8 @@ model Container {
   link        String?  @db.Text
   imageUrl    String?  @db.Text
   clientPackage String? @db.Text
+
+  primaryColor String? @default("#0369a0")
   
 
   profiles    Profile[]

@@ -23,20 +23,20 @@ import { Input } from "@/components/ui/input";
 
 interface ColorFormProps {
   initialData: {
-    colorCode: string;
+    primaryColor: string;
   };
-  categoryId: string;
+  containerId: string;
 };
 
 const formSchema = z.object({
-  colorCode: z.string().min(1, {
+    primaryColor: z.string().min(1, {
     message: "Color is required",
   }),
 });
 
 export const ColorForm = ({
   initialData,
-  categoryId
+  containerId
 }: ColorFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
@@ -53,8 +53,8 @@ export const ColorForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/category/${categoryId}`, values);
-      toast.success("Category updated");
+      await axios.patch(`/api/containers/${containerId}`, values);
+      toast.success("Container updated");
       toggleEdit();
       router.refresh();
     } catch {
@@ -65,7 +65,7 @@ export const ColorForm = ({
   return (
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Category Color
+        Primary Color
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
@@ -79,10 +79,10 @@ export const ColorForm = ({
       </div>
       {!isEditing && (
         <div
-          style={{ backgroundColor: initialData.colorCode }}
+          style={{ backgroundColor: initialData.primaryColor }}
           className="w-8 h-8 rounded-md mt-2">
         <p className="text-sm mt-3 p-1 pl-10">
-          {initialData.colorCode}
+          {initialData.primaryColor}
         </p>
         </div>
       )}
@@ -94,7 +94,7 @@ export const ColorForm = ({
           >
             <FormField
               control={form.control}
-              name="colorCode"
+              name="primaryColor"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -107,7 +107,7 @@ export const ColorForm = ({
                       />
                   </FormControl>
                   <FormLabel className="p-1">
-                    {field.value || initialData.colorCode}
+                    {field.value || initialData.primaryColor}
                   </FormLabel>
                   <FormMessage />
                 </FormItem>

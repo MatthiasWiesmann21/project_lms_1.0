@@ -100,6 +100,7 @@ const teacherRoutes = [
 ];
 
 export const SidebarRoutes = () => {
+
   const pathname = usePathname();
 
   const isTeacherPage = pathname?.includes("/teacher");
@@ -113,7 +114,7 @@ export const SidebarRoutes = () => {
           key={route.href}
           icon={route.icon}
           label={route.label}
-          href={route.href}
+          href={route.href} 
         />
       ))}
     </div>

@@ -10,6 +10,7 @@ import { isTeacher } from "@/lib/teacher";
 
 import { SearchInput } from "./search-input";
 import { ModeToggle } from "./mode-toggle";
+import { LanguageToggle } from "./language-toggle";
 
 export const NavbarRoutes = () => {
   const { userId } = useAuth();
@@ -29,6 +30,7 @@ export const NavbarRoutes = () => {
           <SearchInput />
         </div> )}
       <div className="flex gap-x-2 ml-auto">
+          <LanguageToggle />
           <ModeToggle />
         {isTeacherPage || isCoursePage ? (
           <Link href="/dashboard">
