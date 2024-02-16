@@ -1,6 +1,4 @@
 /** @type {import('next').NextConfig} */
-const { i18n } = require('./next-i18next.config')
-
 const nextConfig = {
   webpack: (config) => {
     config.externals.push({
@@ -17,4 +15,4 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig, i18n;
+module.exports = nextConfig
