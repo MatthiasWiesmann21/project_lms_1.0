@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { BookOpen } from "lucide-react";
@@ -9,6 +7,7 @@ import { UserAvatar } from "@/components/user-avatar";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { Separator } from "@/components/ui/separator";
+import { Preview } from "@/components/preview";
 
 interface PostCardProps {
   id: string;
@@ -47,16 +46,14 @@ export const PostCard = async ({
           </div>
           </div>
           <Separator />
-            <div className="text-lg md:text-base font-medium line-clamp-2 pt-5">
+            <div className="text-xl md:text-base font-medium line-clamp-2 pt-5">
               {title}
             </div>
             <p className="text-xs pb-2 text-muted-foreground text-[#000000] dark:text-[#ffffff]">
               {category}
             </p>
           </div>
-          <p className="text-sm pb-2 text-[#000000] dark:text-[#ffffff]">
-            {description}
-          </p>
+            <Preview value={description!} />
           <div className="relative aspect-video rounded-md p-2">
           <Image
             fill

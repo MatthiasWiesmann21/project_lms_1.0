@@ -1,5 +1,6 @@
 "use client";
 
+import { Clipboard, EyeIcon, EyeOffIcon } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -36,18 +37,22 @@ export const ShowContainerId = ({ initialData }: ContainerIdProps) => {
       <p className={`text-sm mt-2 ${isBlurred ? "blur-sm" : ""}`}>
         {initialData.id}
       </p>
-      <div>
+      <div className="flex justify-end pt-1">
           <button
-            className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+            className="mr-2 bg-slate-800 hover:bg-slate-600 text-white font-sm py-1 px-1 rounded"
             onClick={handleToggleBlur}
           >
-            {isBlurred ? "Show ID" : "Hide ID"}
+            {isBlurred ? (
+              <EyeIcon />
+            ) : (
+              <EyeOffIcon />
+            )}
           </button>
           <button
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded"
+            className="bg-slate-800 hover:bg-slate-600 text-white font-sm py-1 px-1 rounded"
             onClick={handleCopyId}
           >
-            Copy ID
+            <Clipboard />
           </button>
         </div>
     </div>

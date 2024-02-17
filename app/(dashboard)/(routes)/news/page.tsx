@@ -11,7 +11,6 @@ export const metadata: Metadata = {
 
 const NewsPage = async () => {
 
-
     const posts = await getPosts(
         { 
             // @ts-ignore
