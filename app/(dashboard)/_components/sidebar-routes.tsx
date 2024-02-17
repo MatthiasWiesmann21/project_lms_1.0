@@ -2,6 +2,7 @@
 
 import {
   BarChartIcon,
+  ClapperboardIcon,
   Compass,
   FolderOpen,
   Globe2,
@@ -18,6 +19,7 @@ import {
   Server,
   ServerIcon,
   UserCircle2Icon,
+  Video,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -40,9 +42,9 @@ const guestRoutes = [
     href: "/news",
   },
   {
-    icon: Mail,
-    label: "Newsletter",
-    href: "/newsletter",
+    icon: Video,
+    label: "Live Event",
+    href: "/live-event",
   },
   {
     icon: MessageCircle,
@@ -68,19 +70,14 @@ const teacherRoutes = [
     href: "/teacher/posts",
   },
   {
+    icon: ClapperboardIcon,
+    label: "Live Event",
+    href: "/teacher/live-event",
+  },
+  {
     icon: LayoutGridIcon,
     label: "Categories",
     href: "/teacher/categories",
-  },
-  {
-    icon: MailIcon,
-    label: "Mail List",
-    href: "/teacher/mail-list",
-  },
-  {
-    icon: BarChartIcon,
-    label: "Analytics",
-    href: "/teacher/analytics",
   },
   {
     icon: PaletteIcon,
@@ -91,6 +88,11 @@ const teacherRoutes = [
     icon: UserCircle2Icon,
     label: "Users",
     href: "/teacher/users",
+  },
+  {
+    icon: BarChartIcon,
+    label: "Analytics",
+    href: "/teacher/analytics",
   },
   {
     icon: ServerIcon,
