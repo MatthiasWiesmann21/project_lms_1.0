@@ -9,7 +9,6 @@ import { DocumentFolderTree } from "../page";
 import AssetsTable from "./../_components/asset-table";
 
 const DocumentPage = () => {
-  const [file, setFile] = useState(null);
   const [folderName, setFolderName] = useState("");
   const parentKey = usePathname();
 

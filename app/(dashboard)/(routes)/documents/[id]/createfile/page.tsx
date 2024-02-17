@@ -14,7 +14,7 @@ const DocumentCreatePage = () => {
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState("");
   const [parentId, setParentId] = useState("");
-  const [isPublic, setPublic] = useState(false);
+  const [isPublic, setPublic] = useState(true);
   const [loading, setLoading] = useState(false);
   const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   const encodedObj = useParams()?.id as string;

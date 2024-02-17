@@ -12,7 +12,7 @@ type Params = {
 
 const DocumentCreatePage = () => {
   const [folderName, setFolderName] = useState("");
-  const [isPublic, setPublic] = useState(false);
+  const [isPublic, setPublic] = useState(true);
   const [loading, setLoading] = useState(false);
   const [parentId, setParentId] = useState("");
 
@@ -115,8 +115,8 @@ const DocumentCreatePage = () => {
         <button
           onClick={() => setPublic(!isPublic)}
           type="button"
-          className={`${isPublic && "bg-sky-600"} ${
-            !isPublic && "bg-gray-200 dark:bg-gray-600"
+          className={`${isPublic && "bg-sky-600 dark:bg-gray-600"} ${
+            !isPublic && "bg-gray-400"
           } relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out`}
           role="switch"
           aria-checked="false"

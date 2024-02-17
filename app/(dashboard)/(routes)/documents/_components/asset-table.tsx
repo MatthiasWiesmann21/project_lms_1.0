@@ -390,7 +390,7 @@ const AssetsTable: React.FC = (props: any) => {
                                 handleDownload(item.key, item.name)
                               }
                             >
-                              <Download className="text-gray-200" />
+                              <Download className="text-gray-200 w-5 h-5" />
                             </div>
                           </td>
                           <td

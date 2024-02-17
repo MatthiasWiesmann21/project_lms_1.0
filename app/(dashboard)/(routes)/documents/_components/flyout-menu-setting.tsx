@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { FilesIcon, MoreVertical, PencilIcon, Trash2Icon, } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
 interface FlyoutMenuSettingProps {
   index: number;
-  key: string | number;
   onRenameClick: () => void;
   onDeleteClick: () => void;
   onEditClick: () => void;
@@ -13,24 +14,11 @@ interface FlyoutMenuSettingProps {
 }
 
 const FlyoutMenuSetting: React.FC<FlyoutMenuSettingProps> = ({
-  index,
-  key,
   onRenameClick,
   onDeleteClick,
   onEditClick,
-  isMenuOpen,
   setMenuOpen,
-  type,
 }) => {
-  const handleMenuClick = (e: React.MouseEvent) => {
-    e?.stopPropagation();
-  };
-
-  const handleButtonClick = () => {
-    if (`${index}${type}` === isMenuOpen) setMenuOpen("");
-    else setMenuOpen(`${index}${type}`);
-    console.log("i:", index);
-  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -49,40 +37,27 @@ const FlyoutMenuSetting: React.FC<FlyoutMenuSettingProps> = ({
   }, []);
 
   return (
-    <div className="flyout-create relative">
-      <div onClick={handleButtonClick} className="cursor-pointer">
-        <MoreVertical />
-      </div>
-
-      {isMenuOpen === `${index}${type}` && (
-        <div
-          className="absolute left-2 z-50 mt-5 flex w-screen max-w-min -translate-x-1/2 px-4"
-          onClick={handleMenuClick}
-        >
-          <div className="w-max shrink rounded-xl bg-white p-2 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5">
-            {/* <a href="#" className="flex justify-start p-1"> */}
-            <a onClick={onEditClick} className="flex justify-start p-1">
-              <PencilIcon className="mr-3 h-6" size={18} />
-              Edit
-            </a>
-            <button
-              className="flex justify-start p-1"
-              onClick={() => onRenameClick()}
-            >
-              <FilesIcon className="mr-3 h-5" size={18} />
-              Rename
-            </button>
-            <button
-              className="flex justify-start p-1"
-              onClick={() => onDeleteClick()}
-            >
-              <Trash2Icon className="mr-3 h-5" size={18} />
-              Delete
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
+      <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button className="bg-transparent border-0" variant="outline">
+          <MoreVertical className="h-5 w-5" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={onEditClick}>
+        <PencilIcon className="h-4 w-4 mr-2" />
+          Edit
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={onRenameClick}>
+        <FilesIcon className="h-4 w-4 mr-2" />
+          Rename
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={onDeleteClick}>
+        <Trash2Icon className="h-4 w-4 mr-2" />
+          Delete
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

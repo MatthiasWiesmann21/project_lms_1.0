@@ -1,6 +1,5 @@
 "use client";
 
-import FolderTree, { FolderTreeProps } from "../_components/folder-tree";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, usePathname } from "next/navigation";
@@ -12,18 +11,12 @@ type Params = {
 };
 
 const DocumentCreatePage = () => {
-  const [file, setFile] = useState(null);
   const [folderName, setFolderName] = useState("");
-  const [fileName, setFileName] = useState("");
-  const [isPublic, setPublic] = useState(false);
+  const [isPublic, setPublic] = useState(true);
   const [loading, setLoading] = useState(false);
   const [parentId, setParentId] = useState("");
 
   const parentKey = usePathname();
-
-  const handleFileChange = (event: any) => {
-    setFile(event.target.files[0]);
-  };
 
   const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   const encodedObj = useParams()?.id as string;
@@ -97,14 +90,14 @@ const DocumentCreatePage = () => {
         <PathMaker />
       </div>
       <div className="my-2 sm:flex-auto">
-        <h1 className="text-2xl font-semibold leading-6 text-gray-600 ">
+        <h1 className="text-2xl font-semibold leading-6 text-gray-600 dark:text-gray-300">
           {`${isEdit ? "Edit" : "Create"} a Folder`}
         </h1>
       </div>
       <div>
         <label
           htmlFor="name"
-          className="block text-sm font-medium leading-6 text-gray-900"
+          className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
         >
           Name *
         </label>
@@ -115,7 +108,7 @@ const DocumentCreatePage = () => {
             id="name"
             value={folderName}
             onChange={(e) => setFolderName(e.target.value)}
-            className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+            className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
             placeholder="Please enter folder name"
           />
         </div>
@@ -124,8 +117,8 @@ const DocumentCreatePage = () => {
         <button
           onClick={() => setPublic(!isPublic)}
           type="button"
-          className={`${isPublic && "bg-sky-600"} ${
-            !isPublic && "bg-gray-200"
+          className={`${isPublic && "bg-sky-600 dark:bg-gray-600"} ${
+            !isPublic && "bg-gray-400"
           } relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out`}
           role="switch"
           aria-checked="false"
@@ -139,7 +132,7 @@ const DocumentCreatePage = () => {
           ></span>
         </button>
         <span className="ml-3 text-sm" id="annual-billing-label">
-          <span className="font-medium text-gray-900">Public</span>
+          <span className="font-medium text-gray-900 dark:text-gray-300">Public</span>
         </span>
       </div>
       <div className="mt-4 flex flex-row-reverse">
