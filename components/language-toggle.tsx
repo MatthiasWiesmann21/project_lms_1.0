@@ -13,37 +13,40 @@ import {
 
 export function LanguageToggle() {
 
+  const [language, setLanguage] = React.useState("English")
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="bg-transparent border-0" variant="outline" size="icon">
+        <Button className="bg-transparent border-0" variant="outline">
+        <span className="mr-2">{language}</span>
         <Globe className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 tran" />
         <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setLanguage("English")}>
         English
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setLanguage("Deutsch")}>
         Deutsch
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setLanguage("Francaise")}>
         Francaise
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setLanguage("Italiano")}>
          Italiano
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setLanguage("Espanol")}>
         Espanol
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setLanguage("Portugues")}>
          Portugues
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setLanguage("Russian")}>
          Russian
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setLanguage("Mandarin")}>
          Mandarin
         </DropdownMenuItem>
       </DropdownMenuContent>
