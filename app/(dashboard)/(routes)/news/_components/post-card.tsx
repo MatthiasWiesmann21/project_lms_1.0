@@ -53,7 +53,9 @@ export const PostCard = async ({
               {category}
             </p>
           </div>
-            <Preview value={description!} />
+          <div>
+          <Preview value={description!} />
+          </div>
           <div className="relative aspect-video rounded-md p-2">
           <Image
             fill
