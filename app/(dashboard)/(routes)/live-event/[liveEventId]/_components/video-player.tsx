@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Loader2 } from "lucide-react";
-
 
 interface VideoPlayerProps {
   playbackId?: string;
@@ -31,7 +29,7 @@ export const VideoPlayer = ({
     <div className="relative aspect-video">
       {!isReady && (
         <div className="absolute inset-0 flex items-center justify-center bg-slate-800">
-          <p>Youre current Event hasn't started yet please wait until the countdown gets to zero.</p>
+          <p>Youre current Event hasnt started yet please wait until the countdown gets to zero.</p>
         </div>
       )}
       {isReady && (
