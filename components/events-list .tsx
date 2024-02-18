@@ -1,19 +1,18 @@
-import { Category, Course } from "@prisma/client";
-import { EventCard } from "./events-card";
+import { Category, LiveEvent } from "@prisma/client";
 
-type CourseWithProgressWithCategory = Course & {
+import { EventCard } from "@/components/events-card";
+
+type EventsWithProgressWithCategory = LiveEvent & {
   category: Category | null;
-  chapters: { id: string }[];
-  progress: number | null;
 };
 
-interface CoursesListProps {
-  items: CourseWithProgressWithCategory[];
+interface EventsListProps {
+  items: EventsWithProgressWithCategory[];
 }
 
-export const CoursesList = ({
+export const EventsList = ({
   items
-}: CoursesListProps) => {
+}: EventsListProps) => {
   return (
     <div>
       <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-4">
@@ -30,7 +29,7 @@ export const CoursesList = ({
       </div>
       {items.length === 0 && (
         <div className="text-center text-sm text-muted-foreground mt-10">
-          No courses found
+          No Events found
         </div>
       )}
     </div>

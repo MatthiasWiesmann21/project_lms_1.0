@@ -32,6 +32,7 @@ const SearchPage = async ({
   const categories = await db.category.findMany({
     where: {
       isPublished: true,
+      isCourseCategory: true,
       containerId: process.env.CONTAINER_ID
     },
     orderBy: {

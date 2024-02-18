@@ -32,6 +32,7 @@ export const PostList = ({
             createdAt={item.createdAt.toDateString()}
             publisherName={item.publisherName!}
             publisherImageUrl={item.publisherImageUrl!}
+            colorCode={item?.category?.colorCode!}
           />
         ))}
       </div>

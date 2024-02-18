@@ -18,6 +18,7 @@ interface PostCardProps {
   createdAt: string;
   publisherName: string;
   publisherImageUrl: string;
+  colorCode?: string;
 };
 
 export const PostCard = async ({
@@ -28,7 +29,8 @@ export const PostCard = async ({
   description,
   createdAt,
   publisherName,
-  publisherImageUrl
+  publisherImageUrl,
+  colorCode
 }: PostCardProps) => {
 
   return (
@@ -44,14 +46,23 @@ export const PostCard = async ({
               {createdAt}
             </p>
           </div>
+          
           </div>
           <Separator />
-            <div className="text-xl md:text-base font-medium line-clamp-2 pt-5">
-              {title}
-            </div>
-            <p className="text-xs pb-2 text-muted-foreground text-[#000000] dark:text-[#ffffff]">
+          <div className="py-1 px-1 mt-2 pr-2 text-xs border border-slate-300 rounded-full flex items-center gap-x-2 w-fit">
+          {colorCode && (
+            <div
+              style={{ backgroundColor: colorCode }}
+              className="rounded-full w-5 h-5"
+              />
+              )}
+            <div className="truncate">
               {category}
-            </p>
+            </div>
+          </div>
+          <div className="text-lg md:text-lg font-bold">
+            {title}
+          </div>
           </div>
           <div>
           <Preview value={description!} />

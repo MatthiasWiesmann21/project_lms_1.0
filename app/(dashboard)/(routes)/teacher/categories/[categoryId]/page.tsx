@@ -9,6 +9,7 @@ import { Banner } from "@/components/banner";
 import { TitleForm } from "./_components/title-form";
 import { Actions } from "./_components/actions";
 import { ColorForm } from "./_components/color-form";
+import { CategoryTypeForm } from "./_components/categorytype-form";
 
 const CategoryIdPage = async ({
   params
@@ -80,6 +81,10 @@ const CategoryIdPage = async ({
               categoryId={category.id}
             />
             <ColorForm
+              initialData={category}
+              categoryId={category.id}
+            />
+            <CategoryTypeForm
               initialData={category}
               categoryId={category.id}
             />

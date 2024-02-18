@@ -34,6 +34,7 @@ const LiveEventIdPage = async ({
   const categories = await db.category.findMany({
     where: {
       containerId: process.env.CONTAINER_ID,
+      isLiveEventCategory: true,
     },
     orderBy: {
       name: "asc",

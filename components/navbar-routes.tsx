@@ -20,6 +20,7 @@ export const NavbarRoutes = () => {
   const isCoursePage = pathname?.includes("/courses");
   const isDashboardPage = pathname === "/dashboard";
   const isSearchPage = pathname === "/search";
+  const isLiveEventPage = pathname === "/live-event";
 
   return (
     <>
@@ -27,6 +28,9 @@ export const NavbarRoutes = () => {
           <SearchInput />
         </div> )}
         {isDashboardPage && (<div className="hidden md:block">
+          <SearchInput />
+        </div> )}
+        {isLiveEventPage && (<div className="hidden md:block">
           <SearchInput />
         </div> )}
       <div className="flex gap-x-2 ml-auto">
