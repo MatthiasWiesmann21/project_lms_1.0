@@ -18,8 +18,7 @@ export function LanguageToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="bg-transparent border-0" variant="outline">
-        <span className="mr-2">{language}</span>
+        <Button className="bg-transparent border-0 ml-2" variant="outline">
         <Globe className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 tran" />
         <span className="sr-only">Toggle theme</span>
         </Button>
