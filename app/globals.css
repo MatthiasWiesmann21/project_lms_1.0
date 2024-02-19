@@ -87,3 +87,19 @@ body,
 
 @import "~@uploadthing/react/styles.css";
 
+@keyframes spin-left-right {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-20deg);
+  }
+  75% {
+    transform: rotate(20deg);
+  }
+}
+
+.animate-spin-left-right {
+  animation: spin-left-right 1s ease-in-out forwards;
+}
+
