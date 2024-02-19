@@ -10,12 +10,14 @@ interface SidebarItemProps {
   icon: LucideIcon;
   label: string;
   href: string;
+  isNew?: boolean;
 };
 
 export const SidebarItem = ({
   icon: Icon,
   label,
   href,
+  isNew,
 }: SidebarItemProps) => {
   const pathname = usePathname();
   const router = useRouter();
@@ -48,6 +50,11 @@ export const SidebarItem = ({
             )} />
           {label}
         </div>
+        {isNew && (
+          <div className="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-sky-500/10 text-sky-800 ml-auto">
+          New
+        </div>
+        )}
       </button>
   )
 }
