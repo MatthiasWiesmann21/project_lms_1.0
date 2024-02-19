@@ -456,11 +456,6 @@ model LiveEvent {
   price       Float?  @default(0)
   isPublished Boolean @default(false)
 
-  startDate DateTime? @db.DateTime(0)
-  startTime String? @db.Text
-  endDate   DateTime? @db.DateTime(0)
-  endTime   String? @db.Text
-
   containerId String
   container   Container @relation(fields: [containerId], references: [id])
 
