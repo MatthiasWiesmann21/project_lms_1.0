@@ -27,15 +27,15 @@ import { SidebarItem } from "./sidebar-item";
 
 const guestRoutes = [
   {
-    icon: Layout,
-    label: "Dashboard",
-    href: "/dashboard",
-    isNew: false,
-  },
-  {
     icon: Compass,
     label: "Browse",
     href: "/search",
+    isNew: false,
+  },
+  {
+    icon: Layout,
+    label: "Dashboard",
+    href: "/dashboard",
     isNew: false,
   },
   {
