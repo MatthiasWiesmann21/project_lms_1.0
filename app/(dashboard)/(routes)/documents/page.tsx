@@ -10,6 +10,7 @@ import PublicAssetsTable from "./_components/public-asset-table";
 import Image from "next/image";
 import noFolder from "../../../../assets/icons/no folder.png";
 import { useParams, usePathname } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 export type DocumentFolderTree = {
   name: string;
@@ -98,7 +99,9 @@ const DocumentPage = () => {
     }
   };
   if (isLoading) {
-    return <div>Loading</div>;
+    return <div className="flex justify-center items-center min-h-screen">
+      <Loader2 className="h-6 w-6 animate-spin"/>
+      </div>;
   } else if (folderStructure == null) {
     return (
       <div className="flex h-full w-full items-center justify-around">
@@ -107,7 +110,7 @@ const DocumentPage = () => {
     );
   } else
     return (
-      <div className="  ml-2 h-full">
+      <div className="ml-2 h-full">
         {/* <div className=" my-4  flex flex-col">
         <form className="flex">
           <input
