@@ -4,29 +4,32 @@ import { Plus } from "lucide-react";
 
 import { ActionTooltip } from "@/components/action-tooltip";
 import { useModal } from "@/hooks/use-modal-store";
+import { Separator } from "../ui/separator";
+import { useIsAdmin } from "@/lib/roleCheck";
 
 export const NavigationAction = () => {
   const { onOpen } = useModal();
 
   return (
-    <div>
-      <ActionTooltip
-        side="right"
-        align="center"
-        label="Add a server"
-      >
-        <button
-          onClick={() => onOpen("createServer")}
-          className="group flex items-center"
-        >
-          <div className="flex mx-3 h-[48px] w-[48px] rounded-[24px] group-hover:rounded-[16px] transition-all overflow-hidden items-center justify-center bg-background dark:bg-neutral-700 group-hover:bg-[#0b6495]">
-            <Plus
-              className="group-hover:text-white transition text-[#0b6495]"
-              size={25}
-            />
-          </div>
-        </button>
-      </ActionTooltip>
-    </div>
-  )
-}
+    useIsAdmin() && (
+      <>
+        <div>
+          <ActionTooltip side="right" align="center" label="Add a server">
+            <button
+              onClick={() => onOpen("createServer")}
+              className="group flex items-center"
+            >
+              <div className="mx-3 flex h-[48px] w-[48px] items-center justify-center overflow-hidden rounded-[24px] bg-background transition-all group-hover:rounded-[16px] group-hover:bg-[#0b6495] dark:bg-neutral-700">
+                <Plus
+                  className="text-[#0b6495] transition group-hover:text-white"
+                  size={25}
+                />
+              </div>
+            </button>
+          </ActionTooltip>
+        </div>
+        <Separator className="mx-auto h-[2px] w-10 rounded-md bg-zinc-300 dark:bg-zinc-700" />
+      </>
+    )
+  );
+};
