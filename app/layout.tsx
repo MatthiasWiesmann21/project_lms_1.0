@@ -28,8 +28,8 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <Providers>
-          <body className={cn(font.className, "bg-white dark:bg-[#313338]")}>
+        <body className={cn(font.className, "bg-white dark:bg-[#313338]")}>
+          <Providers>
             <ThemeProvider
               attribute="class"
               defaultTheme="dark"
@@ -40,8 +40,8 @@ export default function RootLayout({
               <ToastProvider />
               {children}
             </ThemeProvider>
-          </body>
-        </Providers>
+          </Providers>
+        </body>
       </html>
     </ClerkProvider>
   );
