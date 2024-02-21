@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 const useUserRole = () => useSelector((state: any) => state?.user);
 
-export const useIsAdmin = () => useUserRole()?.role === "TEACHER";
+export const useIsAdmin = () => useUserRole()?.role === "ADMIN";
 
 export const useIsOperator = () => useUserRole()?.role === "OPERATOR";
 
