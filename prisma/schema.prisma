@@ -465,6 +465,9 @@ model LiveEvent {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  startDateTime DateTime?
+  endDateTime DateTime?
+
   @@index([categoryId])
   @@index([containerId])
   @@fulltext([title])

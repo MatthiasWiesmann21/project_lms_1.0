@@ -10,12 +10,10 @@ interface EventsListProps {
   items: EventsWithProgressWithCategory[];
 }
 
-export const EventsList = ({
-  items
-}: EventsListProps) => {
+export const EventsList = ({ items }: EventsListProps) => {
   return (
     <div>
-      <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-4">
+      <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4">
         {items.map((item) => (
           <EventCard
             key={item.id}
@@ -24,14 +22,16 @@ export const EventsList = ({
             imageUrl={item.imageUrl!}
             category={item?.category?.name!}
             categoryColorCode={item?.category?.colorCode!}
+            startDateTime={item?.startDateTime}
+            endDateTime={item?.endDateTime}
           />
         ))}
       </div>
       {items.length === 0 && (
-        <div className="text-center text-sm text-muted-foreground mt-10">
+        <div className="mt-10 text-center text-sm text-muted-foreground">
           No Events found
         </div>
       )}
     </div>
-  )
-}
+  );
+};
