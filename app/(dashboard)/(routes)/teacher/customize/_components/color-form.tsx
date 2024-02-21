@@ -20,29 +20,28 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useDispatch } from "react-redux";
 
 interface ColorFormProps {
   initialData: {
     primaryColor: string;
   };
   containerId: string;
-};
+}
 
 const formSchema = z.object({
-    primaryColor: z.string().min(1, {
+  primaryColor: z.string().min(1, {
     message: "Color is required",
   }),
 });
 
-export const ColorForm = ({
-  initialData,
-  containerId
-}: ColorFormProps) => {
+export const ColorForm = ({ initialData, containerId }: ColorFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const toggleEdit = () => setIsEditing((current) => !current);
 
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -53,25 +52,29 @@ export const ColorForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/containers/${containerId}`, values);
+      const response = await axios.patch(
+        `/api/containers/${containerId}`,
+        values
+      );
+      dispatch({ type: "UpdateUserContainer", payload: response?.data });
       toast.success("Container updated");
       toggleEdit();
       router.refresh();
     } catch {
       toast.error("Something went wrong");
     }
-  }
+  };
 
   return (
-    <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
-      <div className="font-medium flex items-center justify-between">
+    <div className="mt-6 rounded-md border bg-slate-200 p-4 dark:bg-slate-700">
+      <div className="flex items-center justify-between font-medium">
         Primary Color
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
           ) : (
             <>
-              <Pencil className="h-4 w-4 mr-2" />
+              <Pencil className="mr-2 h-4 w-4" />
               Edit
             </>
           )}
@@ -80,17 +83,16 @@ export const ColorForm = ({
       {!isEditing && (
         <div
           style={{ backgroundColor: initialData.primaryColor }}
-          className="w-8 h-8 rounded-md mt-2">
-        <p className="text-sm mt-3 p-1 pl-10">
-          {initialData.primaryColor}
-        </p>
+          className="mt-2 h-8 w-8 rounded-md"
+        >
+          <p className="mt-3 p-1 pl-10 text-sm">{initialData.primaryColor}</p>
         </div>
       )}
       {isEditing && (
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-4 mt-4"
+            className="mt-4 space-y-4"
           >
             <FormField
               control={form.control}
@@ -102,9 +104,13 @@ export const ColorForm = ({
                       type="color"
                       disabled={isSubmitting}
                       {...field}
-                      className="w-10 h-10 rounded-md border-none" 
-                      style={{ backgroundColor: field.value, border: "none", color: field.value }}
-                      />
+                      className="h-10 w-10 rounded-md border-none"
+                      style={{
+                        backgroundColor: field.value,
+                        border: "none",
+                        color: field.value,
+                      }}
+                    />
                   </FormControl>
                   <FormLabel className="p-1">
                     {field.value || initialData.primaryColor}
@@ -114,10 +120,7 @@ export const ColorForm = ({
               )}
             />
             <div className="flex items-center gap-x-2">
-              <Button
-                disabled={!isValid || isSubmitting}
-                type="submit"
-              >
+              <Button disabled={!isValid || isSubmitting} type="submit">
                 Save
               </Button>
             </div>
@@ -125,5 +128,5 @@ export const ColorForm = ({
         </Form>
       )}
     </div>
-  )
-}
+  );
+};

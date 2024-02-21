@@ -1,12 +1,10 @@
 import { auth } from "@clerk/nextjs";
 import { Navbar } from "./_components/navbar";
 import { Sidebar } from "./_components/sidebar";
-import SetUser from "@/lib/setUser";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex h-full flex-col">
-      <SetUser />
       <div
         className="flex-1"
         data-dashlane-rid="b6c3117a5ff821c0"
