@@ -14,7 +14,7 @@ export async function DELETE(
     const serverId = searchParams.get("serverId");
 
     if (!profile) {
-      return new NextResponse("Unauthorized" ,{ status: 401 });
+      return new NextResponse("Unauthorized", { status: 401 });
     }
 
     if (!serverId) {
@@ -83,39 +83,53 @@ export async function PATCH(
       return new NextResponse("Member ID missing", { status: 400 });
     }
 
-    const server = await db.server.update({
+    // const server = await db.server.update({
+    //   where: {
+    //     id: serverId,
+    //     profileId: profile.id,
+    //   },
+    //   data: {
+    //     members: {
+    //       update: {
+    //         where: {
+    //           id: params.memberId,
+    //           profileId: {
+    //             not: profile.id
+    //           }
+    //         },
+    //         data: {
+    //           role
+    //         }
+    //       }
+    //     }
+    //   },
+    //   include: {
+    //     members: {
+    //       include: {
+    //         profile: true,
+    //       },
+    //       orderBy: {
+    //         role: "asc"
+    //       }
+    //     }
+    //   }
+    // });
+
+    const member = await db.member.update({
       where: {
-        id: serverId,
-        profileId: profile.id,
+        id: params.memberId,
+        containerId: process.env.CONTAINER_ID,
+        serverId: serverId,
+        profileId: {
+          not: profile.id
+        }
       },
       data: {
-        members: {
-          update: {
-            where: {
-              id: params.memberId,
-              profileId: {
-                not: profile.id
-              }
-            },
-            data: {
-              role
-            }
-          }
-        }
-      },
-      include: {
-        members: {
-          include: {
-            profile: true,
-          },
-          orderBy: {
-            role: "asc"
-          }
-        }
+        role: role
       }
-    });
+    })
 
-    return NextResponse.json(server);
+    return NextResponse.json(member);
   } catch (error) {
     console.log("[MEMBERS_ID_PATCH]", error);
     return new NextResponse("Internal Error", { status: 500 });
