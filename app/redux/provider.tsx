@@ -13,8 +13,15 @@ const PG = ({ children }: any) => {
 
   const persistedUser = useSelector((state: any) => state?.user);
   const getUser = async () => {
-    if (authUser?.userId && persistedUser?.userId !== authUser?.userId) {
-      const user = await axios?.get("/api/user");
+    if (!authUser.isSignedIn) { return }
+    const user = await axios?.get("/api/user");
+    if (persistedUser) {
+      if (JSON.stringify(persistedUser) === JSON.stringify(user.data)) {
+        return
+      } else {
+        dispatch({ type: "SetUser", payload: user?.data });
+      }
+    } else {
       dispatch({ type: "SetUser", payload: user?.data });
     }
   };
