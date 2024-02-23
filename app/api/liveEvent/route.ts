@@ -2,14 +2,14 @@ import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
-import { useIsOwner } from "@/lib/owner";
+import { isOwner } from "@/lib/owner";
 
 export async function POST(req: Request) {
   try {
     const { userId } = auth();
     const { title } = await req.json();
 
-    if (!userId || !useIsOwner(userId)) {
+    if (!userId || !isOwner(userId)) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 

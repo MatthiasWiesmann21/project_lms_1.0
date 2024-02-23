@@ -6,7 +6,7 @@ import { LogOut, Settings } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { useIsOwner } from "@/lib/owner";
+import { isOwner } from "@/lib/owner";
 
 import { SearchInput } from "./search-input";
 import { ModeToggle } from "./mode-toggle";
@@ -19,11 +19,11 @@ export const NavbarRoutes = () => {
 
   const isAdmin = useIsAdmin();
   const isOperator = useIsOperator();
-  const isOwner = useIsOwner(userId);
   
-  const canAccess = isAdmin || isOperator || isOwner;
+  
+  const canAccess = isAdmin || isOperator || isOwner(userId);
 
-  const isAdministrationPage = pathname?.startsWith("/teacher");
+  const isAdministrationPage = pathname?.startsWith("/admin");
   const isCoursePage = pathname?.includes("/courses");
   const isDashboardPage = pathname === "/dashboard";
   const isSearchPage = pathname === "/search";
@@ -51,7 +51,7 @@ export const NavbarRoutes = () => {
             </Button>
           </Link>
         ) : canAccess ? (
-          <Link href="/teacher/courses">
+          <Link href="/admin/courses">
             <Button size="default" variant="ghost">
               <Settings className="h-4 w-4 mr-2" />
               Administration

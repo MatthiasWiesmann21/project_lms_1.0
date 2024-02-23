@@ -2,7 +2,7 @@ import createFolder from "@/app/vendor/aws/s3/createFolder";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
-import { useIsOwner } from "@/lib/owner";
+import { isOwner } from "@/lib/owner";
 
 const getOrCreateParentFolder = async (userId: string, parentKey?: string) => {
   if (parentKey != null) {
@@ -60,7 +60,7 @@ async function getFolderAndFiles(
 
   // console.log("============");
 
-  if (useIsOwner(userId)) {
+  if (isOwner(userId)) {
     if (key == null) {
       console.log("key", { key, userId });
       folder = await db.folder.findFirst({
@@ -189,7 +189,7 @@ export async function GET(req: any) {
       throw new Error("Un Authorized");
     }
 
-    if (useIsOwner(userId)) {
+    if (isOwner(userId)) {
       await getOrCreateParentFolder(userId);
     }
 

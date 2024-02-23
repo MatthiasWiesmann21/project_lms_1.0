@@ -3,7 +3,7 @@
 import React, { useCallback, useState } from "react";
 import axios from "axios";
 import AppSVGIcon from "@/components/appsvgicon";
-import { useIsOwner } from "@/lib/owner";
+import { isOwner } from "@/lib/owner";
 import { useAuth } from "@clerk/nextjs";
 import FlyoutMenuCreate from "./flyout-menu-create";
 import FlyoutMenuSetting from "./flyout-menu-setting";
@@ -269,7 +269,7 @@ const AssetsTable: React.FC = (props: any) => {
         </div>
 
         <div
-          className={`${useIsOwner(userId) ? "block" : "hidden"
+          className={`${isOwner(userId) ? "block" : "hidden"
             } mt-4 sm:ml-16 sm:mt-0 sm:flex-none`}
         >
           <FlyoutMenuCreate
@@ -311,7 +311,7 @@ const AssetsTable: React.FC = (props: any) => {
                   {folderStructure?.subFolders?.map(
                     (item: any, i: number) =>
                       // isPublic
-                      (useIsOwner(userId) ? true : item?.isPublic) && (
+                      (isOwner(userId) ? true : item?.isPublic) && (
                         <tr key={i}>
                           <td className="relative px-7 sm:w-12 sm:px-6">
                             {/* <input type="checkbox" className="absolute left-1 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" /> */}
@@ -340,7 +340,7 @@ const AssetsTable: React.FC = (props: any) => {
                           >
                           </td>
                           <td
-                            className={`${!useIsOwner(userId) && "hidden"
+                            className={`${!isOwner(userId) && "hidden"
                               } relative whitespace-nowrap px-3 text-sm text-gray-500 dark:text-gray-200`}
                           >
                             <div className=" ">
@@ -367,7 +367,7 @@ const AssetsTable: React.FC = (props: any) => {
                   {folderStructure?.files?.map(
                     (item: any, i: number) =>
                       // isPublic
-                      (useIsOwner(userId) ? true : item?.isPublic) && (
+                      (isOwner(userId) ? true : item?.isPublic) && (
                         <tr key={i}>
                           <td className="relative px-7 sm:w-12 sm:px-6">
                             {/* <input type="checkbox" className="absolute left-1 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" /> */}
@@ -394,7 +394,7 @@ const AssetsTable: React.FC = (props: any) => {
                             </div>
                           </td>
                           <td
-                            className={`${!useIsOwner(userId) && "hidden"
+                            className={`${!isOwner(userId) && "hidden"
                               } relative whitespace-nowrap px-3 text-sm text-gray-500 dark:text-gray-200`}
                           >
                             <div className=" ">

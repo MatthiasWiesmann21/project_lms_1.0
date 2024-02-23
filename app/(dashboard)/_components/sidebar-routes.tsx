@@ -91,49 +91,49 @@ const AdministrationRoutes = [
   {
     icon: ListIcon,
     label: "Courses",
-    href: "/teacher/courses",
+    href: "/admin/courses",
     isNew: false,
   },
   {
     icon: NewspaperIcon,
     label: "Posts",
-    href: "/teacher/posts",
+    href: "/admin/posts",
     isNew: false,
   },
   {
     icon: ClapperboardIcon,
     label: "Live Event",
-    href: "/teacher/live-event",
+    href: "/admin/live-event",
     isNew: false,
   },
   {
     icon: LayoutGridIcon,
     label: "Categories",
-    href: "/teacher/categories",
+    href: "/admin/categories",
     isNew: false,
   },
   {
     icon: PaletteIcon,
     label: "Customize",
-    href: "/teacher/customize",
+    href: "/admin/customize",
     isNew: false,
   },
   {
     icon: UserCircle2Icon,
     label: "Users",
-    href: "/teacher/users",
+    href: "/admin/users",
     isNew: false,
   },
   {
     icon: BarChartIcon,
     label: "Analytics",
-    href: "/teacher/analytics",
+    href: "/admin/analytics",
     isNew: false,
   },
   {
     icon: ServerIcon,
     label: "Clients",
-    href: "/teacher/containers",
+    href: "/admin/containers",
     isNew: false,
   },
 ];
@@ -143,7 +143,7 @@ export const SidebarRoutes = () => {
 
   const pathname = usePathname();
 
-  const isAdministrationPage = pathname?.includes("/teacher");
+  const isAdministrationPage = pathname?.includes("/admin");
 
   const routes = isAdministrationPage
     ? AdministrationRoutes

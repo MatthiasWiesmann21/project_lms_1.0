@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
-import { useIsOwner } from "@/lib/owner";
+import { isOwner } from "@/lib/owner";
 
 export async function DELETE(
   req: Request,
@@ -11,7 +11,7 @@ export async function DELETE(
   try {
     const { userId } = auth();
 
-    if (!userId || !useIsOwner(userId)) {
+    if (!userId || !isOwner(userId)) {
         return new NextResponse("Unauthorized", { status: 401 });
       }
 
@@ -47,7 +47,7 @@ export async function PATCH(
     const { profileId } = params;
     const values = await req.json();
 
-    if (!userId || !useIsOwner(userId)) {
+    if (!userId || !isOwner(userId)) {
         return new NextResponse("Unauthorized", { status: 401 });
     }
 
