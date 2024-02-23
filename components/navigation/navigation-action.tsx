@@ -5,13 +5,17 @@ import { Plus } from "lucide-react";
 import { ActionTooltip } from "@/components/action-tooltip";
 import { useModal } from "@/hooks/use-modal-store";
 import { Separator } from "../ui/separator";
-import { useIsAdmin } from "@/lib/roleCheck";
+import { useIsAdmin, useIsOperator } from "@/lib/roleCheck";
 
 export const NavigationAction = () => {
   const { onOpen } = useModal();
+  const isAdmin = useIsAdmin();
+  const isOperator = useIsOperator();
+  
+  const canAccess = isAdmin || isOperator;
 
   return (
-    useIsAdmin() && (
+    canAccess && (
       <>
         <div>
           <ActionTooltip side="right" align="center" label="Add a server">

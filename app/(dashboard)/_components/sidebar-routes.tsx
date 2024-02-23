@@ -25,8 +25,9 @@ import { usePathname } from "next/navigation";
 
 import { SidebarItem } from "./sidebar-item";
 import { useSelector } from "react-redux";
+import { use } from "react";
 
-const guestRoutes = [
+const userRoutes = [
   {
     icon: Compass,
     label: "Browse",
@@ -86,7 +87,7 @@ const packageStarterRoutes = [
   },
 ];
 
-const teacherRoutes = [
+const AdministrationRoutes = [
   {
     icon: ListIcon,
     label: "Courses",
@@ -142,13 +143,13 @@ export const SidebarRoutes = () => {
 
   const pathname = usePathname();
 
-  const isTeacherPage = pathname?.includes("/teacher");
+  const isAdministrationPage = pathname?.includes("/teacher");
 
-  const routes = isTeacherPage
-    ? teacherRoutes
+  const routes = isAdministrationPage
+    ? AdministrationRoutes
     : user?.container?.clientPackage === "STARTER"
     ? packageStarterRoutes
-    : guestRoutes;
+    : userRoutes;
 
   return (
     <div className="flex w-full flex-col">
