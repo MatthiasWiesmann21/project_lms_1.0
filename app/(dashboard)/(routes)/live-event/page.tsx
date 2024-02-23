@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { Metadata } from "next";
 import { getEvents } from "@/actions/get-events";
-import Wrapper from "./_components/wrapper";
+import LiveEventWrapper from "./_components/live-event-wrapper";
 
 export const metadata: Metadata = {
   title: "Live Events",
@@ -42,7 +42,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
   });
 
   return (
-    <Wrapper
+    <LiveEventWrapper
       liveEvents={liveEvents}
       categories={categories}
       searchParams={searchParams}

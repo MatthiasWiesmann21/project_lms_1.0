@@ -5,7 +5,7 @@ import { Categories } from "./categories";
 import { EventsList } from "@/components/events-list ";
 import { useAuth } from "@clerk/nextjs";
 
-const wrapper = ({ liveEvents, categories, searchParams }: any) => {
+const LiveEventWrapper = ({ liveEvents, categories, searchParams }: any) => {
   const { userId } = useAuth();
   const [liveEvent, setLiveEvent] = useState([]);
 
@@ -29,4 +29,4 @@ const wrapper = ({ liveEvents, categories, searchParams }: any) => {
   );
 };
 
-export default wrapper;
+export default LiveEventWrapper;
