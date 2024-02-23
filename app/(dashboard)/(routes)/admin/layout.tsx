@@ -12,12 +12,6 @@ const AdministrationLayout = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { userId } = auth();
-
-  if (!isOwner(userId)) {
-    return redirect("/dashboard");
-  }
-
   return <>{children}</>
 }
  
