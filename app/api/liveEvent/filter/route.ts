@@ -12,7 +12,6 @@ export async function POST(req: Request) {
         },
         categoryId,
         containerId: process?.env?.CONTAINER_ID,
-        //@ts-ignore
         startDateTime: { gte: startDateTime },
         endDateTime: { lte: endDateTime },
       },
