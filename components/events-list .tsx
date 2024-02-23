@@ -22,9 +22,7 @@ export const EventsList = ({ items }: EventsListProps) => {
             imageUrl={item.imageUrl!}
             category={item?.category?.name!}
             categoryColorCode={item?.category?.colorCode!}
-            //@ts-ignore
             startDateTime={item?.startDateTime}
-            //@ts-ignore
             endDateTime={item?.endDateTime}
           />
         ))}
