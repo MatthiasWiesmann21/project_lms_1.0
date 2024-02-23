@@ -4,9 +4,7 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { isTeacher } from "@/lib/teacher";
 
-export async function POST(
-  req: Request,
-) {
+export async function POST(req: Request) {
   try {
     const { userId } = auth();
     const { title } = await req.json();
@@ -19,13 +17,39 @@ export async function POST(
       data: {
         userId,
         title,
-        containerId: process.env.CONTAINER_ID || '',
-      }
+        containerId: process.env.CONTAINER_ID || "",
+      },
     });
 
     return NextResponse.json(liveEvent);
   } catch (error) {
     console.log("[COURSES]", error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}
+
+export async function GET(req: Request) {
+  try {
+    // const { title, categoryId } = await req?.json();
+    const liveEvent = await db?.liveEvent?.findMany({
+      where: {
+        isPublished: true,
+        // title: {
+        //   contains: title,
+        // },
+        // categoryId,
+        containerId: process?.env?.CONTAINER_ID,
+      },
+      include: {
+        category: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    return NextResponse.json(liveEvent);
+  } catch (error) {
+    console?.log("[EVENT GET]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

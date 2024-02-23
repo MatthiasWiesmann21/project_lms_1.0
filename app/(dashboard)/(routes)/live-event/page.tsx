@@ -2,15 +2,9 @@ import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 import { db } from "@/lib/db";
-import { SearchInput } from "@/components/search-input";
-import { getCourses } from "@/actions/get-courses";
-import { CoursesList } from "@/components/courses-list";
-
-import { Categories } from "./_components/categories";
 import { Metadata } from "next";
-import { EventsList } from "@/components/events-list ";
 import { getEvents } from "@/actions/get-events";
-import { DateandTime } from "./_components/date&time";
+import Wrapper from "./_components/wrapper";
 
 export const metadata: Metadata = {
   title: "Live Events",
@@ -48,13 +42,11 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
   });
 
   return (
-    <>
-      <div className="space-y-4 p-6">
-        <DateandTime />
-        <Categories items={categories} />
-        <EventsList items={liveEvents} />
-      </div>
-    </>
+    <Wrapper
+      liveEvents={liveEvents}
+      categories={categories}
+      searchParams={searchParams}
+    />
   );
 };
 
