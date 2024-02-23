@@ -107,10 +107,12 @@ const LiveEventIdPage = async ({
               }))}
             />
             <StartDateTimeForm
+              //@ts-ignore
               initialData={liveEvent}
               liveEventId={liveEvent?.id}
             />
             <EndDateTimeForm
+              //@ts-ignore
               initialData={liveEvent}
               liveEventId={liveEvent?.id}
             />
