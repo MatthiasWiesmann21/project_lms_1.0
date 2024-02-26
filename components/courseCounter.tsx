@@ -13,7 +13,7 @@ export const CourseCounter = () => {
             return (
                 <div>
                     <h1>Course Counter</h1>
-                    <p>You have ? courses available. "current amount"/{starterMaxCourses} </p>
+                    <p>You have ? courses available. ?/{starterMaxCourses} </p>
                 </div>
             )
         }
