@@ -13,7 +13,7 @@ const ContainerPage = async () => {
   const canAccess = isOwner(userId);
 
   if (!userId || !canAccess) {
-   return redirect("/search");
+   return redirect("/admin/courses");
   }
 
   const containers = await db.container.findMany({
