@@ -23,14 +23,14 @@ const DocumentCreatePage = () => {
   const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   const encodedObj = useParams()?.id as string;
 
-  const isAdmin = useIsAdmin();
-  const isOperator = useIsOperator();
+  // const isAdmin = useIsAdmin();
+  // const isOperator = useIsOperator();
 
-  const canAccess = isAdmin || isOperator;
+  // const canAccess = isAdmin || isOperator;
 
-  if (!canAccess) {
-    return new NextResponse("Unauthorized", { status: 401 });
-  }
+  // if (!canAccess) {
+  //  return new NextResponse("Unauthorized", { status: 401 });
+  // }
 
   // Initialize id and action with default values
   let id: string | string[];

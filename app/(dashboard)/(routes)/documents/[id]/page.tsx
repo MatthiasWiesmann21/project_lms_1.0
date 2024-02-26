@@ -19,14 +19,14 @@ const DocumentPage = () => {
   const [folderStructure, setFolderStructure] =
     useState<DocumentFolderTree | null>(null);
 
-  const isAdmin = useIsAdmin();
-  const isOperator = useIsOperator();
+  // const isAdmin = useIsAdmin();
+  // const isOperator = useIsOperator();
 
-  const canAccess = isAdmin || isOperator;
+  // const canAccess = isAdmin || isOperator;
 
-  if (!canAccess) {
-    return new NextResponse("Unauthorized", { status: 401 });
-  }
+  // if (!canAccess) {
+  //  return new NextResponse("Unauthorized", { status: 401 });
+  // }
 
 const createFolder = async () => {
   if (folderName == null || folderName.length < 1) {
