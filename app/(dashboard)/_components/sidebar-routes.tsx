@@ -181,7 +181,7 @@ const packageStarterAdminRoutes = [
 
 
 export const SidebarRoutes = () => {
-  const user = useSelector((state: any) => state?.user);
+  const client = useSelector((state: any) => state?.user);
 
   const pathname = usePathname();
 
@@ -189,7 +189,7 @@ export const SidebarRoutes = () => {
 
   const routes = isAdministrationPage
     ? AdministrationRoutes
-    : user?.container?.clientPackage === "STARTER"
+    : client?.container?.clientPackage === "STARTER"
     ? packageStarterRoutes
     : userRoutes;
 

@@ -8,6 +8,7 @@ import { CoursesList } from "@/components/courses-list";
 
 import { Categories } from "./_components/categories";
 import { Metadata } from "next";
+import { CourseCounter } from "@/components/courseCounter";
 
 export const metadata: Metadata = {
   title: 'Browse',
@@ -49,6 +50,7 @@ const SearchPage = async ({
   return (
     <>
       <div className="p-6 space-y-4">
+        <CourseCounter />
         <Categories
           items={categories}
         />
