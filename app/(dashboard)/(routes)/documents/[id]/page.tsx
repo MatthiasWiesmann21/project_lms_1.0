@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { DocumentFolderTree } from "../page";
 import AssetsTable from "./../_components/asset-table";
+import { useIsAdmin, useIsOperator } from "@/lib/roleCheck";
+import { NextResponse } from "next/server";
 
 const DocumentPage = () => {
   const [folderName, setFolderName] = useState("");
@@ -16,6 +18,15 @@ const DocumentPage = () => {
 
   const [folderStructure, setFolderStructure] =
     useState<DocumentFolderTree | null>(null);
+
+  const isAdmin = useIsAdmin();
+  const isOperator = useIsOperator();
+
+  const canAccess = isAdmin || isOperator;
+
+  if (!canAccess) {
+    return new NextResponse("Unauthorized", { status: 401 });
+  }
 
 const createFolder = async () => {
   if (folderName == null || folderName.length < 1) {
