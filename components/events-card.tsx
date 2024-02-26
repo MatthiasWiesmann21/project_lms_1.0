@@ -42,11 +42,11 @@ export const EventCard = ({
               <CategoryItem label={category} colorCode={categoryColorCode} />
             </div>
           </div>
-          <div className="flex flex-1 flex-col items-center justify-around">
-            <p className="text-[10px]">{`Starts: ${moment(
+          <div className="flex flex-1 flex-col items-center justify-evenly pt-6">
+            <p className="text-xs">{`Starts: ${moment(
               startDateTime
             )?.format("DD-MM-YY HH:mm")}`}</p>
-            <p className="text-[10px]">{`Ends: ${moment(endDateTime)?.format(
+            <p className="text-xs">{`Ends: ${moment(endDateTime)?.format(
               "DD-MM-YY HH:mm"
             )}`}</p>
           </div>

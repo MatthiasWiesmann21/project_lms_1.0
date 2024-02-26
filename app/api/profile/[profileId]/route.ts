@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
 import { isOwner } from "@/lib/owner";
+import { isAdmin, isOperator } from "@/lib/roleCheckServer";
 
 export async function DELETE(
   req: Request,
@@ -47,8 +48,12 @@ export async function PATCH(
     const { profileId } = params;
     const values = await req.json();
 
-    if (!userId || !isOwner(userId)) {
-        return new NextResponse("Unauthorized", { status: 401 });
+    const isRoleAdmins = await isAdmin();
+    const isRoleOperator = await isOperator();
+    const canAccess = isRoleAdmins || isRoleOperator || isOwner(userId);
+
+    if (!userId || !canAccess) {
+      return new NextResponse("Unauthorized", { status: 401 });
     }
 
     console.log(values);

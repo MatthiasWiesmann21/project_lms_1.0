@@ -10,12 +10,18 @@ import { Banner } from "@/components/banner";
 import { ImageForm } from "./_components/image-form";
 import { LinkForm } from "./_components/link-form";
 import { ColorForm } from "./_components/color-form";
+import { isAdmin, isOperator } from "@/lib/roleCheckServer";
+import { isOwner } from "@/lib/owner";
 
 const CustomizeSettingsPage = async () => {
   const { userId } = auth();
 
-  if (!userId) {
-    return redirect("/");
+  const isRoleAdmins = await isAdmin();
+  const isRoleOperator = await isOperator();
+  const canAccess = isRoleAdmins || isRoleOperator || isOwner(userId);
+
+  if (!userId || !canAccess) {
+   return redirect("/search");
   }
 
   const container = await db.container.findUnique({

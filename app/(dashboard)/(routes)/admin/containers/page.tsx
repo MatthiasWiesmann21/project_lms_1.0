@@ -6,12 +6,14 @@ import { db } from "@/lib/db";
 import { DataTable } from "./_components/data-table";
 import { columns } from "./_components/columns";
 import { isOwner } from "@/lib/owner";
+import { isAdmin, isOperator } from "@/lib/roleCheckServer";
 
 const ContainerPage = async () => {
   const { userId } = auth();
+  const canAccess = isOwner(userId);
 
-  if (!userId) {
-    return redirect("/");
+  if (!userId || !canAccess) {
+   return redirect("/search");
   }
 
   const containers = await db.container.findMany({

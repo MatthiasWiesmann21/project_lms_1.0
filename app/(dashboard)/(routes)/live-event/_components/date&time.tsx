@@ -21,6 +21,7 @@ export const DateandTime = ({
       <div>
         <input
           type="datetime-local"
+          className="border-1 cursor-pointer rounded border border-white px-2"
           placeholder={moment(startDateTime)?.format("YYYY-MM-DDTHH:MM:SS")}
           value={moment(startDateTime)?.format("YYYY-MM-DDTHH:MM:SS")}
           onChange={(e) => {
@@ -31,6 +32,7 @@ export const DateandTime = ({
       <div>
         <input
           type="datetime-local"
+          className="border-1 cursor-pointer rounded border border-white px-2"
           placeholder={moment(endDateTime)?.format("YYYY-MM-DDTHH:MM:SS")}
           value={moment(endDateTime)?.format("YYYY-MM-DDTHH:MM:SS")}
           onChange={(e) => {

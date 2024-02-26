@@ -6,7 +6,6 @@ import { getAnalytics } from "@/actions/get-analytics";
 import { DataCard } from "./_components/data-card";
 import { Chart } from "./_components/chart";
 import { isOwner } from "@/lib/owner";
-import { useIsAdmin, useIsOperator } from "@/lib/roleCheck";
 import { isAdmin, isOperator } from "@/lib/roleCheckServer";
 
 const AnalyticsPage = async () => {
@@ -17,11 +16,7 @@ const AnalyticsPage = async () => {
   const canAccess = isRoleAdmins || isRoleOperator || isOwner(userId);
 
   if (!userId || !canAccess) {
-   return redirect("/");
-  }
-
-  if (!userId) {
-    return redirect("/");
+   return redirect("/search");
   }
 
   const {
