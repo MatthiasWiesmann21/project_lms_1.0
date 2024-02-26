@@ -7,18 +7,18 @@ import { DataCard } from "./_components/data-card";
 import { Chart } from "./_components/chart";
 import { isOwner } from "@/lib/owner";
 import { useIsAdmin, useIsOperator } from "@/lib/roleCheck";
+import { isAdmin, isOperator } from "@/lib/roleCheckServer";
 
 const AnalyticsPage = async () => {
   const { userId } = auth();
 
-  // const isAdmin = useIsAdmin();
-  // const isOperator = useIsOperator();
+  const isRoleAdmins = await isAdmin();
+  const isRoleOperator = await isOperator();
+  const canAccess = isRoleAdmins || isRoleOperator || isOwner(userId);
 
-  // const canAccess = isAdmin || isOperator || isOwner(userId);
-
-  // if (!userId || !canAccess) {
-  //  return redirect("/");
-  // }
+  if (!userId || !canAccess) {
+   return redirect("/");
+  }
 
   if (!userId) {
     return redirect("/");
