@@ -9,7 +9,8 @@ export async function POST(
 ) {
   try {
     const { userId } = auth();
-    const { name, imageUrl, link, clientPackage } = await req.json();
+    const { name, imageUrl, link, clientPackage, maxCourses } = await req.json();
+
 
     if (!userId || !isOwner(userId)) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -21,6 +22,7 @@ export async function POST(
         imageUrl,
         link,
         clientPackage,
+        maxCourses,
       }
     });
 

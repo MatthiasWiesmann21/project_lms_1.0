@@ -11,6 +11,7 @@ import { Actions } from "./_components/actions";
 import { TitleForm } from "./_components/title-form";
 import { ShowContainerId } from "./_components/containerid-widget";
 import { PackageForm } from "./_components/package-form";
+import { MaxCoursesForm } from "./_components/max-courses-form";
 
 const ContainerIdPage = async ({
   params
@@ -94,6 +95,15 @@ const ContainerIdPage = async ({
                 { label: "STARTER", value: "STARTER" },
                 { label: "COMMUNITY", value: "COMMUNITY" },
                 { label: "EXPERT", value: "EXPERT" },
+              ]}
+            />
+            <MaxCoursesForm
+              initialData={{ maxCourses: container.maxCourses || 0 }}
+              containerId={container.id}
+              options={[
+                { label: "20", value: 20 },
+                { label: "50", value: 50 },
+                { label: "1000", value: 1000 },
               ]}
             />
           </div>

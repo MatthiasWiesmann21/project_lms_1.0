@@ -25,10 +25,26 @@ const SearchPage = async ({
   searchParams
 }: SearchPageProps) => {
   const { userId } = auth();
+  let maxCoursesCount = 0;
 
   if (!userId) {
     return redirect("/");
   }
+
+  const container = await db.container.findUnique({
+    where: {
+      id: process.env.CONTAINER_ID,
+      courses: {
+        some: {}
+      }
+    }
+  });
+
+  const existingCourses = await db.course.count({
+    where: {
+      containerId: process.env.CONTAINER_ID,
+    }
+  });
 
   const categories = await db.category.findMany({
     where: {
@@ -50,7 +66,7 @@ const SearchPage = async ({
   return (
     <>
       <div className="p-6 space-y-4">
-        <CourseCounter />
+        <CourseCounter maxCourses={container?.maxCourses ?? 0} courses={existingCourses}  />
         <Categories
           items={categories}
         />

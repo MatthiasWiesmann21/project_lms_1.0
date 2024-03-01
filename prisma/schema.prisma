@@ -15,6 +15,7 @@ model Container {
   link          String? @db.Text
   imageUrl      String? @db.Text
   clientPackage String? @db.Text
+  maxCourses    Int?     @default(0)
 
   primaryColor String? @default("#0369a0")
 
@@ -453,7 +454,6 @@ model LiveEvent {
   description String? @db.Text
   imageUrl    String? @db.Text
   videoUrl    String? @db.Text
-  price       Float?  @default(0)
   isPublished Boolean @default(false)
 
   containerId String

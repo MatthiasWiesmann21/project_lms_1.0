@@ -20,6 +20,24 @@ export async function POST(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
+    const container = await db.container.findUnique({
+      where: {
+        id: process.env.CONTAINER_ID,
+      },
+    });
+
+    const courses = await db.course.count({
+      where: {
+        containerId: process.env.CONTAINER_ID,
+      }
+    });
+
+    console.log("[COURSES]", courses, container?.maxCourses);
+
+    if (container && container.maxCourses !== null && courses >= container.maxCourses) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
     const course = await db.course.create({
       data: {
         userId,
