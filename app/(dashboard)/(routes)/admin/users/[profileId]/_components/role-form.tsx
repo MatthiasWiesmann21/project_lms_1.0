@@ -22,6 +22,8 @@ import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import { Combobox } from "@/components/ui/combobox";
 import { useIsAdmin } from "@/lib/roleCheck";
+import { isOwner } from "@/lib/owner";
+import { auth } from "@clerk/nextjs";
 
 interface CategoryFormProps {
   initialData: Profile;
@@ -40,6 +42,8 @@ export const RoleForm = ({
 }: CategoryFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const isAdmin = useIsAdmin();
+
+  const canAccess = isAdmin || process.env.NEXT_PUBLIC_OWNER_ID;
 
   const toggleEdit = () => setIsEditing((current) => !current);
 
@@ -71,7 +75,7 @@ export const RoleForm = ({
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Profile Role
-        {isAdmin && (
+        {canAccess && (
           <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
