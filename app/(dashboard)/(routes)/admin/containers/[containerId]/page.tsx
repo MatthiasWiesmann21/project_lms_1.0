@@ -103,7 +103,7 @@ const ContainerIdPage = async ({
               options={[
                 { label: "20", value: 20 },
                 { label: "50", value: 50 },
-                { label: "1000", value: 1000 },
+                { label: "Unlimited", value: 1000 },
               ]}
             />
           </div>

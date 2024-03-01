@@ -18,7 +18,7 @@ const maxCourseDisplay = maxCourses > 50 ? <><Infinity className="h-5 w-5 ml-1 i
 
 return (
     canAccess && (
-        <div className="border rounded-full text-center p-4 text-sm flex items-center w-full bg-slate-400 text-primary dark:text-[#000000]">
+        <div className="border rounded-full text-center p-4 text-sm flex items-center w-full border-black dark:border-white text-prima text-slate-400">
             <Info className="h-5 w-5 mr-2" />
             <span>Current existing courses: {courses} / </span>{maxCourseDisplay}
         </div>
