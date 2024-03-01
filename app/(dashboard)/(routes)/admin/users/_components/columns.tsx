@@ -1,6 +1,6 @@
 "use client"
 
-import { Container, Course, Post, Profile } from "@prisma/client"
+import { Profile } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, MoreHorizontal, Pencil } from "lucide-react"
 import Link from "next/link";
@@ -12,6 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
+
 
 export const columns: ColumnDef<Profile>[] = [
   {

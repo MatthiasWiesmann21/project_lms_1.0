@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ConfirmModal } from "@/components/modals/confirm-modal";
 import { useConfettiStore } from "@/hooks/use-confetti-store";
+import { useIsAdmin } from "@/lib/roleCheck";
 
 interface ActionsProps {
   disabled: boolean;
@@ -24,6 +25,8 @@ export const Actions = ({
   const router = useRouter();
   const confetti = useConfettiStore();
   const [isLoading, setIsLoading] = useState(false);
+
+  const isAdmin = useIsAdmin();
 
   const onClick = async () => {
     try {
@@ -72,11 +75,13 @@ export const Actions = ({
       >
         {isPublished ? "Unpublish" : "Publish"}
       </Button>
+      {isAdmin && (
       <ConfirmModal onConfirm={onDelete}>
         <Button size="sm" disabled={isLoading}>
           <Trash className="h-4 w-4" />
         </Button>
       </ConfirmModal>
+      )}
     </div>
   )
 }

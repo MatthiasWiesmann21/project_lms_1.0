@@ -2,12 +2,13 @@
 
 import axios from "axios";
 import { Trash } from "lucide-react";
-import { useState } from "react";
+import { use, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { ConfirmModal } from "@/components/modals/confirm-modal";
+import { useIsAdmin } from "@/lib/roleCheck";
 
 interface ChapterActionsProps {
   disabled: boolean;
@@ -24,6 +25,8 @@ export const ChapterActions = ({
 }: ChapterActionsProps) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+
+  const isAdmin = useIsAdmin();
 
   const onClick = async () => {
     try {
@@ -71,11 +74,13 @@ export const ChapterActions = ({
       >
         {isPublished ? "Unpublish" : "Publish"}
       </Button>
+      {isAdmin && (
       <ConfirmModal onConfirm={onDelete}>
         <Button size="sm" disabled={isLoading}>
           <Trash className="h-4 w-4" />
         </Button>
       </ConfirmModal>
+      )}
     </div>
   )
 }

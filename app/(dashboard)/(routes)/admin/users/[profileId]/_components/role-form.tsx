@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import { Combobox } from "@/components/ui/combobox";
+import { useIsAdmin } from "@/lib/roleCheck";
 
 interface CategoryFormProps {
   initialData: Profile;
@@ -38,6 +39,7 @@ export const RoleForm = ({
   options,
 }: CategoryFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
+  const isAdmin = useIsAdmin();
 
   const toggleEdit = () => setIsEditing((current) => !current);
 
@@ -69,7 +71,8 @@ export const RoleForm = ({
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Profile Role
-        <Button onClick={toggleEdit} variant="ghost">
+        {isAdmin && (
+          <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
           ) : (
@@ -79,6 +82,7 @@ export const RoleForm = ({
             </>
           )}
         </Button>
+        )}
       </div>
       {!isEditing && (
         <p className={cn(
