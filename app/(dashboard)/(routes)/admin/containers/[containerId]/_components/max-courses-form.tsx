@@ -8,7 +8,6 @@ import { Pencil } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Course, Profile } from "@prisma/client";
 
 import {
   Form,
@@ -19,8 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Textarea } from "@/components/ui/textarea";
-import { Combobox } from "@/components/ui/combobox";
+import { ComboboxNumber } from "@/components/ui/combobox-number";
 
 interface CategoryFormProps {
   initialData: {
@@ -102,7 +100,7 @@ const { isSubmitting, isValid } = form.formState;
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Combobox
+                    <ComboboxNumber
                       options={...options}
                       {...field}
                     />

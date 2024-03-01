@@ -14,7 +14,7 @@ export const CourseCounter = ({
 }: ContainerwithamountofCoursesProps) => {
 const isRoleAdmins = useIsAdmin();
 const canAccess = isRoleAdmins;
-const maxCourseDisplay = maxCourses > 50 ? <><Infinity className="h-4 w-4 ml-1 inline" /></> : maxCourses;
+const maxCourseDisplay = maxCourses > 50 ? <><Infinity className="h-5 w-5 ml-1 inline" /></> : maxCourses;
 
 return (
     canAccess && (
