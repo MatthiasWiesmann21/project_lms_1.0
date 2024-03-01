@@ -23,7 +23,7 @@ const ContainerPage = async () => {
   });
 
   return (
-    isOwner(userId) ? (
+    canAccess ? (
       <div className="p-6">
       <DataTable columns={columns} data={containers} />
     </div>

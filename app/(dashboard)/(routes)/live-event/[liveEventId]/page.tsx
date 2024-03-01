@@ -54,7 +54,7 @@ const isEndDateToday = endDateTimeMoment.isSame(moment(), "hour");
   return ( 
     <div>
       <div className="flex flex-col max-w-5xl mx-auto pb-20">
-      <div className="flex flex-col md:flex-row items-center justify-between p-4 pt-6">
+      <div className="flex flex-col md:flex-row items-end justify-between p-4 pt-6">
             <CategoryItem label={category?.name ?? ""} colorCode={category?.colorCode ?? ""} />
             <div className="flex flex-1 flex-col items-end pr-1">
               <p className="text-xs">{`Starts: ${moment(

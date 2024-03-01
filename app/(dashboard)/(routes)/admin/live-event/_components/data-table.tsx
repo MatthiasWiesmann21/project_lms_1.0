@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { useIsAdmin } from "@/lib/roleCheck"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -37,6 +38,8 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
+
+  const isAdmin = useIsAdmin();
 
   const table = useReactTable({
     data,
@@ -64,12 +67,14 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm border-[#000000] dark:border-[#ffffff]"
         />
-        <Link href="/admin/create/liveEvent">
+        {isAdmin && (
+          <Link href="/admin/create/liveEvent">
           <Button>
             <PlusCircle className="h-4 w-4 mr-2" />
             New Live Event
           </Button>
         </Link>
+        )}
       </div>
       <div className="rounded-md border border-[#000000] dark:border-[#ffffff]">
         <Table>

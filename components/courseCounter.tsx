@@ -23,5 +23,5 @@ return (
             <span>Current existing courses: {courses} / </span>{maxCourseDisplay}
         </div>
     )
-);
+  );
 };
