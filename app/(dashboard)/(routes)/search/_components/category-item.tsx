@@ -25,12 +25,14 @@ export const CategoryItem = ({
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const currentCategoryId = searchParams.get("categoryId");const currentTitle = searchParams.get("title");
+  const currentCategoryId = searchParams?.get("categoryId");
+  const currentTitle = searchParams?.get("title");
 
   const isSelected = currentCategoryId === value;
 
   const onClick = () => {
     const url = qs.stringifyUrl({
+      // @ts-ignore
       url: pathname,
       query: {
         title: currentTitle,
@@ -44,9 +46,7 @@ export const CategoryItem = ({
   return (
     <button
       onClick={onClick}
-      className={cn(
-        "py-2 px-2 text-sm border border-slate-300 rounded-full flex items-center gap-x-1 hover:border-sky-700 transition"
-      )}
+      className="py-2 px-2 text-sm border border-slate-300 rounded-full flex items-center gap-x-1 hover:border-sky-700 transition"
       style={ isSelected ? { borderColor: colorCode } : { borderColor: "#cbd5e1" } }
       type="button"
     >

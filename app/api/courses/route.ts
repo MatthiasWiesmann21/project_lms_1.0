@@ -2,7 +2,8 @@ import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
-import { isTeacher } from "@/lib/teacher";
+import { isOwner } from "@/lib/owner";
+import { isAdmin, isOperator } from "@/lib/roleCheckServer";
 
 export async function POST(
   req: Request,
@@ -11,7 +12,29 @@ export async function POST(
     const { userId } = auth();
     const { title } = await req.json();
 
-    if (!userId || !isTeacher(userId)) {
+    const isRoleAdmins = await isAdmin();
+    const isRoleOperator = await isOperator();
+    const canAccess = isRoleAdmins || isRoleOperator || isOwner(userId);
+
+    if (!userId || !canAccess) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const container = await db.container.findUnique({
+      where: {
+        id: process.env.CONTAINER_ID,
+      },
+    });
+
+    const courses = await db.course.count({
+      where: {
+        containerId: process.env.CONTAINER_ID,
+      }
+    });
+
+    console.log("[COURSES]", courses, container?.maxCourses);
+
+    if (container && container.maxCourses !== null && courses >= container.maxCourses) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 

@@ -1,33 +1,41 @@
-import createFolder from "@/app/vendor/aws/s3/createFolder";
-import getS3SignedUrl from "@/app/vendor/aws/s3/getS3SignedUrl";
+import deleteFile from "@/app/vendor/aws/s3/deleteFile";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
-import { Duration } from "luxon";
-import { NextApiRequest } from "next";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(req: any) {
+export async function POST(req: any, res: any) {
   try {
     const { userId } = auth();
 
     // Authenticate User here for downloading different files
+    const requestBody = await req.json();
+    const { id } = requestBody;
 
-    const key = req.nextUrl.searchParams.get("key"); // file to download
-
-    const downloadUrl = await getS3SignedUrl({
-      fileKey: key,
-      duration: Duration.fromObject({
-        minutes: 30,
-      }),
-    });
-
-    return NextResponse.json({
-      data: {
-        downloadUrl: downloadUrl,
+    let key = null;
+    const keyData = await db.file.findFirst({
+      select: {
+        key: true,
       },
+      where: { id: id },
     });
+    //@ts-ignore
+    key = keyData.key;
+
+    const removeFile = await deleteFile(key);
+
+    const result = await db.file.delete({
+      where: { id: id },
+    });
+
+    if (!result) {
+      throw new Error("File not found");
+    }
+
+    // If needed, delete the file from the storage (e.g., AWS S3)
+
+    return new NextResponse("File deleted successfully", { status: 200 });
   } catch (error) {
-    console.log("[SUBSCRIPTION]  ", error);
+    console.error("[DELETE FILE ERROR]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

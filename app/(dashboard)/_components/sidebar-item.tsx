@@ -4,17 +4,20 @@ import { LucideIcon } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 interface SidebarItemProps {
   icon: LucideIcon;
   label: string;
   href: string;
+  isNew?: boolean;
 };
 
 export const SidebarItem = ({
   icon: Icon,
   label,
   href,
+  isNew,
 }: SidebarItemProps) => {
   const pathname = usePathname();
   const router = useRouter();
@@ -28,31 +31,30 @@ export const SidebarItem = ({
     router.push(href);
   }
 
+
   return (
-    <button
-      onClick={onClick}
-      type="button"
-      className={cn(
-        "flex items-center gap-x-2 text-slate-500 text-sm font-[500] pl-6 transition-all hover:text-slate-600 hover:bg-slate-300/20",
-        isActive && "text-sky-700 bg-sky-200/20 hover:bg-sky-200/20 hover:text-sky-700"
-      )}
-    >
-      <div className="flex items-center gap-x-2 py-4">
-        <Icon
-          size={22}
-          className={cn(
-            "text-slate-500",
-            isActive && "text-sky-700 animate-rotate-y"
-          )}
-        />
-        {label}
-      </div>
-      <div
+     <button
+        onClick={onClick}
+        type="button"
         className={cn(
-          "ml-auto opacity-0 border-2 border-sky-700 h-full transition-all",
-          isActive && "opacity-100"
+          "m-1 pl-2 text-sm rounded-lg flex items-center hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 transition mb-1 pr-2",
+          isActive && "text-sky-700 hover:text-sky-700 bg-sky-200/50 hover:bg-sky-200/50 dark:bg-sky-200/10 dark:hover:bg-sky-200/10"
         )}
-      />
-    </button>
+      >
+        <div className="flex items-center gap-x-2 py-4">
+          <Icon
+            size={22}
+            className={cn(
+              "text-slate-500",
+              isActive && "text-sky-700 animate-spin-left-right",
+            )} />
+          {label}
+        </div>
+        {isNew && (
+          <div className="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-sky-500/10 text-sky-800 ml-auto">
+          New
+        </div>
+        )}
+      </button>
   )
 }

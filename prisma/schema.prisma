@@ -10,35 +10,66 @@ generator client {
 }
 
 model Container {
-  id          String   @id @default(uuid())
-  name        String   @unique
-  link        String?  @db.Text
-  imageUrl    String?  @db.Text
-  
+  id            String  @id @default(uuid())
+  name          String  @unique
+  link          String? @db.Text
+  imageUrl      String? @db.Text
+  clientPackage String? @db.Text
+  maxCourses    Int?     @default(0)
 
-  profiles    Profile[]
-  members     Member[]
-  channels    Channel[]
-  courses     Course[]
-  categories  Category[]
-  posts       Post[]
-  
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  primaryColor String? @default("#0369a0")
+
+  courses    Course[]
+  categories Category[]
+  posts      Post[]
+  liveEvents LiveEvent[]
+  servers    Server[]
+  profiles   Profile[]
+  members    Member[]
+  channels   Channel[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Server {
+  id         String @id @default(uuid())
+  name       String
+  imageUrl   String @db.Text
+  inviteCode String @unique
+
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  members  Member[]
+  channels Channel[]
+
+  containerId String
+  container   Container @relation(fields: [containerId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([profileId])
+  @@index([containerId])
 }
 
 model Profile {
-  id String @id @default(uuid())
-  userId String @unique
-  name String
+  id       String @id @default(uuid())
+  userId   String @unique
+  name     String @db.Text
   imageUrl String @db.Text
-  email String @db.Text
+  email    String @db.Text
+  role     String @default("USER")
 
-  containerId   String
-  container     Container @relation(fields: [containerId], references: [id])
+  containerId String
+  container   Container @relation(fields: [containerId], references: [id])
 
-  members Member[]
+  servers  Server[]
+  members  Member[]
   channels Channel[]
+  comments Comment[]
+  likes    Like[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -53,26 +84,30 @@ enum MemberRole {
 }
 
 model Member {
-  id String @id @default(uuid())
+  id   String     @id @default(uuid())
   role MemberRole @default(GUEST)
 
   profileId String
-  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
-  containerId   String
-  container     Container @relation(fields: [containerId], references: [id])
+  containerId String
+  container   Container @relation(fields: [containerId], references: [id])
 
-  messages Message[]
+  serverId String
+  server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  messages       Message[]
   directMessages DirectMessage[]
 
   conversationsInitiated Conversation[] @relation("MemberOne")
-  conversationsReceived Conversation[] @relation("MemberTwo")
+  conversationsReceived  Conversation[] @relation("MemberTwo")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([profileId])
   @@index([containerId])
+  @@index([serverId])
 }
 
 model Course {
@@ -84,8 +119,8 @@ model Course {
   price       Float?  @default(0)
   isPublished Boolean @default(false)
 
-  containerId   String
-  container     Container @relation(fields: [containerId], references: [id])
+  containerId String
+  container   Container @relation(fields: [containerId], references: [id])
 
   categoryId String?
   category   Category? @relation(fields: [categoryId], references: [id])
@@ -103,19 +138,24 @@ model Course {
 }
 
 model Category {
-  id      String   @id @default(uuid())
-  name    String   @unique
-  colorCode   String @default("#000000")
+  id          String  @id @default(uuid())
+  name        String  @unique
+  colorCode   String  @default("#000000")
   isPublished Boolean @default(false)
 
-  containerId   String
-  container     Container @relation(fields: [containerId], references: [id])
-  
-  courses Course[]
-  posts Post[]
+  isCourseCategory    Boolean @default(false)
+  isNewsCategory      Boolean @default(false)
+  isLiveEventCategory Boolean @default(false)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  containerId String
+  container   Container @relation(fields: [containerId], references: [id])
+
+  courses Course[]
+  posts   Post[]
+
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  LiveEvent LiveEvent[]
 
   @@index([name])
   @@index([containerId])
@@ -144,8 +184,6 @@ model Chapter {
   isPublished Boolean @default(false)
   isFree      Boolean @default(false)
 
-  muxData MuxData?
-
   courseId String
   course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
@@ -155,15 +193,6 @@ model Chapter {
   updatedAt DateTime @updatedAt
 
   @@index([courseId])
-}
-
-model MuxData {
-  id         String  @id @default(uuid())
-  assetId    String
-  playbackId String?
-
-  chapterId String  @unique
-  chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 }
 
 model UserProgress {
@@ -216,41 +245,39 @@ model NewsletterSubscription {
   createdAt DateTime @default(now())
 }
 
-
-
 // Document Uploading 
 
 model File {
-  id       Int     @id @default(autoincrement())
+  id       String  @id @default(uuid())
   type     String?
   name     String
   isPublic Boolean
   key      String  @db.Text
-  userId   String 
-  folderId Int
+  userId   String
+  folderId String
   folder   Folder? @relation(fields: [folderId], references: [id], onDelete: Cascade)
 
-  status  FileStatus @default(PENDING )
+  status FileStatus @default(PENDING)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([folderId])
 }
-enum FileStatus{
+
+enum FileStatus {
   PENDING
   UPLOADED
 }
- 
- 
+
 model Folder {
-  id             Int     @id @default(autoincrement())
+  id             String  @id @default(uuid())
   name           String
   isPublic       Boolean
   key            String  @db.Text
-  userId         String  
+  userId         String
   files          File[]
-  parentFolderId Int?
+  parentFolderId String?
   parentFolder   Folder? @relation("SubFolders", fields: [parentFolderId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   subFolders Folder[] @relation("SubFolders") // Define the opposite relation here
@@ -263,21 +290,27 @@ model Folder {
 
 // TODO: Global Color Settings
 
-// TODO: Post Model
+// TODO: News Post Models
 
 model Post {
-  id          String  @id @default(uuid())
-  userId      String
+  id String @id @default(uuid())
+
+  publisherName     String? @db.Text
+  publisherImageUrl String? @db.Text
+
   title       String  @db.Text
   description String? @db.Text
   imageUrl    String? @db.Text
   isPublished Boolean @default(false)
 
-  containerId   String
-  container     Container @relation(fields: [containerId], references: [id])
+  containerId String
+  container   Container @relation(fields: [containerId], references: [id])
 
   categoryId String?
   category   Category? @relation(fields: [categoryId], references: [id])
+
+  comments Comment[]
+  likes    Like[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -285,6 +318,43 @@ model Post {
   @@index([categoryId])
   @@index([containerId])
   @@fulltext([title])
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  text      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  postId String
+  post   Post   @relation(fields: [postId], references: [id])
+
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id])
+
+  likes Like[]
+
+  @@index([postId])
+  @@index([profileId])
+}
+
+model Like {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id])
+
+  postId String?
+  post   Post?   @relation(fields: [postId], references: [id])
+
+  commentId String?
+  comment   Comment? @relation(fields: [commentId], references: [id])
+
+  @@unique([profileId, postId, commentId])
+  @@index([profileId])
+  @@index([postId])
+  @@index([commentId])
 }
 
 // TODO: Chat & Conversation Models
@@ -296,15 +366,18 @@ enum ChannelType {
 }
 
 model Channel {
-  id String @id @default(uuid())
+  id   String      @id @default(uuid())
   name String
   type ChannelType @default(TEXT)
 
   profileId String
-  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
-  containerId   String
-  container     Container @relation(fields: [containerId], references: [id])
+  containerId String
+  container   Container @relation(fields: [containerId], references: [id])
+
+  serverId String
+  server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
   messages Message[]
 
@@ -313,19 +386,20 @@ model Channel {
 
   @@index([profileId])
   @@index([containerId])
+  @@index([serverId])
 }
 
 model Message {
-  id String @id @default(uuid())
+  id      String @id @default(uuid())
   content String @db.Text
 
   fileUrl String? @db.Text
 
   memberId String
-  member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
 
   channelId String
-  channel Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
 
   deleted Boolean @default(false)
 
@@ -340,28 +414,27 @@ model Conversation {
   id String @id @default(uuid())
 
   memberOneId String
-  memberOne Member @relation("MemberOne", fields: [memberOneId], references: [id], onDelete: Cascade)
+  memberOne   Member @relation("MemberOne", fields: [memberOneId], references: [id], onDelete: Cascade)
 
   memberTwoId String
-  memberTwo Member @relation("MemberTwo", fields: [memberTwoId], references: [id], onDelete: Cascade)
+  memberTwo   Member @relation("MemberTwo", fields: [memberTwoId], references: [id], onDelete: Cascade)
 
   directMessages DirectMessage[]
 
-  @@index([memberTwoId])
-
   @@unique([memberOneId, memberTwoId])
+  @@index([memberTwoId])
 }
 
 model DirectMessage {
-  id String @id @default(uuid())
-  content String @db.Text
+  id      String  @id @default(uuid())
+  content String  @db.Text
   fileUrl String? @db.Text
 
   memberId String
-  member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
 
   conversationId String
-  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
 
   deleted Boolean @default(false)
 
@@ -370,4 +443,32 @@ model DirectMessage {
 
   @@index([memberId])
   @@index([conversationId])
+}
+
+// TODO: Live Event Models
+
+model LiveEvent {
+  id          String  @id @default(uuid())
+  userId      String
+  title       String  @db.Text
+  description String? @db.Text
+  imageUrl    String? @db.Text
+  videoUrl    String? @db.Text
+  isPublished Boolean @default(false)
+
+  containerId String
+  container   Container @relation(fields: [containerId], references: [id])
+
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  startDateTime DateTime?
+  endDateTime DateTime?
+
+  @@index([categoryId])
+  @@index([containerId])
+  @@fulltext([title])
 }

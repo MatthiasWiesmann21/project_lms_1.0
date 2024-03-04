@@ -21,6 +21,5 @@ return (
       src={container?.imageUrl ?? ""}
     />
   </Link>
- 
-)
+  )
 }

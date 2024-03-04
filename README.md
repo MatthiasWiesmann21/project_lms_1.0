@@ -10,8 +10,6 @@ Key Features:
 - Create new Chapters
 - Easily reorder chapter position with drag n’ drop
 - Upload thumbnails, attachments and videos using UploadThing
-- Video processing using Mux
-- HLS Video player using Mux
 - Rich text editor for chapter description
 - Authentication using Clerk
 - ORM using Prisma
@@ -48,9 +46,6 @@ DATABASE_URL=
 
 UPLOADTHING_SECRET=
 UPLOADTHING_APP_ID=
-
-MUX_TOKEN_ID=
-MUX_TOKEN_SECRET=
 
 STRIPE_API_KEY=
 NEXT_PUBLIC_APP_URL=http://localhost:3000

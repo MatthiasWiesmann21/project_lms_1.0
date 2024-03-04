@@ -1,13 +1,13 @@
 import { auth } from "@clerk/nextjs";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 
-import { isTeacher } from "@/lib/teacher";
+import { isOwner } from "@/lib/owner";
  
 const f = createUploadthing();
  
 const handleAuth = () => {
   const { userId } = auth();
-  const isAuthorized = isTeacher(userId);
+  const isAuthorized = isOwner(userId);
 
   if (!userId || !isAuthorized) throw new Error("Unauthorized");
   return { userId };
@@ -23,6 +23,9 @@ export const ourFileRouter = {
   ContainerImage: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
     .middleware(() => handleAuth())
     .onUploadComplete(() => {}),
+  eventImage: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
+    .middleware(() => handleAuth())
+    .onUploadComplete(() => {}),
   courseAttachment: f(["text", "image", "video", "audio", "pdf"])
     .middleware(() => handleAuth())
     .onUploadComplete(() => {}),
@@ -30,6 +33,12 @@ export const ourFileRouter = {
     .middleware(() => handleAuth())
     .onUploadComplete(() => {}),
   chapterVideo: f({ video: { maxFileCount: 1, maxFileSize: "4GB" } })
+    .middleware(() => handleAuth())
+    .onUploadComplete(() => {}),
+  serverImage: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
+    .middleware(() => handleAuth())
+    .onUploadComplete(() => {}),
+  messageFile: f(["image", "pdf"])
     .middleware(() => handleAuth())
     .onUploadComplete(() => {})
 } satisfies FileRouter;

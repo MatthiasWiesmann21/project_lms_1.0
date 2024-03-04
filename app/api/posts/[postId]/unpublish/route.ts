@@ -1,4 +1,3 @@
-import Mux from "@mux/mux-node";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
@@ -18,7 +17,6 @@ export async function DELETE(
     const post = await db.post.findUnique({
       where: {
         id: params.postId,
-        userId: userId,
         containerId: process.env.CONTAINER_ID,
       }
     });
@@ -47,27 +45,35 @@ export async function PATCH(
 ) {
   try {
     const { userId } = auth();
-    const { postId } = params;
-    const values = await req.json();
 
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const post = await db.post.update({
+    const post = await db.post.findUnique({
       where: {
-        id: postId,
-        userId,
+        id: params.postId,
         containerId: process.env.CONTAINER_ID,
-      },
-      data: {
-        ...values,
       }
     });
 
-    return NextResponse.json(post);
+    if (!post) {
+      return new NextResponse("Not found", { status: 404 });
+    }
+
+    const publishedPost = await db.post.update({
+      where: {
+        id: params.postId,
+        containerId: process.env.CONTAINER_ID,
+      },
+      data: {
+        isPublished: false,
+      }
+    });
+
+    return NextResponse.json(publishedPost);
   } catch (error) {
-    console.log("[COURSE_ID]", error);
+    console.log("[COURSE_ID_PUBLISH]", error);
     return new NextResponse("Internal Error", { status: 500 });
-  }
+  } 
 }

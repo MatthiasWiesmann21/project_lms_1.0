@@ -85,11 +85,21 @@ body,
   font-size: 16px !important;
 }
 
-.str-chat__channel-search.str-chat__channel-search--width-results.str-chat__channle-search--inline {
-  height: fit-content;
+@import "~@uploadthing/react/styles.css";
+
+@keyframes spin-left-right {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-20deg);
+  }
+  75% {
+    transform: rotate(20deg);
+  }
 }
 
-@import "~stream-chat-react/dist/css/v2/index.css";
-
-@import "~@uploadthing/react/styles.css";
+.animate-spin-left-right {
+  animation: spin-left-right 1s ease-in-out forwards;
+}
 

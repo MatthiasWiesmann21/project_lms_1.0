@@ -1,71 +1,53 @@
-import React, { useState } from 'react';
-import AppSVGIcon from "@/components/appsvgicon";
-import { useParams, usePathname } from "next/navigation";
+import React from "react";
+import { useParams } from "next/navigation";
+import { FilePlus, FolderPlus, Plus, PlusCircle, PlusIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 type Params = {
-    id: string;
-  };
+  id: string;
+};
 
 const FlyoutMenuCreate = () => {
-    const [isMenuOpen, setMenuOpen] = useState(false);
-    const { id } = useParams() as Params;
-    console.log(id)
-    const handleButtonClick = () => {
-        setMenuOpen(!isMenuOpen);
-    };
-
-    const parentKey = usePathname();
+  const { id } = useParams() as Params;
 
 
-    const setLocalStorageItem = (key: string, value: string) => {
-        try {
-            localStorage.setItem(key, JSON.stringify(value));
-        } catch (error) {
-            console.error('Error setting local storage item:', error);
-        }
-    };
-
-    const onCLickCreateFile = async() => {
-        if(!id){
-            location.href = "/documents/createfile";
-        }else{
-            //setLocalStorageItem('parentKey', parentKey.replace('/documents/', '') + '/');
-            location.href = `/documents/${id}/createfile`;
-        }
+  const onCLickCreateFile = async () => {
+    if (!id) {
+      location.href = "/documents/createfile";
+    } else {
+      location.href = `/documents/${id}/createfile`;
     }
+  };
 
-    const onCLickCreateFolder = async() => {
-        if(!id){
-            location.href = "/documents/createfolder";
-        }else{
-            //setLocalStorageItem('parentKey', parentKey.replace('/documents/', '') + '/');
-            location.href = `/documents/${id}/createfolder`;
-        }
+  const onCLickCreateFolder = async () => {
+    if (!id) {
+      location.href = "/documents/createfolder";
+    } else {
+      location.href = `/documents/${id}/createfolder`;
     }
+  };
 
-    return (
-        <div className="relative">
-            <button onClick={handleButtonClick} type="button" className="block flex text-gray-600 rounded-md px-3 py-2 bg-gray-300 text-center text-sm font-semibold shadow-xl hover:bg-gray-200">
-                <AppSVGIcon customclass={'h-5 w-5 text-gray-400'} icon={'plusIcon'}></AppSVGIcon>
-                Create
-            </button>
-
-            {isMenuOpen && (
-                <div className="absolute left-2 z-10 mt-5 flex w-screen max-w-min -translate-x-1/2 px-4">
-                    <div className="w-max shrink rounded-xl bg-white p-4 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5">
-                        <button onClick={() => onCLickCreateFile()} className="flex p-1 justify-start">
-                            <AppSVGIcon customclass={'h-5 w-5 text-gray-400 mr-2'} icon={'fileIcon'}></AppSVGIcon>
-                            Create File
-                        </button>
-                        <button onClick={() => onCLickCreateFolder()} className="flex p-1 justify-start">
-                            <AppSVGIcon customclass={'h-5 w-5 text-gray-400 mr-2'} icon={'folderIcon'}></AppSVGIcon>
-                            Create Folder
-                        </button>
-                    </div>
-                </div>
-            )}
-        </div>
-    );
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button className="bg-transparent border-2 border-gray-300" variant="outline">
+        <PlusCircle className="h-5 w-5" />
+        <span className="pr-2 pl-2 text-sm">Create</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={onCLickCreateFile}>
+        <FolderPlus className="h-5 w-5 mr-2" />
+          Create File
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={onCLickCreateFolder}>
+          <FilePlus className="h-5 w-5 mr-2" />
+          Create Folder
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
 };
 
 export default FlyoutMenuCreate;

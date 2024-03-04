@@ -1,8 +1,9 @@
-import { auth } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
-import { isTeacher } from "@/lib/teacher";
+import { isOwner } from "@/lib/owner";
+import { isAdmin, isOperator } from "@/lib/roleCheckServer";
 
 export async function POST(
   req: Request,
@@ -11,13 +12,16 @@ export async function POST(
     const { userId } = auth();
     const { title } = await req.json();
 
-    if (!userId || !isTeacher(userId)) {
+    const isRoleAdmins = await isAdmin();
+    const isRoleOperator = await isOperator();
+    const canAccess = isRoleAdmins || isRoleOperator || isOwner(userId);
+
+    if (!userId || !canAccess) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
     const post = await db.post.create({
       data: {
-        userId,
         title,
         containerId: process.env.CONTAINER_ID || '',
       }

@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import { DocumentFolderTree } from "../page";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
-import { Progress } from "@/components/ui/progress";
 
 export interface FolderTreeProps {
   name: string;
@@ -48,7 +47,7 @@ const FolderTree: React.FC<DocumentFolderTree> = ({
     <div>
       {files.map((item, index) => {
         return (
-          <div className="mt-2  flex flex-row   items-center   " key={index}>
+          <div className="mt-2 flex flex-row items-center" key={index}>
             <div className="flex   ">
               <TreeNodeIcon
                 className="mr-2"
@@ -58,7 +57,7 @@ const FolderTree: React.FC<DocumentFolderTree> = ({
               {item.name}
             </div>
             {
-               <Button
+              <Button
                disabled ={downloading}
               className="ml-2 bg-white font-bold text-black hover:bg-black hover:text-white"
               onClick={() => handleDownload(item.key,item.name)}

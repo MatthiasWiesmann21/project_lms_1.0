@@ -1,5 +1,3 @@
-import { Category, Post } from "@prisma/client";
-
 import { db } from "@/lib/db";
 
 

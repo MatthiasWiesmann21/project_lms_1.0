@@ -23,6 +23,23 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(dashboard)/(routes)/newsletter/page.jsx", "app/(dashboard)/(routes)/documents/_components/nextcloud-iframe.jsx", "app/(dashboard)/(routes)/documents/page.js", "hooks/fetchFolderName.jsx", "hooks/fetchFiles.js", "app/(dashboard)/(routes)/documents/_components/CreateFolderButton.jsx", "app/(dashboard)/(routes)/documents/_components/FileList.jsx", "app/(dashboard)/(routes)/documents/_components/UploadButton.jsx", "app/(dashboard)/(routes)/documents/createfile"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "app/(dashboard)/(routes)/live-event/page.jsx",
+    "app/(dashboard)/(routes)/documents/_components/nextcloud-iframe.jsx",
+    "app/(dashboard)/(routes)/documents/page.js",
+    "hooks/fetchFolderName.jsx",
+    "hooks/fetchFiles.js",
+    "app/(dashboard)/(routes)/documents/_components/CreateFolderButton.jsx",
+    "app/(dashboard)/(routes)/documents/_components/FileList.jsx",
+    "app/(dashboard)/(routes)/documents/_components/UploadButton.jsx",
+    "app/(dashboard)/(routes)/documents/createfile",
+    "app/(dashboard)/(routes)/chat/page.jsx",
+    "app/api/roles/admin/checkAdminRole.js",
+    "app/(dashboard)/_components/sidebar-routes.jsx"
+  ],
   "exclude": ["node_modules"]
 }

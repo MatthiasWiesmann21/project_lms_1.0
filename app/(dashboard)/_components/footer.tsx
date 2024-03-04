@@ -1,6 +1,3 @@
-import Chatbot from "@/components/chatbot";
-
-
 const Footer = () => {
     return (
         <div className="md:pl-72">

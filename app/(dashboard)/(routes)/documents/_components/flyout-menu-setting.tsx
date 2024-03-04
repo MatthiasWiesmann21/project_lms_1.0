@@ -1,39 +1,64 @@
-import React, { useState } from 'react';
-import AppSVGIcon from "@/components/appsvgicon";
+import React, { useEffect } from "react";
+import { FilesIcon, MoreVertical, PencilIcon, Trash2Icon, } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
-const FlyoutMenuSetting = () => {
-    const [isMenuOpen, setMenuOpen] = useState(false);
+interface FlyoutMenuSettingProps {
+  index: number;
+  onRenameClick: () => void;
+  onDeleteClick: () => void;
+  onEditClick: () => void;
+  isMenuOpen: any;
+  setMenuOpen: any;
+  type: string;
+}
 
-    const handleButtonClick = () => {
-        setMenuOpen(!isMenuOpen);
+const FlyoutMenuSetting: React.FC<FlyoutMenuSettingProps> = ({
+  onRenameClick,
+  onDeleteClick,
+  onEditClick,
+  setMenuOpen,
+}) => {
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const targetElement = event.target as Element; // Cast event.target to Element
+      // Close the flyout menu if clicked outside
+      if (targetElement && !targetElement.closest(".flyout-create")) {
+        setMenuOpen(false);
+      }
     };
 
-    return (
-        <div className="relative">
-            <div onClick={handleButtonClick} className='cursor-pointer'>
-                <AppSVGIcon customclass={'h-5'} icon={'contextMenuIcon'}></AppSVGIcon>
-            </div>
+    document.addEventListener("click", handleClickOutside);
 
-            {isMenuOpen && (
-                <div className="absolute left-2 z-10 mt-5 flex w-screen max-w-min -translate-x-1/2 px-4">
-                    <div className="w-max shrink rounded-xl bg-white p-4 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5">
-                        <a href="#" className="flex p-1 justify-start">
-                            <AppSVGIcon customclass={'mr-3 h-5'} icon={'editIcon'}></AppSVGIcon>
-                            Edit
-                        </a>
-                        <a href="#" className="flex p-1 justify-start">
-                            <AppSVGIcon customclass={'mr-3 h-5'} icon={'renameIcon'}></AppSVGIcon>
-                            Rename
-                        </a>
-                        <a href="#" className="flex p-1 justify-start">
-                            <AppSVGIcon customclass={'mr-3 h-5'} icon={'deleteIcon'}></AppSVGIcon>
-                            Delete
-                        </a>
-                    </div>
-                </div>
-            )}
-        </div>
-    );
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  return (
+      <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button className="bg-transparent border-0" variant="outline">
+          <MoreVertical className="h-5 w-5" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={onEditClick}>
+        <PencilIcon className="h-4 w-4 mr-2" />
+          Edit
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={onRenameClick}>
+        <FilesIcon className="h-4 w-4 mr-2" />
+          Rename
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={onDeleteClick}>
+        <Trash2Icon className="h-4 w-4 mr-2" />
+          Delete
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
 };
 
 export default FlyoutMenuSetting;

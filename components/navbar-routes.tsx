@@ -6,19 +6,28 @@ import { LogOut, Settings } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { isTeacher } from "@/lib/teacher";
+import { isOwner } from "@/lib/owner";
 
 import { SearchInput } from "./search-input";
 import { ModeToggle } from "./mode-toggle";
+import { LanguageToggle } from "./language-toggle";
+import { useIsAdmin, useIsOperator } from "@/lib/roleCheck";
 
 export const NavbarRoutes = () => {
   const { userId } = useAuth();
   const pathname = usePathname();
 
-  const isTeacherPage = pathname?.startsWith("/teacher");
+  const isAdmin = useIsAdmin();
+  const isOperator = useIsOperator();
+  
+  
+  const canAccess = isAdmin || isOperator || isOwner(userId);
+
+  const isAdministrationPage = pathname?.startsWith("/admin");
   const isCoursePage = pathname?.includes("/courses");
   const isDashboardPage = pathname === "/dashboard";
   const isSearchPage = pathname === "/search";
+  const isLiveEventPage = pathname === "/live-event";
 
   return (
     <>
@@ -28,17 +37,21 @@ export const NavbarRoutes = () => {
         {isDashboardPage && (<div className="hidden md:block">
           <SearchInput />
         </div> )}
+        {isLiveEventPage && (<div className="hidden md:block">
+          <SearchInput />
+        </div> )}
       <div className="flex gap-x-2 ml-auto">
+          <LanguageToggle />
           <ModeToggle />
-        {isTeacherPage || isCoursePage ? (
+        {isAdministrationPage || isCoursePage ? (
           <Link href="/dashboard">
             <Button size="default" variant="ghost">
               <LogOut className="h-4 w-4 mr-2" />
               Exit
             </Button>
           </Link>
-        ) : isTeacher(userId) ? (
-          <Link href="/teacher/courses">
+        ) : canAccess ? (
+          <Link href="/admin/courses">
             <Button size="default" variant="ghost">
               <Settings className="h-4 w-4 mr-2" />
               Administration

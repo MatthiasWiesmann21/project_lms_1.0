@@ -1,10 +1,8 @@
 import createFolder from "@/app/vendor/aws/s3/createFolder";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
-import { FileStatus } from "@prisma/client";
 import { NextResponse } from "next/server";
 import { v4 as uuidv4, v4 } from "uuid";
-import { createReadStream } from "fs";
 import { getS3Client } from "@/app/vendor/aws/s3/getS3Client";
 import { Upload } from "@aws-sdk/lib-storage";
 import { NextApiResponse } from "next";
@@ -16,7 +14,7 @@ const getOrCreateParentFolder = async (parentKey?: string | null) => {
         key: parentKey,
       },
     });
-    if (parentFolder == null) { 
+    if (parentFolder == null) {
       throw new Error("Parent Folder Not Found");
     }
     return parentFolder;
@@ -51,18 +49,18 @@ const getOrCreateParentFolder = async (parentKey?: string | null) => {
 };
 
 export async function POST(req: Request, res: NextApiResponse) {
-  // POST /api/upload
   try {
     const { userId } = auth();
 
     if (userId == null) {
       throw new Error("Un Authorized");
     }
-    //  const requestBody = await req.json();
 
     const formData = await req.formData();
 
     const formFile = formData.get("file");
+    //@ts-ignore
+    const fileExtension = formFile.name.split('.').pop();
     const formIsPublic = formData.get("isPublic");
     const formFileName = formData.get("name");
     const isPublic = typeof formIsPublic === "string" ? (formIsPublic === "true" ? true : false) : false;
@@ -75,7 +73,8 @@ export async function POST(req: Request, res: NextApiResponse) {
         select: {
           key: true,
         },
-        where: { id: parseInt(id) },
+        //@ts-ignore
+        where: { id: id },
       });
       //@ts-ignore
       parentKey = keyData.key;
@@ -106,6 +105,7 @@ export async function POST(req: Request, res: NextApiResponse) {
         userId: userId,
         isPublic: isPublic,
         folderId: parentFolder.id,
+        type: fileExtension
       },
     });
 

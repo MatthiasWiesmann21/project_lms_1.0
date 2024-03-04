@@ -2,7 +2,6 @@ import createFolder from "@/app/vendor/aws/s3/createFolder";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
-import { v4 as uuidv4, v4 } from "uuid";
 
 const getOrCreateParentFolder = async (userId: string, parentKey?: string | null, ) => {
   if (parentKey != null) {
@@ -65,7 +64,7 @@ export async function POST(req: Request) {
         select: {
           key: true,
         },
-        where: { id: parseInt(id) },
+        where: { id: id },
       });
       //@ts-ignore
       parentKey = keyData.key;

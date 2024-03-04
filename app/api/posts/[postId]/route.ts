@@ -1,4 +1,3 @@
-import Mux from "@mux/mux-node";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
@@ -17,8 +16,7 @@ export async function DELETE(
 
     const post = await db.post.findUnique({
       where: {
-        id: params.postId,
-        userId: userId,
+        id: params.postId,        
         containerId: process.env.CONTAINER_ID,
       }
     });
@@ -57,7 +55,6 @@ export async function PATCH(
     const post = await db.post.update({
       where: {
         id: postId,
-        userId,
         containerId: process.env.CONTAINER_ID,
       },
       data: {

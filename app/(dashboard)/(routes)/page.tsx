@@ -5,9 +5,8 @@ export default async function Home() {
   const profile = await initialProfile();
 
   if (profile) { 
-    return redirect('/dashboard');
+    return redirect('/search');
   } else {
     return redirectToSignIn();
   }
-  // Redirects automatically users which goes to the root of the app
 }

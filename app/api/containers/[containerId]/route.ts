@@ -1,9 +1,8 @@
-import Mux from "@mux/mux-node";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
-import { isTeacher } from "@/lib/teacher";
+import { isOwner } from "@/lib/owner";
 
 export async function DELETE(
   req: Request,
@@ -12,7 +11,7 @@ export async function DELETE(
   try {
     const { userId } = auth();
 
-    if (!userId || !isTeacher(userId)) {
+    if (!userId || !isOwner(userId)) {
         return new NextResponse("Unauthorized", { status: 401 });
       }
 
@@ -48,7 +47,7 @@ export async function PATCH(
     const { containerId } = params;
     const values = await req.json();
 
-    if (!userId || !isTeacher(userId)) {
+    if (!userId || !isOwner(userId)) {
         return new NextResponse("Unauthorized", { status: 401 });
     }
 
@@ -57,7 +56,7 @@ export async function PATCH(
         id: containerId,
       },
       data: {
-        ...values,
+        ...values
       }
     });
 

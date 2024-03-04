@@ -20,6 +20,7 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         success: "bg-emerald-600 text-white hover:bg-emerald-600/80",
         signMe: "bg-emerald-400 text-white hover:bg-emerald-400/80 text-lg",
+        primary: "bg-indigo-500 text-white hover:bg-indigo-500/90",
       },
       size: {
         default: "h-10 px-4 py-2",
