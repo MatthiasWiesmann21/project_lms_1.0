@@ -23,27 +23,24 @@ const ServerIdLayout = async ({
       id: params.serverId,
       members: {
         some: {
-          profileId: profile.id
-        }
-      }
-    }
+          profileId: profile.id,
+        },
+      },
+    },
   });
 
   if (!server) {
     return redirect("/");
   }
 
-  return ( 
+  return (
     <div className="h-full">
-      <div 
-      className="hidden mt-[80px] ml-[72px] h-full md:flex w-60 z-20 flex-col fixed inset-y-0">
+      <div className="fixed inset-y-0 z-20 ml-[72px] mt-[80px] hidden h-full w-60 flex-col md:flex">
         <ServerSidebar serverId={params.serverId} />
       </div>
-      <main className="ml-[72px] md:pl-60">
-        {children}
-      </main>
+      <main className="ml-0 md:ml-[72px] md:pl-60">{children}</main>
     </div>
-   );
-}
- 
+  );
+};
+
 export default ServerIdLayout;

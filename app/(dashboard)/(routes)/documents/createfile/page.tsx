@@ -8,6 +8,7 @@ import FolderTree, { FolderTreeProps } from "../_components/folder-tree";
 import AssetsTable from "../_components/asset-table";
 import { useIsAdmin, useIsOperator } from "@/lib/roleCheck";
 import { NextResponse } from "next/server";
+import { useLanguage } from "@/lib/check-language";
 
 type Params = {
   id: string;
@@ -21,8 +22,10 @@ const DocumentCreatePage = () => {
   const [parentId, setParentId] = useState("");
   const [isPublic, setPublic] = useState(true);
   const [loading, setLoading] = useState(false);
-  const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  const uuidPattern =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   const encodedObj = useParams()?.id as string;
+  const currentLanguage = useLanguage();
 
   // const isAdmin = useIsAdmin();
   // const isOperator = useIsOperator();
@@ -43,12 +46,14 @@ const DocumentCreatePage = () => {
   } else {
     try {
       // Otherwise, decode the encoded object
-      const decodedObj = JSON.parse(atob(encodedObj?.replace(/%3D/g, '='))) as Params;
+      const decodedObj = JSON.parse(
+        atob(encodedObj?.replace(/%3D/g, "="))
+      ) as Params;
       id = decodedObj.id;
       action = decodedObj.action;
     } catch (error) {
       // Handle any decoding errors here
-      console.error('Error decoding object:', error);
+      console.error("Error decoding object:", error);
     }
   }
 
@@ -115,7 +120,7 @@ const DocumentCreatePage = () => {
     if (!id || !isEdit) return;
     const getFileDetails = async () => {
       const response = await axios?.get(`/api/documents/get/file?id=${id}`);
-      console.log(response.data.data)
+      console.log(response.data.data);
       setFileName(response?.data?.data?.name);
       setPublic(response?.data?.data?.isPublic);
       setParentId(response?.data?.data?.folderId);
@@ -130,7 +135,9 @@ const DocumentCreatePage = () => {
       </div>
       <div className="my-2 sm:flex-auto">
         <h1 className="text-2xl font-semibold leading-6 text-gray-600 dark:text-gray-300">
-          {`${isEdit ? "Edit" : "Add"} a File`}
+          {`${
+            isEdit ? `${currentLanguage.edit}` : `${currentLanguage.create}`
+          } ${currentLanguage.a_file}`}
         </h1>
       </div>
       <div>
@@ -138,7 +145,7 @@ const DocumentCreatePage = () => {
           htmlFor="name"
           className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-200"
         >
-          Name *
+          {currentLanguage.name + "*"}
         </label>
         <div className="mt-1">
           <input
@@ -147,8 +154,8 @@ const DocumentCreatePage = () => {
             id="name"
             value={fileName}
             onChange={(e) => setFileName(e.target.value)}
-            className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
-            placeholder="Please enter file name"
+            className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:text-gray-300 sm:text-sm sm:leading-6"
+            placeholder={currentLanguage.placeholder}
           />
         </div>
       </div>
@@ -157,7 +164,7 @@ const DocumentCreatePage = () => {
         htmlFor="email"
         className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
       >
-        File *
+        {currentLanguage.file + "*"}
       </label>
       {!isEdit && (
         <button
@@ -186,7 +193,7 @@ const DocumentCreatePage = () => {
             />
           </svg>
           <span className="mt-2 block text-sm font-semibold text-gray-900 dark:text-gray-300">
-            Upload file
+            {currentLanguage.upload_file}
           </span>
         </button>
       )}
@@ -219,7 +226,9 @@ const DocumentCreatePage = () => {
           ></span>
         </button>
         <span className="ml-3 text-sm" id="annual-billing-label">
-          <span className="font-medium text-gray-900 dark:text-gray-200">Public</span>
+          <span className="font-medium text-gray-900 dark:text-gray-200">
+            {currentLanguage.public}
+          </span>
         </span>
       </div>
       <div className="mt-4 flex flex-row-reverse">
@@ -251,9 +260,9 @@ const DocumentCreatePage = () => {
               ></path>
             </svg>
           ) : isEdit ? (
-            "Update"
+            `${currentLanguage.update}`
           ) : (
-            `Save`
+            `${currentLanguage.save}`
           )}
         </button>
         <a
@@ -261,7 +270,7 @@ const DocumentCreatePage = () => {
           type="button"
           className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
         >
-          Cancel
+          {currentLanguage.update}
         </a>
       </div>
     </div>

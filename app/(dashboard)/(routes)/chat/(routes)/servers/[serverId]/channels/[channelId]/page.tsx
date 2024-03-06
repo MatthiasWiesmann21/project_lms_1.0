@@ -8,17 +8,17 @@ import { ChatInput } from "@/components/chat/chat-input";
 import { ChatMessages } from "@/components/chat/chat-messages";
 import { MediaRoom } from "@/components/media-room";
 import { db } from "@/lib/db";
+import leftArrow from "../../../../../../../../../assets/icons/left arrow.png";
+import Image from "next/image";
 
 interface ChannelIdPageProps {
   params: {
     serverId: string;
     channelId: string;
-  }
+  };
 }
 
-const ChannelIdPage = async ({
-  params
-}: ChannelIdPageProps) => {
+const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
   const profile = await currentProfile();
 
   if (!profile) {
@@ -37,15 +37,15 @@ const ChannelIdPage = async ({
       serverId: params.serverId,
       profileId: profile.id,
       containerId: process.env.CONTAINER_ID,
-    }
+    },
   });
 
   if (!channel || !member) {
     redirect("/");
   }
 
-  return ( 
-    <div className="bg-white dark:bg-[#313338] flex flex-col h-full">
+  return (
+    <div className="flex h-full flex-col bg-white dark:bg-[#313338]">
       <ChatHeader
         name={channel.name}
         serverId={channel.serverId}
@@ -79,21 +79,13 @@ const ChannelIdPage = async ({
         </>
       )}
       {channel.type === ChannelType.AUDIO && (
-        <MediaRoom
-          chatId={channel.id}
-          video={false}
-          audio={true}
-        />
+        <MediaRoom chatId={channel.id} video={false} audio={true} />
       )}
       {channel.type === ChannelType.VIDEO && (
-        <MediaRoom
-          chatId={channel.id}
-          video={true}
-          audio={true}
-        />
+        <MediaRoom chatId={channel.id} video={true} audio={true} />
       )}
     </div>
-   );
-}
- 
+  );
+};
+
 export default ChannelIdPage;

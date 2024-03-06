@@ -10,6 +10,7 @@ import FlyoutMenuSetting from "./flyout-menu-setting";
 import Modal from "react-modal";
 import { Download, File, FileText, FolderOpen } from "lucide-react";
 import { useIsAdmin, useIsOperator } from "@/lib/roleCheck";
+import { useLanguage } from "@/lib/check-language";
 
 export interface FolderTreeProps {
   name: string;
@@ -44,6 +45,7 @@ const AssetsTable: React.FC = (props: any) => {
   const [loading, setLoading] = useState(false);
   const [isFolder, setIsFolder] = useState("");
   const [isRenameFolder, setIsRenameFolder] = useState(false);
+  const currentLanguage = useLanguage();
 
   const isAdmin = useIsAdmin();
   const isOperator = useIsOperator();
@@ -79,11 +81,11 @@ const AssetsTable: React.FC = (props: any) => {
           id: renamingItem.id,
           ...(!isRenameFolder
             ? {
-              fileName: newFileName,
-            }
+                fileName: newFileName,
+              }
             : {
-              folderName: newFileName,
-            }),
+                folderName: newFileName,
+              }),
         }
       );
       location.reload();
@@ -125,7 +127,7 @@ const AssetsTable: React.FC = (props: any) => {
     setDownloading(true);
     const response = await axios.get(`/api/documents/download/file?key=${key}`);
     const { fileExtension } = response.data.data;
-    
+
     const downloadURL = response.data.data.downloadUrl;
     const downloadLink = document.createElement("a");
     downloadLink.href = downloadURL;
@@ -162,12 +164,13 @@ const AssetsTable: React.FC = (props: any) => {
     };
     const str = JSON?.stringify(obj);
     const encoded = btoa(str);
-    location.href = `/documents/${encoded}/${isFolder ? "createfolder" : "createfile"
-      }`;
+    location.href = `/documents/${encoded}/${
+      isFolder ? "createfolder" : "createfile"
+    }`;
   };
 
   return (
-    <div className="overflow-hidden px-2 py-4 sm:px-2 lg:px-2 dark:bg-[#313338]">
+    <div className="overflow-hidden px-2 py-4 dark:bg-[#313338] sm:px-2 lg:px-2">
       <Modal
         isOpen={modalIsOpen && renamingItem !== null}
         onRequestClose={closeModal}
@@ -179,14 +182,14 @@ const AssetsTable: React.FC = (props: any) => {
             htmlFor="name"
             className="block text-sm font-medium leading-6 text-gray-900"
           >
-            Rename *
+            {currentLanguage.rename + "*"}
           </label>
           <div className="mt-1">
             <input
               type="text"
               name="name"
               id="name"
-              className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:text-gray-300 sm:text-sm sm:leading-6"
               placeholder="Enter the new name"
               defaultValue={renamingItem?.name}
               onChange={(e) => {
@@ -201,7 +204,7 @@ const AssetsTable: React.FC = (props: any) => {
             className="mx-2 rounded-md bg-slate-300 px-3.5 py-2.5 text-sm font-semibold text-black shadow-sm hover:bg-slate-400"
             onClick={closeModal}
           >
-            Cancel
+            {currentLanguage.cancel}
           </button>
           <button
             type="button"
@@ -211,7 +214,7 @@ const AssetsTable: React.FC = (props: any) => {
               renameFolder();
             }}
           >
-            Save
+            {currentLanguage.save}
           </button>
         </div>
       </Modal>
@@ -222,7 +225,9 @@ const AssetsTable: React.FC = (props: any) => {
         contentLabel="Rename Modal"
       >
         <div>
-          <p className="dark:text-gray-900">Are you sure you want to delete?</p>
+          <p className="text-center dark:text-gray-900">
+            {currentLanguage.are_you_sure_you_want_to_delete}
+          </p>
         </div>
         <div className="mt-4 flex justify-center">
           <button
@@ -230,7 +235,7 @@ const AssetsTable: React.FC = (props: any) => {
             className="mx-2 rounded-md bg-slate-300 px-3.5 py-2.5 text-sm font-semibold text-black shadow-sm hover:bg-slate-400"
             onClick={() => setIsFolder("")}
           >
-            Cancel
+            {currentLanguage.cancel}
           </button>
           <button
             type="button"
@@ -262,7 +267,7 @@ const AssetsTable: React.FC = (props: any) => {
                 ></path>
               </svg>
             ) : (
-              <>Delete</>
+              <>{currentLanguage.delete}</>
             )}
           </button>
         </div>
@@ -270,19 +275,20 @@ const AssetsTable: React.FC = (props: any) => {
       <div className="my-2 sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-2xl font-semibold leading-6 text-gray-600 dark:text-gray-200 ">
-            Document Hub
+            {currentLanguage.document_hub}
           </h1>
         </div>
 
         <div
-          className={`${canAccess ? "block" : "hidden"
-            } mt-4 sm:ml-16 sm:mt-0 sm:flex-none`}
+          className={`${
+            canAccess ? "block" : "hidden"
+          } mt-4 sm:ml-16 sm:mt-0 sm:flex-none`}
         >
           <FlyoutMenuCreate
             // index={i}
             key={`flyout-create-0`}
-          // currentlyOpenIndex={currentlyOpenCreateFlyoutIndex}
-          // setCurrentlyOpenIndex={setCurrentlyOpenCreateFlyoutIndex}
+            // currentlyOpenIndex={currentlyOpenCreateFlyoutIndex}
+            // setCurrentlyOpenIndex={setCurrentlyOpenCreateFlyoutIndex}
           />
         </div>
       </div>
@@ -296,20 +302,20 @@ const AssetsTable: React.FC = (props: any) => {
                     <th scope="col" className="relative px-8 sm:w-12 sm:px-6">
                       {/* <input type="checkbox" className="absolute left-1 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" /> */}
                       <span className="min-w-[12rem] py-3 text-sm font-semibold text-gray-900 dark:text-gray-300">
-                        Type
+                        {currentLanguage.type}
                       </span>
                     </th>
                     <th
                       scope="col"
                       className="min-w-[12rem] py-3.5 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-300"
                     >
-                      Name
+                      {currentLanguage.name}
                     </th>
                     <th
                       scope="col"
                       className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-300"
                     >
-                      Created At
+                      {currentLanguage.created_at}
                     </th>
                   </tr>
                 </thead>
@@ -325,7 +331,7 @@ const AssetsTable: React.FC = (props: any) => {
                               onClick={() =>
                                 (location.href = `${currentDocPath}${item.id}`)
                               }
-                              className="p-3 mr-3 m-1 cursor-pointer rounded bg-slate-300 dark:bg-slate-600"
+                              className="m-1 mr-3 cursor-pointer rounded bg-slate-300 p-3 dark:bg-slate-600"
                             >
                               <FolderOpen />
                             </div>
@@ -343,11 +349,11 @@ const AssetsTable: React.FC = (props: any) => {
                           </td>
                           <td
                             className={`relative whitespace-nowrap px-3 text-sm text-gray-500`}
-                          >
-                          </td>
+                          ></td>
                           <td
-                            className={`${!canAccess && "hidden"
-                              } relative whitespace-nowrap px-3 text-sm text-gray-500 dark:text-gray-200`}
+                            className={`${
+                              !canAccess && "hidden"
+                            } relative whitespace-nowrap px-3 text-sm text-gray-500 dark:text-gray-200`}
                           >
                             <div className=" ">
                               <FlyoutMenuSetting
@@ -377,7 +383,7 @@ const AssetsTable: React.FC = (props: any) => {
                         <tr key={i}>
                           <td className="relative px-7 sm:w-12 sm:px-6">
                             {/* <input type="checkbox" className="absolute left-1 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" /> */}
-                            <div className="p-3 mr-3 m-1 cursor-not-allowed rounded bg-slate-300 dark:bg-slate-600">
+                            <div className="m-1 mr-3 cursor-not-allowed rounded bg-slate-300 p-3 dark:bg-slate-600">
                               <File />
                             </div>
                           </td>
@@ -396,12 +402,13 @@ const AssetsTable: React.FC = (props: any) => {
                                 handleDownload(item.key, item.name)
                               }
                             >
-                              <Download className="text-gray-200 w-5 h-5" />
+                              <Download className="h-5 w-5 text-gray-200" />
                             </div>
                           </td>
                           <td
-                            className={`${!canAccess && "hidden"
-                              } relative whitespace-nowrap px-3 text-sm text-gray-500 dark:text-gray-200`}
+                            className={`${
+                              !canAccess && "hidden"
+                            } relative whitespace-nowrap px-3 text-sm text-gray-500 dark:text-gray-200`}
                           >
                             <div className=" ">
                               <FlyoutMenuSetting
@@ -421,7 +428,6 @@ const AssetsTable: React.FC = (props: any) => {
                               />
                             </div>
                           </td>
-                          
                         </tr>
                       )
                   )}
