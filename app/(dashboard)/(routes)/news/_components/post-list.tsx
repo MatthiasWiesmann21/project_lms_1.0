@@ -4,10 +4,9 @@ import { PostCard } from "./post-card";
 
 type PostWithProgressWithCategory = Post & {
   category: Category | null;
-  comments: any[];
   likesCount: number;
   currentLike: boolean;
-  commentsWithLikes: any
+  commentsWithLikes: any;
 };
 
 interface PostListProps {
@@ -36,7 +35,6 @@ export const PostList = ({ items }: PostListProps) => {
               publisherName={item.publisherName!}
               publisherImageUrl={item.publisherImageUrl!}
               colorCode={item?.category?.colorCode!}
-              comments={item?.comments}
               likesCount={item?.likesCount}
               currentLike={item?.currentLike}
               commentsWithLikes={item.commentsWithLikes}

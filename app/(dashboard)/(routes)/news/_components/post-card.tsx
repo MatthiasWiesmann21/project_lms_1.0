@@ -22,7 +22,6 @@ interface PostCardProps {
   publisherName: string;
   publisherImageUrl: string;
   colorCode?: string;
-  comments: any[];
   likesCount: number;
   currentLike: boolean;
   commentsWithLikes: any;
@@ -38,7 +37,6 @@ export const PostCard = async ({
   publisherName,
   publisherImageUrl,
   colorCode,
-  comments,
   likesCount,
   currentLike,
   commentsWithLikes,
@@ -79,7 +77,6 @@ export const PostCard = async ({
       </div>
       <LikeComment
         id={id}
-        comments={comments}
         likesCount={likesCount}
         currentLike={currentLike}
         commentsWithLikes={commentsWithLikes}

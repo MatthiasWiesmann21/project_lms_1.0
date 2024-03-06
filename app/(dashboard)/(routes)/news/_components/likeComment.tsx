@@ -129,16 +129,14 @@ const Reply = ({ val, id }: { val: any; id: string }) => {
 
 const LikeComment = ({
   id,
-  comments,
   likesCount,
   currentLike,
-  commentsWithLikes
+  commentsWithLikes,
 }: {
   id: string;
-  comments: any[];
   likesCount: number;
   currentLike: boolean;
-  commentsWithLikes: any
+  commentsWithLikes: any;
 }) => {
   // const [likeCount, setLikeCount] = useState(0);
   const user = useSelector((state: any) => state?.user);
