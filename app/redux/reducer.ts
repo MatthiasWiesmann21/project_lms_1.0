@@ -2,6 +2,7 @@
 
 const initialState = {
   user: {} as any,
+  language: 'English',
 };
 
 const reducer = (state = initialState, action: any) => {
@@ -21,6 +22,8 @@ const reducer = (state = initialState, action: any) => {
       };
     case "ClearUser":
       return { ...state, user: {} };
+    case "SetLanguage":
+      return { ...state, language: action?.payload }
     default:
       return state;
   }
