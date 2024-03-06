@@ -36,7 +36,7 @@ const SubReply = ({ val }: { val: any }) => {
               className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
             >
               <ThumbSvg
-                fill={val?.likesCount ? "blue" : "#fff"}
+                fill={val?.commentsWithLikes ? "blue" : "#fff"}
                 className="mr-[10px]"
               />
               {val?.likes?.length}
@@ -72,7 +72,7 @@ const Reply = ({ val, id }: { val: any; id: string }) => {
               className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
             >
               <ThumbSvg
-                fill={val?.likesCount ? "blue" : "#fff"}
+                fill={val?.commentsWithLikes ? "blue" : "#fff"}
                 className="mr-[10px]"
               />
               {val?.likes?.length}
