@@ -7,7 +7,7 @@ import { EmojiPicker } from "@/components/emoji-picker";
 import axios from "axios";
 
 const postComment = async (params: any) => {
-  if (!!params?.text) return;
+  if (params?.text === "") return;
   const response = await axios?.post(`/api/comment/create`, {
     ...params,
   });
@@ -16,7 +16,6 @@ const postComment = async (params: any) => {
 
 const SubReply = ({ val }: { val: any }) => {
   const user = useSelector((state: any) => state?.user);
-  const [likeCount, setLikeCount] = useState(0);
   return (
     <div>
       <div className="flex">
@@ -28,14 +27,19 @@ const SubReply = ({ val }: { val: any }) => {
           <p>{val?.text}</p>
           <div className="my-2 flex items-center">
             <div
-              onClick={() => setLikeCount(likeCount + 1)}
+              onClick={async () => {
+                const response = await axios?.post(`/api/like/create`, {
+                  commentId: val?.id,
+                });
+                if (response?.status === 200) window?.location?.reload();
+              }}
               className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
             >
               <ThumbSvg
-                fill={!!likeCount ? "blue" : "#fff"}
+                fill={val?.likesCount ? "blue" : "#fff"}
                 className="mr-[10px]"
               />
-              {likeCount}
+              {val?.likesCount}
             </div>
           </div>
         </div>
@@ -46,7 +50,6 @@ const SubReply = ({ val }: { val: any }) => {
 
 const Reply = ({ val, id }: { val: any; id: string }) => {
   const user = useSelector((state: any) => state?.user);
-  const [likeCount, setLikeCount] = useState(0);
   const [showReplyInput, setShowReplyInput] = useState(false);
   const [comment, setComment] = useState("");
   return (
@@ -60,14 +63,19 @@ const Reply = ({ val, id }: { val: any; id: string }) => {
           <p>{val?.text}</p>
           <div className="my-2 flex items-center">
             <div
-              onClick={() => setLikeCount(likeCount + 1)}
+              onClick={async () => {
+                const response = await axios?.post(`/api/like/create`, {
+                  commentId: val?.id,
+                });
+                if (response?.status === 200) window?.location?.reload();
+              }}
               className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
             >
               <ThumbSvg
-                fill={!!likeCount ? "blue" : "#fff"}
+                fill={val?.likesCount ? "blue" : "#fff"}
                 className="mr-[10px]"
               />
-              {likeCount}
+              {val?.likesCount}
             </div>
             <p
               className="m-0 ml-5 cursor-pointer"

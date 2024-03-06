@@ -23,7 +23,6 @@ export const PostList = ({ items }: PostListProps) => {
       {/* Add responsive padding, and max-width to center on large screens */}
       <div className="w-full max-w-2xl px-5">
         {sortedItems.map((item) => {
-          console.log(item);
           return (
             <PostCard
               key={item.id}
