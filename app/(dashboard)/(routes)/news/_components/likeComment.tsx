@@ -15,7 +15,7 @@ const postComment = async (params: any) => {
 };
 
 const SubReply = ({ val }: { val: any }) => {
-  const user = useSelector((state: any) => state?.user);
+  console.log(val);
   return (
     <div>
       <div className="flex">
@@ -39,7 +39,7 @@ const SubReply = ({ val }: { val: any }) => {
                 fill={val?.likesCount ? "blue" : "#fff"}
                 className="mr-[10px]"
               />
-              {val?.likesCount}
+              {val?.likes?.length}
             </div>
           </div>
         </div>
@@ -75,7 +75,7 @@ const Reply = ({ val, id }: { val: any; id: string }) => {
                 fill={val?.likesCount ? "blue" : "#fff"}
                 className="mr-[10px]"
               />
-              {val?.likesCount}
+              {val?.likes?.length}
             </div>
             <p
               className="m-0 ml-5 cursor-pointer"

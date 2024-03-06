@@ -21,7 +21,6 @@ export const getPosts = async ({
   categoryId,
 }: GetPosts): Promise<PostWithProgressWithCategory[]> => {
   try {
-
     const { userId } = auth();
 
     if (userId == null) {
@@ -33,11 +32,11 @@ export const getPosts = async ({
         id: true,
       },
       where: {
-        userId: userId
-      }
-    })
+        userId: userId,
+      },
+    });
 
-    if(profile === null){
+    if (profile === null) {
       return [];
     }
 
@@ -58,14 +57,14 @@ export const getPosts = async ({
             subComment: {
               include: {
                 likes: true,
-                profile: true
+                profile: true,
               },
             },
-            profile: true
+            profile: true,
           },
           where: {
-            parentComment: null
-          }
+            parentComment: null,
+          },
         },
         likes: true,
       },
@@ -76,10 +75,10 @@ export const getPosts = async ({
       const likesCount = post.likes.length;
       const commentLikesCount = post.comments[i].likes.length;
 
-      console.log("ProfileIds", profile.id);
-
       // Check if the current profile has liked the post
-      const currentLike = post.likes.some((like) => like.profileId === profile.id);
+      const currentLike = post.likes.some(
+        (like) => like.profileId === profile.id
+      );
       const currentCommentLike = post.comments[i].likes.some(
         (like) => like.profileId === userId
       );
