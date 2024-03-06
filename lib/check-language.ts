@@ -11,12 +11,42 @@ import {
   Russian,
 } from "../lib/localization";
 
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-// const useUserRole = () => useSelector((state: any) => state?.user);
 
-const currentLanguage = "Italiano";
+
 
 export const useLanguage = () => {
+  const selectedLanguage = useSelector((state: any) => state.language);
+
+  const currentLanguage = selectedLanguage;
+  console.log('currentLanguage :', selectedLanguage)
+
+  switch (currentLanguage) {
+    case 'English':
+      return English;
+
+    case 'Deutsch':
+      return Deutch;
+
+    case 'Francaise':
+      return Francaise;
+
+    case 'Italiano':
+      return Italiano;
+
+    case 'Espanol':
+      return Espanol;
+
+    case 'Portugues':
+      return Portugues;
+
+    case 'Russian':
+      return Russian;
+
+    case 'Mandarin':
+      return Mandarin;
+
+  }
   return currentLanguage === "Italiano" ? Italiano : Russian;
 };
