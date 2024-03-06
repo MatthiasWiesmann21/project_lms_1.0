@@ -13,15 +13,9 @@ import {
 
 import { useSelector } from "react-redux";
 
-
-
-
 export const useLanguage = () => {
   const selectedLanguage = useSelector((state: any) => state.language);
-
   const currentLanguage = selectedLanguage;
-  console.log('currentLanguage :', selectedLanguage)
-
   switch (currentLanguage) {
     case 'English':
       return English;
@@ -47,6 +41,7 @@ export const useLanguage = () => {
     case 'Mandarin':
       return Mandarin;
 
+    default:
+      return English;
   }
-  return currentLanguage === "Italiano" ? Italiano : Russian;
 };
