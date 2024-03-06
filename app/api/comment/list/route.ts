@@ -2,7 +2,7 @@ import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function GET(req: any) {
   try {
     const { userId } = auth();
 
@@ -11,7 +11,10 @@ export async function GET(req: Request) {
     }
     const requestBody = await req.json();
 
-    const { postId } = requestBody;
+    // const { postId } = requestBody;
+
+    const postId = req.nextUrl.searchParams.get("postId");
+
 
     const comment = await db.comment.findMany({
         select: {
