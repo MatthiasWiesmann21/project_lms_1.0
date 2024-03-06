@@ -15,7 +15,6 @@ const postComment = async (params: any) => {
 };
 
 const SubReply = ({ val }: { val: any }) => {
-  console.log(val);
   return (
     <div>
       <div className="flex">
@@ -36,7 +35,7 @@ const SubReply = ({ val }: { val: any }) => {
               className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
             >
               <ThumbSvg
-                fill={val?.commentsWithLikes ? "blue" : "#fff"}
+                fill={val?.currentCommentLike ? "blue" : "#fff"}
                 className="mr-[10px]"
               />
               {val?.likes?.length}
@@ -72,7 +71,7 @@ const Reply = ({ val, id }: { val: any; id: string }) => {
               className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
             >
               <ThumbSvg
-                fill={val?.commentsWithLikes ? "blue" : "#fff"}
+                fill={val?.currentCommentLike ? "blue" : "#fff"}
                 className="mr-[10px]"
               />
               {val?.likes?.length}
@@ -119,7 +118,7 @@ const Reply = ({ val, id }: { val: any; id: string }) => {
               </div>
             </div>
           )}
-          {val?.subComment?.map((val: any) => (
+          {val?.subCommentsWithLikes?.map((val: any) => (
             <SubReply key={val?.id} val={val} />
           ))}
         </div>
@@ -133,11 +132,13 @@ const LikeComment = ({
   comments,
   likesCount,
   currentLike,
+  commentsWithLikes
 }: {
   id: string;
   comments: any[];
   likesCount: number;
   currentLike: boolean;
+  commentsWithLikes: any
 }) => {
   // const [likeCount, setLikeCount] = useState(0);
   const user = useSelector((state: any) => state?.user);
@@ -190,7 +191,7 @@ const LikeComment = ({
             </button>
           </div>
           <div>
-            {comments?.map((val: any) => (
+            {commentsWithLikes?.map((val: any) => (
               <Reply key={val?.id} val={val} id={id} />
             ))}
           </div>

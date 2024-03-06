@@ -25,6 +25,7 @@ interface PostCardProps {
   comments: any[];
   likesCount: number;
   currentLike: boolean;
+  commentsWithLikes: any;
 }
 
 export const PostCard = async ({
@@ -40,6 +41,7 @@ export const PostCard = async ({
   comments,
   likesCount,
   currentLike,
+  commentsWithLikes,
 }: PostCardProps) => {
   return (
     <div className="group m-5 h-full overflow-hidden rounded-lg border p-3 hover:shadow-sm dark:border-[#ffffff]">
@@ -80,6 +82,7 @@ export const PostCard = async ({
         comments={comments}
         likesCount={likesCount}
         currentLike={currentLike}
+        commentsWithLikes={commentsWithLikes}
       />
     </div>
   );

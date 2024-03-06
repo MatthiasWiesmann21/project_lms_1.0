@@ -7,6 +7,7 @@ type PostWithProgressWithCategory = Post & {
   comments: any[];
   likesCount: number;
   currentLike: boolean;
+  commentsWithLikes: any
 };
 
 interface PostListProps {
@@ -38,6 +39,7 @@ export const PostList = ({ items }: PostListProps) => {
               comments={item?.comments}
               likesCount={item?.likesCount}
               currentLike={item?.currentLike}
+              commentsWithLikes={item.commentsWithLikes}
             />
           );
         })}
