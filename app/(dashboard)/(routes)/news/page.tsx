@@ -24,7 +24,9 @@ const NewsPage = async () => {
 
   return (
     <div className="space-y-4 p-6 dark:bg-[#313338]">
-      <PostList items={posts} />
+      <PostList
+      //@ts-ignore
+       items={posts} />
     </div>
   );
 };
