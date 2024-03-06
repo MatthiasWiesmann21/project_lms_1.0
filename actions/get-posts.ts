@@ -21,7 +21,6 @@ export const getPosts = async ({
   categoryId,
 }: GetPosts): Promise<PostWithProgressWithCategory[]> => {
   try {
-
     const { userId } = auth();
 
     if (userId == null) {
@@ -33,9 +32,9 @@ export const getPosts = async ({
         id: true,
       },
       where: {
-        userId: userId
-      }
-    })
+        userId: userId,
+      },
+    });
 
     if (profile === null) {
       return [];
@@ -58,14 +57,14 @@ export const getPosts = async ({
             subComment: {
               include: {
                 likes: true,
-                profile: true
+                profile: true,
               },
             },
-            profile: true
+            profile: true,
           },
           where: {
-            parentComment: null
-          }
+            parentComment: null,
+          },
         },
         likes: true,
       },

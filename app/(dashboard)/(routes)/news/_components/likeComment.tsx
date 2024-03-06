@@ -15,7 +15,7 @@ const postComment = async (params: any) => {
 };
 
 const SubReply = ({ val }: { val: any }) => {
-  const user = useSelector((state: any) => state?.user);
+  console.log(val);
   return (
     <div>
       <div className="flex">
@@ -36,10 +36,10 @@ const SubReply = ({ val }: { val: any }) => {
               className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
             >
               <ThumbSvg
-                fill={val?.likesCount ? "blue" : "#fff"}
+                fill={val?.commentsWithLikes ? "blue" : "#fff"}
                 className="mr-[10px]"
               />
-              {val?.likesCount}
+              {val?.likes?.length}
             </div>
           </div>
         </div>
@@ -72,10 +72,10 @@ const Reply = ({ val, id }: { val: any; id: string }) => {
               className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
             >
               <ThumbSvg
-                fill={val?.likesCount ? "blue" : "#fff"}
+                fill={val?.commentsWithLikes ? "blue" : "#fff"}
                 className="mr-[10px]"
               />
-              {val?.likesCount}
+              {val?.likes?.length}
             </div>
             <p
               className="m-0 ml-5 cursor-pointer"
