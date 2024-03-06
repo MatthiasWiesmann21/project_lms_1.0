@@ -332,10 +332,16 @@ model Comment {
   profileId String
   profile   Profile @relation(fields: [profileId], references: [id])
 
+  parentCommentId String?
+  parentComment   Comment? @relation("SubComment", fields: [parentCommentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  subComment Comment[] @relation("SubComment") // Define the opposite relation here
+
   likes Like[]
 
   @@index([postId])
   @@index([profileId])
+  @@index([parentCommentId])
 }
 
 model Like {
