@@ -64,7 +64,6 @@
     "eslint-config-prettier": "^9.0.0",
     "formidable-serverless": "^1.1.1",
     "http": "^0.0.1-security",
-    "i18next": "^23.10.0",
     "livekit-client": "^1.15.12",
     "livekit-server-sdk": "^1.2.7",
     "lucide-react": "^0.276.0",
