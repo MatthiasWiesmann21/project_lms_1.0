@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { UserAvatar } from "@/components/user-avatar";
 import { EmojiPicker } from "@/components/emoji-picker";
 import axios from "axios";
+import moment from "moment";
 
 const postComment = async (params: any) => {
   if (params?.text === "") return;
@@ -23,6 +24,12 @@ const SubReply = ({ val }: { val: any }) => {
           src={val?.profile.imageUrl}
         />
         <div className="w-full">
+          <p>
+            {val?.profile?.name}
+            <span className="ml-5 text-[12px]">
+              {moment(new Date(val?.createdAt))?.fromNow()}
+            </span>
+          </p>
           <p>{val?.text}</p>
           <div className="my-2 flex items-center">
             <div
@@ -51,6 +58,7 @@ const Reply = ({ val, id }: { val: any; id: string }) => {
   const user = useSelector((state: any) => state?.user);
   const [showReplyInput, setShowReplyInput] = useState(false);
   const [comment, setComment] = useState("");
+  console.log(val);
   return (
     <div>
       <div className="flex">
@@ -59,6 +67,12 @@ const Reply = ({ val, id }: { val: any; id: string }) => {
           src={val?.profile.imageUrl}
         />
         <div className="w-full">
+          <p>
+            {val?.profile?.name}
+            <span className="ml-5 text-[12px]">
+              {moment(new Date(val?.createdAt))?.fromNow()}
+            </span>
+          </p>
           <p>{val?.text}</p>
           <div className="my-2 flex items-center">
             <div
@@ -138,7 +152,6 @@ const LikeComment = ({
   currentLike: boolean;
   commentsWithLikes: any;
 }) => {
-  // const [likeCount, setLikeCount] = useState(0);
   const user = useSelector((state: any) => state?.user);
   const [comment, setComment] = useState("");
 
