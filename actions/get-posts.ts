@@ -2,23 +2,45 @@ import { Category, Post } from "@prisma/client";
 
 import { db } from "@/lib/db";
 
+import { auth } from "@clerk/nextjs";
+
 type PostWithProgressWithCategory = Post & {
   category: Category | null;
   comments: any[];
 };
 
 type GetPosts = {
-  userId?: string;
+  // userId?: string;
   title?: string;
   categoryId?: string;
 };
 
 export const getPosts = async ({
-  userId,
+  // userId,
   title,
   categoryId,
 }: GetPosts): Promise<PostWithProgressWithCategory[]> => {
   try {
+
+    const { userId } = auth();
+
+    if (userId == null) {
+      throw new Error("Un Authorized");
+    }
+
+    const profile = await db.profile.findFirst({
+      select: {
+        id: true,
+      },
+      where: {
+        userId: userId
+      }
+    })
+
+    if(profile === null){
+      return [];
+    }
+
     const posts = await db.post.findMany({
       where: {
         isPublished: true,
@@ -32,14 +54,18 @@ export const getPosts = async ({
         category: true,
         comments: {
           include: {
-            //subComment: true,
             likes: true,
             subComment: {
               include: {
                 likes: true,
+                profile: true
               },
             },
+            profile: true
           },
+          where: {
+            parentComment: null
+          }
         },
         likes: true,
       },
@@ -50,10 +76,10 @@ export const getPosts = async ({
       const likesCount = post.likes.length;
       const commentLikesCount = post.comments[i].likes.length;
 
-      // console.log("adddagdajksadsakbdddddddddd", post.comments[i].subComment);
+      console.log("ProfileIds", profile.id);
 
       // Check if the current profile has liked the post
-      const currentLike = post.likes.some((like) => like.profileId === userId);
+      const currentLike = post.likes.some((like) => like.profileId === profile.id);
       const currentCommentLike = post.comments[i].likes.some(
         (like) => like.profileId === userId
       );

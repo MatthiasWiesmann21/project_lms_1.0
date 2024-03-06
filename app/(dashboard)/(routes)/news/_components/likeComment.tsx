@@ -21,7 +21,7 @@ const SubReply = ({ val }: { val: any }) => {
       <div className="flex">
         <UserAvatar
           className="mr-1 h-5 w-5 md:h-7 md:w-7"
-          src={user?.imageUrl}
+          src={val?.profile.imageUrl}
         />
         <div className="w-full">
           <p>{val?.text}</p>
@@ -57,7 +57,7 @@ const Reply = ({ val, id }: { val: any; id: string }) => {
       <div className="flex">
         <UserAvatar
           className="mr-1 h-5 w-5 md:h-7 md:w-7"
-          src={user?.imageUrl}
+          src={val?.profile.imageUrl}
         />
         <div className="w-full">
           <p>{val?.text}</p>
@@ -142,8 +142,6 @@ const LikeComment = ({
   // const [likeCount, setLikeCount] = useState(0);
   const user = useSelector((state: any) => state?.user);
   const [comment, setComment] = useState("");
-
-  console.log("currentLike", currentLike);
 
   return (
     <div>
