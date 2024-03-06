@@ -3,7 +3,6 @@ import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
-  // POST /api/upload
   try {
     const { userId } = auth();
 
