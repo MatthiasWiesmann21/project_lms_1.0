@@ -10,9 +10,7 @@ interface PostListProps {
   items: PostWithProgressWithCategory[];
 }
 
-export const PostList = ({
-  items
-}: PostListProps) => {
+export const PostList = ({ items }: PostListProps) => {
   const sortedItems = items.sort((a, b) => {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
@@ -20,15 +18,14 @@ export const PostList = ({
     // Use flex layout to center the content
     <div className="flex flex-col items-center justify-center">
       {/* Add responsive padding, and max-width to center on large screens */}
-      <div className="px-5 w-full max-w-2xl">
+      <div className="w-full max-w-2xl px-5">
         {sortedItems.map((item) => (
           <PostCard
             key={item.id}
-            id={item.id}
             title={item.title}
             imageUrl={item.imageUrl!}
             category={item?.category?.name!}
-            description={item.description ?? ''}
+            description={item.description ?? ""}
             createdAt={item.createdAt.toDateString()}
             publisherName={item.publisherName!}
             publisherImageUrl={item.publisherImageUrl!}
@@ -37,10 +34,10 @@ export const PostList = ({
         ))}
       </div>
       {items.length === 0 && (
-        <div className="text-center text-sm text-muted-foreground mt-10">
+        <div className="mt-10 text-center text-sm text-muted-foreground">
           No posts found
         </div>
       )}
     </div>
-  )
-}
+  );
+};
