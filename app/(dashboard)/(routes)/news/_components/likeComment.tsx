@@ -4,30 +4,17 @@ import ThumbSvg from "./thumbSVG";
 import { useSelector } from "react-redux";
 import { UserAvatar } from "@/components/user-avatar";
 import { EmojiPicker } from "@/components/emoji-picker";
+import axios from "axios";
 
-const comments = [
-  "This stuff is better than PAID courses on blockchain development and Solidity smart contracts.  Even though I do have experience in this space, you are absolutely correct, Mr. Collins, when you say we need a refresher.  I have no words to describe the level of appreciation I have for your contributions in this space.  Thank you!",
-  "That's Sprit Mr. Collins. I watched paid video of some blockchain Guru, who yell like old woman during instruction (and I confuse )",
-  "Thanks Partick!❤",
-  "I fully agree. I spent a thousand bucks for an online academy just to find myself with outdated and half hearted courses and rather poor support. This course is free and sooooo much better. Thank you",
-  "@PatrickAlphaC  surely sir you will",
-  "@learnmusicwithtom what was the course?",
-  "big respect  @PatrickAlphaC",
-];
+const postComment = async (params: any) => {
+  if (!!params?.text) return;
+  const response = await axios?.post(`/api/comment/create`, {
+    ...params,
+  });
+  if (response?.status === 200) window?.location?.reload();
+};
 
-const SubReply = () => <></>;
-
-const Reply = ({
-  each,
-  index,
-  clicked,
-  setClicked,
-}: {
-  each: String;
-  index: number;
-  clicked: number;
-  setClicked: any;
-}) => {
+const SubReply = ({ val }: { val: any }) => {
   const user = useSelector((state: any) => state?.user);
   const [likeCount, setLikeCount] = useState(0);
   return (
@@ -38,7 +25,39 @@ const Reply = ({
           src={user?.imageUrl}
         />
         <div className="w-full">
-          <p>{each}</p>
+          <p>{val?.text}</p>
+          <div className="my-2 flex items-center">
+            <div
+              onClick={() => setLikeCount(likeCount + 1)}
+              className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
+            >
+              <ThumbSvg
+                fill={!!likeCount ? "blue" : "#fff"}
+                className="mr-[10px]"
+              />
+              {likeCount}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Reply = ({ val, id }: { val: any; id: string }) => {
+  const user = useSelector((state: any) => state?.user);
+  const [likeCount, setLikeCount] = useState(0);
+  const [showReplyInput, setShowReplyInput] = useState(false);
+  const [comment, setComment] = useState("");
+  return (
+    <div>
+      <div className="flex">
+        <UserAvatar
+          className="mr-1 h-5 w-5 md:h-7 md:w-7"
+          src={user?.imageUrl}
+        />
+        <div className="w-full">
+          <p>{val?.text}</p>
           <div className="my-2 flex items-center">
             <div
               onClick={() => setLikeCount(likeCount + 1)}
@@ -52,12 +71,13 @@ const Reply = ({
             </div>
             <p
               className="m-0 ml-5 cursor-pointer"
-              onClick={() => setClicked(index)}
+              onClick={() => setShowReplyInput(!showReplyInput)}
             >
               Reply
             </p>
           </div>
-          {index === clicked && (
+          {/* {true && ( */}
+          {showReplyInput && (
             <div className="flex justify-center">
               <UserAvatar
                 className="mr-1 h-5 w-5 md:h-7 md:w-7"
@@ -68,31 +88,31 @@ const Reply = ({
                   type="text"
                   placeholder="Add a comment..."
                   className="border-b border-[#fff] outline-none"
+                  value={comment}
+                  onChange={(e) => setComment(e?.target?.value)}
                 />
-                <div className="relative my-1 flex items-center justify-between">
+                <div className="relative flex items-center justify-between py-2">
                   <div className="">
-                    <EmojiPicker onChange={() => {}} />
+                    <EmojiPicker onChange={(e) => setComment(comment + e)} />
                   </div>
-                  <button className="cursor-pointer rounded-[20px] border border-[#fff] p-[1%] px-[2%]">
+                  <button
+                    onClick={() =>
+                      postComment({
+                        text: comment,
+                        postId: id,
+                        parentCommentId: val?.id,
+                      })
+                    }
+                    className="cursor-pointer rounded-[20px] border border-[#fff] p-[1%] px-[2%]"
+                  >
                     Comment
                   </button>
                 </div>
-                <SubReply />
               </div>
             </div>
           )}
-          {comments?.map((each, index2) => (
-            <div key={index + index2}>
-              <div className="flex">
-                <UserAvatar
-                  className="mr-1 h-5 w-5 md:h-7 md:w-7"
-                  src={user?.imageUrl}
-                />
-                <div className="w-full">
-                  <p>{each}</p>
-                </div>
-              </div>
-            </div>
+          {val?.subComment?.map((val: any) => (
+            <SubReply key={val?.id} val={val} />
           ))}
         </div>
       </div>
@@ -100,22 +120,40 @@ const Reply = ({
   );
 };
 
-const LikeComment = () => {
-  const [likeCount, setLikeCount] = useState(0);
+const LikeComment = ({
+  id,
+  comments,
+  likesCount,
+  currentLike,
+}: {
+  id: string;
+  comments: any[];
+  likesCount: number;
+  currentLike: boolean;
+}) => {
+  // const [likeCount, setLikeCount] = useState(0);
   const user = useSelector((state: any) => state?.user);
-  const [clicked, setClicked] = useState(comments?.length);
+  const [comment, setComment] = useState("");
+
+  console.log("currentLike", currentLike);
+
   return (
     <div>
       <div className="flex items-center justify-end py-3">
         <div
-          onClick={() => setLikeCount(likeCount + 1)}
+          onClick={async () => {
+            const response = await axios?.post(`/api/like/create`, {
+              postId: id,
+            });
+            if (response?.status === 200) window?.location?.reload();
+          }}
           className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
         >
           <ThumbSvg
-            fill={!!likeCount ? "blue" : "#fff"}
+            fill={!!currentLike ? "blue" : "#fff"}
             className="mr-[10px]"
           />
-          {likeCount}
+          {likesCount}
         </div>
       </div>
       <div className="flex justify-center">
@@ -125,29 +163,29 @@ const LikeComment = () => {
             type="text"
             placeholder="Add a comment..."
             className="border-b border-[#fff] outline-none"
+            value={comment}
+            onChange={(e) => setComment(e?.target?.value)}
           />
           <div className="relative flex items-center justify-between py-2">
             <div className="">
-              <EmojiPicker
-                onChange={() => {}}
-                // onChange={(emoji: string) =>
-                //   field.onChange(`${field.value} ${emoji}`)
-                // }
-              />
+              <EmojiPicker onChange={(e) => setComment(comment + e)} />
             </div>
-            <button className="cursor-pointer rounded-[20px] border border-[#fff] p-[1%] px-[2%]">
+            <button
+              onClick={() =>
+                postComment({
+                  text: comment,
+                  postId: id,
+                  parentCommentId: null,
+                })
+              }
+              className="cursor-pointer rounded-[20px] border border-[#fff] p-[1%] px-[2%]"
+            >
               Comment
             </button>
           </div>
           <div>
-            {comments?.map((each, index) => (
-              <Reply
-                key={index}
-                index={index}
-                each={each}
-                clicked={clicked}
-                setClicked={setClicked}
-              />
+            {comments?.map((val: any) => (
+              <Reply key={val?.id} val={val} id={id} />
             ))}
           </div>
         </div>

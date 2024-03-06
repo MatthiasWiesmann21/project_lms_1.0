@@ -13,6 +13,7 @@ import { useState } from "react";
 import LikeComment from "./likeComment";
 
 interface PostCardProps {
+  id: string;
   title: string;
   imageUrl: string;
   category: string;
@@ -21,9 +22,13 @@ interface PostCardProps {
   publisherName: string;
   publisherImageUrl: string;
   colorCode?: string;
+  comments: any[];
+  likesCount: number;
+  currentLike: boolean;
 }
 
 export const PostCard = async ({
+  id,
   title,
   imageUrl,
   category,
@@ -32,6 +37,9 @@ export const PostCard = async ({
   publisherName,
   publisherImageUrl,
   colorCode,
+  comments,
+  likesCount,
+  currentLike,
 }: PostCardProps) => {
   return (
     <div className="group m-5 h-full overflow-hidden rounded-lg border p-3 hover:shadow-sm dark:border-[#ffffff]">
@@ -67,7 +75,12 @@ export const PostCard = async ({
           <Image fill className="object-contain" alt={title} src={imageUrl} />
         </div>
       </div>
-      <LikeComment />
+      <LikeComment
+        id={id}
+        comments={comments}
+        likesCount={likesCount}
+        currentLike={currentLike}
+      />
     </div>
   );
 };

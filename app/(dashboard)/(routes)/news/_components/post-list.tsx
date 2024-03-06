@@ -4,6 +4,9 @@ import { PostCard } from "./post-card";
 
 type PostWithProgressWithCategory = Post & {
   category: Category | null;
+  comments: any[];
+  likesCount: number;
+  currentLike: boolean;
 };
 
 interface PostListProps {
@@ -19,19 +22,26 @@ export const PostList = ({ items }: PostListProps) => {
     <div className="flex flex-col items-center justify-center">
       {/* Add responsive padding, and max-width to center on large screens */}
       <div className="w-full max-w-2xl px-5">
-        {sortedItems.map((item) => (
-          <PostCard
-            key={item.id}
-            title={item.title}
-            imageUrl={item.imageUrl!}
-            category={item?.category?.name!}
-            description={item.description ?? ""}
-            createdAt={item.createdAt.toDateString()}
-            publisherName={item.publisherName!}
-            publisherImageUrl={item.publisherImageUrl!}
-            colorCode={item?.category?.colorCode!}
-          />
-        ))}
+        {sortedItems.map((item) => {
+          console.log(item);
+          return (
+            <PostCard
+              key={item.id}
+              id={item.id}
+              title={item.title}
+              imageUrl={item.imageUrl!}
+              category={item?.category?.name!}
+              description={item.description ?? ""}
+              createdAt={item.createdAt.toDateString()}
+              publisherName={item.publisherName!}
+              publisherImageUrl={item.publisherImageUrl!}
+              colorCode={item?.category?.colorCode!}
+              comments={item?.comments}
+              likesCount={item?.likesCount}
+              currentLike={item?.currentLike}
+            />
+          );
+        })}
       </div>
       {items.length === 0 && (
         <div className="mt-10 text-center text-sm text-muted-foreground">
