@@ -37,7 +37,7 @@ export const getPosts = async ({
       }
     })
 
-    if(profile === null){
+    if (profile === null) {
       return [];
     }
 
@@ -74,15 +74,20 @@ export const getPosts = async ({
     const postsWithData = posts.map((post, i) => {
       const commentsCount = post.comments.length;
       const likesCount = post.likes.length;
-      const commentLikesCount = post.comments[i].likes.length;
 
-      console.log("ProfileIds", profile.id);
+      const commentsWithLikes = post.comments.map((comment) => ({
+        ...comment,
+        commentLikesCount: comment.likes.length,
+        currentCommentLike: comment.likes.some((like) => like.profileId === profile.id),
+        subCommentsWithLikes: comment.subComment.map((subcomment) => ({
+          ...subcomment,
+          commentLikesCount: subcomment.likes.length,
+          currentCommentLike: subcomment.likes.some((like) => like.profileId === profile.id),
+        }))
+      }));
 
       // Check if the current profile has liked the post
       const currentLike = post.likes.some((like) => like.profileId === profile.id);
-      const currentCommentLike = post.comments[i].likes.some(
-        (like) => like.profileId === userId
-      );
 
       // Return the post data along with the calculated counts and like state
       return {
@@ -90,8 +95,7 @@ export const getPosts = async ({
         commentsCount,
         likesCount,
         currentLike,
-        commentLikesCount,
-        currentCommentLike,
+        commentsWithLikes,
       };
     });
 
