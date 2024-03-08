@@ -11,11 +11,11 @@ export async function POST(req: Request) {
     }
     const requestBody = await req.json();
 
-    const { text, postId, parentCommentId } = requestBody;
+    const { text, postId, parentCommentId, liveEventId } = requestBody;
 
     const profile = await db.profile.findFirst({
       select: {
-        id: true
+        id: true,
       },
       where: { userId: userId },
     });
@@ -28,6 +28,7 @@ export async function POST(req: Request) {
         postId: postId,
         profileId: profile.id,
         parentCommentId: parentCommentId,
+        liveEventId,
       },
     });
 

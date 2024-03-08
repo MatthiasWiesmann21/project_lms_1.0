@@ -1,32 +1,24 @@
-import { getPosts } from "@/actions/get-posts";
+"use client";
+import { useEffect, useState } from "react";
 import { PostList } from "./_components/post-list";
-import { UserAvatar } from "@/components/user-avatar";
-import { auth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
-import { Metadata } from "next";
-import { db } from "@/lib/db";
+import axios from "axios";
 
-export const metadata: Metadata = {
-  title: "News",
-};
-
-const NewsPage = async () => {
-  const { userId } = auth();
-
-  if (!userId) {
-    return redirect("/dashboard");
-  }
-
-  const posts = await getPosts({
-    // @ts-ignore
-    sort: "createdAt",
-  });
-
+const NewsPage = () => {
+  const [posts, setPosts] = useState([]);
+  const getPosts = async () => {
+    const response = await axios?.get(`/api/posts`);
+    setPosts(response?.data?.data);
+  };
+  useEffect(() => {
+    getPosts();
+  }, []);
   return (
     <div className="space-y-4 p-6 dark:bg-[#313338]">
       <PostList
-      //@ts-ignore
-       items={posts} />
+        //@ts-ignore
+        items={posts}
+        getPosts={getPosts}
+      />
     </div>
   );
 };

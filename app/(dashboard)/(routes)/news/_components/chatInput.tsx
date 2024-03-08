@@ -8,21 +8,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useModal } from "@/hooks/use-modal-store";
 import { EmojiPicker } from "@/components/emoji-picker";
+import { useState } from "react";
 
 interface ChatInputProps {
   apiUrl: string;
   query: Record<string, any>;
-  name: string;
-  type: "conversation" | "channel";
+  className?: string;
+  placeHolder?: string;
+  getPosts: any;
 }
 
 const formSchema = z.object({
@@ -32,8 +29,9 @@ const formSchema = z.object({
 export const ChatInputPost = ({
   apiUrl,
   query,
-  name,
-  type,
+  className,
+  placeHolder,
+  getPosts,
 }: ChatInputProps) => {
   const { onOpen } = useModal();
   const router = useRouter();
@@ -42,26 +40,28 @@ export const ChatInputPost = ({
     resolver: zodResolver(formSchema),
     defaultValues: {
       content: "",
-    }
+    },
   });
+
+  const [isSending, setSending] = useState(false);
 
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (isSending) return;
+    setSending(true);
     try {
-      const url = qs.stringifyUrl({
-        url: apiUrl,
-        query,
-      });
-
-      await axios.post(url, values);
+      await axios.post(apiUrl, { ...query, text: values?.content });
 
       form.reset();
       router.refresh();
+      getPosts();
+      setSending(false);
     } catch (error) {
       console.log(error);
+      setSending(false);
     }
-  }
+  };
 
   return (
     <Form {...form}>
@@ -72,23 +72,18 @@ export const ChatInputPost = ({
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <div className="relative p-4 pb-6">
-                  <button
-                    type="button"
-                    onClick={() => onOpen("messageFile", { apiUrl, query })}
-                    className="absolute top-7 left-8 h-[24px] w-[24px] bg-zinc-500 dark:bg-zinc-400 hover:bg-zinc-600 dark:hover:bg-zinc-300 transition rounded-full p-1 flex items-center justify-center"
-                  >
-                    <Plus className="text-white dark:text-[#313338]" />
-                  </button>
+                <div className={`relative p-4 pb-6 ${className}`}>
                   <Input
                     disabled={isLoading}
-                    className="px-14 py-6 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200"
-                    placeholder={`Message ${type === "conversation" ? name : "#" + name}`}
+                    className="border-0 border-none bg-zinc-200/90 py-6 text-zinc-600 focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-zinc-700/75 dark:text-zinc-200"
+                    placeholder={placeHolder}
                     {...field}
                   />
-                  <div className="absolute top-7 right-8">
+                  <div className="absolute right-8 top-7">
                     <EmojiPicker
-                      onChange={(emoji: string) => field.onChange(`${field.value} ${emoji}`)}
+                      onChange={(emoji: string) =>
+                        field.onChange(`${field.value}${emoji}`)
+                      }
                     />
                   </div>
                 </div>
@@ -98,5 +93,5 @@ export const ChatInputPost = ({
         />
       </form>
     </Form>
-  )
-}
+  );
+};

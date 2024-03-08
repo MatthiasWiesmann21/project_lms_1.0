@@ -11,7 +11,7 @@ export async function POST(req: any) {
     }
     const requestBody = await req.json();
 
-    const { postId } = requestBody;
+    const { postId, liveEventId } = requestBody;
 
     // const postId = req.nextUrl.searchParams.get("postId");
 
@@ -43,7 +43,24 @@ export async function POST(req: any) {
       where: { postId: postId },
     });
 
-    return NextResponse.json({ data: comment });
+    const chat = await db?.comment?.findMany({
+      select: {
+        text: true,
+        id: true,
+        createdAt: true,
+        profile: {
+          select: {
+            id: true,
+            imageUrl: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
+      where: { liveEventId },
+    });
+
+    return NextResponse.json({ data: postId ? comment : chat });
   } catch (error) {
     console.log("[SUBSCRIPTION]", error);
     return new NextResponse("Internal Error", { status: 500 });

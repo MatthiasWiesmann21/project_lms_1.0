@@ -6,16 +6,20 @@ import { EmojiPicker } from "@/components/emoji-picker";
 import axios from "axios";
 import moment from "moment";
 import { ThumbsUp } from "lucide-react";
+import { ChatInputPost } from "./chatInput";
 
-const postComment = async (params: any) => {
+const postComment = async ({ params, getPosts, setComment }: any) => {
   if (params?.text === "") return;
   const response = await axios?.post(`/api/comment/create`, {
     ...params,
   });
-  if (response?.status === 200) window?.location?.reload();
+  if (response?.status === 200) {
+    getPosts();
+    setComment("");
+  }
 };
 
-const SubReply = ({ val }: { val: any }) => {
+const SubReply = ({ val, getPosts }: any) => {
   return (
     <div>
       <div className="flex">
@@ -37,7 +41,7 @@ const SubReply = ({ val }: { val: any }) => {
                 const response = await axios?.post(`/api/like/create`, {
                   commentId: val?.id,
                 });
-                if (response?.status === 200) window?.location?.reload();
+                if (response?.status === 200) getPosts();
               }}
               className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
             >
@@ -54,11 +58,18 @@ const SubReply = ({ val }: { val: any }) => {
   );
 };
 
-const Reply = ({ val, id }: { val: any; id: string }) => {
+const Reply = ({
+  val,
+  id,
+  getPosts,
+}: {
+  val: any;
+  id: string;
+  getPosts: any;
+}) => {
   const user = useSelector((state: any) => state?.user);
   const [showReplyInput, setShowReplyInput] = useState(false);
   const [comment, setComment] = useState("");
-  console.log(val);
   return (
     <div>
       <div className="flex">
@@ -80,7 +91,7 @@ const Reply = ({ val, id }: { val: any; id: string }) => {
                 const response = await axios?.post(`/api/like/create`, {
                   commentId: val?.id,
                 });
-                if (response?.status === 200) window?.location?.reload();
+                if (response?.status === 200) getPosts();
               }}
               className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
             >
@@ -119,9 +130,13 @@ const Reply = ({ val, id }: { val: any; id: string }) => {
                   <button
                     onClick={() =>
                       postComment({
-                        text: comment,
-                        postId: id,
-                        parentCommentId: val?.id,
+                        params: {
+                          text: comment,
+                          postId: id,
+                          parentCommentId: val?.id,
+                        },
+                        getPosts,
+                        setComment,
                       })
                     }
                     className="cursor-pointer rounded-[20px] border border-[#fff] p-[1%] px-[2%]"
@@ -133,7 +148,7 @@ const Reply = ({ val, id }: { val: any; id: string }) => {
             </div>
           )}
           {val?.subCommentsWithLikes?.map((val: any) => (
-            <SubReply key={val?.id} val={val} />
+            <SubReply key={val?.id} val={val} getPosts={getPosts} />
           ))}
         </div>
       </div>
@@ -146,11 +161,13 @@ const LikeComment = ({
   likesCount,
   currentLike,
   commentsWithLikes,
+  getPosts,
 }: {
   id: string;
   likesCount: number;
   currentLike: boolean;
   commentsWithLikes: any;
+  getPosts: any;
 }) => {
   const user = useSelector((state: any) => state?.user);
   const [comment, setComment] = useState("");
@@ -163,7 +180,7 @@ const LikeComment = ({
             const response = await axios?.post(`/api/like/create`, {
               postId: id,
             });
-            if (response?.status === 200) window?.location?.reload();
+            if (response?.status === 200) getPosts();
           }}
           className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
         >
@@ -175,36 +192,21 @@ const LikeComment = ({
         </div>
       </div>
       <div className="flex justify-center">
-        <UserAvatar src={user?.imageUrl} className="mr-2" />
-        <div className="flex w-full flex-col">
-          
-          <input
-            type="text"
-            placeholder="Add a comment..."
-            className="border-b border-[#fff] outline-none"
-            value={comment}
-            onChange={(e) => setComment(e?.target?.value)}
+        <UserAvatar src={user?.imageUrl} className="mr-2 mt-4" />
+        <div className="w-full">
+          <ChatInputPost
+            placeHolder={"Type your comment"}
+            apiUrl="/api/comment/create"
+            query={{
+              postId: id,
+              parentCommentId: null,
+            }}
+            className="pb-[15px]"
+            getPosts={getPosts}
           />
-          <div className="relative flex items-center justify-between py-2">
-            <div className="">
-              <EmojiPicker onChange={(e) => setComment(comment + e)} />
-            </div>
-            <button
-              onClick={() =>
-                postComment({
-                  text: comment,
-                  postId: id,
-                  parentCommentId: null,
-                })
-              }
-              className="cursor-pointer rounded-[20px] border border-[#fff] p-[1%] px-[2%]"
-            >
-              Comment
-            </button>
-          </div>
           <div>
             {commentsWithLikes?.map((val: any) => (
-              <Reply key={val?.id} val={val} id={id} />
+              <Reply key={val?.id} val={val} id={id} getPosts={getPosts} />
             ))}
           </div>
         </div>
