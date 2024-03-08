@@ -6,6 +6,7 @@ import { SocketIndicator } from "@/components/socket-indicator";
 import { ChatVideoButton } from "./chat-video-button";
 import leftArrow from "../../assets/icons/left arrow.png";
 import Image from "next/image";
+import { MobileSidebarChat } from "@/app/(dashboard)/_components/mobile_sidebar_chat";
 
 interface ChatHeaderProps {
   serverId: string;
@@ -21,14 +22,8 @@ export const ChatHeader = ({
   imageUrl,
 }: ChatHeaderProps) => {
   return (
-    <div className="text-md flex h-12 items-center border-b-2 border-neutral-200 px-3 font-semibold dark:border-neutral-800">
-      <Image
-        src={leftArrow}
-        width={20}
-        height={20}
-        alt="Picture of the author"
-        className="mr-2 block cursor-pointer md:hidden"
-      />
+    <div className="text-md sticky flex h-12 items-center border-b-2 border-neutral-200 px-3 font-semibold dark:border-neutral-800">
+      <MobileSidebarChat serverId={serverId} />
       {type === "channel" && (
         <Hash className="mr-2 h-5 w-5 text-zinc-500 dark:text-zinc-400" />
       )}
