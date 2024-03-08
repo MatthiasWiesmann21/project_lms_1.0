@@ -1,11 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import ThumbSvg from "./thumbSVG";
 import { useSelector } from "react-redux";
 import { UserAvatar } from "@/components/user-avatar";
 import { EmojiPicker } from "@/components/emoji-picker";
 import axios from "axios";
 import moment from "moment";
+import { ThumbsUp } from "lucide-react";
+import { ChatInput } from "@/components/chat/chat-input";
 
 const postComment = async (params: any) => {
   if (params?.text === "") return;
@@ -41,9 +42,9 @@ const SubReply = ({ val }: { val: any }) => {
               }}
               className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
             >
-              <ThumbSvg
-                fill={val?.currentCommentLike ? "blue" : "#fff"}
-                className="mr-[10px]"
+              <ThumbsUp
+                fill={val?.currentCommentLike ? "blue" : "#ffffff00"}
+                className="mr-2"
               />
               {val?.likes?.length}
             </div>
@@ -84,9 +85,9 @@ const Reply = ({ val, id }: { val: any; id: string }) => {
               }}
               className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
             >
-              <ThumbSvg
-                fill={val?.currentCommentLike ? "blue" : "#fff"}
-                className="mr-[10px]"
+              <ThumbsUp
+                fill={val?.currentCommentLike ? "blue" : "#ffffff00"}
+                className="mr-2"
               />
               {val?.likes?.length}
             </div>
@@ -167,9 +168,9 @@ const LikeComment = ({
           }}
           className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
         >
-          <ThumbSvg
-            fill={!!currentLike ? "blue" : "#fff"}
-            className="mr-[10px]"
+          <ThumbsUp
+            fill={!!currentLike ? "blue" : "#ffffff00"}
+            className="mr-2"
           />
           {likesCount}
         </div>
@@ -177,6 +178,7 @@ const LikeComment = ({
       <div className="flex justify-center">
         <UserAvatar src={user?.imageUrl} className="mr-2" />
         <div className="flex w-full flex-col">
+          
           <input
             type="text"
             placeholder="Add a comment..."

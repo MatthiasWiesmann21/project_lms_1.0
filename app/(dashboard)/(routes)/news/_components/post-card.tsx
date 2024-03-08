@@ -8,7 +8,6 @@ import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { Separator } from "@/components/ui/separator";
 import { Preview } from "@/components/preview";
-import ThumbSvg from "./thumbSVG";
 import { useState } from "react";
 import LikeComment from "./likeComment";
 
