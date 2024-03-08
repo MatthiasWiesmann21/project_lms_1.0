@@ -6,7 +6,6 @@ import { EmojiPicker } from "@/components/emoji-picker";
 import axios from "axios";
 import moment from "moment";
 import { ThumbsUp } from "lucide-react";
-import { ChatInput } from "@/components/chat/chat-input";
 
 const postComment = async (params: any) => {
   if (params?.text === "") return;
