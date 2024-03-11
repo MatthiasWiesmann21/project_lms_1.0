@@ -2,22 +2,10 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { UserAvatar } from "@/components/user-avatar";
-import { EmojiPicker } from "@/components/emoji-picker";
 import axios from "axios";
 import moment from "moment";
 import { ThumbsUp } from "lucide-react";
 import { ChatInputPost } from "./chatInput";
-
-const postComment = async ({ params, getPosts, setComment }: any) => {
-  if (params?.text === "") return;
-  const response = await axios?.post(`/api/comment/create`, {
-    ...params,
-  });
-  if (response?.status === 200) {
-    getPosts();
-    setComment("");
-  }
-};
 
 const SubReply = ({ val, getPosts }: any) => {
   return (
@@ -69,7 +57,6 @@ const Reply = ({
 }) => {
   const user = useSelector((state: any) => state?.user);
   const [showReplyInput, setShowReplyInput] = useState(false);
-  const [comment, setComment] = useState("");
   return (
     <div>
       <div className="flex">
@@ -102,48 +89,30 @@ const Reply = ({
               {val?.likes?.length}
             </div>
             <p
-              className="m-0 ml-5 cursor-pointer"
+              style={{ marginLeft: "1.25rem" }}
+              className="m-0 cursor-pointer"
               onClick={() => setShowReplyInput(!showReplyInput)}
             >
               Reply
             </p>
           </div>
-          {/* {true && ( */}
           {showReplyInput && (
             <div className="flex justify-center">
               <UserAvatar
-                className="mr-1 h-5 w-5 md:h-7 md:w-7"
+                className="mr-1 mt-[2.5%] h-5 w-5 md:h-7 md:w-7"
                 src={user?.imageUrl}
               />
               <div className="my-1 flex w-full flex-col">
-                <input
-                  type="text"
-                  placeholder="Add a comment..."
-                  className="border-b border-[#fff] outline-none"
-                  value={comment}
-                  onChange={(e) => setComment(e?.target?.value)}
+                <ChatInputPost
+                  placeHolder={"Type your comment"}
+                  apiUrl="/api/comment/create"
+                  query={{
+                    postId: id,
+                    parentCommentId: val?.id,
+                  }}
+                  className="-mt-[3%]"
+                  getPosts={getPosts}
                 />
-                <div className="relative flex items-center justify-between py-2">
-                  <div className="">
-                    <EmojiPicker onChange={(e) => setComment(comment + e)} />
-                  </div>
-                  <button
-                    onClick={() =>
-                      postComment({
-                        params: {
-                          text: comment,
-                          postId: id,
-                          parentCommentId: val?.id,
-                        },
-                        getPosts,
-                        setComment,
-                      })
-                    }
-                    className="cursor-pointer rounded-[20px] border border-[#fff] p-[1%] px-[2%]"
-                  >
-                    Comment
-                  </button>
-                </div>
               </div>
             </div>
           )}
@@ -170,8 +139,6 @@ const LikeComment = ({
   getPosts: any;
 }) => {
   const user = useSelector((state: any) => state?.user);
-  const [comment, setComment] = useState("");
-
   return (
     <div>
       <div className="flex items-center justify-end py-3">

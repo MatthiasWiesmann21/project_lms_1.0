@@ -12,9 +12,10 @@ type PostWithProgressWithCategory = Post & {
 interface PostListProps {
   items: PostWithProgressWithCategory[];
   getPosts: any;
+  isLoading: boolean;
 }
 
-export const PostList = ({ items, getPosts }: PostListProps) => {
+export const PostList = ({ items, getPosts, isLoading }: PostListProps) => {
   const sortedItems = items.sort((a, b) => {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
@@ -44,7 +45,7 @@ export const PostList = ({ items, getPosts }: PostListProps) => {
       </div>
       {items.length === 0 && (
         <div className="mt-10 text-center text-sm text-muted-foreground">
-          No posts found
+          {isLoading ? "Loading...." : "No posts found"}
         </div>
       )}
     </div>

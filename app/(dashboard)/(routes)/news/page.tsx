@@ -5,9 +5,12 @@ import axios from "axios";
 
 const NewsPage = () => {
   const [posts, setPosts] = useState([]);
+  const [isLoading, setLoading] = useState(false);
   const getPosts = async () => {
+    setLoading(true);
     const response = await axios?.get(`/api/posts`);
     setPosts(response?.data?.data);
+    setLoading(false);
   };
   useEffect(() => {
     getPosts();
@@ -18,6 +21,7 @@ const NewsPage = () => {
         //@ts-ignore
         items={posts}
         getPosts={getPosts}
+        isLoading={isLoading}
       />
     </div>
   );
