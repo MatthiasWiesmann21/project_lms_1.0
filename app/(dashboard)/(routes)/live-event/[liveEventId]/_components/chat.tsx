@@ -1,14 +1,13 @@
 "use client";
-import { EmojiPicker } from "@/components/emoji-picker";
 import axios from "axios";
 import moment from "moment";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { ChatInputPost } from "../../../news/_components/chatInput";
 
 const Chat = () => {
   const path = usePathname();
   const id = path?.split("/")[path?.split("/")?.length - 1];
-  const [input, setInput] = useState("");
   const [chat, setChat] = useState([]);
 
   const getChat = async () => {
@@ -16,18 +15,6 @@ const Chat = () => {
       liveEventId: id,
     });
     setChat(response?.data?.data);
-    setInput("");
-  };
-
-  const postChat = async () => {
-    if (input === "") return;
-    const response = await axios?.post(`/api/comment/create`, {
-      text: input,
-      postId: null,
-      parentCommentId: null,
-      liveEventId: id,
-    });
-    if (response?.status === 200) getChat();
   };
 
   useEffect(() => {
@@ -58,21 +45,17 @@ const Chat = () => {
             );
           })}
         </div>
-        <textarea
-          value={input}
-          onChange={(e) => setInput(e?.target?.value)}
-          className="w-full rounded p-[1%] outline-none"
-          placeholder="Send a message"
+        <ChatInputPost
+          placeHolder={"Type your comment"}
+          apiUrl="/api/comment/create"
+          query={{
+            postId: null,
+            parentCommentId: null,
+            liveEventId: id,
+          }}
+          className="pb-[0]"
+          getPosts={getChat}
         />
-        <div className="flex w-full items-center justify-between">
-          <EmojiPicker onChange={(e) => setInput(input + e)} />
-          <button
-            onClick={postChat}
-            className="float-end m-[1%] m-[1%] w-[20%] rounded bg-[#762ca3] p-[1%]"
-          >
-            Send
-          </button>
-        </div>
       </div>
     </div>
   );
