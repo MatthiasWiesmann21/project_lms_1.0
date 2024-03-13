@@ -37,6 +37,7 @@ export async function GET(req: any) {
     const { userId } = auth();
     const title = req?.nextUrl?.searchParams?.get("title");
     const categoryId = req?.nextUrl?.searchParams?.get("categoryId");
+    const limit = req?.nextUrl?.searchParams?.get("limit") || 100;
 
     if (userId === null) throw new Error("Un Authorized");
 
@@ -75,6 +76,7 @@ export async function GET(req: any) {
         },
         likes: true,
       },
+      // take: limit,
     });
 
     const postsWithData = posts?.map((post) => {

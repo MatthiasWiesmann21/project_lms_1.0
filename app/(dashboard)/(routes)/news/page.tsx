@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { PostList } from "./_components/post-list";
 import axios from "axios";
+import dynamic from "next/dynamic";
 
 const NewsPage = () => {
   const [posts, setPosts] = useState([]);
@@ -27,4 +28,4 @@ const NewsPage = () => {
   );
 };
 
-export default NewsPage;
+export default dynamic(() => Promise?.resolve(NewsPage), { ssr: false });

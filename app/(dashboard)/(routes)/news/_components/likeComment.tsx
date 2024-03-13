@@ -139,6 +139,7 @@ const LikeComment = ({
   getPosts: any;
 }) => {
   const user = useSelector((state: any) => state?.user);
+  const [showComments, setShowComments] = useState(3);
   return (
     <div>
       <div className="flex items-center justify-end py-3">
@@ -172,10 +173,21 @@ const LikeComment = ({
             getPosts={getPosts}
           />
           <div>
-            {commentsWithLikes?.map((val: any) => (
-              <Reply key={val?.id} val={val} id={id} getPosts={getPosts} />
-            ))}
+            {commentsWithLikes?.map(
+              (val: any, index: number) =>
+                index < showComments && (
+                  <Reply key={val?.id} val={val} id={id} getPosts={getPosts} />
+                )
+            )}
           </div>
+          {showComments < commentsWithLikes?.length - 1 && (
+            <p
+              onClick={() => setShowComments(showComments + 3)}
+              className="cursor-pointer text-center hover:underline"
+            >
+              Show More ...!!!
+            </p>
+          )}
         </div>
       </div>
     </div>

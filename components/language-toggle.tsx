@@ -1,8 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { Globe, Moon, Sun } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,12 +8,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AppSVGIcon from "./appsvgicon";
 
 export function LanguageToggle() {
   const dispatch = useDispatch();
+  const language = useSelector((state: any) => state?.language);
 
   // const [language, setLanguage] = React.useState("English");
 
@@ -23,11 +21,23 @@ export function LanguageToggle() {
     dispatch({ type: "SetLanguage", payload: language });
   };
 
+  const icon: any = {
+    English: "gb",
+    Deutsch: "de",
+    Francaise: "fr",
+    Italiano: "it",
+    Espanol: "es",
+    Portugues: "pt",
+    Russian: "ru",
+    Mandarin: "tw",
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button className="ml-2 border-0 bg-transparent" variant="outline">
-          <Globe className="tran h-[1.2rem] w-[1.2rem] rotate-0 scale-100" />
+          <AppSVGIcon customclass="mr-1" icon={icon[language]} />
+          {/* <Globe className="tran h-[1.2rem] w-[1.2rem] rotate-0 scale-100" /> */}
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
