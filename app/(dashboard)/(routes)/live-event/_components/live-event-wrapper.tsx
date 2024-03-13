@@ -22,6 +22,7 @@ const LiveEventWrapper = ({ liveEvents, categories, searchParams }: any) => {
           ...searchParams,
           containerId: process.env.CONTAINER_ID,
         }}
+        liveEvent={liveEvent}
       />
       <Categories items={categories} />
       <EventsList items={liveEvent} />

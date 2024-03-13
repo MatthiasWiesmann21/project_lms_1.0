@@ -133,9 +133,7 @@ const DocumentCreatePage = () => {
       </div>
       <div className="my-2 sm:flex-auto">
         <h1 className="text-2xl font-semibold leading-6 text-gray-600 dark:text-gray-300">
-          {`${isEdit ? `${currentLanguage.edit}` : `${currentLanguage.add}`} ${
-            currentLanguage.a_file
-          }`}
+          {`${isEdit ? `${currentLanguage.edit_file}` : `${currentLanguage.add_file}`}`}
         </h1>
       </div>
       <div>

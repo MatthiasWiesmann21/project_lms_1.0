@@ -320,22 +320,62 @@ model Post {
   @@fulltext([title])
 }
 
+// TODO: Live Event Models
+
+model LiveEvent {
+  id          String  @id @default(uuid())
+  userId      String
+  title       String  @db.Text
+  description String? @db.Text
+  imageUrl    String? @db.Text
+  videoUrl    String? @db.Text
+  isPublished Boolean @default(false)
+
+  containerId String
+  container   Container @relation(fields: [containerId], references: [id])
+
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id])
+
+comments Comment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  startDateTime DateTime?
+  endDateTime DateTime?
+
+  @@index([categoryId])
+  @@index([containerId])
+  @@fulltext([title])
+}
+
 model Comment {
   id        String   @id @default(uuid())
   text      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  postId String
-  post   Post   @relation(fields: [postId], references: [id])
+  postId String?
+  post   Post?   @relation(fields: [postId], references: [id])
+
+  liveEventId String?
+  liveEvent   LiveEvent?   @relation(fields: [liveEventId], references: [id])
 
   profileId String
   profile   Profile @relation(fields: [profileId], references: [id])
+
+  parentCommentId String?
+  parentComment   Comment? @relation("SubComment", fields: [parentCommentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  subComment Comment[] @relation("SubComment") // Define the opposite relation here
 
   likes Like[]
 
   @@index([postId])
   @@index([profileId])
+  @@index([parentCommentId])
+  @@index([liveEventId])
 }
 
 model Like {
@@ -445,30 +485,4 @@ model DirectMessage {
   @@index([conversationId])
 }
 
-// TODO: Live Event Models
 
-model LiveEvent {
-  id          String  @id @default(uuid())
-  userId      String
-  title       String  @db.Text
-  description String? @db.Text
-  imageUrl    String? @db.Text
-  videoUrl    String? @db.Text
-  isPublished Boolean @default(false)
-
-  containerId String
-  container   Container @relation(fields: [containerId], references: [id])
-
-  categoryId String?
-  category   Category? @relation(fields: [categoryId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  startDateTime DateTime?
-  endDateTime DateTime?
-
-  @@index([categoryId])
-  @@index([containerId])
-  @@fulltext([title])
-}

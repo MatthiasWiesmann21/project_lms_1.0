@@ -136,8 +136,8 @@ const DocumentCreatePage = () => {
       <div className="my-2 sm:flex-auto">
         <h1 className="text-2xl font-semibold leading-6 text-gray-600 dark:text-gray-300">
           {`${
-            isEdit ? `${currentLanguage.edit}` : `${currentLanguage.create}`
-          } ${currentLanguage.a_file}`}
+            isEdit ? `${currentLanguage.edit_file}` : `${currentLanguage.create_file}`
+          }`}
         </h1>
       </div>
       <div>
@@ -270,7 +270,7 @@ const DocumentCreatePage = () => {
           type="button"
           className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
         >
-          {currentLanguage.update}
+          {currentLanguage.cancel}
         </a>
       </div>
     </div>
