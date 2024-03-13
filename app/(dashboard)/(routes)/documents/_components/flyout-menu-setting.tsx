@@ -1,7 +1,13 @@
 import React, { useEffect } from "react";
-import { FilesIcon, MoreVertical, PencilIcon, Trash2Icon, } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { FilesIcon, MoreVertical, PencilIcon, Trash2Icon } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/lib/check-language";
 
 interface FlyoutMenuSettingProps {
   index: number;
@@ -19,6 +25,7 @@ const FlyoutMenuSetting: React.FC<FlyoutMenuSettingProps> = ({
   onEditClick,
   setMenuOpen,
 }) => {
+  const currentLanguage = useLanguage();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -37,24 +44,24 @@ const FlyoutMenuSetting: React.FC<FlyoutMenuSettingProps> = ({
   }, []);
 
   return (
-      <DropdownMenu>
+    <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="bg-transparent border-0" variant="outline">
+        <Button className="border-0 bg-transparent" variant="outline">
           <MoreVertical className="h-5 w-5" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={onEditClick}>
-        <PencilIcon className="h-4 w-4 mr-2" />
-          Edit
+          <PencilIcon className="mr-2 h-4 w-4" />
+          {currentLanguage.edit}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={onRenameClick}>
-        <FilesIcon className="h-4 w-4 mr-2" />
-          Rename
+          <FilesIcon className="mr-2 h-4 w-4" />
+          {currentLanguage.rename}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={onDeleteClick}>
-        <Trash2Icon className="h-4 w-4 mr-2" />
-          Delete
+          <Trash2Icon className="mr-2 h-4 w-4" />
+          {currentLanguage.delete}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

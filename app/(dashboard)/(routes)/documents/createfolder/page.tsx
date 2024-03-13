@@ -6,6 +6,7 @@ import { useParams, usePathname } from "next/navigation";
 import PathMaker from "../_components/path-maker";
 import { useIsAdmin, useIsOperator } from "@/lib/roleCheck";
 import { NextResponse } from "next/server";
+import { useLanguage } from "@/lib/check-language";
 
 type Params = {
   id: string;
@@ -13,6 +14,8 @@ type Params = {
 };
 
 const DocumentCreatePage = () => {
+  const currentLanguage = useLanguage();
+  console.log(currentLanguage);
   const [folderName, setFolderName] = useState("");
   const [isPublic, setPublic] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -20,7 +23,8 @@ const DocumentCreatePage = () => {
 
   const parentKey = usePathname();
 
-  const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  const uuidPattern =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   const encodedObj = useParams()?.id as string;
 
   // const isAdmin = useIsAdmin();
@@ -42,12 +46,14 @@ const DocumentCreatePage = () => {
   } else {
     try {
       // Otherwise, decode the encoded object
-      const decodedObj = JSON.parse(atob(encodedObj?.replace(/%3D/g, '='))) as Params;
+      const decodedObj = JSON.parse(
+        atob(encodedObj?.replace(/%3D/g, "="))
+      ) as Params;
       id = decodedObj.id;
       action = decodedObj.action;
     } catch (error) {
       // Handle any decoding errors here
-      console.error('Error decoding object:', error);
+      console.error("Error decoding object:", error);
     }
   }
   const isEdit = action === "edit";
@@ -102,7 +108,9 @@ const DocumentCreatePage = () => {
       </div>
       <div className="my-2 sm:flex-auto">
         <h1 className="text-2xl font-semibold leading-6 text-gray-600 dark:text-gray-300">
-          {`${isEdit ? "Edit" : "Create"} a Folder`}
+          {`${
+            isEdit ? `${currentLanguage.edit}` : `${currentLanguage.create}`
+          } ${currentLanguage.a_folder}`}
         </h1>
       </div>
       <div>
@@ -110,7 +118,7 @@ const DocumentCreatePage = () => {
           htmlFor="name"
           className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
         >
-          Name *
+          {currentLanguage.name + "*"}
         </label>
         <div className="mt-1">
           <input
@@ -119,8 +127,8 @@ const DocumentCreatePage = () => {
             id="name"
             value={folderName}
             onChange={(e) => setFolderName(e.target.value)}
-            className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
-            placeholder="Please enter folder name"
+            className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:text-gray-300 sm:text-sm sm:leading-6"
+            placeholder={currentLanguage.placeholder}
           />
         </div>
       </div>
@@ -143,7 +151,9 @@ const DocumentCreatePage = () => {
           ></span>
         </button>
         <span className="ml-3 text-sm" id="annual-billing-label">
-          <span className="font-medium text-gray-900 dark:text-gray-300">Public</span>
+          <span className="font-medium text-gray-900 dark:text-gray-300">
+            {currentLanguage.public}
+          </span>
         </span>
       </div>
       <div className="mt-4 flex flex-row-reverse">
@@ -175,9 +185,9 @@ const DocumentCreatePage = () => {
               ></path>
             </svg>
           ) : isEdit ? (
-            "Edit"
+            `${currentLanguage.edit}`
           ) : (
-            "Create"
+            `${currentLanguage.create}`
           )}
         </button>
         <a
@@ -185,7 +195,7 @@ const DocumentCreatePage = () => {
           type="button"
           className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
         >
-          Cancel
+          {currentLanguage.cancel}
         </a>
       </div>
     </div>
