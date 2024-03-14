@@ -1,10 +1,10 @@
 import React from "react";
 import ReactPlayer from "react-player";
 
-const UniversalPlayer = ({ url }: any) => {
+const UniversalPlayer = ({ url, style }: any) => {
   return (
     <ReactPlayer
-      style={{}}
+      style={{ ...style }}
       url={url}
       controls={true}
       width="100%"

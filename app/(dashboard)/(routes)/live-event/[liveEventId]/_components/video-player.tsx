@@ -32,8 +32,8 @@ export const VideoPlayer = ({ title, videoUrl }: VideoPlayerProps) => {
       {/* <div style={{ padding: "56.25% 0 0 0", position: "relative" }}> */}
       <UniversalPlayer
         // url={`https://player.vimeo.com/video/${extractVimeoId(videoUrl)!}`}
-        // url={`https://vimeo.com/881023708?share=copy`}
-        url={`https://www.youtube.com/watch?v=umepbfKp5rI`}
+        url={`https://vimeo.com/881023708?share=copy`}
+        // url={`https://www.youtube.com/watch?v=umepbfKp5rI`}
       />
       {/* <iframe
           src={`https://player.vimeo.com/video/${extractVimeoId(videoUrl)!}`}
