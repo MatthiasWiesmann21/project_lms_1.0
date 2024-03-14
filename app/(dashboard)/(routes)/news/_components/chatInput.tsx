@@ -72,14 +72,14 @@ export const ChatInputPost = ({
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <div className={`relative p-4 pb-6 ${className}`}>
+                <div className={`relative flex items-center py-4 ${className}`}>
                   <Input
                     disabled={isLoading}
-                    className="border-0 border-none bg-zinc-200/90 py-6 text-zinc-600 focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-zinc-700/75 dark:text-zinc-200"
+                    className="flex h-10 w-[94%] rounded-md border border-0 border-none border-input bg-background bg-zinc-200/90 px-2 py-2 text-sm text-zinc-600 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-zinc-700/75 dark:text-zinc-200"
                     placeholder={placeHolder}
                     {...field}
                   />
-                  <div className="absolute right-8 top-7">
+                  <div className="absolute right-0">
                     <EmojiPicker
                       onChange={(emoji: string) =>
                         field.onChange(`${field.value}${emoji}`)

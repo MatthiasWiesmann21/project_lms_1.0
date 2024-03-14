@@ -7,44 +7,42 @@ import moment from "moment";
 import { ThumbsUp } from "lucide-react";
 import { ChatInputPost } from "./chatInput";
 
-const SubReply = ({ val, getPosts }: any) => {
-  return (
-    <div>
-      <div className="flex">
-        <UserAvatar
-          className="mr-1 h-5 w-5 md:h-7 md:w-7"
-          src={val?.profile.imageUrl}
-        />
-        <div className="w-full">
-          <p>
-            {val?.profile?.name}
-            <span className="ml-5 text-[12px]">
-              {moment(new Date(val?.createdAt))?.fromNow()}
-            </span>
-          </p>
-          <p>{val?.text}</p>
-          <div className="my-2 flex items-center">
-            <div
-              onClick={async () => {
-                const response = await axios?.post(`/api/like/create`, {
-                  commentId: val?.id,
-                });
-                if (response?.status === 200) getPosts();
-              }}
-              className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
-            >
-              <ThumbsUp
-                fill={val?.currentCommentLike ? "blue" : "#ffffff00"}
-                className="mr-2"
-              />
-              {val?.likes?.length}
-            </div>
+const SubReply = ({ val, getPosts }: any) => (
+  <div>
+    <div className="flex">
+      <UserAvatar
+        className="mr-1 h-5 w-5 md:h-7 md:w-7"
+        src={val?.profile.imageUrl}
+      />
+      <div className="w-full">
+        <p>
+          {val?.profile?.name}
+          <span className="ml-5 text-[12px]">
+            {moment(new Date(val?.createdAt))?.fromNow()}
+          </span>
+        </p>
+        <p>{val?.text}</p>
+        <div className="my-2 flex items-center">
+          <div
+            onClick={async () => {
+              const response = await axios?.post(`/api/like/create`, {
+                commentId: val?.id,
+              });
+              if (response?.status === 200) getPosts();
+            }}
+            className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
+          >
+            <ThumbsUp
+              fill={val?.currentCommentLike ? "blue" : "#ffffff00"}
+              className="mr-2"
+            />
+            {val?.likes?.length}
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  </div>
+);
 
 const Reply = ({
   val,
@@ -130,19 +128,22 @@ const LikeComment = ({
   likesCount,
   currentLike,
   commentsWithLikes,
+  commentsCount,
   getPosts,
 }: {
   id: string;
   likesCount: number;
   currentLike: boolean;
   commentsWithLikes: any;
+  commentsCount: number;
   getPosts: any;
 }) => {
   const user = useSelector((state: any) => state?.user);
-  const [showComments, setShowComments] = useState(3);
+  const [commentCount, setCommentCount] = useState(3);
+  const [isShowComments, setShowComments] = useState(false);
   return (
     <div>
-      <div className="flex items-center justify-end py-3">
+      <div className="flex items-center justify-between py-3">
         <div
           onClick={async () => {
             const response = await axios?.post(`/api/like/create`, {
@@ -150,13 +151,19 @@ const LikeComment = ({
             });
             if (response?.status === 200) getPosts();
           }}
-          className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
+          className="m-2 flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
         >
           <ThumbsUp
             fill={!!currentLike ? "blue" : "#ffffff00"}
             className="mr-2"
           />
           {likesCount}
+        </div>
+        <div
+          className="cursor-pointer rounded p-3 transition-opacity hover:opacity-70"
+          onClick={() => setShowComments(true)}
+        >
+          <p className="m-0">{`${commentsCount} comments`}</p>
         </div>
       </div>
       <div className="flex justify-center">
@@ -169,24 +176,33 @@ const LikeComment = ({
               postId: id,
               parentCommentId: null,
             }}
-            className="pb-[15px]"
+            className=""
             getPosts={getPosts}
           />
-          <div>
-            {commentsWithLikes?.map(
-              (val: any, index: number) =>
-                index < showComments && (
-                  <Reply key={val?.id} val={val} id={id} getPosts={getPosts} />
-                )
-            )}
-          </div>
-          {showComments < commentsWithLikes?.length - 1 && (
-            <p
-              onClick={() => setShowComments(showComments + 3)}
-              className="cursor-pointer text-center hover:underline"
-            >
-              Show More ...!!!
-            </p>
+          {isShowComments && (
+            <>
+              <div>
+                {commentsWithLikes?.map(
+                  (val: any, index: number) =>
+                    index < commentCount && (
+                      <Reply
+                        key={val?.id}
+                        val={val}
+                        id={id}
+                        getPosts={getPosts}
+                      />
+                    )
+                )}
+              </div>
+              {commentCount < commentsWithLikes?.length - 1 && (
+                <p
+                  onClick={() => setCommentCount(commentCount + 3)}
+                  className="cursor-pointer text-center hover:underline"
+                >
+                  Show More ...!!!
+                </p>
+              )}
+            </>
           )}
         </div>
       </div>

@@ -7,25 +7,59 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { LiveEvent } from "@prisma/client";
 import Image from "next/image";
+import Select from "react-select";
 
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/file-upload";
 
+// import vimeo from '../../../../../../../'
+import vimeo from "@/assets/icons/Vimeo-Logo.png";
+import youtube from "@/assets/icons/Youtube-Logo.png";
+
 interface VideoFormProps {
   initialData: LiveEvent;
   liveEventId: string;
-};
+}
 
 const formSchema = z.object({
   videoUrl: z.string().min(1),
 });
 
-export const VideoForm = ({
-  initialData,
-  liveEventId,
-}: VideoFormProps) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [vimeoUrl, setVimeoUrl] = useState<string | null>(initialData.videoUrl || null);
+const options = [
+  {
+    value: "Vimeo",
+    label: (
+      <div className="flex items-center">
+        <Image className="mr-2 w-[50px]" alt="vimeo" src={vimeo} />
+        <p className="m-0">vimeo</p>
+      </div>
+    ),
+  },
+  {
+    value: "Youtube",
+    label: (
+      <div className="flex items-center">
+        <Image className="mr-2 w-[50px]" alt="youtube" src={youtube} />
+        <p className="m-0">youtube</p>
+      </div>
+    ),
+  },
+];
+
+const customStyles = {
+  option: (provided: any, state: any) => ({
+    ...provided,
+    background: `url(${state.data.image}) no-repeat center left`,
+    backgroundSize: "contain",
+    paddingLeft: "30px", // Adjust as needed
+  }),
+};
+
+export const VideoForm = ({ initialData, liveEventId }: VideoFormProps) => {
+  const [isEditing, setIsEditing] = useState(true);
+  const [vimeoUrl, setVimeoUrl] = useState<string | null>(
+    initialData.videoUrl || null
+  );
   const router = useRouter();
 
   function extractVimeoId(url: string): string | null {
@@ -36,12 +70,17 @@ export const VideoForm = ({
   function VimeoPreview({ videoId }: { videoId: string }) {
     return (
       <div style={{ padding: "56.25% 0 0 0", position: "relative" }}>
-        <iframe 
-          src={`https://player.vimeo.com/video/${videoId}`} 
-          style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }} 
-          allow="autoplay; fullscreen" 
-          >
-        </iframe>
+        <iframe
+          src={`https://player.vimeo.com/video/${videoId}`}
+          style={{
+            position: "absolute",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+          }}
+          allow="autoplay; fullscreen"
+        ></iframe>
       </div>
     );
   }
@@ -57,41 +96,44 @@ export const VideoForm = ({
     } catch {
       toast.error("Something went wrong");
     }
-  }
+  };
 
   return (
-    <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
-      <div className="font-medium flex items-center justify-between">
+    <div className="mt-6 rounded-md border bg-slate-200 p-4 dark:bg-slate-700">
+      <div className="flex items-center justify-between font-medium">
         Live Event
         <Button onClick={toggleEdit} variant="ghost">
-          {isEditing ? <>Cancel</> : initialData.videoUrl ? (
+          {isEditing ? (
+            <>Cancel</>
+          ) : initialData.videoUrl ? (
             <>
-              <Pencil className="h-4 w-4 mr-2" />
+              <Pencil className="mr-2 h-4 w-4" />
               Edit video
             </>
           ) : (
             <>
-              <PlusCircle className="h-4 w-4 mr-2" />
+              <PlusCircle className="mr-2 h-4 w-4" />
               Add a video
             </>
           )}
         </Button>
       </div>
 
-      {!isEditing && (
-        vimeoUrl ? (
+      {!isEditing &&
+        (vimeoUrl ? (
           <VimeoPreview videoId={extractVimeoId(vimeoUrl)!} />
         ) : (
-          <div className="flex items-center justify-center h-60 bg-slate-200 rounded-md">
+          <div className="flex h-60 items-center justify-center rounded-md bg-slate-200">
             <Video className="h-10 w-10 text-slate-500" />
           </div>
-        )
-      )}
+        ))}
 
       {isEditing && (
-        <div>
+        <div style={{ border: "2px solid coral" }}>
+          <Select options={options} onChange={(e) => console.log(e)} />
           <input
-            className="mb-2 flex items-center rounded-md p-1 w-full"
+            style={{ border: "2px solid green" }}
+            className="mb-2 flex w-full items-center rounded-md p-1"
             type="text"
             placeholder="Vimeo Share Link"
             onChange={(e) => {
@@ -107,10 +149,10 @@ export const VideoForm = ({
       )}
 
       {vimeoUrl && !isEditing && (
-        <div className="text-xs text-muted-foreground mt-2">
+        <div className="mt-2 text-xs text-muted-foreground">
           Refresh the page if video does not appear.
         </div>
       )}
     </div>
-  )
-}
+  );
+};

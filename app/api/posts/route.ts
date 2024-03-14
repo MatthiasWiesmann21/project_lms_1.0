@@ -35,9 +35,9 @@ export async function POST(req: Request) {
 export async function GET(req: any) {
   try {
     const { userId } = auth();
-    const title = req?.nextUrl?.searchParams?.get("title");
-    const categoryId = req?.nextUrl?.searchParams?.get("categoryId");
-    const limit = req?.nextUrl?.searchParams?.get("limit") || 100;
+    const page = req?.nextUrl?.searchParams?.get("page") || "1";
+    const pageSize = 10;
+    const skip = (parseInt(page) - 1) * pageSize;
 
     if (userId === null) throw new Error("Un Authorized");
 
@@ -76,27 +76,31 @@ export async function GET(req: any) {
         },
         likes: true,
       },
-      // take: limit,
+      take: pageSize,
+      skip: skip,
     });
 
     const postsWithData = posts?.map((post) => {
       const commentsCount = post?.comments?.length;
       const likesCount = post?.likes?.length;
 
-      const commentsWithLikes = post?.comments?.map((comment) => ({
-        ...comment,
-        commentLikesCount: comment?.likes?.length,
-        currentCommentLike: comment?.likes?.some(
-          (like) => like.profileId === profile.id
-        ),
-        subCommentsWithLikes: comment?.subComment?.map((subcomment) => ({
-          ...subcomment,
-          commentLikesCount: subcomment?.likes?.length,
-          currentCommentLike: subcomment?.likes?.some(
-            (like) => like?.profileId === profile?.id
+      const commentsWithLikes = post?.comments
+        ?.map((comment) => ({
+          ...comment,
+          commentLikesCount: comment?.likes?.length,
+          currentCommentLike: comment?.likes?.some(
+            (like) => like.profileId === profile.id
           ),
-        })),
-      }));
+          subCommentsWithLikes: comment?.subComment?.map((subcomment) => ({
+            ...subcomment,
+            commentLikesCount: subcomment?.likes?.length,
+            currentCommentLike: subcomment?.likes?.some(
+              (like) => like?.profileId === profile?.id
+            ),
+          })),
+        }))
+        //@ts-ignore
+        ?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
 
       // Check if the current profile has liked the post
       const currentLike = post?.likes?.some(
