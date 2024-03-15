@@ -1,11 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BookOpen, PlayCircle } from "lucide-react";
+import { PlayCircle } from "lucide-react";
 import moment from "moment";
-
-import { IconBadge } from "@/components/icon-badge";
-import { formatPrice } from "@/lib/format";
-import { CourseProgress } from "@/components/course-progress";
 import { CategoryItem } from "@/app/(dashboard)/(routes)/search/_components/category-item";
 import { cn } from "@/lib/utils";
 
@@ -28,12 +24,6 @@ export const EventCard = ({
   startDateTime,
   endDateTime,
 }: EventsCardProps) => {
-  const startDateTimeMoment = moment(startDateTime, "DD-MM-YY HH:mm");
-  const endDateTimeMoment = moment(endDateTime, "DD-MM-YY HH:mm");
-
-  const isStartDateToday = startDateTimeMoment.isSame(moment(), "day");
-  const isEndDateToday = endDateTimeMoment.isSame(moment(), "hour");
-
   const isLive =
     new Date(startDateTime) <= new Date() &&
     new Date(endDateTime) >= new Date();

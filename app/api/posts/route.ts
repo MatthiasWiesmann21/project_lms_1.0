@@ -1,4 +1,4 @@
-import { auth, currentUser } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET(req: any) {
+export async function GET(req: any): Promise<void | Response> {
   try {
     const { userId } = auth();
     const page = req?.nextUrl?.searchParams?.get("page") || "1";
@@ -50,7 +50,8 @@ export async function GET(req: any) {
       },
     });
 
-    if (profile === null) return [];
+    if (profile === null)
+      return new NextResponse("Profile not found", { status: 404 });
 
     const posts = await db?.post?.findMany({
       where: {
