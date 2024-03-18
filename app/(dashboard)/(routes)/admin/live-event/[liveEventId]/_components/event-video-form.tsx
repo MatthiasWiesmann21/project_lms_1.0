@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import vimeo from "@/assets/icons/Vimeo-Logo.png";
 import youtube from "@/assets/icons/Youtube-Logo.png";
 import UniversalPlayer from "@/pages/components/universalPlayer";
+import { useTheme } from "next-themes";
 
 interface VideoFormProps {
   initialData: LiveEvent;
@@ -44,6 +45,8 @@ const options = [
 ];
 
 export const VideoForm = ({ initialData, liveEventId }: VideoFormProps) => {
+  const { theme } = useTheme();
+  const isDarkTheme = theme === "dark";
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
   const [videoType, setVideoType] = useState<any>({});
@@ -120,6 +123,40 @@ export const VideoForm = ({ initialData, liveEventId }: VideoFormProps) => {
             options={options}
             onChange={(e: any) => setVideoType(e)}
             value={videoType}
+            styles={{
+              control: (provided) => ({
+                ...provided,
+                backgroundColor: isDarkTheme
+                  ? "focusBackground"
+                  : "defaultBackground",
+                color: "red",
+              }),
+              singleValue: (provided) => ({
+                ...provided,
+                color: isDarkTheme ? "#fff" : "black",
+              }),
+              menu: (provided) => ({
+                ...provided,
+                backgroundColor: isDarkTheme
+                  ? "rgb(51 65 85 / var(--tw-bg-opacity))"
+                  : "rgb(226 232 240 / var(--tw-bg-opacity))",
+              }),
+              // @ts-ignore
+              option: (provided, state) => ({
+                ...provided,
+                backgroundColor: state?.isFocused
+                  ? isDarkTheme
+                    ? "rgb(186 230 253 / 0.1)"
+                    : "lightblue"
+                  : null,
+                color: isDarkTheme ? "white" : "black",
+                "&:hover": {
+                  backgroundColor: isDarkTheme
+                    ? "rgb(186 230 253 / 0.1)"
+                    : "lightblue",
+                },
+              }),
+            }}
           />
           <div className="my-1 flex items-center">
             <p className="m-0">{videoType?.value}</p>

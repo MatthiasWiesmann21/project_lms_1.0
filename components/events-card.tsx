@@ -26,7 +26,9 @@ export const EventCard = ({
 }: EventsCardProps) => {
   const isLive =
     new Date(startDateTime) <= new Date() &&
-    new Date(endDateTime) >= new Date();
+    new Date(
+      new Date(endDateTime)?.setMinutes(new Date(endDateTime)?.getMinutes() + 1)
+    ) >= new Date();
 
   return (
     <Link href={`/live-event/${id}`}>
