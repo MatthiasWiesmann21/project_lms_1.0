@@ -9,19 +9,19 @@ import { ChatInputPost } from "./chatInput";
 
 const SubReply = ({ val, getPosts }: any) => (
   <div>
-    <div className="flex">
+    <div className="flex justify-around">
       <UserAvatar
         className="mr-1 h-5 w-5 md:h-7 md:w-7"
         src={val?.profile.imageUrl}
       />
-      <div className="w-full">
+      <div className="w-[90%]">
         <p>
           {val?.profile?.name}
           <span className="ml-5 text-[12px]">
             {moment(new Date(val?.createdAt))?.fromNow()}
           </span>
         </p>
-        <p>{val?.text}</p>
+        <p className="break-words">{val?.text}</p>
         <div className="my-2 flex items-center">
           <div
             onClick={async () => {
@@ -57,19 +57,19 @@ const Reply = ({
   const [showReplyInput, setShowReplyInput] = useState(false);
   return (
     <div>
-      <div className="flex">
+      <div className="flex justify-around">
         <UserAvatar
           className="mr-1 h-5 w-5 md:h-7 md:w-7"
           src={val?.profile.imageUrl}
         />
-        <div className="w-full">
+        <div className="w-[90%] pr-[1%]">
           <p>
             {val?.profile?.name}
             <span className="ml-5 text-[12px]">
               {moment(new Date(val?.createdAt))?.fromNow()}
             </span>
           </p>
-          <p>{val?.text}</p>
+          <text className="break-words">{val?.text}</text>
           <div className="my-2 flex items-center">
             <div
               onClick={async () => {
@@ -87,8 +87,7 @@ const Reply = ({
               {val?.likes?.length}
             </div>
             <p
-              style={{ marginLeft: "1.25rem" }}
-              className="m-0 cursor-pointer"
+              className="m-0 ml-[1.25rem] cursor-pointer"
               onClick={() => setShowReplyInput(!showReplyInput)}
             >
               Reply
@@ -166,9 +165,9 @@ const LikeComment = ({
           <p className="m-0">{`${commentsCount} comments`}</p>
         </div>
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-around">
         <UserAvatar src={user?.imageUrl} className="mr-2 mt-4" />
-        <div className="w-full">
+        <div className="w-[90%]">
           <ChatInputPost
             placeHolder={"Type your comment"}
             apiUrl="/api/comment/create"
@@ -181,7 +180,7 @@ const LikeComment = ({
           />
           {isShowComments && (
             <>
-              <div>
+              <div className="w-full">
                 {commentsWithLikes?.map(
                   (val: any, index: number) =>
                     index < commentCount && (

@@ -36,7 +36,7 @@ export async function GET(req: any): Promise<void | Response> {
   try {
     const { userId } = auth();
     const page = req?.nextUrl?.searchParams?.get("page") || "1";
-    const pageSize = 10;
+    const pageSize = 5;
     const skip = (parseInt(page) - 1) * pageSize;
 
     if (userId === null) throw new Error("Un Authorized");

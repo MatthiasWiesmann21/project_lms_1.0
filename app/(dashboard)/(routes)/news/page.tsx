@@ -4,6 +4,7 @@ import axios from "axios";
 import dynamic from "next/dynamic";
 import { PostCard } from "./_components/post-card";
 import { Category, Post } from "@prisma/client";
+import { Loader2 } from "lucide-react";
 
 type PostWithProgressWithCategory = Post & {
   category: Category | null;
@@ -29,10 +30,6 @@ const NewsPage = () => {
     setPage((prevPage) => prevPage + 1); // Increment the page count
     setHasMore(newPosts.length > 0); // Check if there are more posts to load
   };
-
-  // useEffect(() => {
-  //   getPosts();
-  // }, []); // Load initial posts
 
   useEffect(() => {
     // Create an intersection observer
@@ -84,12 +81,15 @@ const NewsPage = () => {
           ))}
         </div>
         <div className="loading-indicator" />
-        {(!isLoading || posts?.length === 0) && (
-          <div className="mt-10 text-center text-sm text-muted-foreground">
-            {isLoading
-              ? "Loading...."
-              : posts?.length === 0 && "No posts found"}
-          </div>
+        {isLoading ? (
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        ) : (
+          !isLoading &&
+          posts?.length === 0 && (
+            <div className="mt-10 text-center text-sm text-muted-foreground">
+              "No posts found"
+            </div>
+          )
         )}
       </div>
     </div>

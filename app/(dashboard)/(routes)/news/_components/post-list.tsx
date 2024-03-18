@@ -1,6 +1,7 @@
 import { Category, Post } from "@prisma/client";
 
 import { PostCard } from "./post-card";
+import { Loader2 } from "lucide-react";
 
 type PostWithProgressWithCategory = Post & {
   category: Category | null;
@@ -47,7 +48,12 @@ export const PostList = ({ items, getPosts, isLoading }: PostListProps) => {
       </div>
       {items.length === 0 && (
         <div className="mt-10 text-center text-sm text-muted-foreground">
-          {isLoading ? "Loading...." : "No posts found"}
+          {/* {isLoading ? "Loading...." : "No posts found"} */}
+          {isLoading ? (
+            <Loader2 className="h-8 w-8 animate-spin text-secondary" />
+          ) : (
+            "No posts found"
+          )}
         </div>
       )}
     </div>
