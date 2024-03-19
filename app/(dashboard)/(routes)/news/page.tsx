@@ -87,7 +87,7 @@ const NewsPage = () => {
           !isLoading &&
           posts?.length === 0 && (
             <div className="mt-10 text-center text-sm text-muted-foreground">
-              "No posts found"
+              No posts found
             </div>
           )
         )}
