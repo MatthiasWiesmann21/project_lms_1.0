@@ -159,7 +159,7 @@ const LikeComment = ({
           />
           {likesCount}
         </div>
-        <Button className="cursor-pointer rounded-full p-4" size="lg" variant="ghost" onClick={() => setShowComments(true)}>
+        <Button className="cursor-pointer rounded-full p-4" size="lg" variant="secondary" onClick={() => setShowComments(true)}>
         <MessageCircle className="mr-1" />
           {`${commentsCount} Comments`}
         </Button>
@@ -193,12 +193,16 @@ const LikeComment = ({
                 )}
               </div>
               {commentCount < commentsWithLikes?.length - 1 && (
-                <p
-                  onClick={() => setCommentCount(commentCount + 3)}
-                  className="cursor-pointer text-center hover:underline"
-                >
-                  Show More ...!!!
-                </p>
+                <div className="flex items-center justify-center p-2">
+                  <Button
+                    onClick={() => setCommentCount(commentCount + 3)}
+                    className="cursor-pointer text-center rounded-full p-6"
+                    variant="secondary"
+                    size="lg"
+                  >
+                    Show more +
+                  </Button>
+                </div>
               )}
             </>
           )}
