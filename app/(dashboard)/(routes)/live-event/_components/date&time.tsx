@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import axios from "axios";
 import moment from "moment";
 import { useRef, useState } from "react";
@@ -19,22 +20,9 @@ export const DateandTime = ({
   const [endDateTime, setEndDateTime] = useState<Date | undefined>();
 
   return (
-    <div className="flex items-center justify-between gap-2">
+    <div className="flex items-center justify-between">
       <div className="">
-        <button
-          onClick={async () => {
-            const response = await axios?.get(`/api/liveEvent`);
-            setLiveEvent(
-              response?.data?.filter(
-                (each: any) => new Date(each?.startDateTime) < new Date()
-              )
-            );
-          }}
-          className="border-1 cursor-pointer rounded border border-[#fff] p-1 px-2"
-        >
-          Past Events
-        </button>
-        <button
+      <Button
           onClick={async () => {
             const response = await axios?.get(`/api/liveEvent`);
             setLiveEvent(
@@ -43,12 +31,29 @@ export const DateandTime = ({
               )
             );
           }}
-          className="border-1 ml-2 cursor-pointer rounded border border-[#fff] p-1 px-2"
+          className="border-1 cursor-pointer rounded-xl border border-[#fff] px-2 w-[128px] mr-2"
+          variant="ghost"
+          size="lg"
         >
           Future Events
-        </button>
+        </Button>
+        <Button
+          onClick={async () => {
+            const response = await axios?.get(`/api/liveEvent`);
+            setLiveEvent(
+              response?.data?.filter(
+                (each: any) => new Date(each?.startDateTime) < new Date()
+              )
+            );
+          }}
+          className="border-1 cursor-pointer rounded-xl border border-[#fff] p-1 px-2 w-[128px]"
+          variant="ghost"
+          size="lg"
+        >
+          Past Events
+        </Button>
       </div>
-      <div className="flex items-center justify-end gap-2">
+      <div className="flex items-center gap-1">
         <div className="relative overflow-hidden">
           <input
             type="datetime-local"
