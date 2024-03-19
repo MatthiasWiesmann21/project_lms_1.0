@@ -2,7 +2,13 @@ import React from "react";
 import { useParams } from "next/navigation";
 import { FilePlus, FolderPlus, Plus, PlusCircle, PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useLanguage } from "@/lib/check-language";
 
 type Params = {
   id: string;
@@ -10,7 +16,7 @@ type Params = {
 
 const FlyoutMenuCreate = () => {
   const { id } = useParams() as Params;
-
+  const currentLanguage = useLanguage();
 
   const onCLickCreateFile = async () => {
     if (!id) {
@@ -31,19 +37,22 @@ const FlyoutMenuCreate = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="bg-transparent border-2 border-gray-300" variant="outline">
-        <PlusCircle className="h-5 w-5" />
-        <span className="pr-2 pl-2 text-sm">Create</span>
+        <Button
+          className="border-2 border-gray-300 bg-transparent"
+          variant="outline"
+        >
+          <PlusCircle className="h-5 w-5" />
+          <span className="pl-2 pr-2 text-sm">{currentLanguage.create}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={onCLickCreateFile}>
-        <FolderPlus className="h-5 w-5 mr-2" />
-          Create File
+          <FolderPlus className="mr-2 h-5 w-5" />
+          {currentLanguage.create_file}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={onCLickCreateFolder}>
-          <FilePlus className="h-5 w-5 mr-2" />
-          Create Folder
+          <FilePlus className="mr-2 h-5 w-5" />
+          {currentLanguage.create_folder}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
