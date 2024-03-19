@@ -4,8 +4,9 @@ import { useSelector } from "react-redux";
 import { UserAvatar } from "@/components/user-avatar";
 import axios from "axios";
 import moment from "moment";
-import { ThumbsUp } from "lucide-react";
+import { MessageCircle, ThumbsUp } from "lucide-react";
 import { ChatInputPost } from "./chatInput";
+import { Button } from "@/components/ui/button";
 
 const SubReply = ({ val, getPosts }: any) => (
   <div>
@@ -158,12 +159,10 @@ const LikeComment = ({
           />
           {likesCount}
         </div>
-        <div
-          className="cursor-pointer rounded p-3 transition-opacity hover:opacity-70"
-          onClick={() => setShowComments(true)}
-        >
-          <p className="m-0">{`${commentsCount} comments`}</p>
-        </div>
+        <Button className="cursor-pointer rounded-full p-4" size="lg" variant="ghost" onClick={() => setShowComments(true)}>
+        <MessageCircle className="mr-1" />
+          {`${commentsCount} Comments`}
+        </Button>
       </div>
       <div className="flex justify-around">
         <UserAvatar src={user?.imageUrl} className="mr-2 mt-4" />

@@ -57,9 +57,9 @@ const NewsPage = () => {
   }, [hasMore, isLoading]); // Re-run effect when hasMore or isLoading changes
 
   return (
-    <div className="space-y-4 p-6 dark:bg-[#313338]">
+    <div className="space-y-4 pt-2 dark:bg-[#313338]">
       <div className="flex flex-col items-center justify-center">
-        <div className="w-full max-w-2xl px-5">
+        <div className="w-full max-w-4xl px-5">
           {posts?.map((item) => (
             <PostCard
               key={item?.id}
