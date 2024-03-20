@@ -1,27 +1,64 @@
 "use client";
 
 import UniversalPlayer from "@/pages/components/universalPlayer";
+import Timer from "./timer";
+import { useEffect, useState } from "react";
+import moment from "moment";
 
 interface VideoPlayerProps {
   playbackId?: string;
-  title: string;
   videoUrl: string;
+  startDateTime: any;
 }
 
-export const VideoPlayer = ({ title, videoUrl }: VideoPlayerProps) => {
+const calculateTimeRemaining = (date: any) => {
+  const currentDate = moment();
+  const difference = moment?.duration(
+    moment(date, "ddd MMM DD YYYY HH:mm:ss ZZ")?.diff(currentDate)
+  );
+  return {
+    days: difference?.days(),
+    hours: difference?.hours(),
+    minutes: difference?.minutes(),
+    seconds: difference?.seconds(),
+  };
+};
+
+export const VideoPlayer = ({ videoUrl, startDateTime }: VideoPlayerProps) => {
+  const [timeRemaining, setTimeRemaining] = useState(
+    calculateTimeRemaining(startDateTime)
+  );
+
+  useEffect(() => {
+    const timerInterval = setInterval(() => {
+      setTimeRemaining(calculateTimeRemaining(startDateTime));
+      if (
+        timeRemaining?.days <= 0 &&
+        timeRemaining?.hours <= 0 &&
+        timeRemaining?.minutes <= 0 &&
+        timeRemaining?.seconds <= 0
+      )
+        clearInterval(timerInterval); // Stop the timer
+    }, 1000);
+
+    return () => {
+      clearInterval(timerInterval);
+    };
+  }, []);
+
   if (!videoUrl) {
-    console.error("Vimeo URL is not provided!");
+    console.error("URL is not provided!");
     return null;
   }
 
   return (
     <div className="relative aspect-video">
-      {/* <div className="absolute inset-0 flex items-center justify-center bg-slate-800">
-        <p>
-          Youre current Event hasnt started yet please wait until the countdown
-          gets to zero.
-        </p>
-      </div> */}
+      {!(
+        timeRemaining?.days <= 0 &&
+        timeRemaining?.hours <= 0 &&
+        timeRemaining?.minutes <= 0 &&
+        timeRemaining?.seconds <= 0
+      ) && <Timer timeRemaining={timeRemaining} />}
       <UniversalPlayer url={videoUrl} />
     </div>
   );

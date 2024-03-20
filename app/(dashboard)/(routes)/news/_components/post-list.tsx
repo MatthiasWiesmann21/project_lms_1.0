@@ -46,9 +46,8 @@ export const PostList = ({ items, getPosts, isLoading }: PostListProps) => {
           />
         ))}
       </div>
-      {items.length === 0 && (
+      {items?.length === 0 && (
         <div className="mt-10 text-center text-sm text-muted-foreground">
-          {/* {isLoading ? "Loading...." : "No posts found"} */}
           {isLoading ? (
             <Loader2 className="h-8 w-8 animate-spin text-secondary" />
           ) : (

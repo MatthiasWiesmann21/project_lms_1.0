@@ -60,19 +60,19 @@ const LiveEventIdPage = async ({
           />
           <div className="flex flex-1 flex-col items-end pr-1">
             <p className="text-xs">{`Starts: ${moment(
-              liveEvent.startDateTime
+              liveEvent?.startDateTime
             )?.format("DD-MM-YY HH:mm")}`}</p>
             <p className="text-xs">{`Ends: ${moment(
-              liveEvent.endDateTime
+              liveEvent?.endDateTime
             )?.format("DD-MM-YY HH:mm")}`}</p>
           </div>
         </div>
         <div className="p-4">
           <VideoPlayer
-            title={liveEvent.title}
             liveEventId={params.liveEventId}
             // @ts-ignore
             videoUrl={liveEvent.videoUrl} // Hier fügen wir die Vimeo-URL aus den chapter Daten hinzu.
+            startDateTime={liveEvent?.startDateTime}
           />
         </div>
 
