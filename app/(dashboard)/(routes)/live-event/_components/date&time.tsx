@@ -20,45 +20,13 @@ export const DateandTime = ({
   const [endDateTime, setEndDateTime] = useState<Date | undefined>();
 
   return (
-    <div className="flex items-center justify-between">
-      <div className="">
-      <Button
-          onClick={async () => {
-            const response = await axios?.get(`/api/liveEvent`);
-            setLiveEvent(
-              response?.data?.filter(
-                (each: any) => new Date(each?.startDateTime) > new Date()
-              )
-            );
-          }}
-          className="border-1 cursor-pointer rounded-xl border border-[#fff] px-2 w-[128px] mr-2"
-          variant="ghost"
-          size="lg"
-        >
-          Future Events
-        </Button>
-        <Button
-          onClick={async () => {
-            const response = await axios?.get(`/api/liveEvent`);
-            setLiveEvent(
-              response?.data?.filter(
-                (each: any) => new Date(each?.startDateTime) < new Date()
-              )
-            );
-          }}
-          className="border-1 cursor-pointer rounded-xl border border-[#fff] p-1 px-2 w-[128px]"
-          variant="ghost"
-          size="lg"
-        >
-          Past Events
-        </Button>
-      </div>
-      <div className="flex items-center gap-1">
-        <div className="relative overflow-hidden">
+    <div className="flex flex-col w-full space-y-4 mt-4">
+      <div className="flex flex-col items-start gap-2">
+        <div className="relative overflow-hidden w-full mb-2">
           <input
             type="datetime-local"
             ref={startDateInputRef}
-            className="absolute -z-[1]"
+            className="absolute -z-[1] w-full"
             onChange={(e) => {
               setStartDateTime(new Date(e?.target?.value));
             }}
@@ -73,14 +41,14 @@ export const DateandTime = ({
                 ? moment(startDateTime)?.format("YYYY-MM-DD HH:mm")
                 : ""
             }
-            className="border-1 z-[1] cursor-pointer rounded border border-white px-2"
+            className="border-1 z-[1] cursor-pointer rounded border w-full border-white px-2"
           />
         </div>
-        <div className="relative overflow-hidden">
+        <div className="relative overflow-hidden w-full mb-2">
           <input
             type="datetime-local"
             ref={endDateInputRef}
-            className="absolute -z-[1]"
+            className="absolute -z-[1] w-full"
             onChange={(e) => {
               setEndDateTime(new Date(e?.target?.value));
             }}
@@ -93,9 +61,11 @@ export const DateandTime = ({
             value={
               endDateTime ? moment(endDateTime)?.format("YYYY-MM-DD HH:mm") : ""
             }
-            className="border-1 z-[1] cursor-pointer rounded border border-white px-2"
+            className="border-1 z-[1] cursor-pointer rounded border w-full border-white px-2"
           />
         </div>
+      </div>
+      <div className="flex items-center space-x-4">
         <button
           onClick={async () => {
             const response = await axios?.post(`/api/liveEvent/filter`, {

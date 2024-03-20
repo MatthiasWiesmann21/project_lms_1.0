@@ -4,6 +4,8 @@ import { DateandTime } from "./date&time";
 import { Categories } from "./categories";
 import { EventsList } from "@/components/events-list ";
 import { useAuth } from "@clerk/nextjs";
+import EventFilterSidebar from "./filter-sidebar";
+import { PastandFuture } from "./past&future";
 
 const LiveEventWrapper = ({ liveEvents, categories, searchParams }: any) => {
   const { userId } = useAuth();
@@ -15,7 +17,8 @@ const LiveEventWrapper = ({ liveEvents, categories, searchParams }: any) => {
 
   return (
     <div className="space-y-4 p-6">
-      <DateandTime
+      <div className="flex justify-between mr-1">
+      <PastandFuture
         setLiveEvent={setLiveEvent}
         getEvent={{
           userId,
@@ -24,6 +27,8 @@ const LiveEventWrapper = ({ liveEvents, categories, searchParams }: any) => {
         }}
         liveEvent={liveEvent}
       />
+      <EventFilterSidebar />
+      </div>
       <Categories items={categories} />
       <EventsList items={liveEvent} />
     </div>
