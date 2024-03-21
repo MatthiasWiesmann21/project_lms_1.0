@@ -100,7 +100,7 @@ const DocumentPage = () => {
   };
   if (isLoading) {
     return <div className="flex justify-center items-center min-h-screen">
-      <Loader2 className="h-6 w-6 animate-spin"/>
+      <Loader2 className="h-8 w-8 animate-spin"/>
       </div>;
   } else if (folderStructure == null) {
     return (

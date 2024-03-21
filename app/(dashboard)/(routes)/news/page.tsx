@@ -89,7 +89,9 @@ const NewsPage = () => {
         </div>
         <div className="loading-indicator" />
         {isLoading ? (
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <div className="flex justify-center items-center min-h-screen">
+          <Loader2 className="h-8 w-8 animate-spin"/>
+          </div>
         ) : (
           !isLoading &&
           posts?.length === 0 && (

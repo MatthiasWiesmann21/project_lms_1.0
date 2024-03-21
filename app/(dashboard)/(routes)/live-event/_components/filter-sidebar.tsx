@@ -30,7 +30,7 @@ return (
     <Sheet>
         <SheetTrigger>
             <Button className="rounded-xl items-center justify-center" variant="default" size="lg">
-                <Filter className="pr-1" size={24}/>
+                <Filter className="pr-1" size={28}/>
                 Filter
             </Button>
         </SheetTrigger>
