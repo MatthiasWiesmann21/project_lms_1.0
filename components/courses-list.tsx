@@ -13,7 +13,7 @@ interface CoursesListProps {
   items: CourseWithProgressWithCategory[];
 }
 
-export const CoursesList = ({
+export const    CoursesList = ({
   items
 }: CoursesListProps) => {
   return (

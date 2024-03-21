@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/lib/check-language";
 import axios from "axios";
 import moment from "moment";
 import { useRef, useState } from "react";
@@ -18,6 +19,7 @@ export const DateandTime = ({
   const startDateInputRef = useRef(null);
   const [startDateTime, setStartDateTime] = useState<Date | undefined>();
   const [endDateTime, setEndDateTime] = useState<Date | undefined>();
+  const currentLanguage = useLanguage();
 
   return (
     <div className="flex flex-col w-full space-y-4 mt-4">
@@ -35,7 +37,7 @@ export const DateandTime = ({
             // @ts-ignore
             onClick={() => startDateInputRef?.current?.showPicker()}
             type="text"
-            placeholder="Select Start Date"
+            placeholder={currentLanguage.live_event_filter_start_date}
             value={
               startDateTime
                 ? moment(startDateTime)?.format("YYYY-MM-DD HH:mm")
@@ -57,7 +59,7 @@ export const DateandTime = ({
             // @ts-ignore
             onClick={() => endDateInputRef?.current?.showPicker()}
             type="text"
-            placeholder="Select End Date"
+            placeholder={currentLanguage.live_event_filter_end_date}
             value={
               endDateTime ? moment(endDateTime)?.format("YYYY-MM-DD HH:mm") : ""
             }
@@ -77,7 +79,7 @@ export const DateandTime = ({
           }}
           className="border-1 cursor-pointer rounded border border-[#fff] p-1 px-2"
         >
-          Apply Filter
+          {currentLanguage.live_event_filter_applyFilter_button_text}
         </button>
         <button
           onClick={async () => {
@@ -86,7 +88,7 @@ export const DateandTime = ({
           }}
           className="border-1 cursor-pointer rounded border border-[#fff] p-1 px-2"
         >
-          Clear Filter
+          {currentLanguage.live_event_filter_clearFilter_button_text}
         </button>
       </div>
     </div>

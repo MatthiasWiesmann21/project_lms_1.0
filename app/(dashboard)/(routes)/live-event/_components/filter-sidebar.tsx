@@ -15,12 +15,14 @@ import { useAuth } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Filter } from "lucide-react";
+import { useLanguage } from "@/lib/check-language";
 
 
 
 const EventFilterSidebar = ({ liveEvents, categories, searchParams }: any) => {
     const { userId } = useAuth();
     const [liveEvent, setLiveEvent] = useState([]);
+    const currentLanguage = useLanguage();
   
     useEffect(() => {
       setLiveEvent(liveEvents);
@@ -31,15 +33,14 @@ return (
         <SheetTrigger>
             <Button className="rounded-xl items-center justify-center" variant="default" size="lg">
                 <Filter className="pr-1" size={28}/>
-                Filter
+                {currentLanguage.live_event_filter_button_text}
             </Button>
         </SheetTrigger>
         <SheetContent>
             <SheetHeader>
-                <SheetTitle>Are you absolutely sure?</SheetTitle>
+                <SheetTitle>{currentLanguage.live_event_filter_title}</SheetTitle>
                 <SheetDescription>
-                    This action cannot be undone. This will permanently delete your account
-                    and remove your data from our servers.
+                    {currentLanguage.live_event_filter_description}
                 </SheetDescription>
             </SheetHeader>
             <DateandTime
