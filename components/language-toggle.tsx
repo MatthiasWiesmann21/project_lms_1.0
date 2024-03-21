@@ -10,10 +10,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useDispatch, useSelector } from "react-redux";
 import AppSVGIcon from "./appsvgicon";
+import { useLanguage } from "@/lib/check-language";
 
 export function LanguageToggle() {
   const dispatch = useDispatch();
   const language = useSelector((state: any) => state?.language);
+  const currentLanguage = useLanguage();
+
 
   // const [language, setLanguage] = React.useState("English");
 
@@ -44,35 +47,35 @@ export function LanguageToggle() {
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setLanguage("English")}>
           <AppSVGIcon customclass="mr-1" icon={"gb"} />
-          English
+          {currentLanguage.navigation_language_toggle_english}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setLanguage("Deutsch")}>
           <AppSVGIcon customclass="mr-1" icon={"de"} />
-          Deutsch
+          {currentLanguage.navigation_language_toggle_german}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setLanguage("Francaise")}>
           <AppSVGIcon customclass="mr-1" icon={"fr"} />
-          Francaise
+          {currentLanguage.navigation_language_toggle_french}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setLanguage("Italiano")}>
           <AppSVGIcon customclass="mr-1" icon={"it"} />
-          Italiano
+          {currentLanguage.navigation_language_toggle_italian}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setLanguage("Espanol")}>
           <AppSVGIcon customclass="mr-1" icon={"es"} />
-          Espanol
+          {currentLanguage.navigation_language_toggle_spanish}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setLanguage("Portugues")}>
           <AppSVGIcon customclass="mr-1" icon={"pt"} />
-          Portugues
+          {currentLanguage.navigation_language_toggle_portuguese}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setLanguage("Russian")}>
           <AppSVGIcon customclass="mr-1" icon={"ru"} />
-          Russian
+          {currentLanguage.navigation_language_toggle_russian}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setLanguage("Mandarin")}>
           <AppSVGIcon customclass="mr-1" icon={"tw"} />
-          Mandarin
+          {currentLanguage.navigation_language_toggle_mandarin}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

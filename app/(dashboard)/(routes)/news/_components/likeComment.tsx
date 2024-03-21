@@ -7,6 +7,7 @@ import moment from "moment";
 import { MessageCircle, ThumbsUp } from "lucide-react";
 import { ChatInputPost } from "./chatInput";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/lib/check-language";
 
 const SubReply = ({ val, updateLikeComment }: any) => (
   <div>
@@ -57,6 +58,7 @@ const Reply = ({
 }) => {
   const user = useSelector((state: any) => state?.user);
   const [showReplyInput, setShowReplyInput] = useState(false);
+  const currentLanguage = useLanguage();
   return (
     <div>
       <div className="flex justify-around">
@@ -93,7 +95,7 @@ const Reply = ({
               className="m-0 ml-[1.25rem] cursor-pointer"
               onClick={() => setShowReplyInput(!showReplyInput)}
             >
-              Reply
+              {currentLanguage.news_comments_reply_button_label}
             </p>
           </div>
           {showReplyInput && (
@@ -104,7 +106,7 @@ const Reply = ({
               />
               <div className="my-1 flex w-full flex-col">
                 <ChatInputPost
-                  placeHolder={"Type your comment"}
+                  placeHolder={currentLanguage.news_comments_input_placeholder}
                   apiUrl="/api/comment/create"
                   query={{
                     postId: id,
@@ -147,6 +149,7 @@ const LikeComment = ({
   const user = useSelector((state: any) => state?.user);
   const [commentCount, setCommentCount] = useState(3);
   const [isShowComments, setShowComments] = useState(false);
+  const currentLanguage = useLanguage();
   return (
     <div>
       <div className="flex items-center justify-between py-3">
@@ -173,14 +176,14 @@ const LikeComment = ({
           onClick={() => setShowComments(true)}
         >
           <MessageCircle className="mr-1" />
-          {`${commentsCount} Comments`}
+          {`${commentsCount} ${currentLanguage.news_comments_button_label}`}
         </Button>
       </div>
       <div className="flex justify-around">
         <UserAvatar src={user?.imageUrl} className="mr-2 mt-4" />
         <div className="w-[90%]">
           <ChatInputPost
-            placeHolder={"Type your comment"}
+            placeHolder={currentLanguage.news_comments_input_placeholder}
             apiUrl="/api/comment/create"
             query={{
               postId: id,
@@ -212,7 +215,7 @@ const LikeComment = ({
                     variant="secondary"
                     size="lg"
                   >
-                    Show more +
+                    {currentLanguage.news_comments_showmore_label}
                   </Button>
                 </div>
               )}

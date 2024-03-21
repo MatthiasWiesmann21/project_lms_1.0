@@ -27,6 +27,7 @@ export const FreeText = () => {
 }
 
 
+
 export const CourseCard = ({
   id,
   title,
@@ -37,7 +38,6 @@ export const CourseCard = ({
   category,
   categoryColorCode
 }: CourseCardProps) => {
-  
 
   return (
     <Link href={`/courses/${id}`}>

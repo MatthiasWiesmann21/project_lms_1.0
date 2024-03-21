@@ -1,6 +1,7 @@
 import { Category, Course } from "@prisma/client";
 import { EventCard } from "./events-card";
 import { CourseCard } from "./course-card";
+import { useLanguage } from "@/lib/check-language";
 
 type CourseWithProgressWithCategory = Course & {
   category: Category | null;

@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/lib/check-language";
 import axios from "axios";
 import moment from "moment";
 import { useRef, useState } from "react";
@@ -18,6 +19,7 @@ export const PastandFuture = ({
   const startDateInputRef = useRef(null);
   const [startDateTime, setStartDateTime] = useState<Date | undefined>();
   const [endDateTime, setEndDateTime] = useState<Date | undefined>();
+  const currentLanguage = useLanguage();
 
   return (
     <div className="flex items-center justify-between">
@@ -35,7 +37,7 @@ export const PastandFuture = ({
           variant="ghost"
           size="lg"
         >
-          Future Events
+          {currentLanguage.live_event_futerAndPast_button_text_future}
         </Button>
         <Button
           onClick={async () => {
@@ -50,7 +52,7 @@ export const PastandFuture = ({
           variant="ghost"
           size="lg"
         >
-          Past Events
+          {currentLanguage.live_event_futerAndPast_button_text_past}
         </Button>
     </div>
     </div>
