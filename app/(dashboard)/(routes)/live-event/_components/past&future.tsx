@@ -37,7 +37,7 @@ export const PastandFuture = ({
           variant="ghost"
           size="lg"
         >
-          {currentLanguage.live_event_futerAndPast_button_text_future}
+          {currentLanguage.live_event_futureAndPast_button_text_future}
         </Button>
         <Button
           onClick={async () => {
@@ -52,7 +52,7 @@ export const PastandFuture = ({
           variant="ghost"
           size="lg"
         >
-          {currentLanguage.live_event_futerAndPast_button_text_past}
+          {currentLanguage.live_event_futureAndPast_button_text_past}
         </Button>
     </div>
     </div>
