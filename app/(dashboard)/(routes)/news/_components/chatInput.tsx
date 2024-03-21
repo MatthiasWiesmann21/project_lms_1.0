@@ -19,7 +19,7 @@ interface ChatInputProps {
   query: Record<string, any>;
   className?: string;
   placeHolder?: string;
-  getPosts: any;
+  updateLikeComment: any;
 }
 
 const formSchema = z.object({
@@ -31,7 +31,7 @@ export const ChatInputPost = ({
   query,
   className,
   placeHolder,
-  getPosts,
+  updateLikeComment,
 }: ChatInputProps) => {
   const { onOpen } = useModal();
   const router = useRouter();
@@ -51,11 +51,13 @@ export const ChatInputPost = ({
     if (isSending) return;
     setSending(true);
     try {
-      await axios.post(apiUrl, { ...query, text: values?.content });
-
+      const response = await axios.post(apiUrl, {
+        ...query,
+        text: values?.content,
+      });
       form.reset();
       router.refresh();
-      getPosts();
+      updateLikeComment(response?.data?.post);
       setSending(false);
     } catch (error) {
       console.log(error);

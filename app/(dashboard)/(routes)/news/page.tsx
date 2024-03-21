@@ -21,6 +21,13 @@ const NewsPage = () => {
   const [hasMore, setHasMore] = useState(true); // Track if there are more posts to load
   const observer = useRef<IntersectionObserver | null>(null);
 
+  const updateLikeComment = (post: any) => {
+    const tempPost = posts?.map((each) =>
+      each?.id === post?.id ? post : each
+    );
+    setPosts(tempPost);
+  };
+
   const getPosts = async () => {
     setLoading(true);
     const response = await axios?.get(`/api/posts?page=${page}`);
@@ -76,7 +83,7 @@ const NewsPage = () => {
               currentLike={item?.currentLike}
               commentsWithLikes={item?.commentsWithLikes}
               commentsCount={item?.commentsCount}
-              getPosts={getPosts}
+              updateLikeComment={updateLikeComment}
             />
           ))}
         </div>
