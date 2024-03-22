@@ -1,7 +1,7 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
 import { 
@@ -12,6 +12,7 @@ import {
   CommandItem,
   CommandList
 } from "@/components/ui/command";
+import { useLanguage } from "@/lib/check-language";
 
 interface ServerSearchProps {
   data: {
@@ -31,6 +32,7 @@ export const ServerSearch = ({
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const params = useParams();
+  const currentLanguage = useLanguage();
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -66,7 +68,7 @@ export const ServerSearch = ({
         <p
           className="font-semibold text-sm text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition"
         >
-          Search
+          {currentLanguage.chat_server_search_placeholder}
         </p>
         <kbd
           className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground ml-auto"
@@ -78,7 +80,7 @@ export const ServerSearch = ({
         <CommandInput placeholder="Search all channels and members" />
         <CommandList>
           <CommandEmpty>
-            No Results found
+            {currentLanguage.chat_server_search_notFound}
           </CommandEmpty>
           {data.map(({ label, type, data }) => {
             if (!data?.length) return null;

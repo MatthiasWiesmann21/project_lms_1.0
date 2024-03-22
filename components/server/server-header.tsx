@@ -20,6 +20,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useModal } from "@/hooks/use-modal-store";
+import { useLanguage } from "@/lib/check-language";
 
 interface ServerHeaderProps {
   server: ServerWithMembersWithProfiles;
@@ -28,7 +29,7 @@ interface ServerHeaderProps {
 
 export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
   const { onOpen } = useModal();
-
+  const currentLanguage = useLanguage();
   const isAdmin = role === MemberRole.ADMIN;
   const isModerator = isAdmin || role === MemberRole.MODERATOR;
 
@@ -46,7 +47,7 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
             onClick={() => onOpen("invite", { server })}
             className="cursor-pointer px-3 py-2 text-sm text-indigo-600 dark:text-indigo-400"
           >
-            Invite People
+            {currentLanguage.chat_server_invite}
             <UserPlus className="ml-auto h-4 w-4" />
           </DropdownMenuItem>
         )}
@@ -55,7 +56,7 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
             onClick={() => onOpen("editServer", { server })}
             className="cursor-pointer px-3 py-2 text-sm"
           >
-            Server Settings
+            {currentLanguage.chat_server_edit}
             <Settings className="ml-auto h-4 w-4" />
           </DropdownMenuItem>
         )}
@@ -64,7 +65,7 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
             onClick={() => onOpen("members", { server })}
             className="cursor-pointer px-3 py-2 text-sm"
           >
-            Manage Members
+            {currentLanguage.chat_server_manage_members}
             <Users className="ml-auto h-4 w-4" />
           </DropdownMenuItem>
         )}
@@ -73,7 +74,7 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
             onClick={() => onOpen("createChannel")}
             className="cursor-pointer px-3 py-2 text-sm"
           >
-            Create Channel
+            {currentLanguage.chat_server_create_channel}
             <PlusCircle className="ml-auto h-4 w-4" />
           </DropdownMenuItem>
         )}
@@ -83,7 +84,7 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
             onClick={() => onOpen("deleteServer", { server })}
             className="cursor-pointer px-3 py-2 text-sm text-rose-500"
           >
-            Delete Server
+            {currentLanguage.chat_server_delete}
             <Trash className="ml-auto h-4 w-4" />
           </DropdownMenuItem>
         )}
