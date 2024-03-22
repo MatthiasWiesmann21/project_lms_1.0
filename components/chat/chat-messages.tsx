@@ -11,6 +11,7 @@ import { useChatScroll } from "@/hooks/use-chat-scroll";
 
 import { ChatWelcome } from "./chat-welcome";
 import { ChatItem } from "./chat-item";
+import { useLanguage } from "@/lib/check-language";
 
 const DATE_FORMAT = "d MMM yyyy, HH:mm";
 
@@ -46,6 +47,7 @@ export const ChatMessages = ({
   const queryKey = `chat:${chatId}`;
   const addKey = `chat:${chatId}:messages`;
   const updateKey = `chat:${chatId}:messages:update`;
+  const currentLanguage = useLanguage();
 
   const chatRef = useRef<ElementRef<"div">>(null);
   const bottomRef = useRef<ElementRef<"div">>(null);
@@ -71,7 +73,7 @@ export const ChatMessages = ({
       <div className="flex flex-1 flex-col items-center justify-center">
         <Loader2 className="my-4 h-7 w-7 animate-spin text-zinc-500" />
         <p className="text-xs text-zinc-500 dark:text-zinc-400">
-          Loading messages...
+          {currentLanguage.chat_ChatMessages_loading}
         </p>
       </div>
     );
@@ -82,7 +84,7 @@ export const ChatMessages = ({
       <div className="flex flex-1 flex-col items-center justify-center">
         <ServerCrash className="my-4 h-7 w-7 text-zinc-500" />
         <p className="text-xs text-zinc-500 dark:text-zinc-400">
-          Something went wrong!
+          {currentLanguage.chat_ChatMessages_error}
         </p>
       </div>
     );
@@ -101,7 +103,7 @@ export const ChatMessages = ({
               onClick={() => fetchNextPage()}
               className="my-4 text-xs text-zinc-500 transition hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300"
             >
-              Load previous messages
+              {currentLanguage.chat_ChatMessages_loadPreviousMessages}
             </button>
           )}
         </div>

@@ -23,6 +23,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/hooks/use-modal-store";
+import { useLanguage } from "@/lib/check-language";
 
 interface ChatItemProps {
   id: string;
@@ -65,6 +66,7 @@ export const ChatItem = ({
   const { onOpen } = useModal();
   const params = useParams();
   const router = useRouter();
+  const currentLanguage = useLanguage();
 
   const onMemberClick = () => {
     if (member.id === currentMember.id) {
@@ -171,7 +173,7 @@ export const ChatItem = ({
                 rel="noopener noreferrer"
                 className="ml-2 text-sm text-indigo-500 dark:text-indigo-400 hover:underline"
               >
-                PDF File
+                {currentLanguage.chat_ChatItem_viewPDF}
               </a>
             </div>
           )}
@@ -183,7 +185,7 @@ export const ChatItem = ({
               {content}
               {isUpdated && !deleted && (
                 <span className="text-[10px] mx-2 text-zinc-500 dark:text-zinc-400">
-                  (edited)
+                  {currentLanguage.chat_ChatItem_edited}
                 </span>
               )}
             </p>
@@ -203,7 +205,7 @@ export const ChatItem = ({
                             <Input
                               disabled={isLoading}
                               className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200"
-                              placeholder="Edited message"
+                              placeholder={currentLanguage.chat_ChatItem_editMessage}
                               {...field}
                             />
                           </div>
@@ -212,11 +214,11 @@ export const ChatItem = ({
                     )}
                   />
                   <Button disabled={isLoading} size="sm" variant="primary">
-                    Save
+                    {currentLanguage.chat_ChatItem_saveChanges}
                   </Button>
               </form>
               <span className="text-[10px] mt-1 text-zinc-400">
-                Press escape to cancel, enter to save
+                {currentLanguage.chat_ChatItem_editMessageHint}
               </span>
             </Form>
           )}
