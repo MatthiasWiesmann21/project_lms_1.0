@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/lib/check-language";
 
 interface TitleFormProps {
   initialData: {
@@ -29,11 +30,11 @@ interface TitleFormProps {
 export const ShowUserName = ({
   initialData,
 }: TitleFormProps) => {
-
+  const currentLanguage = useLanguage();
   return (
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Username
+        {currentLanguage.user_TitleForm_title}
       </div>
         <p className="text-sm mt-2">
           {initialData.name}

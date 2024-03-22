@@ -66,14 +66,14 @@ export const ColorForm = ({
   return (
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Category Color
+        {currentLanguage.categories_ColorForm_title}
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <>{currentLanguage.categories_ColorForm_cancel}</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit
+              {currentLanguage.categories_ColorForm_edit}
             </>
           )}
         </Button>
@@ -119,7 +119,7 @@ export const ColorForm = ({
                 disabled={!isValid || isSubmitting}
                 type="submit"
               >
-                Save
+                {currentLanguage.categories_ColorForm_save}
               </Button>
             </div>
           </form>

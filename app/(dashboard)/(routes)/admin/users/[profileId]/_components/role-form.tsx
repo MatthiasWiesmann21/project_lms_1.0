@@ -24,6 +24,7 @@ import { Combobox } from "@/components/ui/combobox";
 import { useIsAdmin } from "@/lib/roleCheck";
 import { isOwner } from "@/lib/owner";
 import { auth } from "@clerk/nextjs";
+import { useLanguage } from "@/lib/check-language";
 
 interface CategoryFormProps {
   initialData: Profile;
@@ -42,7 +43,7 @@ export const RoleForm = ({
 }: CategoryFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const isAdmin = useIsAdmin();
-
+  const currentLanguage = useLanguage();
   const canAccess = isAdmin || process.env.NEXT_PUBLIC_OWNER_ID;
 
   const toggleEdit = () => setIsEditing((current) => !current);
@@ -74,15 +75,15 @@ export const RoleForm = ({
   return (
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Profile Role
+        {currentLanguage.user_RoleForm_title}
         {canAccess && (
           <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <>{currentLanguage.user_RoleForm_cancel}</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit category
+              {currentLanguage.user_RoleForm_edit}
             </>
           )}
         </Button>
@@ -122,7 +123,7 @@ export const RoleForm = ({
                 disabled={!isValid || isSubmitting}
                 type="submit"
               >
-                Save
+                {currentLanguage.user_RoleForm_save}
               </Button>
             </div>
           </form>
