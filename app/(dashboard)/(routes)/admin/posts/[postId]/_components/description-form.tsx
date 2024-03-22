@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Editor } from "@/components/editor";
 import { Preview } from "@/components/preview";
+import { useLanguage } from "@/lib/check-language";
 
 interface DescriptionFormProps {
   initialData: Post;
@@ -36,7 +37,7 @@ export const DescriptionForm = ({
   postId,
 }: DescriptionFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
-
+  const currentLanguage = useLanguage();
   const toggleEdit = () => setIsEditing((current) => !current);
 
   const router = useRouter();
@@ -64,14 +65,14 @@ export const DescriptionForm = ({
   return (
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Event description
+        {currentLanguage.post_DescriptionForm_title}
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <>{currentLanguage.post_DescriptionForm_cancel}</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit description
+              {currentLanguage.post_DescriptionForm_edit}
             </>
           )}
         </Button>
@@ -81,7 +82,7 @@ export const DescriptionForm = ({
           "text-sm mt-2",
           !initialData.description && "text-slate-500 italic"
         )}>
-          {!initialData.description && "No description"}
+          {!initialData.description && `${currentLanguage.post_DescriptionForm_noDescription}`}
           {initialData.description && (
             <Preview
               value={initialData.description}
@@ -114,7 +115,7 @@ export const DescriptionForm = ({
                 disabled={!isValid || isSubmitting}
                 type="submit"
               >
-                Save
+                {currentLanguage.post_DescriptionForm_save}
               </Button>
             </div>
           </form>
