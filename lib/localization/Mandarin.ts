@@ -51,4 +51,6 @@ export const Mandarin: Record<string, string> = {
   live_event_filter_button_text: "过滤",
   live_event_filter_title: "直播事件过滤器",
   live_event_filter_description: "您可以通过给出事件的开始和/或结束日期来过滤事件。",
+  live_event_filter_applyFilter_button_text: "应用过滤器",
+  live_event_filter_clearFilter_button_text: "清除过滤器",
 };

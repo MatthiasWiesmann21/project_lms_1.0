@@ -30,7 +30,7 @@ export const Portugues: Record<string, string> = {
   navigation_theme_toggle_dark: "Escuro",
   navigation_theme_toggle_system: "Sistema",
   navigation_language_toggle_english: "Inglês",
-  navegação_language_toggle_german: "Alemão",
+  navigation_language_toggle_german: "Alemão",
   navigation_language_toggle_french: "Francês",
   navigation_language_toggle_spanish: "Espanhol",
   navigation_language_toggle_italian: "Italiano",
@@ -51,4 +51,6 @@ export const Portugues: Record<string, string> = {
   live_event_filter_button_text: "Filtrar",
   live_event_filter_title: "Filtro de eventos ao vivo",
   live_event_filter_description: "Você pode filtrar eventos informando a data de início e/ou término de um evento.",
+  live_event_filter_applyFilter_button_text: "Aplicar Filtro",
+  live_event_filter_clearFilter_button_text: "Limpar Filtro",
 };

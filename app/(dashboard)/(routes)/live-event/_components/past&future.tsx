@@ -33,7 +33,7 @@ export const PastandFuture = ({
               )
             );
           }}
-          className="border-1 cursor-pointer rounded-xl border border-[#fff] px-2 w-[128px] mr-2"
+          className="border-1 cursor-pointer rounded-xl border border-[#fff] px-2 w-[148px] mr-2"
           variant="ghost"
           size="lg"
         >
@@ -48,7 +48,7 @@ export const PastandFuture = ({
               )
             );
           }}
-          className="border-1 cursor-pointer rounded-xl border border-[#fff] p-1 px-2 w-[128px]"
+          className="border-1 cursor-pointer rounded-xl border border-[#fff] p-1 px-2 w-[148px] mr-2"
           variant="ghost"
           size="lg"
         >

@@ -51,4 +51,6 @@ export const Italiano: Record<string, string> = {
   live_event_filter_button_text: "Filtrare",
   live_event_filter_title: "Filtro eventi dal vivo",
   live_event_filter_description: "Puoi filtrare gli eventi fornendo la data di inizio e/o di fine di un evento.",
+  live_event_filter_applyFilter_button_text: "Applica filtro",
+  live_event_filter_clearFilter_button_text: "Cancella filtro",
 };

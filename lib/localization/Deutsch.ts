@@ -54,4 +54,6 @@ export const Deutch: Record<string, string> = {
   live_event_filter_button_text: "Filtern",
   live_event_filter_title: "Live Events Filtern",
   live_event_filter_description: "Sie können Ereignisse filtern, indem Sie das Start- und/oder Enddatum eines Ereignisses angeben.",
+  live_event_filter_applyFilter_button_text: "Filter anwenden",
+  live_event_filter_clearFilter_button_text: "Filter löschen",
 };

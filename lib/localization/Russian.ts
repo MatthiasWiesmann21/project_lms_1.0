@@ -51,4 +51,6 @@ export const Russian: Record<string, string> = {
   live_event_filter_button_text: "Фильтр",
   live_event_filter_title: "Фильтр живых событий",
   live_event_filter_description: "Вы можете фильтровать события, указав дату начала и/или окончания события.",
+  live_event_filter_applyFilter_button_text: "Применить фильтр",
+  live_event_filter_clearFilter_button_text: "Очистить фильтр",
 };

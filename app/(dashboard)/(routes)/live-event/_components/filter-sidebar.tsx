@@ -31,7 +31,7 @@ const EventFilterSidebar = ({ liveEvents, categories, searchParams }: any) => {
 return ( 
     <Sheet>
         <SheetTrigger>
-            <Button className="rounded-xl items-center justify-center" variant="default" size="lg">
+            <Button className="rounded-xl items-center justify-center h-[42px] w-[96px]" variant="default" size="sm">
                 <Filter className="pr-1" size={28}/>
                 {currentLanguage.live_event_filter_button_text}
             </Button>
