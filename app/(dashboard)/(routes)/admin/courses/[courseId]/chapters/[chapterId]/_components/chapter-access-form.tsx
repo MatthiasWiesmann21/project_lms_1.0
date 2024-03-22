@@ -23,6 +23,7 @@ import { cn } from "@/lib/utils";
 import { Editor } from "@/components/editor";
 import { Preview } from "@/components/preview";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useLanguage } from "@/lib/check-language";
 
 interface ChapterAccessFormProps {
   initialData: Chapter;
@@ -40,7 +41,7 @@ export const ChapterAccessForm = ({
   chapterId
 }: ChapterAccessFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
-
+  const currentLanguage = useLanguage();
   const toggleEdit = () => setIsEditing((current) => !current);
 
   const router = useRouter();
@@ -68,14 +69,14 @@ export const ChapterAccessForm = ({
   return (
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Chapter access
+        {currentLanguage.chapter_accessForm_title}
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <>{currentLanguage.chapter_accessForm_cancel}</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit access
+              {currentLanguage.chapter_accessForm_edit}
             </>
           )}
         </Button>
@@ -86,9 +87,9 @@ export const ChapterAccessForm = ({
           !initialData.isFree && "text-slate-500 italic"
         )}>
           {initialData.isFree ? (
-            <>This chapter is free.</>
+            <>{currentLanguage.chapter_accessForm_isFree}</>
           ) : (
-            <>This chapter is not free.</>
+            <>{currentLanguage.chapter_accessForm_isNotFree}</>
           )}
         </p>
       )}
@@ -111,7 +112,7 @@ export const ChapterAccessForm = ({
                   </FormControl>
                   <div className="space-y-1 leading-none">
                     <FormDescription>
-                      Check this box if you want to make this chapter free.
+                      {currentLanguage.chapter_accessForm_description}
                     </FormDescription>
                   </div>
                 </FormItem>
@@ -122,7 +123,7 @@ export const ChapterAccessForm = ({
                 disabled={!isValid || isSubmitting}
                 type="submit"
               >
-                Save
+                {currentLanguage.chapter_accessForm_save}
               </Button>
             </div>
           </form>
