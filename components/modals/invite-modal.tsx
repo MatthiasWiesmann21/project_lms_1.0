@@ -15,11 +15,12 @@ import { useModal } from "@/hooks/use-modal-store";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useOrigin } from "@/hooks/use-origin";
+import { useLanguage } from "@/lib/check-language";
 
 export const InviteModal = () => {
   const { onOpen, isOpen, onClose, type, data } = useModal();
   const origin = useOrigin();
-
+  const currentLanguage = useLanguage();
   const isModalOpen = isOpen && type === "invite";
   const { server } = data;
 
@@ -55,14 +56,14 @@ export const InviteModal = () => {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Invite Friends
+            {currentLanguage.chat_modal_invite_title}
           </DialogTitle>
         </DialogHeader>
         <div className="p-6">
           <Label
             className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70"
           >
-            Server invite link
+            {currentLanguage.chat_modal_invite_link_label}
           </Label>
           <div className="flex items-center mt-2 gap-x-2">
             <Input
@@ -84,7 +85,7 @@ export const InviteModal = () => {
             size="sm"
             className="text-xs text-zinc-500 mt-4"
           >
-            Generate a new link
+            {currentLanguage.chat_modal_invite_new}
             <RefreshCw className="w-4 h-4 ml-2" />
           </Button>
         </div>

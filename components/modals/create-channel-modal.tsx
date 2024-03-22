@@ -34,6 +34,7 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { useEffect } from "react";
+import { useLanguage } from "@/lib/check-language";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -51,6 +52,7 @@ export const CreateChannelModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
   const params = useParams();
+  const currentLanguage = useLanguage();
 
   const isModalOpen = isOpen && type === "createChannel";
   const { channelType } = data;
@@ -101,7 +103,7 @@ export const CreateChannelModal = () => {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Create Channel
+            {currentLanguage.chat_modal_create_channel_title}
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
@@ -115,13 +117,13 @@ export const CreateChannelModal = () => {
                     <FormLabel
                       className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70"
                     >
-                      Channel name
+                      {currentLanguage.chat_modal_create_channel_name}
                     </FormLabel>
                     <FormControl>
                       <Input
                         disabled={isLoading}
                         className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-                        placeholder="Enter channel name"
+                        placeholder={currentLanguage.chat_modal_create_channel_name_placeholder}
                         {...field}
                       />
                     </FormControl>
@@ -134,7 +136,7 @@ export const CreateChannelModal = () => {
                 name="type"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Channel Type</FormLabel>
+                    <FormLabel>{currentLanguage.chat_modal_create_channelType_name}</FormLabel>
                     <Select
                       disabled={isLoading}
                       onValueChange={field.onChange}
@@ -144,7 +146,7 @@ export const CreateChannelModal = () => {
                         <SelectTrigger
                           className="bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none"
                         >
-                          <SelectValue placeholder="Select a channel type" />
+                          <SelectValue placeholder={currentLanguage.chat_modal_create_channelType_placeholder} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -166,7 +168,7 @@ export const CreateChannelModal = () => {
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
               <Button variant="primary" disabled={isLoading}>
-                Create
+                {currentLanguage.chat_modal_create_channel_create}
               </Button>
             </DialogFooter>
           </form>

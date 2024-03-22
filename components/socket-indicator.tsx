@@ -2,9 +2,11 @@
 
 import { useSocket } from "@/components/providers/socket-provider";
 import { Badge } from "@/components/ui/badge";
+import { useLanguage } from "@/lib/check-language";
 
 export const SocketIndicator = () => {
   const { isConnected } = useSocket();
+  const currentLanguage = useLanguage();
 
   if (!isConnected) {
     return (
@@ -12,7 +14,7 @@ export const SocketIndicator = () => {
         variant="outline" 
         className="bg-yellow-600 text-white border-none"
       >
-        Fallback: Polling every 1s
+        {currentLanguage.chat_socket_reconnecting}
       </Badge>
     )
   }
@@ -22,7 +24,7 @@ export const SocketIndicator = () => {
       variant="outline" 
       className="bg-emerald-600 text-white border-none"
     >
-      Live: Real-time updates
+      {currentLanguage.chat_socket_connected}
     </Badge>
   )
 }
