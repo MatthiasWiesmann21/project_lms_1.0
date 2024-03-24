@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useLanguage } from "@/lib/check-language";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -34,7 +35,7 @@ const CreatePage = () => {
       name: ""
     },
   });
-
+  const currentLanguage = useLanguage();
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -51,10 +52,10 @@ const CreatePage = () => {
     <div className="max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6">
       <div>
         <h1 className="text-2xl">
-          Name your Category
+          {currentLanguage.createCategory_title}
         </h1>
         <p className="text-sm text-slate-600 dark:text-[#ffffff]">
-          What would you like to name your course? Don&apos;t worry, you can change this later.
+          {currentLanguage.createCategory_description}
         </p>
         <Form {...form}>
           <form
@@ -67,17 +68,17 @@ const CreatePage = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    Category Name
+                    {currentLanguage.createCategory_form_label}
                   </FormLabel>
                   <FormControl>
                     <Input
                       disabled={isSubmitting}
-                      placeholder="e.g. 'Advanced web development'"
+                      placeholder={currentLanguage.createCategory_form_placeholder}
                       {...field}
                     />
                   </FormControl>
                   <FormDescription className="dark:text-[#ffffff]">
-                    What will you teach in this course?
+                    {currentLanguage.createCategory_form_description}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
