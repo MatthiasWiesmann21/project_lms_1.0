@@ -17,6 +17,12 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseServerIo) => {
     const io = new ServerIO(httpServer, {
       path: path,
       addTrailingSlash: false,
+      pingInterval: 10000,
+      pingTimeout: 5000,
+      adapter: require("socket.io-redis")({
+        connectionLimit: 100, // Set the maximum number of active connections
+        maxConnectionAge: 1000 * 60 * 60,
+      }),
     });
     res.socket.server.io = io;
   }
