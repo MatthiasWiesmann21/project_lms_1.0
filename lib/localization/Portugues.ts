@@ -293,5 +293,7 @@ createCategory_form_placeholder: "ex.: 'Desenvolvimento Web Avançado'",
 createCategory_form_description: "O que você categorizará na sua plataforma?",
 createCategory_cancel: "Cancelar",
 createCategory_submit: "Salvar",
-
+liveEvent_createEvent_button_text: "Novo Evento ao Vivo",
+liveEvent_noEvent_text: "Nenhum evento encontrado.",
+liveEvent_filterEvents_placeholder: "Filtrar Eventos...",
 };

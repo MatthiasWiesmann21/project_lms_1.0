@@ -293,4 +293,7 @@ createCategory_form_placeholder: "например, 'Продвинутая ве
 createCategory_form_description: "Что вы будете категоризировать на вашей платформе?",
 createCategory_cancel: "Отмена",
 createCategory_submit: "Сохранить",
+liveEvent_createEvent_button_text: "Новое Прямое Событие",
+liveEvent_noEvent_text: "События не найдены.",
+liveEvent_filterEvents_placeholder: "Фильтровать События...",
 };

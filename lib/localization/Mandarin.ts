@@ -293,4 +293,7 @@ createCategory_form_placeholder: "例如 '高级Web开发'",
 createCategory_form_description: "您将在您的平台上分类什么？",
 createCategory_cancel: "取消",
 createCategory_submit: "保存",
+liveEvent_createEvent_button_text: "新的现场活动",
+liveEvent_noEvent_text: "未找到活动。",
+liveEvent_filterEvents_placeholder: "筛选活动...",
 };
