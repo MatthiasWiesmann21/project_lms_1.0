@@ -41,6 +41,7 @@ const getOrCreateParentFolder = async (parentKey?: string | null) => {
         key: key,
         isPublic: false,
         userId: userId,
+        containerId: process.env.CONTAINER_ID,
       },
     });
   }
@@ -60,14 +61,19 @@ export async function POST(req: Request, res: NextApiResponse) {
 
     const formFile = formData.get("file");
     //@ts-ignore
-    const fileExtension = formFile.name.split('.').pop();
+    const fileExtension = formFile.name.split(".").pop();
     const formIsPublic = formData.get("isPublic");
     const formFileName = formData.get("name");
-    const isPublic = typeof formIsPublic === "string" ? (formIsPublic === "true" ? true : false) : false;
+    const isPublic =
+      typeof formIsPublic === "string"
+        ? formIsPublic === "true"
+          ? true
+          : false
+        : false;
 
     const id = formData.get("id")?.toString();
 
-    let parentKey = null
+    let parentKey = null;
     if (id) {
       const keyData = await db.folder.findFirst({
         select: {
@@ -84,8 +90,8 @@ export async function POST(req: Request, res: NextApiResponse) {
       throw new Error(" Invalid file");
     }
 
-    const fileName = typeof formFileName === "string" ? formFileName : `${formFileName}`;
-
+    const fileName =
+      typeof formFileName === "string" ? formFileName : `${formFileName}`;
 
     //const fileName = formFileName === null ? '' : formFileName;
 
@@ -105,7 +111,8 @@ export async function POST(req: Request, res: NextApiResponse) {
         userId: userId,
         isPublic: isPublic,
         folderId: parentFolder.id,
-        type: fileExtension
+        type: fileExtension,
+        containerId: process.env.CONTAINER_ID,
       },
     });
 

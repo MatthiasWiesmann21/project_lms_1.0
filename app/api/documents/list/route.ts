@@ -10,6 +10,7 @@ const getOrCreateParentFolder = async (userId: string, parentKey?: string) => {
       where: {
         key: parentKey,
         userId: userId,
+        containerId: process.env.CONTAINER_ID,
       },
     });
     if (parentFolder == null) {
@@ -23,6 +24,7 @@ const getOrCreateParentFolder = async (userId: string, parentKey?: string) => {
     where: {
       parentFolder: null,
       userId: userId,
+      containerId: process.env.CONTAINER_ID,
     },
   });
   if (rootFolder == null) {
@@ -40,6 +42,7 @@ const getOrCreateParentFolder = async (userId: string, parentKey?: string) => {
         key: key,
         isPublic: true,
         userId: userId,
+        containerId: process.env.CONTAINER_ID,
       },
     });
   }
@@ -58,8 +61,6 @@ async function getFolderAndFiles(
     throw new Error("Login first to access");
   }
 
-  // console.log("============");
-
   if (isOwner(userId)) {
     if (key == null) {
       console.log("key", { key, userId });
@@ -67,15 +68,18 @@ async function getFolderAndFiles(
         where: {
           parentFolderId: null,
           userId: userId,
+          containerId: process.env.CONTAINER_ID,
         },
         include: {
           subFolders: {
             where: {
               OR: [{ isPublic: true }, { userId: userId }],
+              containerId: process.env.CONTAINER_ID,
             },
           },
           files: {
             where: {
+              containerId: process.env.CONTAINER_ID,
               OR: [{ isPublic: true }, { userId: userId }],
             },
           },
@@ -84,15 +88,19 @@ async function getFolderAndFiles(
     }
     if (key != null) {
       folder = await db.folder.findFirst({
-        where: { key: key },
+        where: { key: key, containerId: process.env.CONTAINER_ID },
         include: {
           subFolders: {
             where: {
+              containerId: process.env.CONTAINER_ID,
+
               OR: [{ isPublic: true }, { userId: userId }],
             },
           },
           files: {
             where: {
+              containerId: process.env.CONTAINER_ID,
+
               OR: [{ isPublic: true }, { userId: userId }],
             },
           },
@@ -116,15 +124,23 @@ async function getFolderAndFiles(
   } else {
     if (key == null) {
       folder = await db.folder.findFirst({
-        where: { parentFolderId: null },
+        where: {
+          parentFolderId: null,
+          containerId: process.env.CONTAINER_ID,
+        },
         include: {
           subFolders: {
             where: {
+              containerId: process.env.CONTAINER_ID,
               OR: [{ isPublic: true }, { userId: userId }],
             },
+            // include: {
+            //   container: true,
+            // },
           },
           files: {
             where: {
+              containerId: process.env.CONTAINER_ID,
               OR: [{ isPublic: true }, { userId: userId }],
             },
           },
@@ -133,11 +149,15 @@ async function getFolderAndFiles(
     }
     if (key != null && !isPublicDirectory) {
       folder = await db.folder.findFirst({
-        where: { key: key },
+        where: { key: key, containerId: process.env.CONTAINER_ID },
         include: {
-          subFolders: true,
+          subFolders: {
+            where: {
+              containerId: process.env.CONTAINER_ID,
+            },
+          },
           files: {
-            where: { isPublic: true },
+            where: { isPublic: true, containerId: process.env.CONTAINER_ID },
           },
         },
       });
@@ -145,13 +165,13 @@ async function getFolderAndFiles(
 
     if (key != null && isPublicDirectory) {
       folder = await db.folder.findFirst({
-        where: { key: key },
+        where: { key: key, containerId: process.env.CONTAINER_ID },
         include: {
           subFolders: {
-            where: { isPublic: true },
+            where: { isPublic: true, containerId: process.env.CONTAINER_ID },
           },
           files: {
-            where: { isPublic: true },
+            where: { isPublic: true, containerId: process.env.CONTAINER_ID },
           },
         },
       });
@@ -179,7 +199,7 @@ export async function GET(req: any) {
         select: {
           key: true,
         },
-        where: { id: id },
+        where: { id: id, containerId: process.env.CONTAINER_ID },
       });
       //@ts-ignore
       key = keyData?.key;
@@ -217,5 +237,3 @@ export async function GET(req: any) {
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
- 
-

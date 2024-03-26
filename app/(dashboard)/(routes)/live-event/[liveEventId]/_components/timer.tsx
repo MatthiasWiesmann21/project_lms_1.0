@@ -7,12 +7,18 @@ const Each = ({ str, num }: { str: string; num: number }) => (
   </div>
 );
 
-const Timer = ({ timeRemaining }: any) => (
+const Timer = ({ timeRemaining, endDateTime }: any) => (
   <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-md backdrop-filter">
-    <Each str="Days" num={timeRemaining?.days} />
-    <Each str="Hours" num={timeRemaining?.hours} />
-    <Each str="Minutes" num={timeRemaining?.minutes} />
-    <Each str="Seconds" num={timeRemaining?.seconds} />
+    {new Date(endDateTime) < new Date() ? (
+      <div>Event has been Ended..!!</div>
+    ) : (
+      <>
+        <Each str="Days" num={timeRemaining?.days} />
+        <Each str="Hours" num={timeRemaining?.hours} />
+        <Each str="Minutes" num={timeRemaining?.minutes} />
+        <Each str="Seconds" num={timeRemaining?.seconds} />
+      </>
+    )}
   </div>
 );
 

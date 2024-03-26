@@ -15,7 +15,7 @@ model Container {
   link          String? @db.Text
   imageUrl      String? @db.Text
   clientPackage String? @db.Text
-  maxCourses    Int?     @default(0)
+  maxCourses    Int?    @default(0)
 
   primaryColor String? @default("#0369a0")
 
@@ -27,6 +27,8 @@ model Container {
   profiles   Profile[]
   members    Member[]
   channels   Channel[]
+  files      File[]
+  folders    Folder[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -257,12 +259,16 @@ model File {
   folderId String
   folder   Folder? @relation(fields: [folderId], references: [id], onDelete: Cascade)
 
+  containerId String?
+  container   Container? @relation(fields: [containerId], references: [id])
+
   status FileStatus @default(PENDING)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([folderId])
+  @@index([containerId])
 }
 
 enum FileStatus {
@@ -282,10 +288,14 @@ model Folder {
 
   subFolders Folder[] @relation("SubFolders") // Define the opposite relation here
 
+  containerId String?
+  container   Container? @relation(fields: [containerId], references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([parentFolderId])
+  @@index([containerId])
 }
 
 // TODO: Global Color Settings
@@ -337,13 +347,13 @@ model LiveEvent {
   categoryId String?
   category   Category? @relation(fields: [categoryId], references: [id])
 
-comments Comment[]
+  comments Comment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   startDateTime DateTime?
-  endDateTime DateTime?
+  endDateTime   DateTime?
 
   @@index([categoryId])
   @@index([containerId])
@@ -360,7 +370,7 @@ model Comment {
   post   Post?   @relation(fields: [postId], references: [id])
 
   liveEventId String?
-  liveEvent   LiveEvent?   @relation(fields: [liveEventId], references: [id])
+  liveEvent   LiveEvent? @relation(fields: [liveEventId], references: [id])
 
   profileId String
   profile   Profile @relation(fields: [profileId], references: [id])
@@ -484,5 +494,3 @@ model DirectMessage {
   @@index([memberId])
   @@index([conversationId])
 }
-
-

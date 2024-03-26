@@ -9,6 +9,7 @@ interface VideoPlayerProps {
   playbackId?: string;
   videoUrl: string;
   startDateTime: any;
+  endDateTime: any;
 }
 
 const calculateTimeRemaining = (date: any) => {
@@ -24,7 +25,11 @@ const calculateTimeRemaining = (date: any) => {
   };
 };
 
-export const VideoPlayer = ({ videoUrl, startDateTime }: VideoPlayerProps) => {
+export const VideoPlayer = ({
+  videoUrl,
+  startDateTime,
+  endDateTime,
+}: VideoPlayerProps) => {
   const [timeRemaining, setTimeRemaining] = useState(
     calculateTimeRemaining(startDateTime)
   );
@@ -53,12 +58,15 @@ export const VideoPlayer = ({ videoUrl, startDateTime }: VideoPlayerProps) => {
 
   return (
     <div className="relative aspect-video">
-      {!(
+      {(!(
         timeRemaining?.days <= 0 &&
         timeRemaining?.hours <= 0 &&
         timeRemaining?.minutes <= 0 &&
         timeRemaining?.seconds <= 0
-      ) && <Timer timeRemaining={timeRemaining} />}
+      ) ||
+        new Date(endDateTime) < new Date()) && (
+        <Timer timeRemaining={timeRemaining} endDateTime={endDateTime} />
+      )}
       <UniversalPlayer url={videoUrl} />
     </div>
   );

@@ -73,6 +73,7 @@ const LiveEventIdPage = async ({
             // @ts-ignore
             videoUrl={liveEvent.videoUrl} // Hier fügen wir die Vimeo-URL aus den chapter Daten hinzu.
             startDateTime={liveEvent?.startDateTime}
+            endDateTime={liveEvent?.endDateTime}
           />
         </div>
 
