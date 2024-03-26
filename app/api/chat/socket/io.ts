@@ -19,7 +19,7 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseServerIo) => {
       addTrailingSlash: false,
       pingInterval: 10000,
       pingTimeout: 5000,
-      adapter: require("socket.io-redis")({
+      adapter: require("socket.io-mysql")({
         connectionLimit: 100, // Set the maximum number of active connections
         maxConnectionAge: 1000 * 60 * 60,
       }),

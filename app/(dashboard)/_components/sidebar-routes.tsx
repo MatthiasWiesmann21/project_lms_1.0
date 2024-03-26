@@ -131,51 +131,6 @@ const AdministrationRoutes = [
     href: "/admin/analytics",
     isNew: false,
   },
-  {
-    icon: ServerIcon,
-    label: "Client",
-    href: "/admin/containers",
-    isNew: false,
-  }
-];
-
-const packageStarterAdminRoutes = [
-  {
-    icon: ListIcon,
-    label: "Courses",
-    href: "/admin/courses",
-    isNew: false,
-  },
-  {
-    icon: NewspaperIcon,
-    label: "Posts",
-    href: "/admin/posts",
-    isNew: false,
-  },
-  {
-    icon: LayoutGridIcon,
-    label: "Categories",
-    href: "/admin/categories",
-    isNew: false,
-  },
-  {
-    icon: PaletteIcon,
-    label: "Customize",
-    href: "/admin/customize",
-    isNew: false,
-  },
-  {
-    icon: UserCircle2Icon,
-    label: "Users",
-    href: "/admin/users",
-    isNew: false,
-  },
-  {
-    icon: BarChartIcon,
-    label: "Analytics",
-    href: "/admin/analytics",
-    isNew: false,
-  },
 ];
 
 
