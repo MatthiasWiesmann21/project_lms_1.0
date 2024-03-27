@@ -6,8 +6,18 @@ import { InitialModal } from "@/components/modals/initial-modal";
 
 const SetupPage = async () => {
   const profile = await initialProfile();
-  let checkFirstServer = {} as any;
-  let server = await db.server.findFirst({
+  const server = await db.server.findFirst({
+    orderBy: {
+      createdAt: "asc",
+    },
+    where: {
+      members: {
+        some: {},
+      },
+    },
+  });
+
+  const serverwithProfile = await db.server.findFirst({
     where: {
       members: {
         some: {
@@ -18,30 +28,24 @@ const SetupPage = async () => {
   });
 
   if (!server) {
-    checkFirstServer = await db.server.findFirst();
-    const creatMember = await db.member.create({
-      data: {
-        serverId: checkFirstServer.id,
-        profileId: profile.id,
-        containerId: process.env.CONTAINER_ID || "",
-      },
-    });
-    server = await db.server.findFirst({
-      where: {
-        members: {
-          some: {
-            profileId: profile.id,
-          },
-        },
-      },
-    });
+    return <InitialModal />;
   }
 
   if (server) {
-    return redirect(`/chat/servers/${server.id}`);
-  }
-
-  return <InitialModal />;
+    if (!serverwithProfile) {
+      const creatMember = await db.member.create({
+        data: {
+          serverId: server.id,
+          profileId: profile.id,
+          containerId: process.env.CONTAINER_ID!,
+        },
+      });
+    }
+      // Redirect to the dashboard page
+    return (
+      redirect(`/chat/servers/${server.id}`)
+    );
+  };
 };
 
 export default SetupPage;

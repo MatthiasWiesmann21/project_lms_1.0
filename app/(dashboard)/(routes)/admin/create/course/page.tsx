@@ -44,7 +44,7 @@ const CreatePage = () => {
       router.push(`/admin/courses/${response.data.id}`);
       toast.success("Course created");
     } catch {
-      toast.error("Something went wrong");
+      toast.error("You've reached the maximum number of courses. Please upgrade your plan.");
     }
   }
 
