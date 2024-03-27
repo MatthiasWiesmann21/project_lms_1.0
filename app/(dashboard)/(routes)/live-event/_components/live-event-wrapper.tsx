@@ -13,7 +13,7 @@ const LiveEventWrapper = ({ liveEvents, categories, searchParams }: any) => {
 
   useEffect(() => {
     setLiveEvent(liveEvents);
-  }, []);
+  } , [liveEvents]);
 
   return (
     <div className="space-y-4 p-6">

@@ -26,7 +26,7 @@ const formSchema = z.object({
 
 const options = [
   {
-    value: "https://vimeo.com/",
+    value: "",
     label: (
       <div className="flex items-center">
         <Image className="mr-2 w-[50px]" alt="vimeo" src={vimeo} />
@@ -35,7 +35,7 @@ const options = [
     ),
   },
   {
-    value: "https://youtube.com/",
+    value: "",
     label: (
       <div className="flex items-center">
         <Image className="mr-2 w-[50px]" alt="youtube" src={youtube} />
