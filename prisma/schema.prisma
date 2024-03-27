@@ -355,6 +355,8 @@ model LiveEvent {
   startDateTime DateTime?
   endDateTime   DateTime?
 
+  likes Like[]
+
   @@index([categoryId])
   @@index([containerId])
   @@fulltext([title])
@@ -400,11 +402,14 @@ model Like {
 
   commentId String?
   comment   Comment? @relation(fields: [commentId], references: [id])
+  liveEventId String?
+  liveEvent   LiveEvent? @relation(fields: [liveEventId], references: [id])
 
-  @@unique([profileId, postId, commentId])
+  @@unique([profileId, postId, commentId, liveEventId])
   @@index([profileId])
   @@index([postId])
   @@index([commentId])
+  @@index([liveEventId])
 }
 
 // TODO: Chat & Conversation Models

@@ -41,6 +41,7 @@ export async function POST(req: any) {
         },
       },
       where: { postId: postId },
+      // orderBy: { createdAt: "desc" },
     });
 
     const chat = await db?.comment?.findMany({
@@ -58,6 +59,7 @@ export async function POST(req: any) {
         },
       },
       where: { liveEventId },
+      // orderBy: { createdAt: "desc" },
     });
 
     return NextResponse.json({ data: postId ? comment : chat });

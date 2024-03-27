@@ -19,7 +19,8 @@ interface ChatInputProps {
   query: Record<string, any>;
   className?: string;
   placeHolder?: string;
-  updateLikeComment: any;
+  updateLikeComment?: any;
+  getPosts?: any;
 }
 
 const formSchema = z.object({

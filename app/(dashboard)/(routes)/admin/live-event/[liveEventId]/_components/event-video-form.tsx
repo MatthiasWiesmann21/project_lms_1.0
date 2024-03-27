@@ -71,10 +71,10 @@ export const VideoForm = ({ initialData, liveEventId }: VideoFormProps) => {
 
   const VimeoPreview = ({ videoId }: { videoId: string }) => (
     <div className="h-[300px]">
-      <EventModal
+      {/* <EventModal
         liveEventId={liveEventId}
         endDateTime={initialData?.endDateTime}
-      />
+      /> */}
       <UniversalPlayer url={videoId} />
     </div>
   );
