@@ -12,24 +12,26 @@ import { useDispatch, useSelector } from "react-redux";
 import AppSVGIcon from "./appsvgicon";
 import { useLanguage } from "@/lib/check-language";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export function LanguageToggle() {
+  const router = useRouter();
   const dispatch = useDispatch();
   const language = useSelector((state: any) => state?.language);
   const user = useSelector((state: any) => state?.user);
 
   const currentLanguage = useLanguage();
 
-
   // const [language, setLanguage] = React.useState("English");
 
   const onSubmit = async (values: string) => {
     try {
-      await axios.patch(`/api/profile/${user.id}`, {language: values});
+      await axios.patch(`/api/profile/${user.id}`, { language: values });
+      router?.refresh();
     } catch {
       console.log("Something went wrong");
     }
-  }
+  };
 
   const setLanguage = (language: string) => {
     dispatch({ type: "SetLanguage", payload: language });

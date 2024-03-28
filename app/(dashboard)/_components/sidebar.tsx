@@ -3,8 +3,9 @@ import { Logo } from "./logo";
 import { SidebarRoutes } from "./sidebar-routes";
 import { languageServer } from "@/lib/check-language-server";
 
-export const Sidebar = async() => {
+export const Sidebar = async () => {
   const currentLanguage = await languageServer();
+  console.log("===========", currentLanguage);
   return (
     <div className="flex h-full flex-col overflow-y-auto border-r bg-white shadow-sm dark:bg-[#1e1f22]">
       <div className="p-5">
