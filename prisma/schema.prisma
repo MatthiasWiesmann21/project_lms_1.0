@@ -62,6 +62,7 @@ model Profile {
   name     String @db.Text
   imageUrl String @db.Text
   email    String @db.Text
+  language String? @db.Text
   role     String @default("USER")
 
   containerId String
