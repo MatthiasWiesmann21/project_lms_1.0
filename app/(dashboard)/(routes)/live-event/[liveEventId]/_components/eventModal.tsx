@@ -23,9 +23,11 @@ const customStyles = {
 const EventModal = ({
   endDateTime,
   liveEventId,
+  getLiveEvent,
 }: {
   endDateTime: any;
   liveEventId: string;
+  getLiveEvent: any;
 }) => {
   const user = useSelector((state: any) => state?.user);
   const isAdmin = user?.role === "ADMIN";
@@ -89,13 +91,19 @@ const EventModal = ({
             <Button
               onClick={async () => {
                 try {
-                  await axios.patch(`/api/liveEvent/${liveEventId}`, {
-                    endDateTime: moment(new Date())
-                      ?.add(15, "minutes")
-                      ?.toISOString(),
-                  });
-                  toast?.success("Event updated");
-                  router?.refresh();
+                  const response = await axios.patch(
+                    `/api/liveEvent/${liveEventId}`,
+                    {
+                      endDateTime: moment(new Date())
+                        ?.add(15, "minutes")
+                        ?.toISOString(),
+                    }
+                  );
+                  if (response?.status === 200) {
+                    getLiveEvent();
+                    toast?.success("Event updated");
+                    router?.refresh();
+                  }
                 } catch {
                   toast.error("Something went wrong");
                 }

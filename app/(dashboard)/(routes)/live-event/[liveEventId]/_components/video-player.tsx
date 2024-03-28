@@ -13,30 +13,47 @@ interface VideoPlayerProps {
 }
 
 const calculateTimeRemaining = (date: any) => {
+  // Parse the input date
   const currentDate = moment();
-  const difference = moment?.duration(
-    moment(date, "ddd MMM DD YYYY HH:mm:ss ZZ")?.diff(currentDate)
-  );
+  const targetDate = moment(date);
+
+  // Calculate the difference
+  const difference = moment.duration(targetDate.diff(currentDate));
+
+  // Extract components
+  const days = difference.days();
+  const hours = difference.hours();
+  const minutes = difference.minutes();
+  const seconds = difference.seconds();
+
   return {
-    days: difference?.days(),
-    hours: difference?.hours(),
-    minutes: difference?.minutes(),
-    seconds: difference?.seconds(),
+    days,
+    hours,
+    minutes,
+    seconds,
   };
 };
+
+// Test the function
+const remainingTime = calculateTimeRemaining("2024-03-30T12:00:00Z");
 
 export const VideoPlayer = ({
   videoUrl,
   startDateTime,
   endDateTime,
 }: VideoPlayerProps) => {
-  const [timeRemaining, setTimeRemaining] = useState(
-    calculateTimeRemaining(startDateTime)
-  );
+  const [timeRemaining, setTimeRemaining] = useState({
+    days: 30,
+    hours: 23,
+    minutes: 59,
+    seconds: 59,
+  });
 
   useEffect(() => {
+    if (!startDateTime) return;
     const timerInterval = setInterval(() => {
       setTimeRemaining(calculateTimeRemaining(startDateTime));
+
       if (
         timeRemaining?.days <= 0 &&
         timeRemaining?.hours <= 0 &&
@@ -49,7 +66,7 @@ export const VideoPlayer = ({
     return () => {
       clearInterval(timerInterval);
     };
-  }, []);
+  }, [startDateTime]);
 
   if (!videoUrl) {
     console.error("URL is not provided!");

@@ -119,6 +119,7 @@ const LiveEventIdPage = ({ params }: { params: { liveEventId: string } }) => {
           <EventModal
             liveEventId={liveEvent?.id}
             endDateTime={liveEvent?.endDateTime}
+            getLiveEvent={getLiveEvent}
           />
           <Like liveEvent={liveEvent} getLiveEvent={getLiveEvent} />
         </div>

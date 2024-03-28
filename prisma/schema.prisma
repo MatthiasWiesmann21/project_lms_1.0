@@ -400,8 +400,8 @@ model Like {
   postId String?
   post   Post?   @relation(fields: [postId], references: [id])
 
-  commentId String?
-  comment   Comment? @relation(fields: [commentId], references: [id])
+  commentId   String?
+  comment     Comment?   @relation(fields: [commentId], references: [id])
   liveEventId String?
   liveEvent   LiveEvent? @relation(fields: [liveEventId], references: [id])
 
