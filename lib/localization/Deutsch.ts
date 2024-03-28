@@ -299,4 +299,6 @@ createCategory_submit: "Speichern",
 liveEvent_createEvent_button_text: "Neues Event",
 liveEvent_noEvent_text: "Keine Events gefunden.",
 liveEvent_filterEvents_placeholder: "Events filtern...",
+infocard_courses: "Kurse",
+infocard_course: "Kurs",
 };

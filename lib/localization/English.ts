@@ -296,4 +296,6 @@ createCategory_submit: "Save",
 liveEvent_createEvent_button_text: "New Live Event",
 liveEvent_noEvent_text: "No Events found.",
 liveEvent_filterEvents_placeholder: "Filter Events...",
+infocard_courses: "Courses",
+infocard_course: "Course",
 };
