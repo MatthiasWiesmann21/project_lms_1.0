@@ -120,6 +120,7 @@ const LiveEventIdPage = ({ params }: { params: { liveEventId: string } }) => {
             liveEventId={liveEvent?.id}
             endDateTime={liveEvent?.endDateTime}
             getLiveEvent={getLiveEvent}
+            isEnded={liveEvent?.isEnded}
           />
           <Like liveEvent={liveEvent} getLiveEvent={getLiveEvent} />
         </div>

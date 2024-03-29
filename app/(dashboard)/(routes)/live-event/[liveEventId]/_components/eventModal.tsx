@@ -24,20 +24,21 @@ const EventModal = ({
   endDateTime,
   liveEventId,
   getLiveEvent,
+  isEnded,
 }: {
   endDateTime: any;
   liveEventId: string;
   getLiveEvent: any;
+  isEnded: boolean;
 }) => {
   const user = useSelector((state: any) => state?.user);
   const isAdmin = user?.role === "ADMIN";
   const router = useRouter();
   const [modalIsOpen, setIsOpen] = useState(false);
   const [remainingTime, setRemainingTime] = useState<any>(null);
-  const [eventEnded, setEventEnded] = useState(false);
 
   useEffect(() => {
-    if (eventEnded) return;
+    if (isEnded) return;
     const interval = setInterval(() => {
       const currentTime = moment();
       const endTime = moment(endDateTime);
@@ -76,7 +77,7 @@ const EventModal = ({
 
   return (
     <div>
-      <Modal isOpen={modalIsOpen && !eventEnded} style={customStyles}>
+      <Modal isOpen={modalIsOpen && !isEnded} style={customStyles}>
         <div className="flex flex-col items-center">
           <div className="w-[15%]">
             <Image className="" alt="questionMark" src={questionMark} />
@@ -115,9 +116,23 @@ const EventModal = ({
               No
             </Button>
             <Button
-              onClick={() => {
-                setIsOpen(false);
-                setEventEnded(true);
+              onClick={async () => {
+                try {
+                  const response = await axios.patch(
+                    `/api/liveEvent/${liveEventId}`,
+                    {
+                      isEnded: true,
+                    }
+                  );
+                  if (response?.status === 200) {
+                    getLiveEvent();
+                    toast?.success("Event updated");
+                    router?.refresh();
+                    // setIsOpen(false);
+                  }
+                } catch {
+                  toast.error("Something went wrong");
+                }
               }}
               disabled={!(() => {})}
               size="sm"
