@@ -57,13 +57,13 @@ model Server {
 }
 
 model Profile {
-  id       String @id @default(uuid())
-  userId   String @unique
-  name     String @db.Text
-  imageUrl String @db.Text
-  email    String @db.Text
+  id       String  @id @default(uuid())
+  userId   String  @unique
+  name     String  @db.Text
+  imageUrl String  @db.Text
+  email    String  @db.Text
   language String? @db.Text
-  role     String @default("USER")
+  role     String  @default("USER")
 
   containerId String
   container   Container @relation(fields: [containerId], references: [id])
@@ -334,13 +334,14 @@ model Post {
 // TODO: Live Event Models
 
 model LiveEvent {
-  id          String  @id @default(uuid())
+  id          String   @id @default(uuid())
   userId      String
-  title       String  @db.Text
-  description String? @db.Text
-  imageUrl    String? @db.Text
-  videoUrl    String? @db.Text
-  isPublished Boolean @default(false)
+  title       String   @db.Text
+  description String?  @db.Text
+  imageUrl    String?  @db.Text
+  videoUrl    String?  @db.Text
+  isPublished Boolean  @default(false)
+  isEnded     Boolean? @default(false)
 
   containerId String
   container   Container @relation(fields: [containerId], references: [id])
