@@ -1,3 +1,5 @@
+import { useLanguage } from "@/lib/check-language";
+import { languageServer } from "@/lib/check-language-server";
 import { Hash } from "lucide-react";
 
 interface ChatWelcomeProps {
@@ -9,6 +11,7 @@ export const ChatWelcome = ({
   name,
   type
 }: ChatWelcomeProps) => {
+  const currentLnaguage = useLanguage();
   return (
     <div className="space-y-2 px-4 mb-4">
       {type === "channel" && (
@@ -17,12 +20,12 @@ export const ChatWelcome = ({
         </div>
       )}
       <p className="text-xl md:text-3xl font-bold">
-        {type === "channel" ? "Welcome to #" : ""}{name}
+        {type === "channel" ? `${currentLnaguage.chat_welcome_title}` : ""}{name}
       </p>
       <p className="text-zinc-600 dark:text-zinc-400 text-sm">
         {type === "channel"
-          ? `This is the start of the #${name} channel.`
-          : `This is the start of your conversation with ${name}`
+          ? `${currentLnaguage.chat_welcome_description}${name} ${currentLnaguage.chat_welcome_description2}`
+          : `${currentLnaguage.chat_welcome_title_directMessage} ${name}`
         }
       </p>
     </div>

@@ -12,6 +12,7 @@ import { ServerSearch } from "./server-search";
 import { ServerSection } from "./server-section";
 import { ServerChannel } from "./server-channel";
 import { ServerMember } from "./server-member";
+import { languageServer } from "@/lib/check-language-server";
 
 interface ServerSidebarProps {
   serverId: string;
@@ -33,6 +34,7 @@ export const ServerSidebar = async ({
   serverId
 }: ServerSidebarProps) => {
   const profile = await currentProfile();
+  const currentLanguage = await languageServer();
   if (!profile) {
     return redirect("/");
   }
@@ -81,7 +83,7 @@ export const ServerSidebar = async ({
           <ServerSearch
             data={[
               {
-                label: "Text Channels",
+                label: `${currentLanguage.serverSidebar_textChannel}`,
                 type: "channel",
                 data: textChannels?.map((channel) => ({
                   id: channel.id,
@@ -90,7 +92,7 @@ export const ServerSidebar = async ({
                 }))
               },
               {
-                label: "Voice Channels",
+                label: `${currentLanguage.serverSidebar_videoChannel}`,
                 type: "channel",
                 data: audioChannels?.map((channel) => ({
                   id: channel.id,
@@ -99,7 +101,7 @@ export const ServerSidebar = async ({
                 }))
               },
               {
-                label: "Video Channels",
+                label: `${currentLanguage.serverSidebar_audioChannel}`,
                 type: "channel",
                 data: videoChannels?.map((channel) => ({
                   id: channel.id,
@@ -108,7 +110,7 @@ export const ServerSidebar = async ({
                 }))
               },
               {
-                label: "Members",
+                label: `${currentLanguage.serverSidebar_member}`,
                 type: "member",
                 data: members?.map((member) => ({
                   id: member.id,

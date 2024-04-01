@@ -9,6 +9,7 @@ import { InfoCard } from "./_components/info-card";
 import { getSearchCourses } from "@/actions/get-searchcourses";
 import exp from "constants";
 import { db } from "@/lib/db";
+import { languageServer } from "@/lib/check-language-server";
 
 interface SearchPageProps {
   searchParams: {
@@ -23,6 +24,8 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
   if (!userId) {
     return redirect("/");
   }
+
+  const currentLanguage = await languageServer()
 
   const { completedCourses, coursesInProgress } = await getDashboardCourses(
     userId
@@ -40,12 +43,12 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <InfoCard
           icon={Clock}
-          label="In Progress"
+          label={currentLanguage?.infocard_inprogress}
           numberOfItems={coursesInProgress.length}
         />
         <InfoCard
           icon={CheckCircle}
-          label="Completed"
+          label={currentLanguage?.infocard_completed}
           numberOfItems={completedCourses.length}
           variant="success"
         />

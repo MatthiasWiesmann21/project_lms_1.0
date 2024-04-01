@@ -12,10 +12,11 @@ import { LinkForm } from "./_components/link-form";
 import { ColorForm } from "./_components/color-form";
 import { isAdmin, isOperator } from "@/lib/roleCheckServer";
 import { isOwner } from "@/lib/owner";
+import { languageServer } from "@/lib/check-language-server";
 
 const CustomizeSettingsPage = async () => {
   const { userId } = auth();
-
+  const currentLanguage = await languageServer();
   const isRoleAdmins = await isAdmin();
   const isRoleOperator = await isOperator();
   const canAccess = isRoleAdmins || isRoleOperator || isOwner(userId);
@@ -52,10 +53,10 @@ const CustomizeSettingsPage = async () => {
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2">
             <h1 className="text-2xl font-medium">
-              Customize Container
+              {currentLanguage?.customize_customizeCcontainer_title}
             </h1>
             <span className="text-sm text-slate-700 dark:text-[#ffffff]">
-              Complete all required fields {completionText}
+              {currentLanguage?.customize_customizeCcontainer_requiredFields} {completionText}
             </span>
           </div>
         </div>
@@ -64,9 +65,9 @@ const CustomizeSettingsPage = async () => {
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LayoutGridIcon} />
               <h2 className="text-xl">
-                Customize your Container
+                {currentLanguage?.customize_customizeYourCcontainer}
               </h2>
-              <span className="pl-1 text-xs text-rose-600">*required</span>
+              <span className="pl-1 text-xs text-rose-600">{currentLanguage?.requiredFields}</span>
             </div>
             <LinkForm
                 initialData={{ link: container.link || "" }}
@@ -81,9 +82,9 @@ const CustomizeSettingsPage = async () => {
             <div className="flex items-center gap-x-2">
               <IconBadge icon={Image} />
               <h2 className="text-xl">
-                Add an Image as an Logo
+                {currentLanguage?.customize_AddImageTitle}
               </h2>
-              <span className="pl-1 text-xs text-rose-600">*required</span>
+              <span className="pl-1 text-xs text-rose-600">{currentLanguage?.requiredFields}</span>
             </div>
             <ImageForm
               initialData={container}
