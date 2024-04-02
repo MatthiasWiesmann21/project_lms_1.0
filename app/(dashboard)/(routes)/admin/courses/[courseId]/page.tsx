@@ -14,7 +14,7 @@ import { PriceForm } from "./_components/price-form";
 import { AttachmentForm } from "./_components/attachment-form";
 import { ChaptersForm } from "./_components/chapters-form";
 import { Actions } from "./_components/actions";
-import { useLanguage } from "@/lib/check-language";
+import { languageServer } from "@/lib/check-language-server";
 
 const CourseIdPage = async ({
   params
@@ -26,7 +26,7 @@ const CourseIdPage = async ({
   if (!userId) {
     return redirect("/");
   }
-
+  const currentLanguage = await languageServer();
   const course = await db.course.findUnique({
     where: {
       id: params.courseId,
@@ -87,10 +87,10 @@ const CourseIdPage = async ({
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2">
             <h1 className="text-2xl font-medium">
-              Course setup
+              {currentLanguage.course_setup_title}
             </h1>
             <span className="text-sm text-slate-700 dark:text-[#ffffff]">
-              Complete all required fields {completionText}
+              {currentLanguage.course_setup_undertitle} {completionText}
             </span>
           </div>
           <Actions
@@ -104,9 +104,9 @@ const CourseIdPage = async ({
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LayoutDashboard} />
               <h2 className="text-xl">
-                Customize your course
+                {currentLanguage.course_setup_course_information_title}
               </h2>
-              <span className="pl-1 text-xs text-rose-600">*required</span>
+              <span className="pl-1 text-xs text-rose-600">{currentLanguage.requiredFields}</span>
             </div>
             <TitleForm
               initialData={course}
@@ -134,8 +134,8 @@ const CourseIdPage = async ({
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={ListChecks} />
                 <h2 className="text-xl">
-                  Course chapters
-                  <span className="pl-1 text-xs text-rose-600">*required</span>
+                  {currentLanguage.course_setup_chapters_title}
+                  <span className="pl-1 text-xs text-rose-600">{currentLanguage.requiredFields}</span>
                 </h2>
               </div>
               <ChaptersForm
@@ -147,7 +147,7 @@ const CourseIdPage = async ({
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={CircleDollarSign} />
                 <h2 className="text-xl">
-                  Sell your course
+                {currentLanguage.course_setup_price_title}
                 </h2>
               </div>
               <PriceForm
@@ -159,7 +159,7 @@ const CourseIdPage = async ({
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={File} />
                 <h2 className="text-xl">
-                  Resources & Attachments
+                  {currentLanguage.course_setup_attachments_title}
                 </h2>
               </div>
               <AttachmentForm

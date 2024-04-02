@@ -61,6 +61,7 @@ export const ServerSidebar = async ({
     }
   });
 
+
   const textChannels = server?.channels.filter((channel) => channel.type === ChannelType.TEXT)
   const audioChannels = server?.channels.filter((channel) => channel.type === ChannelType.AUDIO)
   const videoChannels = server?.channels.filter((channel) => channel.type === ChannelType.VIDEO)
@@ -128,7 +129,7 @@ export const ServerSidebar = async ({
               sectionType="channels"
               channelType={ChannelType.TEXT}
               role={role}
-              label="Text Channels"
+              label={currentLanguage.chat_serversection_label_text}
             />
             <div className="space-y-[2px]">
               {textChannels.map((channel) => (
@@ -148,7 +149,7 @@ export const ServerSidebar = async ({
               sectionType="channels"
               channelType={ChannelType.AUDIO}
               role={role}
-              label="Voice Channels"
+              label={currentLanguage.chat_serversection_label_audio}
             />
             <div className="space-y-[2px]">
               {audioChannels.map((channel) => (
@@ -168,7 +169,7 @@ export const ServerSidebar = async ({
               sectionType="channels"
               channelType={ChannelType.VIDEO}
               role={role}
-              label="Video Channels"
+              label={currentLanguage.chat_serversection_label_video}
             />
             <div className="space-y-[2px]">
               {videoChannels.map((channel) => (
@@ -187,7 +188,7 @@ export const ServerSidebar = async ({
             <ServerSection
               sectionType="members"
               role={role}
-              label="Members"
+              label={currentLanguage.chat_serversection_label_member}
               server={server}
             />
             <div className="space-y-[2px]">

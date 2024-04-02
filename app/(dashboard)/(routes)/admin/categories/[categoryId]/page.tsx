@@ -10,6 +10,7 @@ import { TitleForm } from "./_components/title-form";
 import { Actions } from "./_components/actions";
 import { ColorForm } from "./_components/color-form";
 import { CategoryTypeForm } from "./_components/categorytype-form";
+import { languageServer } from "@/lib/check-language-server";
 
 const CategoryIdPage = async ({
   params
@@ -17,7 +18,7 @@ const CategoryIdPage = async ({
   params: { categoryId: string }
 }) => {
   const { userId } = auth();
-
+  const currentLanguage = await languageServer();
   if (!userId) {
     return redirect("/");
   }
@@ -55,10 +56,10 @@ const CategoryIdPage = async ({
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2">
             <h1 className="text-2xl font-medium">
-              Category setup
+              {currentLanguage.category_setup_title}
             </h1>
             <span className="text-sm text-slate-700 dark:text-[#ffffff]">
-              Complete all required fields {completionText}
+              {currentLanguage.category_setup_undertitle} {completionText}
             </span>
           </div>
           <Actions
@@ -74,7 +75,7 @@ const CategoryIdPage = async ({
               <h2 className="text-xl">
                 Name your Category
               </h2>
-              <span className="pl-1 text-xs text-rose-600">*required</span>
+              <span className="pl-1 text-xs text-rose-600">{currentLanguage.requiredFields}</span>
             </div>
             <TitleForm
               initialData={category}

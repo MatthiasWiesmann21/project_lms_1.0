@@ -77,7 +77,7 @@ export const ServerSearch = ({
         </kbd>
       </button>
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Search all channels and members" />
+        <CommandInput placeholder={currentLanguage.chat_server_search_command_placeholder} />
         <CommandList>
           <CommandEmpty>
             {currentLanguage.chat_server_search_notFound}

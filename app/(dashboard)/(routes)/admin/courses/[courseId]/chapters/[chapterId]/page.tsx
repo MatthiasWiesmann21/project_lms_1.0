@@ -12,6 +12,7 @@ import { ChapterDescriptionForm } from "./_components/chapter-description-form";
 import { ChapterAccessForm } from "./_components/chapter-access-form";
 import { ChapterVideoForm } from "./_components/chapter-video-form";
 import { ChapterActions } from "./_components/chapter-actions";
+import { languageServer } from "@/lib/check-language-server";
 
 const ChapterIdPage = async ({
   params
@@ -19,7 +20,7 @@ const ChapterIdPage = async ({
   params: { courseId: string; chapterId: string }
 }) => {
   const { userId } = auth();
-
+  const currentLanguage = await languageServer();
   if (!userId) {
     return redirect("/");
   }
@@ -64,15 +65,15 @@ const ChapterIdPage = async ({
               className="flex items-center text-sm hover:opacity-75 transition mb-6"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to course setup
+              {currentLanguage.courses_chapter_backToCourse_button_text}
             </Link>
             <div className="flex items-center justify-between w-full">
               <div className="flex flex-col gap-y-2">
                 <h1 className="text-2xl font-medium">
-                  Chapter Creation
+                  {currentLanguage.courses_chapter_title}
                 </h1>
                 <span className="text-sm text-slate-700 dark:text-[#ffffff]">
-                  Complete all fields {completionText}
+                  {currentLanguage.courses_chapter_undertitle} {completionText}
                 </span>
               </div>
               <ChapterActions
@@ -90,7 +91,7 @@ const ChapterIdPage = async ({
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={LayoutDashboard} />
                 <h2 className="text-xl">
-                  Customize your chapter
+                  {currentLanguage.course_chapter_customize_title}
                 </h2>
               </div>
               <ChapterTitleForm
@@ -108,7 +109,7 @@ const ChapterIdPage = async ({
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={Eye} />
                 <h2 className="text-xl">
-                  Access Settings
+                  {currentLanguage.course_chapter_access}
                 </h2>
               </div>
               <ChapterAccessForm
@@ -122,7 +123,7 @@ const ChapterIdPage = async ({
             <div className="flex items-center gap-x-2">
               <IconBadge icon={Video} />
               <h2 className="text-xl">
-                Add a video
+                {currentLanguage.course_chapter_video}
               </h2>
             </div>
             <ChapterVideoForm

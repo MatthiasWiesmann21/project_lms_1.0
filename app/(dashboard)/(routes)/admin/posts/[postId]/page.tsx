@@ -11,6 +11,7 @@ import { DescriptionForm } from "./_components/description-form";
 import { ImageForm } from "./_components/image-form";
 import { CategoryForm } from "./_components/category-form";
 import { Actions } from "./_components/actions";
+import { languageServer } from "@/lib/check-language-server";
 
 const PostIdPage = async ({
   params
@@ -18,7 +19,7 @@ const PostIdPage = async ({
   params: { postId: string }
 }) => {
   const { userId } = auth();
-
+  const currentLanguage = await languageServer();
   if (!userId) {
     return redirect("/");
   }
@@ -75,10 +76,10 @@ const PostIdPage = async ({
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2">
             <h1 className="text-2xl font-medium">
-              Post setup
+              {currentLanguage.post_setup_title}
             </h1>
             <span className="text-sm text-slate-700 dark:text-[#ffffff]">
-              Complete all required fields {completionText}
+              {currentLanguage.post_setup_undertitle} {completionText}
             </span>
           </div>
           <Actions
@@ -92,9 +93,9 @@ const PostIdPage = async ({
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LayoutGridIcon} />
               <h2 className="text-xl">
-                Customize your Post
+                {currentLanguage.post_setup_customize_title}
               </h2>
-              <span className="pl-1 text-xs text-rose-600">*required</span>
+              <span className="pl-1 text-xs text-rose-600">{currentLanguage.requiredFields}</span>
             </div>
             <TitleForm
               initialData={post}
@@ -117,9 +118,9 @@ const PostIdPage = async ({
             <div className="flex items-center gap-x-2">
               <IconBadge icon={Image} />
               <h2 className="text-xl">
-                Add an Image to your Post
+                {currentLanguage.post_setup_image_title}
               </h2>
-              <span className="pl-1 text-xs text-rose-600">*required</span>
+              <span className="pl-1 text-xs text-rose-600">{currentLanguage.requiredFields}</span>
             </div>
             <ImageForm
               initialData={post}

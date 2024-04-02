@@ -12,6 +12,7 @@ import { Grip, Pencil } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { useLanguage } from "@/lib/check-language";
 
 interface ChaptersListProps {
   items: Chapter[];
@@ -26,7 +27,7 @@ export const ChaptersList = ({
 }: ChaptersListProps) => {
   const [isMounted, setIsMounted] = useState(false);
   const [chapters, setChapters] = useState(items);
-
+  const currentLanguage = useLanguage();
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -96,7 +97,7 @@ export const ChaptersList = ({
                     <div className="ml-auto pr-2 flex items-center gap-x-2">
                       {chapter.isFree && (
                         <Badge>
-                          Free
+                          {currentLanguage.courses_setup_free_badge}
                         </Badge>
                       )}
                       <Badge
@@ -105,7 +106,7 @@ export const ChaptersList = ({
                           chapter.isPublished && "bg-sky-700"
                         )}
                       >
-                        {chapter.isPublished ? "Published" : "Draft"}
+                        {chapter.isPublished ? `${currentLanguage.courses_setup_published_text}` : `${currentLanguage.courses_setup_draft_text}`}
                       </Badge>
                       <Pencil
                         onClick={() => onEdit(chapter.id)}
