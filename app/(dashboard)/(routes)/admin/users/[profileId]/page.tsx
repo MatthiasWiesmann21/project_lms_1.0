@@ -10,6 +10,7 @@ import { Actions } from "./_components/actions";
 import { ShowUserName } from "./_components/title-form";
 import { ShowUserMail } from "./_components/showUserMail";
 import { RoleForm } from "./_components/role-form";
+import { languageServer } from "@/lib/check-language-server";
 
 const UserIdPage = async ({
   params
@@ -17,7 +18,7 @@ const UserIdPage = async ({
   params: { profileId: string }
 }) => {
   const { userId } = auth();
-
+  const currentLanguage = await languageServer();
   if (!userId) {
     return redirect("/");
   }
@@ -50,10 +51,10 @@ const UserIdPage = async ({
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2">
             <h1 className="text-2xl font-medium">
-              User setup
+              {currentLanguage.user_setup_title}
             </h1>
             <span className="text-sm text-slate-700 dark:text-[#ffffff]">
-              Complete all required fields {completionText}
+              {currentLanguage.user_setup_undertitle} {completionText}
             </span>
           </div>
           <Actions
@@ -66,9 +67,9 @@ const UserIdPage = async ({
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LayoutGridIcon} />
               <h2 className="text-xl">
-                Customize the User
+                {currentLanguage.user_setup_customize_title}
               </h2>
-              <span className="pl-1 text-xs text-rose-600">*required</span>
+              <span className="pl-1 text-xs text-rose-600">{currentLanguage.requiredFields}</span>
             </div>
             <ShowUserName
               initialData={profile}

@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { formatPrice } from "@/lib/format";
+import { useLanguage } from "@/lib/check-language";
 
 interface PriceFormProps {
   initialData: Course;
@@ -36,7 +37,7 @@ export const PriceForm = ({
   courseId
 }: PriceFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
-
+  const currentLanguage = useLanguage();
   const toggleEdit = () => setIsEditing((current) => !current);
 
   const router = useRouter();
@@ -64,14 +65,14 @@ export const PriceForm = ({
   return (
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Course price
+        {currentLanguage.course_priceForm_title}
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <>{currentLanguage.courses_priceForm_cancel}</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit price
+              {currentLanguage.courses_priceForm_edit}
             </>
           )}
         </Button>
@@ -83,7 +84,7 @@ export const PriceForm = ({
         )}>
           {initialData.price
             ? formatPrice(initialData.price)
-            : "No price"
+            : currentLanguage.courses_priceForm_noPrice
           }
         </p>
       )}
@@ -103,7 +104,7 @@ export const PriceForm = ({
                       type="number"
                       step="0.01"
                       disabled={isSubmitting}
-                      placeholder="Set a price for your course"
+                      placeholder={currentLanguage.courses_priceForm_placeholder}
                       {...field}
                     />
                   </FormControl>
@@ -116,7 +117,7 @@ export const PriceForm = ({
                 disabled={!isValid || isSubmitting}
                 type="submit"
               >
-                Save
+                {currentLanguage.courses_priceForm_save}
               </Button>
             </div>
           </form>

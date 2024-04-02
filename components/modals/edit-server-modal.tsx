@@ -27,6 +27,7 @@ import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/file-upload";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store";
+import { useLanguage } from "@/lib/check-language";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -40,7 +41,7 @@ const formSchema = z.object({
 export const EditServerModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
-
+  const currentLanguage = useLanguage();
   const isModalOpen = isOpen && type === "editServer";
   const { server } = data;
 
@@ -83,10 +84,10 @@ export const EditServerModal = () => {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Customize your server
+          {currentLanguage.chat_initialModal_title}
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
-            Give your server a personality with a name and an image. You can always change it later.
+          {currentLanguage.chat_initialModal_description}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -118,13 +119,13 @@ export const EditServerModal = () => {
                     <FormLabel
                       className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70"
                     >
-                      Server name
+                      {currentLanguage.chat_initialModal_serverName}
                     </FormLabel>
                     <FormControl>
                       <Input
                         disabled={isLoading}
                         className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-                        placeholder="Enter server name"
+                        placeholder={currentLanguage.chat_initialModal_serverName_placeholder}
                         {...field}
                       />
                     </FormControl>
@@ -135,7 +136,7 @@ export const EditServerModal = () => {
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
               <Button variant="primary" disabled={isLoading}>
-                Save
+                {currentLanguage.chat_initialModal_createServer}
               </Button>
             </DialogFooter>
           </form>

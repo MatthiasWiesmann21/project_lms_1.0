@@ -12,10 +12,13 @@ import { SearchInput } from "./search-input";
 import { ModeToggle } from "./mode-toggle";
 import { LanguageToggle } from "./language-toggle";
 import { useIsAdmin, useIsOperator } from "@/lib/roleCheck";
+import { useLanguage } from "@/lib/check-language";
 
 export const NavbarRoutes = () => {
   const { userId } = useAuth();
   const pathname = usePathname();
+  const currentLanguage = useLanguage();
+
 
   const isAdmin = useIsAdmin();
   const isOperator = useIsOperator();
@@ -47,14 +50,14 @@ export const NavbarRoutes = () => {
           <Link href="/dashboard">
             <Button size="default" variant="ghost">
               <LogOut className="h-4 w-4 mr-2" />
-              Exit
+              {currentLanguage.navigation_administration_button_text_exit}
             </Button>
           </Link>
         ) : canAccess ? (
           <Link href="/admin/courses">
             <Button size="default" variant="ghost">
               <Settings className="h-4 w-4 mr-2" />
-              Administration
+              {currentLanguage.navigation_administration_button_text}
             </Button>
           </Link>
         ) : null}

@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/lib/check-language";
 
 interface TitleFormProps {
   initialData: {
@@ -37,7 +38,7 @@ export const TitleForm = ({
   courseId
 }: TitleFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
-
+  const currentLanguage = useLanguage();
   const toggleEdit = () => setIsEditing((current) => !current);
 
   const router = useRouter();
@@ -63,14 +64,14 @@ export const TitleForm = ({
   return (
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Course title
+        {currentLanguage.courses_titleForm_title}
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <>{currentLanguage.courses_titleForm_cancel}</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit title
+              {currentLanguage.courses_titleForm_edit}
             </>
           )}
         </Button>
@@ -94,7 +95,7 @@ export const TitleForm = ({
                   <FormControl>
                     <Input
                       disabled={isSubmitting}
-                      placeholder="e.g. 'Advanced web development'"
+                      placeholder={currentLanguage.courses_titleForm_placeholder}
                       {...field}
                     />
                   </FormControl>
@@ -107,7 +108,7 @@ export const TitleForm = ({
                 disabled={!isValid || isSubmitting}
                 type="submit"
               >
-                Save
+                {currentLanguage.courses_titleForm_save}
               </Button>
             </div>
           </form>

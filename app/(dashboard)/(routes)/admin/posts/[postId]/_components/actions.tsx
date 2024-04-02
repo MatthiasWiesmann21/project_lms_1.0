@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { ConfirmModal } from "@/components/modals/confirm-modal";
 import { useConfettiStore } from "@/hooks/use-confetti-store";
 import { useIsAdmin } from "@/lib/roleCheck";
+import { useLanguage } from "@/lib/check-language";
 
 interface ActionsProps {
   disabled: boolean;
@@ -25,7 +26,7 @@ export const Actions = ({
   const router = useRouter();
   const confetti = useConfettiStore();
   const [isLoading, setIsLoading] = useState(false);
-
+  const currentLanguage = useLanguage();
   const isAdmin = useIsAdmin();
 
   const onClick = async () => {
@@ -73,7 +74,7 @@ export const Actions = ({
         variant="outline"
         size="sm"
       >
-        {isPublished ? "Unpublish" : "Publish"}
+        {isPublished ? `${currentLanguage.posts_actions_unpublish}` : `${currentLanguage.posts_actions_publish}`}
       </Button>
       {isAdmin && (
       <ConfirmModal onConfirm={onDelete}>

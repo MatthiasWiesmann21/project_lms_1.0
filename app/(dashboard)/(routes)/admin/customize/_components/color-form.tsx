@@ -21,6 +21,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useDispatch } from "react-redux";
+import { useLanguage } from "@/lib/check-language";
 
 interface ColorFormProps {
   initialData: {
@@ -37,7 +38,7 @@ const formSchema = z.object({
 
 export const ColorForm = ({ initialData, containerId }: ColorFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
-
+  const currentLanguage = useLanguage();
   const toggleEdit = () => setIsEditing((current) => !current);
 
   const router = useRouter();
@@ -68,14 +69,14 @@ export const ColorForm = ({ initialData, containerId }: ColorFormProps) => {
   return (
     <div className="mt-6 rounded-md border bg-slate-200 p-4 dark:bg-slate-700">
       <div className="flex items-center justify-between font-medium">
-        Primary Color
+        {currentLanguage.customize_PrimaryColorForm_title}
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <>{currentLanguage.customize_PrimaryColorForm_cancel}</>
           ) : (
             <>
               <Pencil className="mr-2 h-4 w-4" />
-              Edit
+              {currentLanguage.customize_PrimaryColorForm_edit}
             </>
           )}
         </Button>
@@ -121,7 +122,7 @@ export const ColorForm = ({ initialData, containerId }: ColorFormProps) => {
             />
             <div className="flex items-center gap-x-2">
               <Button disabled={!isValid || isSubmitting} type="submit">
-                Save
+                {currentLanguage.customize_PrimaryColorForm_save}
               </Button>
             </div>
           </form>

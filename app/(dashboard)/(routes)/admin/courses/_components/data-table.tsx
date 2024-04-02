@@ -26,6 +26,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useIsAdmin } from "@/lib/roleCheck"
+import { useLanguage } from "@/lib/check-language"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -38,6 +39,7 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
+  const currentLanguage = useLanguage();
 
   const isAdmin = useIsAdmin();
 
@@ -56,22 +58,23 @@ export function DataTable<TData, TValue>({
     },
   })
 
+
   return (
     <div>
       <div className="flex items-center py-4 justify-between">
         <Input
-          placeholder="Filter courses..."
+          placeholder={currentLanguage.courses_searchCourses_placeholder}
           value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("title")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm border-[#000000] dark:border-[#ffffff]"
+          className="max-w-sm mr-5 border-[#000000] dark:border-[#ffffff]"
         />
         {isAdmin && (
           <Link href="/admin/create/course">
             <Button>
               <PlusCircle className="h-4 w-4 mr-2" />
-              New course
+              {currentLanguage.courses_createCourse_button_text}
             </Button>
           </Link>
         )}
@@ -114,7 +117,7 @@ export function DataTable<TData, TValue>({
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
+                  {currentLanguage.courses_noCourses_text}
                 </TableCell>
               </TableRow>
             )}
@@ -128,7 +131,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          Previous
+          {currentLanguage.adminTable_previous_button_text}
         </Button>
         <Button
           variant="outline"
@@ -136,7 +139,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          Next
+          {currentLanguage.adminTable_next_button_text}
         </Button>
       </div>
     </div>

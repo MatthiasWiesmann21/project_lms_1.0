@@ -22,6 +22,7 @@ import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 
 import { ChaptersList } from "./chapters-list";
+import { useLanguage } from "@/lib/check-language";
 
 interface ChaptersFormProps {
   initialData: Course & { chapters: Chapter[] };
@@ -38,7 +39,7 @@ export const ChaptersForm = ({
 }: ChaptersFormProps) => {
   const [isCreating, setIsCreating] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
-
+  const currentLanguage = useLanguage();
   const toggleCreating = () => {
     setIsCreating((current) => !current);
   }
@@ -93,14 +94,14 @@ export const ChaptersForm = ({
         </div>
       )}
       <div className="font-medium flex items-center justify-between">
-        Course chapters
+        {currentLanguage.courses_chaptersForm_title}
         <Button onClick={toggleCreating} variant="ghost">
           {isCreating ? (
-            <>Cancel</>
+            <>{currentLanguage.courses_chaptersForm_cancel}</>
           ) : (
             <>
               <PlusCircle className="h-4 w-4 mr-2" />
-              Add a chapter
+              {currentLanguage.courses_chaptersForm_addChapter}
             </>
           )}
         </Button>
@@ -119,7 +120,7 @@ export const ChaptersForm = ({
                   <FormControl>
                     <Input
                       disabled={isSubmitting}
-                      placeholder="e.g. 'Introduction to the course'"
+                      placeholder={currentLanguage.courses_chaptersForm_placeholder}
                       {...field}
                     />
                   </FormControl>
@@ -131,7 +132,7 @@ export const ChaptersForm = ({
               disabled={!isValid || isSubmitting}
               type="submit"
             >
-              Create
+              {currentLanguage.courses_chaptersForm_save}
             </Button>
           </form>
         </Form>
@@ -141,7 +142,7 @@ export const ChaptersForm = ({
           "text-sm mt-2",
           !initialData.chapters.length && "text-slate-500 italic"
         )}>
-          {!initialData.chapters.length && "No chapters"}
+          {!initialData.chapters.length && `${currentLanguage.courses_chaptersForm_noChapters}`}
           <ChaptersList
             onEdit={onEdit}
             onReorder={onReorder}
@@ -151,7 +152,7 @@ export const ChaptersForm = ({
       )}
       {!isCreating && (
         <p className="text-xs text-muted-foreground mt-4">
-          Drag and drop to reorder the chapters
+          {currentLanguage.courses_chaptersForm_reorderInstructions}
         </p>
       )}
     </div>

@@ -17,6 +17,9 @@ export const NavigationSidebar = async () => {
   }
 
   const servers = await db.server.findMany({
+    orderBy: {
+      createdAt: "asc",
+    },
     where: {
       members: {
         some: {

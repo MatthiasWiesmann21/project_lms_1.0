@@ -3,6 +3,53 @@ import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
 
+export async function GET(req: Request) {
+  const { userId } = auth();
+  const { searchParams } = new URL(req.url);
+  const liveEventId = searchParams?.get("liveEventId") || "";
+  try {
+    if (userId === null) throw new Error("Un Authorized");
+    const profile = await db?.profile?.findFirst({
+      select: {
+        id: true,
+      },
+      where: {
+        userId: userId,
+      },
+    });
+
+    const liveEvent = await db.liveEvent.findUnique({
+      where: {
+        id: liveEventId,
+        isPublished: true,
+      },
+      include: {
+        likes: true,
+      },
+    });
+
+    const currentLike = liveEvent?.likes?.some(
+      (like) => like?.profileId === profile?.id
+    );
+
+    const category = await db.category.findUnique({
+      where: {
+        id: liveEvent?.categoryId ?? undefined,
+        isPublished: true,
+        isLiveEventCategory: true,
+      },
+    });
+
+    return NextResponse.json({
+      liveEvent: { ...liveEvent, currentLike },
+      category,
+    });
+  } catch (error) {
+    console.log("[COURSE_ID]", error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}
+
 export async function DELETE(
   req: Request,
   { params }: { params: { liveEventId: string } }
@@ -18,7 +65,7 @@ export async function DELETE(
       where: {
         id: params.liveEventId,
         containerId: process.env.CONTAINER_ID,
-      }
+      },
     });
 
     if (!liveEvent) {
@@ -59,7 +106,7 @@ export async function PATCH(
       },
       data: {
         ...values,
-      }
+      },
     });
 
     return NextResponse.json(liveEvent);

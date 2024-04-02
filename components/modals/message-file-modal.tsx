@@ -24,6 +24,7 @@ import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/file-upload";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store";
+import { useLanguage } from "@/lib/check-language";
 
 const formSchema = z.object({
   fileUrl: z.string().min(1, {
@@ -34,7 +35,7 @@ const formSchema = z.object({
 export const MessageFileModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
-
+  const currentLanguage = useLanguage();
   const isModalOpen = isOpen && type === "messageFile";
   const { apiUrl, query } = data;
 
@@ -77,10 +78,10 @@ export const MessageFileModal = () => {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Add an attachment
+            {currentLanguage.chat_modal_messageFile_title}
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
-            Send a file as a message
+            {currentLanguage.chat_modal_messageFile_description}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -106,7 +107,7 @@ export const MessageFileModal = () => {
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
               <Button variant="primary" disabled={isLoading}>
-                Send
+                {currentLanguage.chat_modal_messageFile_submit}
               </Button>
             </DialogFooter>
           </form>

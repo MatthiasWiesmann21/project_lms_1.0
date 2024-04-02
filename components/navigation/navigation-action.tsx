@@ -6,19 +6,20 @@ import { ActionTooltip } from "@/components/action-tooltip";
 import { useModal } from "@/hooks/use-modal-store";
 import { Separator } from "../ui/separator";
 import { useIsAdmin, useIsOperator } from "@/lib/roleCheck";
+import { useLanguage } from "@/lib/check-language";
 
 export const NavigationAction = () => {
   const { onOpen } = useModal();
   const isAdmin = useIsAdmin();
   const isOperator = useIsOperator();
-  
+  const currentLanguage = useLanguage();
   const canAccess = isAdmin || isOperator;
 
   return (
     canAccess && (
       <>
         <div>
-          <ActionTooltip side="right" align="center" label="Add a server">
+          <ActionTooltip side="right" align="center" label={currentLanguage.chat_server_addServer}>
             <button
               onClick={() => onOpen("createServer")}
               className="group flex items-center"

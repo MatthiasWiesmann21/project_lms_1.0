@@ -3,12 +3,16 @@ import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
-const getOrCreateParentFolder = async (userId: string, parentKey?: string | null, ) => {
+const getOrCreateParentFolder = async (
+  userId: string,
+  parentKey?: string | null
+) => {
   if (parentKey != null) {
     const parentFolder = await db.folder.findFirst({
       where: {
         key: parentKey,
-        userId: userId
+        userId: userId,
+        containerId: process.env.CONTAINER_ID,
       },
     });
     if (parentFolder == null) {
@@ -21,7 +25,8 @@ const getOrCreateParentFolder = async (userId: string, parentKey?: string | null
   let rootFolder = await db.folder.findFirst({
     where: {
       parentFolder: null,
-      userId: userId
+      userId: userId,
+      containerId: process.env.CONTAINER_ID,
     },
   });
   if (rootFolder == null) {
@@ -39,6 +44,7 @@ const getOrCreateParentFolder = async (userId: string, parentKey?: string | null
         key: key,
         isPublic: false,
         userId: userId,
+        containerId: process.env.CONTAINER_ID,
       },
     });
   }
@@ -58,7 +64,7 @@ export async function POST(req: Request) {
 
     // FolderId null means it will upload in root folder
     const { id, folderName, isPublic } = requestBody;
-    let parentKey = null
+    let parentKey = null;
     if (id) {
       const keyData = await db.folder.findFirst({
         select: {
@@ -82,7 +88,6 @@ export async function POST(req: Request) {
         key: folderKey,
       },
     });
-    console.log({tempFolder})
     if (tempFolder != null) {
       return new NextResponse("Folder already created", { status: 200 });
     }
@@ -95,6 +100,7 @@ export async function POST(req: Request) {
         userId: userId,
         isPublic: isPublic,
         parentFolderId: parentFolder.id,
+        containerId: process.env.CONTAINER_ID,
       },
     });
 

@@ -11,6 +11,7 @@ import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/file-upload";
+import { useLanguage } from "@/lib/check-language";
 
 interface ImageFormProps {
   initialData: Container
@@ -28,7 +29,7 @@ export const ImageForm = ({
   containerId
 }: ImageFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
-
+  const currentLanguage = useLanguage();
   const toggleEdit = () => setIsEditing((current) => !current);
 
   const router = useRouter();
@@ -47,21 +48,21 @@ export const ImageForm = ({
   return (
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Container Image
+        {currentLanguage.customize_ImageForm_title}
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing && (
-            <>Cancel</>
+            <>{currentLanguage.customize_ImageForm_cancel}</>
           )}
           {!isEditing && !initialData.imageUrl && (
             <>
               <PlusCircle className="h-4 w-4 mr-2" />
-              Add an image
+              {currentLanguage.customize_ImageForm_addImage}
             </>
           )}
           {!isEditing && initialData.imageUrl && (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit image
+              {currentLanguage.customize_ImageForm_edit}
             </>
           )}
         </Button>
@@ -93,7 +94,7 @@ export const ImageForm = ({
             }}
           />
           <div className="text-xs text-muted-foreground mt-4">
-            16:9 aspect ratio recommended
+            {currentLanguage.customize_ImageForm_imageHint}
           </div>
         </div>
       )}

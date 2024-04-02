@@ -13,6 +13,7 @@ import vimeo from "@/assets/icons/Vimeo-Logo.png";
 import youtube from "@/assets/icons/Youtube-Logo.png";
 import UniversalPlayer from "@/pages/components/universalPlayer";
 import { useTheme } from "next-themes";
+import EventModal from "./eventModal";
 
 interface VideoFormProps {
   initialData: LiveEvent;
@@ -25,7 +26,7 @@ const formSchema = z.object({
 
 const options = [
   {
-    value: "https://vimeo.com/",
+    value: "",
     label: (
       <div className="flex items-center">
         <Image className="mr-2 w-[50px]" alt="vimeo" src={vimeo} />
@@ -34,7 +35,7 @@ const options = [
     ),
   },
   {
-    value: "https://youtube.com/",
+    value: "",
     label: (
       <div className="flex items-center">
         <Image className="mr-2 w-[50px]" alt="youtube" src={youtube} />
@@ -70,6 +71,10 @@ export const VideoForm = ({ initialData, liveEventId }: VideoFormProps) => {
 
   const VimeoPreview = ({ videoId }: { videoId: string }) => (
     <div className="h-[300px]">
+      {/* <EventModal
+        liveEventId={liveEventId}
+        endDateTime={initialData?.endDateTime}
+      /> */}
       <UniversalPlayer url={videoId} />
     </div>
   );

@@ -13,11 +13,15 @@ type PostWithProgressWithCategory = Post & {
 
 interface PostListProps {
   items: PostWithProgressWithCategory[];
-  getPosts: any;
+  updateLikeComment: any;
   isLoading: boolean;
 }
 
-export const PostList = ({ items, getPosts, isLoading }: PostListProps) => {
+export const PostList = ({
+  items,
+  updateLikeComment,
+  isLoading,
+}: PostListProps) => {
   const sortedItems = items.sort((a, b) => {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
@@ -42,13 +46,12 @@ export const PostList = ({ items, getPosts, isLoading }: PostListProps) => {
             currentLike={item?.currentLike}
             commentsWithLikes={item.commentsWithLikes}
             commentsCount={item.commentsCount}
-            getPosts={getPosts}
+            updateLikeComment={updateLikeComment}
           />
         ))}
       </div>
-      {items.length === 0 && (
+      {items?.length === 0 && (
         <div className="mt-10 text-center text-sm text-muted-foreground">
-          {/* {isLoading ? "Loading...." : "No posts found"} */}
           {isLoading ? (
             <Loader2 className="h-8 w-8 animate-spin text-secondary" />
           ) : (

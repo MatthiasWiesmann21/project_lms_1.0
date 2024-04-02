@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useLanguage } from "@/lib/check-language";
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -34,7 +35,7 @@ const CreatePost = () => {
       title: ""
     },
   });
-
+  const currentLanguage = useLanguage();
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -51,10 +52,10 @@ const CreatePost = () => {
     <div className="max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6">
       <div>
         <h1 className="text-2xl">
-          Name your Post
+          {currentLanguage.createPost_title}
         </h1>
         <p className="text-sm text-slate-600 dark:text-[#ffffff]">
-          What would you like to name your post? Don&apos;t worry, you can change this later.
+          {currentLanguage.createPost_description}
         </p>
         <Form {...form}>
           <form
@@ -67,17 +68,17 @@ const CreatePost = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    Post title
+                    {currentLanguage.createPost_form_label}
                   </FormLabel>
                   <FormControl>
                     <Input
                       disabled={isSubmitting}
-                      placeholder="e.g. 'Advanced web development'"
+                      placeholder={currentLanguage.createPost_form_placeholder}
                       {...field}
                     />
                   </FormControl>
                   <FormDescription className="dark:text-[#ffffff]">
-                    What will you want to let you know your Community?
+                    {currentLanguage.createPost_form_description}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -89,14 +90,14 @@ const CreatePost = () => {
                   type="button"
                   variant="ghost"
                 >
-                  Cancel
+                  {currentLanguage.createPost_cancel}
                 </Button>
               </Link>
               <Button
                 type="submit"
                 disabled={!isValid || isSubmitting}
               >
-                Continue
+                {currentLanguage.createPost_submit}
               </Button>
             </div>
           </form>

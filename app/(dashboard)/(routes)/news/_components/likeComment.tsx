@@ -7,8 +7,9 @@ import moment from "moment";
 import { MessageCircle, ThumbsUp } from "lucide-react";
 import { ChatInputPost } from "./chatInput";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/lib/check-language";
 
-const SubReply = ({ val, getPosts }: any) => (
+const SubReply = ({ val, updateLikeComment }: any) => (
   <div>
     <div className="flex justify-around">
       <UserAvatar
@@ -29,7 +30,8 @@ const SubReply = ({ val, getPosts }: any) => (
               const response = await axios?.post(`/api/like/create`, {
                 commentId: val?.id,
               });
-              if (response?.status === 200) getPosts();
+              if (response?.status === 200)
+                updateLikeComment(response?.data?.post);
             }}
             className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
           >
@@ -48,14 +50,15 @@ const SubReply = ({ val, getPosts }: any) => (
 const Reply = ({
   val,
   id,
-  getPosts,
+  updateLikeComment,
 }: {
   val: any;
   id: string;
-  getPosts: any;
+  updateLikeComment: any;
 }) => {
   const user = useSelector((state: any) => state?.user);
   const [showReplyInput, setShowReplyInput] = useState(false);
+  const currentLanguage = useLanguage();
   return (
     <div>
       <div className="flex justify-around">
@@ -77,7 +80,8 @@ const Reply = ({
                 const response = await axios?.post(`/api/like/create`, {
                   commentId: val?.id,
                 });
-                if (response?.status === 200) getPosts();
+                if (response?.status === 200)
+                  updateLikeComment(response?.data?.post);
               }}
               className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
             >
@@ -91,7 +95,7 @@ const Reply = ({
               className="m-0 ml-[1.25rem] cursor-pointer"
               onClick={() => setShowReplyInput(!showReplyInput)}
             >
-              Reply
+              {currentLanguage.news_comments_reply_button_label}
             </p>
           </div>
           {showReplyInput && (
@@ -102,20 +106,24 @@ const Reply = ({
               />
               <div className="my-1 flex w-full flex-col">
                 <ChatInputPost
-                  placeHolder={"Type your comment"}
+                  placeHolder={currentLanguage.news_comments_input_placeholder}
                   apiUrl="/api/comment/create"
                   query={{
                     postId: id,
                     parentCommentId: val?.id,
                   }}
                   className="-mt-[3%]"
-                  getPosts={getPosts}
+                  updateLikeComment={updateLikeComment}
                 />
               </div>
             </div>
           )}
           {val?.subCommentsWithLikes?.map((val: any) => (
-            <SubReply key={val?.id} val={val} getPosts={getPosts} />
+            <SubReply
+              key={val?.id}
+              val={val}
+              updateLikeComment={updateLikeComment}
+            />
           ))}
         </div>
       </div>
@@ -129,18 +137,19 @@ const LikeComment = ({
   currentLike,
   commentsWithLikes,
   commentsCount,
-  getPosts,
+  updateLikeComment,
 }: {
   id: string;
   likesCount: number;
   currentLike: boolean;
   commentsWithLikes: any;
   commentsCount: number;
-  getPosts: any;
+  updateLikeComment: any;
 }) => {
   const user = useSelector((state: any) => state?.user);
   const [commentCount, setCommentCount] = useState(3);
   const [isShowComments, setShowComments] = useState(false);
+  const currentLanguage = useLanguage();
   return (
     <div>
       <div className="flex items-center justify-between py-3">
@@ -149,7 +158,8 @@ const LikeComment = ({
             const response = await axios?.post(`/api/like/create`, {
               postId: id,
             });
-            if (response?.status === 200) getPosts();
+            if (response?.status === 200)
+              updateLikeComment(response?.data?.post);
           }}
           className="m-2 flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
         >
@@ -159,23 +169,28 @@ const LikeComment = ({
           />
           {likesCount}
         </div>
-        <Button className="cursor-pointer rounded-full p-4" size="lg" variant="secondary" onClick={() => setShowComments(true)}>
-        <MessageCircle className="mr-1" />
-          {`${commentsCount} Comments`}
+        <Button
+          className="cursor-pointer rounded-full p-4"
+          size="lg"
+          variant="secondary"
+          onClick={() => setShowComments(true)}
+        >
+          <MessageCircle className="mr-1" />
+          {`${commentsCount} ${currentLanguage.news_comments_button_label}`}
         </Button>
       </div>
       <div className="flex justify-around">
         <UserAvatar src={user?.imageUrl} className="mr-2 mt-4" />
         <div className="w-[90%]">
           <ChatInputPost
-            placeHolder={"Type your comment"}
+            placeHolder={currentLanguage.news_comments_input_placeholder}
             apiUrl="/api/comment/create"
             query={{
               postId: id,
               parentCommentId: null,
             }}
             className=""
-            getPosts={getPosts}
+            updateLikeComment={updateLikeComment}
           />
           {isShowComments && (
             <>
@@ -187,7 +202,7 @@ const LikeComment = ({
                         key={val?.id}
                         val={val}
                         id={id}
-                        getPosts={getPosts}
+                        updateLikeComment={updateLikeComment}
                       />
                     )
                 )}
@@ -196,11 +211,11 @@ const LikeComment = ({
                 <div className="flex items-center justify-center p-2">
                   <Button
                     onClick={() => setCommentCount(commentCount + 3)}
-                    className="cursor-pointer text-center rounded-full p-6"
+                    className="cursor-pointer rounded-full p-6 text-center"
                     variant="secondary"
                     size="lg"
                   >
-                    Show more +
+                    {currentLanguage.news_comments_showmore_label}
                   </Button>
                 </div>
               )}

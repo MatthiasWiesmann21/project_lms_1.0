@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/lib/check-language";
 
 interface MailFormProps {
   initialData: {
@@ -30,12 +31,12 @@ export const ShowUserMail = ({
   initialData,
 }: MailFormProps) => {
 
-  
+  const currentLanguage = useLanguage();
 
   return (
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        User E-Mail
+        {currentLanguage.user_MailForm_title}
       </div>
         <p className="text-sm mt-2">
           {initialData.email}

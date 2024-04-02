@@ -14,10 +14,11 @@ import {
 } from "@/components/ui/dialog";
 import { useModal } from "@/hooks/use-modal-store";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/lib/check-language";
 
 export const DeleteMessageModal = () => {
   const { isOpen, onClose, type, data } = useModal();
-
+  const currentLanguage = useLanguage();
   const isModalOpen = isOpen && type === "deleteMessage";
   const { apiUrl, query } = data;
 

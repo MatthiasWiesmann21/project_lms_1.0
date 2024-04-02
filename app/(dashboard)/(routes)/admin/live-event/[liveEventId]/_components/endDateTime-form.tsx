@@ -51,7 +51,10 @@ export const EndDateTimeForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/liveEvent/${liveEventId}`, values);
+      await axios.patch(`/api/liveEvent/${liveEventId}`, {
+        ...values,
+        isEnded: false,
+      });
       toast.success("Event updated");
       toggleEdit();
       router.refresh();

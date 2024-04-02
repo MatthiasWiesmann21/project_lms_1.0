@@ -19,7 +19,8 @@ interface ChatInputProps {
   query: Record<string, any>;
   className?: string;
   placeHolder?: string;
-  getPosts: any;
+  updateLikeComment?: any;
+  getPosts?: any;
 }
 
 const formSchema = z.object({
@@ -31,7 +32,7 @@ export const ChatInputPost = ({
   query,
   className,
   placeHolder,
-  getPosts,
+  updateLikeComment,
 }: ChatInputProps) => {
   const { onOpen } = useModal();
   const router = useRouter();
@@ -51,11 +52,13 @@ export const ChatInputPost = ({
     if (isSending) return;
     setSending(true);
     try {
-      await axios.post(apiUrl, { ...query, text: values?.content });
-
+      const response = await axios.post(apiUrl, {
+        ...query,
+        text: values?.content,
+      });
       form.reset();
       router.refresh();
-      getPosts();
+      updateLikeComment(response?.data?.post);
       setSending(false);
     } catch (error) {
       console.log(error);
@@ -75,7 +78,7 @@ export const ChatInputPost = ({
                 <div className={`relative flex items-center py-4 ${className}`}>
                   <Input
                     disabled={isLoading}
-                    className="flex h-10 w-[94%] rounded-md border border-0 border-none border-input bg-background bg-zinc-200/90 px-2 py-2 text-sm text-zinc-600 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-zinc-700/75 dark:text-zinc-200"
+                    className="flex h-10 w-[94%] rounded-md border-none border-input bg-zinc-200/90 px-2 py-2 text-sm text-zinc-600 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 dark:bg-zinc-700/75 dark:text-zinc-200"
                     placeholder={placeHolder}
                     {...field}
                   />

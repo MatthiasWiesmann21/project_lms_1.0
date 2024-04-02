@@ -10,6 +10,7 @@ import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/file-upload";
+import { useLanguage } from "@/lib/check-language";
 
 interface ChapterVideoFormProps {
   initialData: Chapter;
@@ -29,6 +30,7 @@ export const ChapterVideoForm = ({
   const [isEditing, setIsEditing] = useState(false);
   const [vimeoUrl, setVimeoUrl] = useState<string | null>(initialData.videoUrl || null);
   const router = useRouter();
+  const currentLanguage = useLanguage();
 
   function extractVimeoId(url: string): string | null {
     const match = url.match(/https:\/\/vimeo\.com\/(\d+)/);
@@ -64,17 +66,17 @@ export const ChapterVideoForm = ({
   return (
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Chapter video
+        {currentLanguage.chapter_VideoForm_title}
         <Button onClick={toggleEdit} variant="ghost">
-          {isEditing ? <>Cancel</> : initialData.videoUrl ? (
+          {isEditing ? <>{currentLanguage.chapter_VideoForm_cancel}</> : initialData.videoUrl ? (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit video
+              {currentLanguage.chapter_VideoForm_edit}
             </>
           ) : (
             <>
               <PlusCircle className="h-4 w-4 mr-2" />
-              Add a video
+              {currentLanguage.chapter_VideoForm_addVideo}
             </>
           )}
         </Button>
@@ -95,7 +97,7 @@ export const ChapterVideoForm = ({
           <input
             className="mb-2 flex items-center rounded-md p-1 w-full"
             type="text"
-            placeholder="Vimeo Share Link"
+            placeholder={currentLanguage.chapter_VideoForm_placeholder}
             onChange={(e) => {
               const videoId = extractVimeoId(e.target.value);
               if (videoId) {
@@ -110,7 +112,7 @@ export const ChapterVideoForm = ({
 
       {vimeoUrl && !isEditing && (
         <div className="text-xs text-muted-foreground mt-2">
-          Refresh the page if video does not appear.
+          {currentLanguage.chapter_VideoForm_urlWarning}
         </div>
       )}
     </div>

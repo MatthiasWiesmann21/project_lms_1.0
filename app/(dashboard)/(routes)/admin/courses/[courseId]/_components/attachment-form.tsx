@@ -11,6 +11,7 @@ import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/file-upload";
+import { useLanguage } from "@/lib/check-language";
 
 interface AttachmentFormProps {
   initialData: Course & { attachments: Attachment[] };
@@ -27,7 +28,7 @@ export const AttachmentForm = ({
 }: AttachmentFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
-
+  const currentLanguage = useLanguage();
   const toggleEdit = () => setIsEditing((current) => !current);
 
   const router = useRouter();
@@ -59,15 +60,15 @@ export const AttachmentForm = ({
   return (
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Course attachments
+        {currentLanguage.course_attachmentForm_title}
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing && (
-            <>Cancel</>
+            <>{currentLanguage.course_attachmentForm_cancel}</>
           )}
           {!isEditing && (
             <>
               <PlusCircle className="h-4 w-4 mr-2" />
-              Add a file
+              {currentLanguage.course_attachmentForm_add}
             </>
           )}
         </Button>
@@ -76,7 +77,7 @@ export const AttachmentForm = ({
         <>
           {initialData.attachments.length === 0 && (
             <p className="text-sm mt-2 text-slate-500 italic">
-              No attachments yet
+              {currentLanguage.course_attachmentForm_noAttachments}
             </p>
           )}
           {initialData.attachments.length > 0 && (
@@ -120,7 +121,7 @@ export const AttachmentForm = ({
             }}
           />
           <div className="text-xs text-muted-foreground mt-4">
-            Add anything your students might need to complete the course.
+            {currentLanguage.course_attachmentForm_Recoomendation}
           </div>
         </div>
       )}

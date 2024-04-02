@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Editor } from "@/components/editor";
 import { Preview } from "@/components/preview";
+import { useLanguage } from "@/lib/check-language";
 
 interface ChapterDescriptionFormProps {
   initialData: Chapter;
@@ -38,7 +39,7 @@ export const ChapterDescriptionForm = ({
   chapterId
 }: ChapterDescriptionFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
-
+  const currentLanguage = useLanguage();
   const toggleEdit = () => setIsEditing((current) => !current);
 
   const router = useRouter();
@@ -66,14 +67,14 @@ export const ChapterDescriptionForm = ({
   return (
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Chapter description
+        {currentLanguage.chapter_chapterDescriptionForm_title}
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <>{currentLanguage.chapter_chapterDescriptionForm_cancel}</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit description
+              {currentLanguage.chapter_chapterDescriptionForm_edit}
             </>
           )}
         </Button>
@@ -83,7 +84,7 @@ export const ChapterDescriptionForm = ({
           "text-sm mt-2",
           !initialData.description && "text-slate-500 italic"
         )}>
-          {!initialData.description && "No description"}
+          {!initialData.description && `${currentLanguage.chapter_chapterDescriptionForm_noDescription}`}
           {initialData.description && (
             <Preview
               value={initialData.description}
@@ -116,7 +117,7 @@ export const ChapterDescriptionForm = ({
                 disabled={!isValid || isSubmitting}
                 type="submit"
               >
-                Save
+                {currentLanguage.chapter_chapterDescriptionForm_save}
               </Button>
             </div>
           </form>

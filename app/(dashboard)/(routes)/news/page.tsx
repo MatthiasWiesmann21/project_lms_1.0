@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { PostCard } from "./_components/post-card";
 import { Category, Post } from "@prisma/client";
 import { Loader2 } from "lucide-react";
+import { useLanguage } from "@/lib/check-language";
 
 type PostWithProgressWithCategory = Post & {
   category: Category | null;
@@ -20,6 +21,15 @@ const NewsPage = () => {
   const [page, setPage] = useState(1); // Track the current page
   const [hasMore, setHasMore] = useState(true); // Track if there are more posts to load
   const observer = useRef<IntersectionObserver | null>(null);
+
+  const currentLanguage = useLanguage();
+
+  const updateLikeComment = (post: any) => {
+    const tempPost = posts?.map((each) =>
+      each?.id === post?.id ? post : each
+    );
+    setPosts(tempPost);
+  };
 
   const getPosts = async () => {
     setLoading(true);
@@ -76,18 +86,20 @@ const NewsPage = () => {
               currentLike={item?.currentLike}
               commentsWithLikes={item?.commentsWithLikes}
               commentsCount={item?.commentsCount}
-              getPosts={getPosts}
+              updateLikeComment={updateLikeComment}
             />
           ))}
         </div>
         <div className="loading-indicator" />
         {isLoading ? (
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <div className="flex justify-center items-center min-h-screen">
+          <Loader2 className="h-8 w-8 animate-spin"/>
+          </div>
         ) : (
           !isLoading &&
           posts?.length === 0 && (
             <div className="mt-10 text-center text-sm text-muted-foreground">
-              No posts found
+              {currentLanguage.news_no_posts_found}
             </div>
           )
         )}

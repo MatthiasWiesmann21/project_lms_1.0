@@ -12,6 +12,7 @@ import { ServerSearch } from "./server-search";
 import { ServerSection } from "./server-section";
 import { ServerChannel } from "./server-channel";
 import { ServerMember } from "./server-member";
+import { languageServer } from "@/lib/check-language-server";
 
 interface ServerSidebarProps {
   serverId: string;
@@ -33,7 +34,7 @@ export const ServerSidebar = async ({
   serverId
 }: ServerSidebarProps) => {
   const profile = await currentProfile();
-
+  const currentLanguage = await languageServer();
   if (!profile) {
     return redirect("/");
   }
@@ -60,6 +61,7 @@ export const ServerSidebar = async ({
     }
   });
 
+
   const textChannels = server?.channels.filter((channel) => channel.type === ChannelType.TEXT)
   const audioChannels = server?.channels.filter((channel) => channel.type === ChannelType.AUDIO)
   const videoChannels = server?.channels.filter((channel) => channel.type === ChannelType.VIDEO)
@@ -82,7 +84,7 @@ export const ServerSidebar = async ({
           <ServerSearch
             data={[
               {
-                label: "Text Channels",
+                label: `${currentLanguage.serverSidebar_textChannel}`,
                 type: "channel",
                 data: textChannels?.map((channel) => ({
                   id: channel.id,
@@ -91,7 +93,7 @@ export const ServerSidebar = async ({
                 }))
               },
               {
-                label: "Voice Channels",
+                label: `${currentLanguage.serverSidebar_videoChannel}`,
                 type: "channel",
                 data: audioChannels?.map((channel) => ({
                   id: channel.id,
@@ -100,7 +102,7 @@ export const ServerSidebar = async ({
                 }))
               },
               {
-                label: "Video Channels",
+                label: `${currentLanguage.serverSidebar_audioChannel}`,
                 type: "channel",
                 data: videoChannels?.map((channel) => ({
                   id: channel.id,
@@ -109,7 +111,7 @@ export const ServerSidebar = async ({
                 }))
               },
               {
-                label: "Members",
+                label: `${currentLanguage.serverSidebar_member}`,
                 type: "member",
                 data: members?.map((member) => ({
                   id: member.id,
@@ -127,7 +129,7 @@ export const ServerSidebar = async ({
               sectionType="channels"
               channelType={ChannelType.TEXT}
               role={role}
-              label="Text Channels"
+              label={currentLanguage.chat_serversection_label_text}
             />
             <div className="space-y-[2px]">
               {textChannels.map((channel) => (
@@ -147,7 +149,7 @@ export const ServerSidebar = async ({
               sectionType="channels"
               channelType={ChannelType.AUDIO}
               role={role}
-              label="Voice Channels"
+              label={currentLanguage.chat_serversection_label_audio}
             />
             <div className="space-y-[2px]">
               {audioChannels.map((channel) => (
@@ -167,7 +169,7 @@ export const ServerSidebar = async ({
               sectionType="channels"
               channelType={ChannelType.VIDEO}
               role={role}
-              label="Video Channels"
+              label={currentLanguage.chat_serversection_label_video}
             />
             <div className="space-y-[2px]">
               {videoChannels.map((channel) => (
@@ -186,7 +188,7 @@ export const ServerSidebar = async ({
             <ServerSection
               sectionType="members"
               role={role}
-              label="Members"
+              label={currentLanguage.chat_serversection_label_member}
               server={server}
             />
             <div className="space-y-[2px]">

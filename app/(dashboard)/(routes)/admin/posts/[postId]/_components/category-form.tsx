@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import { Combobox } from "@/components/ui/combobox";
+import { useLanguage } from "@/lib/check-language";
 
 interface CategoryFormProps {
   initialData: Post;
@@ -38,7 +39,7 @@ export const CategoryForm = ({
   options,
 }: CategoryFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
-
+  const currentLanguage = useLanguage();
   const toggleEdit = () => setIsEditing((current) => !current);
 
   const router = useRouter();
@@ -68,14 +69,14 @@ export const CategoryForm = ({
   return (
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Post category
+        {currentLanguage.post_CategoryForm_title}
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <>{currentLanguage.post_CategoryForm_cancel}</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit category
+              {currentLanguage.post_CategoryForm_edit}
             </>
           )}
         </Button>
@@ -85,7 +86,7 @@ export const CategoryForm = ({
           "text-sm mt-2",
           !initialData.categoryId && "text-slate-500 italic"
         )}>
-          {selectedOption?.label || "No category"}
+          {selectedOption?.label || `${currentLanguage.post_CategoryForm_noCategory}`}
         </p>
       )}
       {isEditing && (
@@ -114,7 +115,7 @@ export const CategoryForm = ({
                 disabled={!isValid || isSubmitting}
                 type="submit"
               >
-                Save
+                {currentLanguage.post_CategoryForm_save}
               </Button>
             </div>
           </form>

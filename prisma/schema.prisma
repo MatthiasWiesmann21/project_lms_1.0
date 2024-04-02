@@ -15,7 +15,7 @@ model Container {
   link          String? @db.Text
   imageUrl      String? @db.Text
   clientPackage String? @db.Text
-  maxCourses    Int?     @default(0)
+  maxCourses    Int?    @default(0)
 
   primaryColor String? @default("#0369a0")
 
@@ -27,6 +27,8 @@ model Container {
   profiles   Profile[]
   members    Member[]
   channels   Channel[]
+  files      File[]
+  folders    Folder[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -55,12 +57,13 @@ model Server {
 }
 
 model Profile {
-  id       String @id @default(uuid())
-  userId   String @unique
-  name     String @db.Text
-  imageUrl String @db.Text
-  email    String @db.Text
-  role     String @default("USER")
+  id       String  @id @default(uuid())
+  userId   String  @unique
+  name     String  @db.Text
+  imageUrl String  @db.Text
+  email    String  @db.Text
+  language String? @db.Text
+  role     String  @default("USER")
 
   containerId String
   container   Container @relation(fields: [containerId], references: [id])
@@ -257,12 +260,16 @@ model File {
   folderId String
   folder   Folder? @relation(fields: [folderId], references: [id], onDelete: Cascade)
 
+  containerId String?
+  container   Container? @relation(fields: [containerId], references: [id])
+
   status FileStatus @default(PENDING)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([folderId])
+  @@index([containerId])
 }
 
 enum FileStatus {
@@ -282,10 +289,14 @@ model Folder {
 
   subFolders Folder[] @relation("SubFolders") // Define the opposite relation here
 
+  containerId String?
+  container   Container? @relation(fields: [containerId], references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([parentFolderId])
+  @@index([containerId])
 }
 
 // TODO: Global Color Settings
@@ -323,13 +334,14 @@ model Post {
 // TODO: Live Event Models
 
 model LiveEvent {
-  id          String  @id @default(uuid())
+  id          String   @id @default(uuid())
   userId      String
-  title       String  @db.Text
-  description String? @db.Text
-  imageUrl    String? @db.Text
-  videoUrl    String? @db.Text
-  isPublished Boolean @default(false)
+  title       String   @db.Text
+  description String?  @db.Text
+  imageUrl    String?  @db.Text
+  videoUrl    String?  @db.Text
+  isPublished Boolean  @default(false)
+  isEnded     Boolean? @default(false)
 
   containerId String
   container   Container @relation(fields: [containerId], references: [id])
@@ -337,13 +349,15 @@ model LiveEvent {
   categoryId String?
   category   Category? @relation(fields: [categoryId], references: [id])
 
-comments Comment[]
+  comments Comment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   startDateTime DateTime?
-  endDateTime DateTime?
+  endDateTime   DateTime?
+
+  likes Like[]
 
   @@index([categoryId])
   @@index([containerId])
@@ -360,7 +374,7 @@ model Comment {
   post   Post?   @relation(fields: [postId], references: [id])
 
   liveEventId String?
-  liveEvent   LiveEvent?   @relation(fields: [liveEventId], references: [id])
+  liveEvent   LiveEvent? @relation(fields: [liveEventId], references: [id])
 
   profileId String
   profile   Profile @relation(fields: [profileId], references: [id])
@@ -388,13 +402,16 @@ model Like {
   postId String?
   post   Post?   @relation(fields: [postId], references: [id])
 
-  commentId String?
-  comment   Comment? @relation(fields: [commentId], references: [id])
+  commentId   String?
+  comment     Comment?   @relation(fields: [commentId], references: [id])
+  liveEventId String?
+  liveEvent   LiveEvent? @relation(fields: [liveEventId], references: [id])
 
-  @@unique([profileId, postId, commentId])
+  @@unique([profileId, postId, commentId, liveEventId])
   @@index([profileId])
   @@index([postId])
   @@index([commentId])
+  @@index([liveEventId])
 }
 
 // TODO: Chat & Conversation Models
@@ -484,5 +501,3 @@ model DirectMessage {
   @@index([memberId])
   @@index([conversationId])
 }
-
-

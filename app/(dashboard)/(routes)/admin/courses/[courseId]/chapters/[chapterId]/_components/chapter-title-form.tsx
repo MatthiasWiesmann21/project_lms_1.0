@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/lib/check-language";
 
 interface ChapterTitleFormProps {
   initialData: {
@@ -37,7 +38,7 @@ export const ChapterTitleForm = ({
   chapterId,
 }: ChapterTitleFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
-
+  const currentLanguage = useLanguage();
   const toggleEdit = () => setIsEditing((current) => !current);
 
   const router = useRouter();
@@ -63,14 +64,14 @@ export const ChapterTitleForm = ({
   return (
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Chapter title
+        {currentLanguage.chapter_TitleForm_title}
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <>{currentLanguage.chapter_TitleForm_cancel}</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit title
+              {currentLanguage.chapter_TitleForm_edit}
             </>
           )}
         </Button>
@@ -94,7 +95,7 @@ export const ChapterTitleForm = ({
                   <FormControl>
                     <Input
                       disabled={isSubmitting}
-                      placeholder="e.g. 'Introduction to the course'"
+                      placeholder={currentLanguage.chapter_TitleForm_placeholder}
                       {...field}
                     />
                   </FormControl>
@@ -107,7 +108,7 @@ export const ChapterTitleForm = ({
                 disabled={!isValid || isSubmitting}
                 type="submit"
               >
-                Save
+                {currentLanguage.chapter_TitleForm_save}
               </Button>
             </div>
           </form>

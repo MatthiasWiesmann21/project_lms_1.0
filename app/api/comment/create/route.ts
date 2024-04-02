@@ -31,8 +31,59 @@ export async function POST(req: Request) {
         liveEventId,
       },
     });
+    const postDetails = await db?.post?.findFirst({
+      where: {
+        isPublished: true,
+        containerId: process.env.CONTAINER_ID,
+        id: postId,
+      },
+      include: {
+        category: true,
+        comments: {
+          include: {
+            likes: true,
+            subComment: {
+              include: {
+                likes: true,
+                profile: true,
+              },
+            },
+            profile: true,
+          },
+          where: {
+            parentComment: null,
+          },
+        },
+        likes: true,
+      },
+    });
+    const post = {
+      ...postDetails,
+      commentsCount: postDetails?.comments?.length,
+      likesCount: postDetails?.likes?.length,
+      currentLike: postDetails?.likes?.some(
+        (like) => like?.profileId === profile?.id
+      ),
+      commentsWithLikes: postDetails?.comments
+        ?.map((comment) => ({
+          ...comment,
+          commentLikesCount: comment?.likes?.length,
+          currentCommentLike: comment?.likes?.some(
+            (like) => like.profileId === profile.id
+          ),
+          subCommentsWithLikes: comment?.subComment?.map((subcomment) => ({
+            ...subcomment,
+            commentLikesCount: subcomment?.likes?.length,
+            currentCommentLike: subcomment?.likes?.some(
+              (like) => like?.profileId === profile?.id
+            ),
+          })),
+        }))
+        //@ts-ignore
+        ?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)),
+    };
 
-    return NextResponse.json({ data: comment });
+    return NextResponse.json({ data: comment, post });
   } catch (error) {
     console.log("[SUBSCRIPTION]", error);
     return new NextResponse("Internal Error", { status: 500 });

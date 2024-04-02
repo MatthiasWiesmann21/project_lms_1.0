@@ -20,7 +20,7 @@ const InviteCodePage = async ({
   }
 
   if (!params.inviteCode) {
-    return redirect("/");
+    return redirect("/search");
   }
 
   const existingServer = await db.server.findFirst({

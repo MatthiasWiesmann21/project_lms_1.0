@@ -25,7 +25,7 @@ interface PostCardProps {
   currentLike: boolean;
   commentsWithLikes: any;
   commentsCount: number;
-  getPosts: any;
+  updateLikeComment: any;
 }
 
 export const PostCard = ({
@@ -42,7 +42,7 @@ export const PostCard = ({
   currentLike,
   commentsWithLikes,
   commentsCount,
-  getPosts,
+  updateLikeComment,
 }: PostCardProps) => (
   <div className="group m-5 h-full overflow-hidden rounded-lg border p-3 hover:shadow-sm dark:border-[#ffffff]">
     <div className="group h-full overflow-hidden rounded-lg border p-3 hover:shadow-sm dark:border-[#ffffff]">
@@ -83,7 +83,7 @@ export const PostCard = ({
       currentLike={currentLike}
       commentsWithLikes={commentsWithLikes}
       commentsCount={commentsCount}
-      getPosts={getPosts}
+      updateLikeComment={updateLikeComment}
     />
   </div>
 );

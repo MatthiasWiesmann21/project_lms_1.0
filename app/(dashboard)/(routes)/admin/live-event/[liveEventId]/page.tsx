@@ -1,11 +1,6 @@
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import {
-  CircleDollarSign,
-  File,
-  LayoutDashboard,
-  ListChecks,
-} from "lucide-react";
+import { LayoutDashboard, ListChecks } from "lucide-react";
 
 import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
@@ -19,6 +14,7 @@ import { Actions } from "./_components/actions";
 import { VideoForm } from "./_components/event-video-form";
 import { StartDateTimeForm } from "./_components/startDateTime-form";
 import { EndDateTimeForm } from "./_components/endDateTime-form";
+import { languageServer } from "@/lib/check-language-server";
 
 const LiveEventIdPage = async ({
   params,
@@ -26,7 +22,7 @@ const LiveEventIdPage = async ({
   params: { liveEventId: string };
 }) => {
   const { userId } = auth();
-
+  const currentLanguage = await languageServer();
   if (!userId) {
     return redirect("/");
   }
@@ -70,14 +66,14 @@ const LiveEventIdPage = async ({
   return (
     <>
       {!liveEvent.isPublished && (
-        <Banner label="This course is unpublished. It will not be visible to the students." />
+        <Banner label={currentLanguage.liveEvent_unpublish_banner} />
       )}
       <div className="p-6">
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2">
-            <h1 className="text-2xl font-medium">Event Setup</h1>
+            <h1 className="text-2xl font-medium">{currentLanguage.liveEvent_setup_title}</h1>
             <span className="text-sm text-slate-700 dark:text-[#ffffff]">
-              Complete all required fields {completionText}
+              {currentLanguage.liveEvent_setup_undertitle} {completionText}
             </span>
           </div>
           <Actions
@@ -90,8 +86,8 @@ const LiveEventIdPage = async ({
           <div>
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LayoutDashboard} />
-              <h2 className="text-xl">Customize your Live Event</h2>
-              <span className="pl-1 text-xs text-rose-600">*required</span>
+              <h2 className="text-xl">{currentLanguage.liveEvent_setup_customize_title}</h2>
+              <span className="pl-1 text-xs text-rose-600">{currentLanguage.requiredFields}</span>
             </div>
             <TitleForm initialData={liveEvent} liveEventId={liveEvent.id} />
             <EventDescriptionForm
@@ -125,8 +121,8 @@ const LiveEventIdPage = async ({
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={ListChecks} />
                 <h2 className="text-xl">
-                  Course chapters
-                  <span className="pl-1 text-xs text-rose-600">*required</span>
+                  {currentLanguage.liveEvent_setup_video_title}
+                  <span className="pl-1 text-xs text-rose-600">{currentLanguage.requiredFields}</span>
                 </h2>
               </div>
               <ImageForm initialData={liveEvent} liveEventId={liveEvent.id} />

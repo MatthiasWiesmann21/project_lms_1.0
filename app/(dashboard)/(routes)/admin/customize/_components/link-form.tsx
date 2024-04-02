@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/lib/check-language";
 
 interface LinkFormProps {
   initialData: {
@@ -39,7 +40,7 @@ export const LinkForm = ({
   const [isEditing, setIsEditing] = useState(false);
 
   const toggleEdit = () => setIsEditing((current) => !current);
-
+  const currentLanguage = useLanguage();
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -63,14 +64,14 @@ export const LinkForm = ({
   return (
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Container Link
+        {currentLanguage.customize_ContainerLinkForm_title}
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <>{currentLanguage.customize_ContainerLinkForm_cancel}</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit title
+              {currentLanguage.customize_ContainerLinkForm_edit}
             </>
           )}
         </Button>
@@ -94,7 +95,7 @@ export const LinkForm = ({
                   <FormControl>
                     <Input
                       disabled={isSubmitting}
-                      placeholder="e.g. 'Advanced web development'"
+                      placeholder={currentLanguage.customize_ContainerLinkForm_placeholder}
                       {...field}
                     />
                   </FormControl>
@@ -107,7 +108,7 @@ export const LinkForm = ({
                 disabled={!isValid || isSubmitting}
                 type="submit"
               >
-                Save
+                {currentLanguage.customize_ContainerLinkForm_save}
               </Button>
             </div>
           </form>

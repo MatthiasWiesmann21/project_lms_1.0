@@ -22,7 +22,7 @@ export const Actions = ({
   const router = useRouter();
   const confetti = useConfettiStore();
   const [isLoading, setIsLoading] = useState(false);
-
+  
   
   const onDelete = async () => {
     try {

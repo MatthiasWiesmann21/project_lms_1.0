@@ -23,6 +23,7 @@ import { cn } from "@/lib/utils";
 import { Editor } from "@/components/editor";
 import { Preview } from "@/components/preview";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useLanguage } from "@/lib/check-language";
 
 interface CategoryTypeFormProps {
   initialData: Category;
@@ -40,7 +41,7 @@ export const CategoryTypeForm = ({
   categoryId,
 }: CategoryTypeFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
-
+  const currentLanguage = useLanguage();
   const toggleEdit = () => setIsEditing((current) => !current);
 
   const router = useRouter();
@@ -70,7 +71,7 @@ export const CategoryTypeForm = ({
   return (
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Category Type
+        {currentLanguage.post_CategoryTypeForm_title}
       </div>
         <Form {...form}>
           <form
@@ -90,7 +91,7 @@ export const CategoryTypeForm = ({
                   </FormControl>
                   <div className="space-y-1 leading-none">
                     <FormDescription>
-                      Course category
+                      {currentLanguage.post_CategoryTypeForm_isCourseCategory}
                     </FormDescription>
                   </div>
                 </FormItem>
@@ -109,7 +110,7 @@ export const CategoryTypeForm = ({
                   </FormControl>
                   <div className="space-y-1 leading-none">
                     <FormDescription>
-                      News category
+                      {currentLanguage.post_CategoryTypeForm_isNewsCategory}
                     </FormDescription>
                   </div>
                 </FormItem>
@@ -128,7 +129,7 @@ export const CategoryTypeForm = ({
                   </FormControl>
                   <div className="space-y-1 leading-none">
                     <FormDescription>
-                        Live event category
+                      {currentLanguage.post_CategoryTypeForm_isLiveEventCategory}
                     </FormDescription>
                   </div>
                 </FormItem>
@@ -139,7 +140,7 @@ export const CategoryTypeForm = ({
                 disabled={!isValid || isSubmitting}
                 type="submit"
               >
-                Save
+                {currentLanguage.post_CategoryTypeForm_save}
               </Button>
             </div>
           </form>
