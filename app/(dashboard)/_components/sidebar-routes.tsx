@@ -2,22 +2,19 @@
 
 import {
   BarChartIcon,
+  CalendarCheck2,
   ClapperboardIcon,
   Compass,
   FolderOpen,
   Globe2,
+  GraduationCap,
   Layout,
-  LayoutDashboard,
   LayoutGridIcon,
   ListIcon,
-  Mail,
-  MailIcon,
   MessageCircle,
   NewspaperIcon,
   PaletteIcon,
-  PinIcon,
-  Server,
-  ServerIcon,
+  Trophy,
   UserCircle2Icon,
   Video,
 } from "lucide-react";
@@ -25,8 +22,6 @@ import { usePathname } from "next/navigation";
 
 import { SidebarItem } from "./sidebar-item";
 import { useSelector } from "react-redux";
-import { use } from "react";
-import { currentUser } from "@clerk/nextjs";
 
 const userRoutes = [
   {
@@ -63,6 +58,24 @@ const userRoutes = [
     icon: FolderOpen,
     label: "Documents",
     href: "/documents",
+    isNew: false,
+  },
+  {
+    icon: Trophy,
+    label: "Trainingscenter",
+    href: "/trainingscenter",
+    isNew: false,
+  },
+  {
+    icon: CalendarCheck2,
+    label: "Calendar",
+    href: "/calendar",
+    isNew: false,
+  },
+  {
+    icon: GraduationCap,
+    label: "Knowledge-Library",
+    href: "/knowledge-hub",
     isNew: false,
   },
 ];
