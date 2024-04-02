@@ -49,7 +49,7 @@ const CategoryIdPage = async ({
     <>
       {!category.isPublished && (
         <Banner
-          label="This course is unpublished. It will not be visible to the students."
+          label={currentLanguage.category_unpublish_banner}
         />
       )}
       <div className="p-6">
@@ -73,7 +73,7 @@ const CategoryIdPage = async ({
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LayoutGridIcon} />
               <h2 className="text-xl">
-                Name your Category
+                {currentLanguage.category_setup_customize_title}
               </h2>
               <span className="pl-1 text-xs text-rose-600">{currentLanguage.requiredFields}</span>
             </div>

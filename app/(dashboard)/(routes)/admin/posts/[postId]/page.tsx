@@ -69,7 +69,7 @@ const PostIdPage = async ({
     <>
       {!post.isPublished && (
         <Banner
-          label="This course is unpublished. It will not be visible to the students."
+          label={currentLanguage.post_unpublish_banner}
         />
       )}
       <div className="p-6">

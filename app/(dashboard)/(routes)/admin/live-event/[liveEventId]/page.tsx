@@ -66,7 +66,7 @@ const LiveEventIdPage = async ({
   return (
     <>
       {!liveEvent.isPublished && (
-        <Banner label="This course is unpublished. It will not be visible to the students." />
+        <Banner label={currentLanguage.liveEvent_unpublish_banner} />
       )}
       <div className="p-6">
         <div className="flex items-center justify-between">
