@@ -9,7 +9,6 @@ import { Banner } from "@/components/banner";
 
 import { ImageForm } from "./_components/image-form";
 import { LinkForm } from "./_components/link-form";
-import { ColorForm } from "./_components/color-form";
 import { isAdmin, isOperator } from "@/lib/roleCheckServer";
 import { isOwner } from "@/lib/owner";
 import { languageServer } from "@/lib/check-language-server";
@@ -72,10 +71,6 @@ const CustomizeSettingsPage = async () => {
             <LinkForm
                 initialData={{ link: container.link || "" }}
                 containerId={container.id}
-            />
-            <ColorForm
-                initialData={{ primaryColor: container.primaryColor || "#0369a0" }}
-                containerId={container.id} 
             />
           </div>
           <div>
