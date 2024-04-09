@@ -62,6 +62,8 @@ const LiveEventIdPage = async ({
 
   const isComplete = requiredFields.every(Boolean);
 
+  console.log("liveEvent", liveEvent);
+
   return (
     <>
       {!liveEvent.isPublished && (
