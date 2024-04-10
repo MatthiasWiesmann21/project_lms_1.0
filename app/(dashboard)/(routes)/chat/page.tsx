@@ -11,6 +11,7 @@ const SetupPage = async () => {
       createdAt: "asc",
     },
     where: {
+      containerId: process.env.CONTAINER_ID!,
       members: {
         some: {},
       },
@@ -19,6 +20,7 @@ const SetupPage = async () => {
 
   const serverwithProfile = await db.server.findFirst({
     where: {
+      containerId: process.env.CONTAINER_ID!,
       members: {
         some: {
           profileId: profile.id,
