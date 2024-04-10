@@ -28,6 +28,7 @@ import { FileUpload } from "@/components/file-upload";
 import { redirect, useRouter } from "next/navigation";
 import { useLanguage } from "@/lib/check-language";
 import { useIsAdmin } from "@/lib/roleCheck";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -76,6 +77,7 @@ export const InitialModal = () => {
   }
 
   if(!isAdmin) {
+    toast.error("You are not authorized to create a server. Please log in as an admin.");
     return redirect("/search")
   }
 
