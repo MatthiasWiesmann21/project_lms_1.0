@@ -27,7 +27,6 @@ import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/file-upload";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "@/lib/check-language";
-import { DialogOverlay } from "@radix-ui/react-dialog";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -74,7 +73,7 @@ export const InitialModal = () => {
   }
 
   return (
-    <DialogOverlay>
+    <Dialog open>
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
@@ -136,6 +135,6 @@ export const InitialModal = () => {
           </form>
         </Form>
       </DialogContent>
-    </DialogOverlay>
+    </Dialog>
   )
 }
