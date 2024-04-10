@@ -25,8 +25,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/file-upload";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useLanguage } from "@/lib/check-language";
+import { useIsAdmin } from "@/lib/roleCheck";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -41,6 +42,8 @@ export const InitialModal = () => {
   const [isMounted, setIsMounted] = useState(false);
   const currentLanguage = useLanguage();
   const router = useRouter();
+  const isAdmin = useIsAdmin();
+
 
   useEffect(() => {
     setIsMounted(true);
@@ -70,6 +73,10 @@ export const InitialModal = () => {
 
   if (!isMounted) {
     return null;
+  }
+
+  if(!isAdmin) {
+    return redirect("/search")
   }
 
   return (
