@@ -17,7 +17,10 @@ model Container {
   clientPackage String? @db.Text
   maxCourses    Int?    @default(0)
 
-  primaryColor String? @default("#0369a0")
+  navPrimaryColor String? @default("#0369a0")
+  navBackgroundColor String? @default("#ffffff")
+  navDarkPrimaryColor String? @default("#ffffff")
+  navDarkBackgroundColor String? @default("#0369a0")
 
   courses    Course[]
   categories Category[]

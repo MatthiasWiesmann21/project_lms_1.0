@@ -357,4 +357,13 @@ category_unpublish_banner: "Эта категория не опубликова�
 chapter_unpublish_banner: "Эта глава не опубликована. Она не будет видна пользователям.",
 analytics_total_revenue_label: "Общий доход",
 analytics_total_sales_label: "Общие продажи",
+customize_NavColors_title: "Настройте цвета вашей навигации",
+customize_navBackgroundColorForm_title: "Цвет фона навигации",
+customize_navDarkBackgroundColorForm_title: "Цвет фона навигации в темном режиме",
+customize_navPrimaryColorForm_title: "Основной цвет навигации",
+customize_navDarkPrimaryColorForm_title: "Основной цвет навигации в темном режиме",
+customize_customizeNavigation_title: "Настройте цвета вашей навигации",
+customize_NavColorsDark_title: "Настройте цвета вашей навигации в темном режиме",
+settings_menu_containersettings_title: "Настройки контейнера",
+settings_menu_navigationdesign_title: "Дизайн навигации",
 };

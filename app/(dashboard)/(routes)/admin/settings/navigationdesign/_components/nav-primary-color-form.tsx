@@ -23,20 +23,20 @@ import { Input } from "@/components/ui/input";
 import { useDispatch } from "react-redux";
 import { useLanguage } from "@/lib/check-language";
 
-interface ColorFormProps {
+interface PrimaryNavColorFormProps {
   initialData: {
-    primaryColor: string;
+    navPrimaryColor: string;
   };
   containerId: string;
 }
 
 const formSchema = z.object({
-  primaryColor: z.string().min(1, {
+  navPrimaryColor: z.string().min(1, {
     message: "Color is required",
   }),
 });
 
-export const ColorForm = ({ initialData, containerId }: ColorFormProps) => {
+export const PrimaryNavColorForm = ({ initialData, containerId }: PrimaryNavColorFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const currentLanguage = useLanguage();
   const toggleEdit = () => setIsEditing((current) => !current);
@@ -69,7 +69,7 @@ export const ColorForm = ({ initialData, containerId }: ColorFormProps) => {
   return (
     <div className="mt-6 rounded-md border bg-slate-200 p-4 dark:bg-slate-700">
       <div className="flex items-center justify-between font-medium">
-        {currentLanguage.customize_PrimaryColorForm_title}
+        {currentLanguage.customize_navPrimaryColorForm_title}
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>{currentLanguage.customize_PrimaryColorForm_cancel}</>
@@ -83,10 +83,10 @@ export const ColorForm = ({ initialData, containerId }: ColorFormProps) => {
       </div>
       {!isEditing && (
         <div
-          style={{ backgroundColor: initialData.primaryColor }}
+          style={{ backgroundColor: initialData.navPrimaryColor }}
           className="mt-2 h-8 w-8 rounded-md"
         >
-          <p className="mt-3 p-1 pl-10 text-sm">{initialData.primaryColor}</p>
+          <p className="mt-3 p-1 pl-10 text-sm">{initialData.navPrimaryColor}</p>
         </div>
       )}
       {isEditing && (
@@ -97,7 +97,7 @@ export const ColorForm = ({ initialData, containerId }: ColorFormProps) => {
           >
             <FormField
               control={form.control}
-              name="primaryColor"
+              name="navPrimaryColor"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -114,7 +114,7 @@ export const ColorForm = ({ initialData, containerId }: ColorFormProps) => {
                     />
                   </FormControl>
                   <FormLabel className="p-1">
-                    {field.value || initialData.primaryColor}
+                    {field.value || initialData.navPrimaryColor}
                   </FormLabel>
                   <FormMessage />
                 </FormItem>

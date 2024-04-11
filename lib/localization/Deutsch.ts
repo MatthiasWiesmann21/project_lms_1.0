@@ -360,4 +360,13 @@ category_unpublish_banner: "Diese Kategorie ist nicht veröffentlicht. Sie wird 
 chapter_unpublish_banner: "Dieses Kapitel ist nicht veröffentlicht. Es wird für die Benutzer nicht sichtbar sein.",
 analytics_total_revenue_label: "Gesamteinnahmen",
 analytics_total_sales_label: "Gesamtverkäufe",
+customize_NavColors_title: "Passen Sie Ihre Navigationsfarben an",
+customize_navBackgroundColorForm_title: "Navigationshintergrundfarbe",
+customize_navDarkBackgroundColorForm_title: "Navigationshintergrundfarbe Dunkelmodus",
+customize_navPrimaryColorForm_title: "Primärfarbe der Navigation",
+customize_navDarkPrimaryColorForm_title: "Primärfarbe der Navigation Dunkelmodus",
+customize_customizeNavigation_title: "Passen Sie Ihre Navigationsfarben an",
+customize_NavColorsDark_title: "Passen Sie Ihre Navigationsfarben für den Dunkelmodus an",
+settings_menu_containersettings_title: "Container-Einstellungen",
+settings_menu_navigationdesign_title: "Navigationsdesign",
 };

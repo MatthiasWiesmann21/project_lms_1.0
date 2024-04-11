@@ -1,55 +1,49 @@
-import { auth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
-import { CircleDollarSign, File, Image, LayoutDashboard, LayoutGridIcon, ListChecks } from "lucide-react";
-
-import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
-import { Banner } from "@/components/banner";
-
-
-import { ImageForm } from "./_components/image-form";
 import { LinkForm } from "./_components/link-form";
-import { ColorForm } from "./_components/color-form";
+import { ImageForm } from "./_components/image-form";
+import { auth } from "@clerk/nextjs";
+import { languageServer } from "@/lib/check-language-server";
 import { isAdmin, isOperator } from "@/lib/roleCheckServer";
 import { isOwner } from "@/lib/owner";
-import { languageServer } from "@/lib/check-language-server";
+import { redirect } from "next/navigation";
+import { db } from "@/lib/db";
+import { Image, LayoutGridIcon } from "lucide-react";
 
-const CustomizeSettingsPage = async () => {
-  const { userId } = auth();
-  const currentLanguage = await languageServer();
-  const isRoleAdmins = await isAdmin();
-  const isRoleOperator = await isOperator();
-  const canAccess = isRoleAdmins || isRoleOperator || isOwner(userId);
+const ContainerSettingsPage = async () => {
+    const { userId } = auth();
+    const currentLanguage = await languageServer();
+    const isRoleAdmins = await isAdmin();
+    const isRoleOperator = await isOperator();
+    const canAccess = isRoleAdmins || isRoleOperator || isOwner(userId);
 
-  if (!userId || !canAccess) {
-   return redirect("/search");
-  }
-
-  const container = await db.container.findUnique({
-    where: {
-      id: process.env.CONTAINER_ID,
+    if (!userId || !canAccess) {
+        return redirect("/admin/customize");
     }
-  });
 
-  if (!container) {
-    return redirect("/");
-  }
+    const container = await db.container.findUnique({
+        where: {
+            id: process.env.CONTAINER_ID,
+        }
+    });
 
-  const requiredFields = [
-    container.name,
-    container.imageUrl,
-  ];
+    if (!container) {
+        return redirect("/");
+    }
 
-  const totalFields = requiredFields.length;
-  const completedFields = requiredFields.filter(Boolean).length;
-
-  const completionText = `(${completedFields}/${totalFields})`;
-
-  const isComplete = requiredFields.every(Boolean);
-
-  return (
-    <>
-      <div className="p-6">
+    const requiredFields = [
+        container.link,
+        container.imageUrl,
+      ];
+    
+      const totalFields = requiredFields.length;
+      const completedFields = requiredFields.filter(Boolean).length;
+    
+      const completionText = `(${completedFields}/${totalFields})`;
+    
+      const isComplete = requiredFields.every(Boolean);
+    
+    return ( 
+        <div className="p-6">
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2">
             <h1 className="text-2xl font-medium">
@@ -73,16 +67,13 @@ const CustomizeSettingsPage = async () => {
                 initialData={{ link: container.link || "" }}
                 containerId={container.id}
             />
-            <ColorForm
-                initialData={{ primaryColor: container.primaryColor || "#0369a0" }}
-                containerId={container.id} 
-            />
+            
           </div>
           <div>
             <div className="flex items-center gap-x-2">
               <IconBadge icon={Image} />
               <h2 className="text-xl">
-                {currentLanguage?.customize_AddImageTitle}
+                {currentLanguage.customize_AddImageTitle}
               </h2>
               <span className="pl-1 text-xs text-rose-600">{currentLanguage?.requiredFields}</span>
             </div>
@@ -92,9 +83,8 @@ const CustomizeSettingsPage = async () => {
               />
           </div>
         </div>
-      </div>
-    </>
-   );
+        </div>
+     );
 }
  
-export default CustomizeSettingsPage;
+export default ContainerSettingsPage;

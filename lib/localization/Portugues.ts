@@ -357,4 +357,13 @@ category_unpublish_banner: "Esta categoria não está publicada. Não será vis�
 chapter_unpublish_banner: "Este capítulo não está publicado. Não será visível para os Usuários.",
 analytics_total_revenue_label: "Receita Total",
 analytics_total_sales_label: "Vendas Totais",
+customize_NavColors_title: "Personalize as cores da sua navegação",
+customize_navBackgroundColorForm_title: "Cor de fundo da navegação",
+customize_navDarkBackgroundColorForm_title: "Cor de fundo da navegação em modo escuro",
+customize_navPrimaryColorForm_title: "Cor primária da navegação",
+customize_navDarkPrimaryColorForm_title: "Cor primária da navegação em modo escuro",
+customize_customizeNavigation_title: "Personalize as cores da sua navegação",
+customize_NavColorsDark_title: "Personalize as cores da sua navegação em modo escuro",
+settings_menu_containersettings_title: "Configurações do contêiner",
+settings_menu_navigationdesign_title: "Design da navegação",
 };
