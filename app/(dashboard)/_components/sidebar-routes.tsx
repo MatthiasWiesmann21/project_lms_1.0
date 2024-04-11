@@ -18,6 +18,7 @@ import {
   PinIcon,
   Server,
   ServerIcon,
+  Settings,
   UserCircle2Icon,
   Video,
 } from "lucide-react";
@@ -114,12 +115,6 @@ const AdministrationRoutes = [
     isNew: false,
   },
   {
-    icon: PaletteIcon,
-    label: "Customize",
-    href: "/admin/customize",
-    isNew: false,
-  },
-  {
     icon: UserCircle2Icon,
     label: "Users",
     href: "/admin/users",
@@ -131,11 +126,27 @@ const AdministrationRoutes = [
     href: "/admin/analytics",
     isNew: false,
   },
+  {
+    icon: Settings,
+    label: "Settings",
+    href: "/admin/settings",
+    isNew: false,
+  },
 ];
 
+interface NavColor {
+  navPrimaryColor: string; // The color code, e.g., "#FFFFFF"
+  navBackgroundColor: string;
+  navDarkPrimaryColor: string;
+  navDarkBackgroundColor: string;
+}
 
-
-export const SidebarRoutes = () => {
+export const SidebarRoutes = ({
+  navPrimaryColor,
+  navBackgroundColor,
+  navDarkPrimaryColor,
+  navDarkBackgroundColor,
+}: NavColor) => {
   const client = useSelector((state: any) => state?.user);
 
   const pathname = usePathname();
@@ -157,6 +168,10 @@ export const SidebarRoutes = () => {
           label={route.label}
           href={route.href}
           isNew={route.isNew}
+          navPrimaryColor={navPrimaryColor}
+          navBackgroundColor={navBackgroundColor}
+          navDarkBackgroundColor={navDarkBackgroundColor}
+          navDarkPrimaryColor={navDarkPrimaryColor}
         />
       ))}
     </div>

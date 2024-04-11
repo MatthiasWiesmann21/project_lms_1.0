@@ -357,4 +357,13 @@ category_unpublish_banner: "此类别未发布。它将不会对用户可见。"
 chapter_unpublish_banner: "此章节未发布。它将不会对用户可见。",
 analytics_total_revenue_label: "总收入",
 analytics_total_sales_label: "总销售额",
+customize_NavColors_title: "自定义导航颜色",
+customize_navBackgroundColorForm_title: "导航背景颜色",
+customize_navDarkBackgroundColorForm_title: "导航暗模式背景颜色",
+customize_navPrimaryColorForm_title: "导航主色",
+customize_navDarkPrimaryColorForm_title: "导航暗模式主色",
+customize_customizeNavigation_title: "自定义导航颜色",
+customize_NavColorsDark_title: "自定义导航暗模式颜色",
+settings_menu_containersettings_title: "容器设置",
+settings_menu_navigationdesign_title: "导航设计",
 };

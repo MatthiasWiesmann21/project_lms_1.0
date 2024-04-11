@@ -1,17 +1,28 @@
-import Image from "next/image";
 import { Logo } from "./logo";
 import { SidebarRoutes } from "./sidebar-routes";
 import { languageServer } from "@/lib/check-language-server";
+import { db } from "@/lib/db";
+
 
 export const Sidebar = async () => {
   const currentLanguage = await languageServer();
+  const navColor = await db.container.findUnique({
+    where: {
+      id: process.env.CONTAINER_ID,
+    },
+  });
   return (
     <div className="flex h-full flex-col overflow-y-auto border-r bg-white shadow-sm dark:bg-[#1e1f22]">
       <div className="p-5">
         <Logo />
       </div>
       <div className="flex w-full flex-col border-t ">
-        <SidebarRoutes />
+        <SidebarRoutes 
+          navPrimaryColor={navColor?.navPrimaryColor || '#ff00ff'}
+          navDarkPrimaryColor={navColor?.navDarkPrimaryColor || '#ff00ff'} 
+          navBackgroundColor={navColor?.navBackgroundColor || '#ff00ff'}
+          navDarkBackgroundColor={navColor?.navDarkBackgroundColor || '#ff00ff'}
+        />
       </div>
       <div className="flex flex-grow items-end justify-center pb-5">
         <div className="flex items-center">

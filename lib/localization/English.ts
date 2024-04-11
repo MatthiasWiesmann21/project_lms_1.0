@@ -180,7 +180,6 @@ customize_ImageForm_cancel: "Cancel",
 customize_ImageForm_addImage: "Add an Image",
 customize_ImageForm_edit: "Edit Image",
 customize_ImageForm_imageHint: "16:9 aspect ratio recommended",
-customize_PrimaryColorForm_title: "Primary Color",
 customize_PrimaryColorForm_cancel: "Cancel",
 customize_PrimaryColorForm_edit: "Edit",
 customize_PrimaryColorForm_save: "Save",
@@ -357,4 +356,15 @@ category_unpublish_banner: "This category is unpublished. It will not be visible
 chapter_unpublish_banner: "This chapter is unpublished. It will not be visible to the Users.",
 analytics_total_revenue_label: "Total Revenue",
 analytics_total_sales_label: "Total Sales",
+
+
+customize_NavColors_title: "Customize your Navigation Colors",
+customize_navBackgroundColorForm_title: "Navigation Background Color",
+customize_navDarkBackgroundColorForm_title: "Navigation Background Color Darkmode",
+customize_navPrimaryColorForm_title: "Navigation Primary Color",
+customize_navDarkPrimaryColorForm_title: "Navigation Primary Color Darkmode",
+customize_customizeNavigation_title: "Customize your Navigation Colors",
+customize_NavColorsDark_title: "Customize your Navigation Colors Darkmode",
+settings_menu_containersettings_title: "Container Settings",
+settings_menu_navigationdesign_title: "Navigation Design",
 };
