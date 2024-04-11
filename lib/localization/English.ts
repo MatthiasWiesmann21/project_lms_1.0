@@ -356,8 +356,6 @@ category_unpublish_banner: "This category is unpublished. It will not be visible
 chapter_unpublish_banner: "This chapter is unpublished. It will not be visible to the Users.",
 analytics_total_revenue_label: "Total Revenue",
 analytics_total_sales_label: "Total Sales",
-
-
 customize_NavColors_title: "Customize your Navigation Colors",
 customize_navBackgroundColorForm_title: "Navigation Background Color",
 customize_navDarkBackgroundColorForm_title: "Navigation Background Color Darkmode",
@@ -367,4 +365,5 @@ customize_customizeNavigation_title: "Customize your Navigation Colors",
 customize_NavColorsDark_title: "Customize your Navigation Colors Darkmode",
 settings_menu_containersettings_title: "Container Settings",
 settings_menu_navigationdesign_title: "Navigation Design",
+settings_backToMenu_button_text: "Back to Menu",
 };

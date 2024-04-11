@@ -366,4 +366,5 @@ customize_customizeNavigation_title: "Настройте цвета вашей �
 customize_NavColorsDark_title: "Настройте цвета вашей навигации в темном режиме",
 settings_menu_containersettings_title: "Настройки контейнера",
 settings_menu_navigationdesign_title: "Дизайн навигации",
+settings_backToMenu_button_text: "Вернуться в меню",
 };
