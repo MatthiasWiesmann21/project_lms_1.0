@@ -366,4 +366,5 @@ customize_customizeNavigation_title: "自定义导航颜色",
 customize_NavColorsDark_title: "自定义导航暗模式颜色",
 settings_menu_containersettings_title: "容器设置",
 settings_menu_navigationdesign_title: "导航设计",
+settings_backToMenu_button_text: "返回菜单",
 };

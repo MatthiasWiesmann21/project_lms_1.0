@@ -369,4 +369,5 @@ customize_customizeNavigation_title: "Passen Sie Ihre Navigationsfarben an",
 customize_NavColorsDark_title: "Passen Sie Ihre Navigationsfarben für den Dunkelmodus an",
 settings_menu_containersettings_title: "Container-Einstellungen",
 settings_menu_navigationdesign_title: "Navigationsdesign",
+settings_backToMenu_button_text: "Zurück zum Menü",
 };

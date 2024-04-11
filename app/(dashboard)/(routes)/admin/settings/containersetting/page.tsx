@@ -7,7 +7,8 @@ import { isAdmin, isOperator } from "@/lib/roleCheckServer";
 import { isOwner } from "@/lib/owner";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
-import { Image, LayoutGridIcon } from "lucide-react";
+import { ArrowLeft, Image, LayoutGridIcon } from "lucide-react";
+import Link from "next/link";
 
 const ContainerSettingsPage = async () => {
     const { userId } = auth();
@@ -44,6 +45,12 @@ const ContainerSettingsPage = async () => {
     
     return ( 
         <div className="p-6">
+        <Link
+          href={"/admin/settings"}
+          className="flex items-center text-sm hover:opacity-75 transition mb-6">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+              {currentLanguage.settings_backToMenu_button_text}
+        </Link>
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2">
             <h1 className="text-2xl font-medium">

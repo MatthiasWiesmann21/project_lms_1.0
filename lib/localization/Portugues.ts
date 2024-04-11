@@ -366,4 +366,5 @@ customize_customizeNavigation_title: "Personalize as cores da sua navegação",
 customize_NavColorsDark_title: "Personalize as cores da sua navegação em modo escuro",
 settings_menu_containersettings_title: "Configurações do contêiner",
 settings_menu_navigationdesign_title: "Design da navegação",
+settings_backToMenu_button_text: "Voltar ao menu",
 };

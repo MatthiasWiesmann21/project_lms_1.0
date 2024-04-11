@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { CircleDollarSign, File, Image, LayoutDashboard, LayoutGridIcon, ListChecks, PaletteIcon } from "lucide-react";
+import { ArrowLeft, CircleDollarSign, File, Image, LayoutDashboard, LayoutGridIcon, ListChecks, PaletteIcon } from "lucide-react";
 
 import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
@@ -16,6 +16,7 @@ import { languageServer } from "@/lib/check-language-server";
 import { BackgorundNavColorForm } from "./_components/nav-background-color-form";
 import { DarkPrimaryNavColorForm } from "./_components/nav-darkPrimary-color-form";
 import { DarkBackgorundNavColorForm } from "./_components/nav-darkBackground-color-form";
+import Link from "next/link";
 
 const CustomizeSettingsPage = async () => {
   const { userId } = auth();
@@ -41,6 +42,12 @@ const CustomizeSettingsPage = async () => {
   return (
     <>
       <div className="p-6">
+        <Link
+        href={"/admin/settings"}
+        className="flex items-center text-sm hover:opacity-75 transition mb-6">
+          <ArrowLeft className="h-4 w-4 mr-2" />
+            {currentLanguage.settings_backToMenu_button_text}
+        </Link>
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2">
             <h1 className="text-2xl font-medium">

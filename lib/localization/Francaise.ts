@@ -365,5 +365,6 @@ customize_navDarkPrimaryColorForm_title: "Couleur principale de la navigation en
 customize_customizeNavigation_title: "Personnalisez les couleurs de votre navigation",
 customize_NavColorsDark_title: "Personnalisez les couleurs de votre navigation en mode sombre",
 settings_menu_containersettings_title: "Paramètres du conteneur",
-settings_menu_navigationdesign_title: "Design de la navigation"
+settings_menu_navigationdesign_title: "Design de la navigation",
+settings_backToMenu_button_text: "Retour au menu",
 };

@@ -366,4 +366,5 @@ customize_customizeNavigation_title: "Personalizza i colori della tua navigazion
 customize_NavColorsDark_title: "Personalizza i colori della tua navigazione in modalità scura",
 settings_menu_containersettings_title: "Impostazioni del contenitore",
 settings_menu_navigationdesign_title: "Design della navigazione",
+settings_backToMenu_button_text: "Torna al menu",
 };
