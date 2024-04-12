@@ -1,3 +1,4 @@
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { db } from "@/lib/db";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,12 +15,14 @@ const container = await db.container.findUnique({
   
 return (
   <Link target={container?.link ?? ""} href={container?.link ?? ""}>
+    <AspectRatio ratio={21 / 9}>
     <Image
-      height={130}
-      width={130}
-      alt="logo"
-      src={container?.imageUrl ?? ""}
+    height={100}
+    width={200}
+    alt="logo"
+    src={container?.imageUrl ?? ""}
     />
+    </AspectRatio>
   </Link>
   )
 }

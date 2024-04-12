@@ -68,9 +68,9 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
                   <button
                     type="button"
                     onClick={() => onOpen("messageFile", { apiUrl, query })}
-                    className="absolute left-8 top-7 flex h-[24px] w-[24px] items-center justify-center rounded-full bg-zinc-500 p-1 transition hover:bg-zinc-600 dark:bg-zinc-400 dark:hover:bg-zinc-300"
+                    className="absolute left-8 top-7 flex h-[24px] w-[24px] items-center justify-center rounded-full bg-[#e7e7e9] p-1 transition-all duration-300 hover:bg-zinc-500 dark:bg-[#3b3c43] dark:hover:bg-zinc-300"
                   >
-                    <Plus className="text-white dark:text-[#313338]" />
+                    <Plus className="text-[#71717a] dark:text-[#a1a1aa] hover:text-white dark:hover:text-[#71717a]" />
                   </button>
                   <Input
                     disabled={isLoading}
