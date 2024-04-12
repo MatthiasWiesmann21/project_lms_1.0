@@ -28,111 +28,7 @@ import { SidebarItem } from "./sidebar-item";
 import { useSelector } from "react-redux";
 import { use } from "react";
 import { currentUser } from "@clerk/nextjs";
-
-const userRoutes = [
-  {
-    icon: Compass,
-    label: "Browse",
-    href: "/search",
-    isNew: false,
-  },
-  {
-    icon: Layout,
-    label: "Dashboard",
-    href: "/dashboard",
-    isNew: false,
-  },
-  {
-    icon: Globe2,
-    label: "News",
-    href: "/news",
-    isNew: false,
-  },
-  {
-    icon: Video,
-    label: "Live Event",
-    href: "/live-event",
-    isNew: false,
-  },
-  {
-    icon: MessageCircle,
-    label: "Chat",
-    href: "/chat",
-    isNew: false,
-  },
-  {
-    icon: FolderOpen,
-    label: "Documents",
-    href: "/documents",
-    isNew: false,
-  },
-];
-
-const packageStarterRoutes = [
-  {
-    icon: Compass,
-    label: "Browse",
-    href: "/search",
-    isNew: false,
-  },
-  {
-    icon: Layout,
-    label: "Dashboard",
-    href: "/dashboard",
-    isNew: false,
-  },
-  {
-    icon: Globe2,
-    label: "News",
-    href: "/news",
-    isNew: false,
-  },
-];
-
-const AdministrationRoutes = [
-  {
-    icon: ListIcon,
-    label: "Courses",
-    href: "/admin/courses",
-    isNew: false,
-  },
-  {
-    icon: NewspaperIcon,
-    label: "Posts",
-    href: "/admin/posts",
-    isNew: false,
-  },
-  {
-    icon: ClapperboardIcon,
-    label: "Live Event",
-    href: "/admin/live-event",
-    isNew: false,
-  },
-  {
-    icon: LayoutGridIcon,
-    label: "Categories",
-    href: "/admin/categories",
-    isNew: false,
-  },
-  {
-    icon: UserCircle2Icon,
-    label: "Users",
-    href: "/admin/users",
-    isNew: false,
-  },
-  {
-    icon: BarChartIcon,
-    label: "Analytics",
-    href: "/admin/analytics",
-    isNew: false,
-  },
-  {
-    icon: Settings,
-    label: "Settings",
-    href: "/admin/settings",
-    isNew: false,
-  },
-];
+import { useLanguage } from "@/lib/check-language";
 
 interface NavColor {
   navPrimaryColor: string; // The color code, e.g., "#FFFFFF"
@@ -147,6 +43,113 @@ export const SidebarRoutes = ({
   navDarkPrimaryColor,
   navDarkBackgroundColor,
 }: NavColor) => {
+  const currentLanguage = useLanguage();
+
+  const userRoutes = [
+    {
+      icon: Compass,
+      label: `${currentLanguage.nav_item_browse}`,
+      href: "/search",
+      isNew: false,
+    },
+    {
+      icon: Layout,
+      label: `${currentLanguage.nav_item_dashboard}`,
+      href: "/dashboard",
+      isNew: false,
+    },
+    {
+      icon: Globe2,
+      label: `${currentLanguage.nav_item_news}`,
+      href: "/news",
+      isNew: false,
+    },
+    {
+      icon: Video,
+      label: `${currentLanguage.nav_item_liveEvent}`,
+      href: "/live-event",
+      isNew: false,
+    },
+    {
+      icon: MessageCircle,
+      label: `${currentLanguage.nav_item_chat}`,
+      href: "/chat",
+      isNew: false,
+    },
+    {
+      icon: FolderOpen,
+      label: `${currentLanguage.nav_item_documents}`,
+      href: "/documents",
+      isNew: false,
+    },
+  ];
+  
+  const packageStarterRoutes = [
+    {
+      icon: Compass,
+      label: `${currentLanguage.nav_item_browse}`,
+      href: "/search",
+      isNew: false,
+    },
+    {
+      icon: Layout,
+      label: `${currentLanguage.nav_item_Dashboard}`,
+      href: "/dashboard",
+      isNew: false,
+    },
+    {
+      icon: Globe2,
+      label: `${currentLanguage.nav_item_news}`,
+      href: "/news",
+      isNew: false,
+    },
+  ];
+  
+  const AdministrationRoutes = [
+    {
+      icon: ListIcon,
+      label: `${currentLanguage.nav_admin_item_course}`,
+      href: "/admin/courses",
+      isNew: false,
+    },
+    {
+      icon: NewspaperIcon,
+      label: `${currentLanguage.nav_admin_item_posts}`,
+      href: "/admin/posts",
+      isNew: false,
+    },
+    {
+      icon: ClapperboardIcon,
+      label: `${currentLanguage.nav_admin_item_liveEvents}`,
+      href: "/admin/live-event",
+      isNew: false,
+    },
+    {
+      icon: LayoutGridIcon,
+      label: `${currentLanguage.nav_admin_item_categories}`,
+      href: "/admin/categories",
+      isNew: false,
+    },
+    {
+      icon: UserCircle2Icon,
+      label: `${currentLanguage.nav_admin_item_users}`,
+      href: "/admin/users",
+      isNew: false,
+    },
+    {
+      icon: BarChartIcon,
+      label: `${currentLanguage.nav_admin_item_analytics}`,
+      href: "/admin/analytics",
+      isNew: false,
+    },
+    {
+      icon: Settings,
+      label: `${currentLanguage.nav_admin_item_settings}`,
+      href: "/admin/settings",
+      isNew: false,
+    },
+  ];
+
   const client = useSelector((state: any) => state?.user);
 
   const pathname = usePathname();

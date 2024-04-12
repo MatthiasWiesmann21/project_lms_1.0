@@ -9,6 +9,7 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { ArrowLeft, Image, LayoutGridIcon } from "lucide-react";
 import Link from "next/link";
+import { ImageFormDark } from "./_components/image-form-dark";
 
 const ContainerSettingsPage = async () => {
     const { userId } = auth();
@@ -34,6 +35,7 @@ const ContainerSettingsPage = async () => {
     const requiredFields = [
         container.link,
         container.imageUrl,
+        container.imageUrlDark,
       ];
     
       const totalFields = requiredFields.length;
@@ -88,6 +90,10 @@ const ContainerSettingsPage = async () => {
               initialData={container}
               containerId={container.id}
               />
+            <ImageFormDark 
+              initialData={container}
+              containerId={container.id}
+            />
           </div>
         </div>
         </div>
