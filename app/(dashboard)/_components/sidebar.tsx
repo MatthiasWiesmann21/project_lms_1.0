@@ -18,9 +18,10 @@ export const Sidebar = async () => {
     }}
   )
 
+
   return (
     <div className="flex h-full flex-col overflow-y-auto border-r bg-white shadow-sm dark:bg-[#1e1f22]">
-      <div className="px-4 py-2">
+      <div className="pt-2 px-4 py-2">
         <Logo 
           imageUrl={container?.imageUrl || ""}
           imageUrlDark={container?.imageUrlDark || ""}

@@ -13,6 +13,7 @@ model Container {
   id            String  @id @default(uuid())
   name          String  @unique
   link          String? @db.Text
+  icon          String? @db.Text
   imageUrl      String? @db.Text
   imageUrlDark  String? @db.Text
   clientPackage String? @db.Text
