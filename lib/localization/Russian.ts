@@ -380,4 +380,6 @@ nav_admin_item_categories: "Категория",
 nav_admin_item_users: "Пользователи",
 nav_admin_item_analytics: "Аналитика",
 nav_admin_item_settings: "Настройки",
+customize_ImageFormDark_title: "Изображение контейнера в темном режиме",
+settings_Container_IconForm_title: "Иконка контейнера",
 };

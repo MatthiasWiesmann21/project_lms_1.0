@@ -380,4 +380,6 @@ nav_admin_item_categories: "Categoria",
 nav_admin_item_users: "Utenti",
 nav_admin_item_analytics: "Analisi",
 nav_admin_item_settings: "Impostazioni",
+customize_ImageFormDark_title: "Immagine del contenitore in modalità scura",
+settings_Container_IconForm_title: "Icona del contenitore",
 };

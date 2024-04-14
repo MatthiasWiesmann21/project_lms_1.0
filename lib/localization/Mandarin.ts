@@ -380,4 +380,6 @@ nav_admin_item_categories: "分类",
 nav_admin_item_users: "用户",
 nav_admin_item_analytics: "分析",
 nav_admin_item_settings: "设置",
+customize_ImageFormDark_title: "容器暗黑模式图像",
+settings_Container_IconForm_title: "容器图标",
 };

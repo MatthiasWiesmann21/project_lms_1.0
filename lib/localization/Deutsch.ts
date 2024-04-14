@@ -383,4 +383,6 @@ nav_admin_item_categories: "Kategorien",
 nav_admin_item_users: "Benutzer",
 nav_admin_item_analytics: "Analytik",
 nav_admin_item_settings: "Einstellungen",
+customize_ImageFormDark_title: "Containerbild Dunkelmodus",
+settings_Container_IconForm_title: "Container-Symbol",
 };

@@ -48,7 +48,7 @@ export const ImageFormIcon = ({
   return (
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        {currentLanguage.customize_ImageForm_title}
+        {currentLanguage.settings_Container_IconForm_title}
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing && (
             <>{currentLanguage.customize_ImageForm_cancel}</>

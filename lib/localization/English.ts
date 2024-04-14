@@ -379,4 +379,6 @@ nav_admin_item_categories: "Categories",
 nav_admin_item_users: "Users",
 nav_admin_item_analytics: "Analytics",
 nav_admin_item_settings: "Settings",
+customize_ImageFormDark_title: "Container Image Darkmode",
+settings_Container_IconForm_title: "Container Icon",
 };
