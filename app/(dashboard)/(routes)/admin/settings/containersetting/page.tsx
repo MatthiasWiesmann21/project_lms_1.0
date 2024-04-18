@@ -9,6 +9,8 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { ArrowLeft, Image, LayoutGridIcon } from "lucide-react";
 import Link from "next/link";
+import { ImageFormDark } from "./_components/image-form-dark";
+import { ImageFormIcon } from "./_components/image-form-icon";
 
 const ContainerSettingsPage = async () => {
     const { userId } = auth();
@@ -34,6 +36,7 @@ const ContainerSettingsPage = async () => {
     const requiredFields = [
         container.link,
         container.imageUrl,
+        container.imageUrlDark,
       ];
     
       const totalFields = requiredFields.length;
@@ -74,7 +77,10 @@ const ContainerSettingsPage = async () => {
                 initialData={{ link: container.link || "" }}
                 containerId={container.id}
             />
-            
+            <ImageFormIcon
+              initialData={container}
+              containerId={container.id}
+            />
           </div>
           <div>
             <div className="flex items-center gap-x-2">
@@ -88,6 +94,10 @@ const ContainerSettingsPage = async () => {
               initialData={container}
               containerId={container.id}
               />
+            <ImageFormDark 
+              initialData={container}
+              containerId={container.id}
+            />
           </div>
         </div>
         </div>

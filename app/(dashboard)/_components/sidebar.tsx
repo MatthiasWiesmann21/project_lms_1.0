@@ -11,10 +11,22 @@ export const Sidebar = async () => {
       id: process.env.CONTAINER_ID,
     },
   });
+
+  const container = await db.container.findUnique({
+    where: {
+      id: process.env.CONTAINER_ID,
+    }}
+  )
+
+
   return (
     <div className="flex h-full flex-col overflow-y-auto border-r bg-white shadow-sm dark:bg-[#1e1f22]">
-      <div className="p-5">
-        <Logo />
+      <div className="pt-2 px-4 py-2">
+        <Logo 
+          imageUrl={container?.imageUrl || ""}
+          imageUrlDark={container?.imageUrlDark || ""}
+          link={container?.link || ""}
+        />
       </div>
       <div className="flex w-full flex-col border-t ">
         <SidebarRoutes 
@@ -27,7 +39,7 @@ export const Sidebar = async () => {
       <div className="flex flex-grow items-end justify-center pb-5">
         <div className="flex items-center">
           <span className="mr-1 text-sm font-medium text-gray-600">
-            Powered by
+            Made by
           </span>
           <svg
             width="40"
