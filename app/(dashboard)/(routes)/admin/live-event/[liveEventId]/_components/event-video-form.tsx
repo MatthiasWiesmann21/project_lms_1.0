@@ -11,9 +11,11 @@ import Select from "react-select";
 import { Button } from "@/components/ui/button";
 import vimeo from "@/assets/icons/Vimeo-Logo.png";
 import youtube from "@/assets/icons/Youtube-Logo.png";
+import utfs from "@/assets/icons/uploadthing-logo.svg";
 import UniversalPlayer from "@/pages/components/universalPlayer";
 import { useTheme } from "next-themes";
 import EventModal from "./eventModal";
+import { UploadButton } from "@/utils/uploadthing";
 
 interface VideoFormProps {
   initialData: LiveEvent;
@@ -26,7 +28,7 @@ const formSchema = z.object({
 
 const options = [
   {
-    value: "",
+    value: "https://vimeo.com/",
     label: (
       <div className="flex items-center">
         <Image className="mr-2 w-[50px]" alt="vimeo" src={vimeo} />
@@ -35,11 +37,20 @@ const options = [
     ),
   },
   {
-    value: "",
+    value: "https://www.youtube.com/",
     label: (
       <div className="flex items-center">
         <Image className="mr-2 w-[50px]" alt="youtube" src={youtube} />
         <p className="m-0">youtube</p>
+      </div>
+    ),
+  },
+  {
+    value: "https://utfs.io/",
+    label: (
+      <div className="flex items-center">
+        <Image className="mr-2 w-[50px]" alt="utfs" src={utfs} />
+        <p className="m-0">Uploadthing</p>
       </div>
     ),
   },
@@ -55,17 +66,17 @@ export const VideoForm = ({ initialData, liveEventId }: VideoFormProps) => {
 
   useEffect(() => {
     if (initialData?.videoUrl) {
-      const url = options?.filter(
-        (each) =>
-          each?.value ===
-          `${initialData?.videoUrl?.split("/")?.slice(0, -1)?.join("/")}/`
-      );
-      setVideoUrl(
-        initialData?.videoUrl?.split("/")[
-          initialData?.videoUrl?.split("/")?.length - 1
-        ]
-      );
-      setVideoType(url[0]);
+      const video = initialData?.videoUrl
+        ?.split("/")
+        ?.filter((each, index) => index > 2)
+        ?.join("/");
+      const videoProvider = `${initialData?.videoUrl
+        ?.split("/")
+        ?.filter((each, index) => index < 3)
+        ?.join("/")}/`;
+      const provider = options?.find((each) => each?.value === videoProvider);
+      setVideoUrl(video);
+      setVideoType(provider);
     }
   }, []);
 
@@ -121,72 +132,112 @@ export const VideoForm = ({ initialData, liveEventId }: VideoFormProps) => {
             <Video className="h-10 w-10 text-slate-500" />
           </div>
         ))}
+      {/* {console.log("videoType", videoType, "videoUrl", videoUrl)} */}
 
       {isEditing && (
-        <div>
-          <Select
-            options={options}
-            onChange={(e: any) => setVideoType(e)}
-            value={videoType}
-            styles={{
-              control: (provided) => ({
-                ...provided,
-                backgroundColor: isDarkTheme
-                  ? "focusBackground"
-                  : "defaultBackground",
-                color: "red",
-              }),
-              singleValue: (provided) => ({
-                ...provided,
-                color: isDarkTheme ? "#fff" : "black",
-              }),
-              menu: (provided) => ({
-                ...provided,
-                backgroundColor: isDarkTheme
-                  ? "rgb(51 65 85 / var(--tw-bg-opacity))"
-                  : "rgb(226 232 240 / var(--tw-bg-opacity))",
-              }),
-              // @ts-ignore
-              option: (provided, state) => ({
-                ...provided,
-                backgroundColor: state?.isFocused
-                  ? isDarkTheme
-                    ? "rgb(186 230 253 / 0.1)"
-                    : "lightblue"
-                  : null,
-                color: isDarkTheme ? "white" : "black",
-                "&:hover": {
-                  backgroundColor: isDarkTheme
-                    ? "rgb(186 230 253 / 0.1)"
-                    : "lightblue",
-                },
-              }),
-            }}
-          />
-          <div className="my-1 flex items-center">
-            <p className="m-0">{videoType?.value}</p>
-            <input
-              className="flex w-full items-center rounded-md p-1"
-              type="text"
-              placeholder="Share Link"
-              value={videoUrl}
-              onChange={(e: any) => setVideoUrl(e?.target?.value)}
+        <>
+          <div
+            className="flex items-center justify-around"
+            // style={{ border: "10px solid red" }}
+          >
+            <UploadButton
+              endpoint="videoUploader"
+              onClientUploadComplete={(res: any) => {
+                // Do something with the response
+                setVideoType(options[2]);
+                setVideoUrl(
+                  res[0]?.url
+                    ?.split("/")
+                    ?.filter((each: any, index: any) => index > 2)
+                    ?.join("/")
+                );
+                // console.log(
+                //   "Files: ",
+                //   res[0]?.url
+                //     ?.split("/")
+                //     ?.filter((each: any, index: any) => index < 3)
+                //     ?.join("/")
+                // );
+                // console.log(
+                //   "Files: ",
+                //   res[0]?.url
+                //     ?.split("/")
+                //     ?.filter((each: any, index: any) => index > 2)
+                //     ?.join("/")
+                // );
+                // alert(`Upload Completed ${res[0]?.url}`);
+              }}
+              onUploadError={(error: Error) => {
+                // Do something with the error.
+                alert(`ERROR! ${error.message}`);
+              }}
             />
           </div>
-          <div className="m-[1%] flex items-center justify-end p-[1%]">
-            <Button
-              disabled={videoType === "" || videoUrl === ""}
-              onClick={() =>
-                onSubmit({ videoUrl: videoType?.value + videoUrl })
-              }
-            >
-              Save
-            </Button>
+          <div>
+            <Select
+              options={options}
+              onChange={(e: any) => setVideoType(e)}
+              value={videoType}
+              styles={{
+                control: (provided) => ({
+                  ...provided,
+                  backgroundColor: isDarkTheme
+                    ? "focusBackground"
+                    : "defaultBackground",
+                  color: "red",
+                }),
+                singleValue: (provided) => ({
+                  ...provided,
+                  color: isDarkTheme ? "#fff" : "black",
+                }),
+                menu: (provided) => ({
+                  ...provided,
+                  backgroundColor: isDarkTheme
+                    ? "rgb(51 65 85 / var(--tw-bg-opacity))"
+                    : "rgb(226 232 240 / var(--tw-bg-opacity))",
+                }),
+                // @ts-ignore
+                option: (provided, state) => ({
+                  ...provided,
+                  backgroundColor: state?.isFocused
+                    ? isDarkTheme
+                      ? "rgb(186 230 253 / 0.1)"
+                      : "lightblue"
+                    : null,
+                  color: isDarkTheme ? "white" : "black",
+                  "&:hover": {
+                    backgroundColor: isDarkTheme
+                      ? "rgb(186 230 253 / 0.1)"
+                      : "lightblue",
+                  },
+                }),
+              }}
+            />
+            <div className="my-1 flex items-center">
+              <p className="m-0">{videoType?.value}</p>
+              <input
+                className="flex w-full items-center rounded-md p-1"
+                type="text"
+                placeholder="Share Link"
+                value={videoUrl}
+                onChange={(e: any) => setVideoUrl(e?.target?.value)}
+              />
+            </div>
+            <div className="m-[1%] flex items-center justify-end p-[1%]">
+              <Button
+                disabled={videoType === "" || videoUrl === ""}
+                onClick={() =>
+                  onSubmit({ videoUrl: videoType?.value + videoUrl })
+                }
+              >
+                Save
+              </Button>
+            </div>
+            {videoType && videoUrl && (
+              <VimeoPreview videoId={`${videoType?.value}${videoUrl}`} />
+            )}
           </div>
-          {videoType && videoUrl && (
-            <VimeoPreview videoId={`${videoType?.value}${videoUrl}`} />
-          )}
-        </div>
+        </>
       )}
 
       {initialData?.videoUrl && !isEditing && (
