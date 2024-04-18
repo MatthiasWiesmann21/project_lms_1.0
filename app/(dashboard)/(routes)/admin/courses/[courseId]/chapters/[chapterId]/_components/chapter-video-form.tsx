@@ -2,53 +2,93 @@
 import * as z from "zod";
 import axios from "axios";
 import { Pencil, PlusCircle, Video } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Chapter } from "@prisma/client";
 import Image from "next/image";
-
+import Select from "react-select";
 import { Button } from "@/components/ui/button";
-import { FileUpload } from "@/components/file-upload";
-import { useLanguage } from "@/lib/check-language";
+import vimeo from "@/assets/icons/Vimeo-Logo.png";
+import youtube from "@/assets/icons/Youtube-Logo.png";
+import utfs from "@/assets/icons/uploadthing-logo.svg";
+import UniversalPlayer from "@/pages/components/universalPlayer";
+import { useTheme } from "next-themes";
+import { UploadButton } from "@/utils/uploadthing";
 
 interface ChapterVideoFormProps {
   initialData: Chapter;
-  courseId: string;
   chapterId: string;
-};
+  courseId: string;
+}
 
 const formSchema = z.object({
   videoUrl: z.string().min(1),
 });
 
-export const ChapterVideoForm = ({
-  initialData,
-  courseId,
-  chapterId,
-}: ChapterVideoFormProps) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [vimeoUrl, setVimeoUrl] = useState<string | null>(initialData.videoUrl || null);
-  const router = useRouter();
-  const currentLanguage = useLanguage();
-
-  function extractVimeoId(url: string): string | null {
-    const match = url.match(/https:\/\/vimeo\.com\/(\d+)/);
-    return match ? match[1] : null;
-  }
-
-  function VimeoPreview({ videoId }: { videoId: string }) {
-    return (
-      <div style={{ padding: "56.25% 0 0 0", position: "relative" }}>
-        <iframe 
-          src={`https://player.vimeo.com/video/${videoId}`} 
-          style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }} 
-          allow="autoplay; fullscreen" 
-          >
-        </iframe>
+const options = [
+  {
+    value: "https://vimeo.com/",
+    label: (
+      <div className="flex items-center">
+        <Image className="mr-2 w-[50px]" alt="vimeo" src={vimeo} />
+        <p className="m-0">vimeo</p>
       </div>
-    );
-  }
+    ),
+  },
+  {
+    value: "https://www.youtube.com/",
+    label: (
+      <div className="flex items-center">
+        <Image className="mr-2 w-[50px]" alt="youtube" src={youtube} />
+        <p className="m-0">youtube</p>
+      </div>
+    ),
+  },
+  {
+    value: "https://utfs.io/",
+    label: (
+      <div className="flex items-center">
+        <Image className="mr-2 w-[50px]" alt="utfs" src={utfs} />
+        <p className="m-0">Uploadthing</p>
+      </div>
+    ),
+  },
+];
+
+export const ChapterVideoForm = ({ initialData, chapterId, courseId }: ChapterVideoFormProps) => {
+  const { theme } = useTheme();
+  const isDarkTheme = theme === "dark";
+  const router = useRouter();
+  const [isEditing, setIsEditing] = useState(false);
+  const [videoType, setVideoType] = useState<any>({});
+  const [videoUrl, setVideoUrl] = useState("");
+
+  useEffect(() => {
+    if (initialData?.videoUrl) {
+      const video = initialData?.videoUrl
+        ?.split("/")
+        ?.filter((each, index) => index > 2)
+        ?.join("/");
+      const videoProvider = `${initialData?.videoUrl
+        ?.split("/")
+        ?.filter((each, index) => index < 3)
+        ?.join("/")}/`;
+      const provider = options?.find((each) => each?.value === videoProvider);
+      setVideoUrl(video);
+      setVideoType(provider);
+    }
+  }, []);
+
+  const VimeoPreview = ({ videoId }: { videoId: string }) => (
+    <div className="h-[300px]">
+      {/* <EventModal
+        liveEventId={liveEventId}
+        endDateTime={initialData?.endDateTime}
+      /> */}
+      <UniversalPlayer url={videoId} />
+    </div>
+  );
 
   const toggleEdit = () => setIsEditing((current) => !current);
 
@@ -61,60 +101,150 @@ export const ChapterVideoForm = ({
     } catch {
       toast.error("Something went wrong");
     }
-  }
+  };
 
   return (
-    <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
-      <div className="font-medium flex items-center justify-between">
-        {currentLanguage.chapter_VideoForm_title}
+    <div className="mt-6 rounded-md border bg-slate-200 p-4 dark:bg-slate-700">
+      <div className="flex items-center justify-between font-medium">
+        Chapters Video
         <Button onClick={toggleEdit} variant="ghost">
-          {isEditing ? <>{currentLanguage.chapter_VideoForm_cancel}</> : initialData.videoUrl ? (
+          {isEditing ? (
+            <>Cancel</>
+          ) : initialData.videoUrl ? (
             <>
-              <Pencil className="h-4 w-4 mr-2" />
-              {currentLanguage.chapter_VideoForm_edit}
+              <Pencil className="mr-2 h-4 w-4" />
+              Edit video
             </>
           ) : (
             <>
-              <PlusCircle className="h-4 w-4 mr-2" />
-              {currentLanguage.chapter_VideoForm_addVideo}
+              <PlusCircle className="mr-2 h-4 w-4" />
+              Add a video
             </>
           )}
         </Button>
       </div>
 
-      {!isEditing && (
-        vimeoUrl ? (
-          <VimeoPreview videoId={extractVimeoId(vimeoUrl)!} />
+      {!isEditing &&
+        (videoType && videoUrl ? (
+          <VimeoPreview videoId={`${videoType?.value}${videoUrl}`} />
         ) : (
-          <div className="flex items-center justify-center h-60 bg-slate-200 rounded-md">
+          <div className="flex h-60 items-center justify-center rounded-md bg-slate-200">
             <Video className="h-10 w-10 text-slate-500" />
           </div>
-        )
-      )}
+        ))}
+      {/* {console.log("videoType", videoType, "videoUrl", videoUrl)} */}
 
       {isEditing && (
-        <div>
-          <input
-            className="mb-2 flex items-center rounded-md p-1 w-full"
-            type="text"
-            placeholder={currentLanguage.chapter_VideoForm_placeholder}
-            onChange={(e) => {
-              const videoId = extractVimeoId(e.target.value);
-              if (videoId) {
-                setVimeoUrl(e.target.value);
-                onSubmit({ videoUrl: e.target.value });
-              }
-            }}
-          />
-          {vimeoUrl && <VimeoPreview videoId={extractVimeoId(vimeoUrl)!} />}
-        </div>
+        <>
+          <div
+            className="flex items-center justify-around"
+            // style={{ border: "10px solid red" }}
+          >
+            <UploadButton
+              endpoint="chapterVideo"
+              onClientUploadComplete={(res: any) => {
+                // Do something with the response
+                setVideoType(options[2]);
+                setVideoUrl(
+                  res[0]?.url
+                    ?.split("/")
+                    ?.filter((each: any, index: any) => index > 2)
+                    ?.join("/")
+                );
+                // console.log(
+                //   "Files: ",
+                //   res[0]?.url
+                //     ?.split("/")
+                //     ?.filter((each: any, index: any) => index < 3)
+                //     ?.join("/")
+                // );
+                // console.log(
+                //   "Files: ",
+                //   res[0]?.url
+                //     ?.split("/")
+                //     ?.filter((each: any, index: any) => index > 2)
+                //     ?.join("/")
+                // );
+                // alert(`Upload Completed ${res[0]?.url}`);
+              }}
+              onUploadError={(error: Error) => {
+                // Do something with the error.
+                alert(`ERROR! ${error.message}`);
+              }}
+            />
+          </div>
+          <div>
+            <Select
+              options={options}
+              onChange={(e: any) => setVideoType(e)}
+              value={videoType}
+              styles={{
+                control: (provided) => ({
+                  ...provided,
+                  backgroundColor: isDarkTheme
+                    ? "focusBackground"
+                    : "defaultBackground",
+                  color: "red",
+                }),
+                singleValue: (provided) => ({
+                  ...provided,
+                  color: isDarkTheme ? "#fff" : "black",
+                }),
+                menu: (provided) => ({
+                  ...provided,
+                  backgroundColor: isDarkTheme
+                    ? "rgb(51 65 85 / var(--tw-bg-opacity))"
+                    : "rgb(226 232 240 / var(--tw-bg-opacity))",
+                }),
+                // @ts-ignore
+                option: (provided, state) => ({
+                  ...provided,
+                  backgroundColor: state?.isFocused
+                    ? isDarkTheme
+                      ? "rgb(186 230 253 / 0.1)"
+                      : "lightblue"
+                    : null,
+                  color: isDarkTheme ? "white" : "black",
+                  "&:hover": {
+                    backgroundColor: isDarkTheme
+                      ? "rgb(186 230 253 / 0.1)"
+                      : "lightblue",
+                  },
+                }),
+              }}
+            />
+            <div className="my-1 flex items-center">
+              <p className="m-0">{videoType?.value}</p>
+              <input
+                className="flex w-full items-center rounded-md p-1"
+                type="text"
+                placeholder="Share Link"
+                value={videoUrl}
+                onChange={(e: any) => setVideoUrl(e?.target?.value)}
+              />
+            </div>
+            <div className="m-[1%] flex items-center justify-end p-[1%]">
+              <Button
+                disabled={videoType === "" || videoUrl === ""}
+                onClick={() =>
+                  onSubmit({ videoUrl: videoType?.value + videoUrl })
+                }
+              >
+                Save
+              </Button>
+            </div>
+            {videoType && videoUrl && (
+              <VimeoPreview videoId={`${videoType?.value}${videoUrl}`} />
+            )}
+          </div>
+        </>
       )}
 
-      {vimeoUrl && !isEditing && (
-        <div className="text-xs text-muted-foreground mt-2">
-          {currentLanguage.chapter_VideoForm_urlWarning}
+      {initialData?.videoUrl && !isEditing && (
+        <div className="mt-2 text-xs text-muted-foreground">
+          Refresh the page if video does not appear.
         </div>
       )}
     </div>
-  )
-}
+  );
+};

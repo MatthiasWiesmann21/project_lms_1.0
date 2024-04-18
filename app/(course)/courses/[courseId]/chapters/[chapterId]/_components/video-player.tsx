@@ -5,8 +5,8 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Loader2, Lock } from "lucide-react";
+import UniversalPlayer from "@/pages/components/universalPlayer";
 
-import { cn } from "@/lib/utils";
 import { useConfettiStore } from "@/hooks/use-confetti-store";
 
 interface VideoPlayerProps {
@@ -26,7 +26,6 @@ export const VideoPlayer = ({
   nextChapterId,
   isLocked,
   completeOnEnd,
-  title,
   videoUrl,
 }: VideoPlayerProps) => {
   const [isReady, setIsReady] = useState(false);
@@ -37,14 +36,6 @@ export const VideoPlayer = ({
     console.error("Vimeo URL is not provided!");
     return null;
   }
-  const vimeoId = extractVimeoId(videoUrl);
-  
-
-  function extractVimeoId(url: string): string | null {
-    const match = url.match(/https:\/\/vimeo\.com\/(\d+)/);
-    return match ? match[1] : null;
-  }
-
   const onEnd = async () => {
     try {
       if (completeOnEnd) {
@@ -70,11 +61,6 @@ export const VideoPlayer = ({
 
   return (
     <div className="relative aspect-video">
-      {!isReady && !isLocked && (
-        <div className="absolute inset-0 flex items-center justify-center bg-slate-800">
-          <Loader2 className="h-8 w-8 animate-spin text-secondary" />
-        </div>
-      )}
       {isLocked && (
         <div className="absolute inset-0 flex items-center justify-center bg-slate-800 flex-col gap-y-2 text-secondary">
           <Lock className="h-8 w-8" />
@@ -84,17 +70,9 @@ export const VideoPlayer = ({
         </div>
       )}
       {!isLocked && (
-        <div style={{ padding: "56.25% 0 0 0", position: "relative" }}>
-          <iframe 
-            src={`https://player.vimeo.com/video/${extractVimeoId(videoUrl)!}`} 
-            style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }} 
-            allow="autoplay; fullscreen" 
-            onLoad={() => setIsReady(true)}
-            onEnded={onEnd}
-            title={title}
-          ></iframe>
-        </div>
+        <UniversalPlayer url={videoUrl} /> 
       )}
     </div>
   )
 }
+
