@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/check-language";
 import axios from "axios";
 import moment from "moment";
@@ -22,9 +21,9 @@ export const DateandTime = ({
   const currentLanguage = useLanguage();
 
   return (
-    <div className="flex flex-col w-full space-y-4 mt-4">
+    <div className="mt-4 flex w-full flex-col space-y-4">
       <div className="flex flex-col items-start gap-2">
-        <div className="relative overflow-hidden w-full mb-2">
+        <div className="relative mb-2 w-full overflow-hidden">
           <input
             type="datetime-local"
             ref={startDateInputRef}
@@ -43,10 +42,10 @@ export const DateandTime = ({
                 ? moment(startDateTime)?.format("YYYY-MM-DD HH:mm")
                 : ""
             }
-            className="border-1 z-[1] cursor-pointer rounded border w-full border-white px-2"
+            className="border-1 z-[1] w-full cursor-pointer rounded border border-white px-2"
           />
         </div>
-        <div className="relative overflow-hidden w-full mb-2">
+        <div className="relative mb-2 w-full overflow-hidden">
           <input
             type="datetime-local"
             ref={endDateInputRef}
@@ -63,7 +62,7 @@ export const DateandTime = ({
             value={
               endDateTime ? moment(endDateTime)?.format("YYYY-MM-DD HH:mm") : ""
             }
-            className="border-1 z-[1] cursor-pointer rounded border w-full border-white px-2"
+            className="border-1 z-[1] w-full cursor-pointer rounded border border-white px-2"
           />
         </div>
       </div>

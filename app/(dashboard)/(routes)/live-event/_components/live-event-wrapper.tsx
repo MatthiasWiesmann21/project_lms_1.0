@@ -13,21 +13,21 @@ const LiveEventWrapper = ({ liveEvents, categories, searchParams }: any) => {
 
   useEffect(() => {
     setLiveEvent(liveEvents);
-  } , [liveEvents]);
+  }, [liveEvents]);
 
   return (
     <div className="space-y-4 p-6">
-      <div className="flex justify-between mr-1">
-      <PastandFuture
-        setLiveEvent={setLiveEvent}
-        getEvent={{
-          userId,
-          ...searchParams,
-          containerId: process.env.CONTAINER_ID,
-        }}
-        liveEvent={liveEvent}
-      />
-      <EventFilterSidebar />
+      <div className="mr-1 flex justify-between">
+        <PastandFuture
+          setLiveEvent={setLiveEvent}
+          getEvent={{
+            userId,
+            ...searchParams,
+            containerId: process.env.CONTAINER_ID,
+          }}
+          liveEvent={liveEvent}
+        />
+        <EventFilterSidebar liveEvent={liveEvent} setLiveEvent={setLiveEvent} />
       </div>
       <Categories items={categories} />
       <EventsList items={liveEvent} />
