@@ -1,5 +1,6 @@
 "use client";
 
+import { SheetClose } from "@/components/ui/sheet";
 import { useLanguage } from "@/lib/check-language";
 import axios from "axios";
 import moment from "moment";
@@ -67,28 +68,32 @@ export const DateandTime = ({
         </div>
       </div>
       <div className="flex items-center space-x-4">
-        <button
-          onClick={async () => {
-            const response = await axios?.post(`/api/liveEvent/filter`, {
-              ...getEvent,
-              startDateTime,
-              endDateTime,
-            });
-            setLiveEvent(response?.data);
-          }}
-          className="border-1 cursor-pointer rounded border border-[#fff] p-1 px-2"
-        >
-          {currentLanguage.live_event_filter_applyFilter_button_text}
-        </button>
-        <button
-          onClick={async () => {
-            const response = await axios?.get(`/api/liveEvent`);
-            setLiveEvent(response?.data);
-          }}
-          className="border-1 cursor-pointer rounded border border-[#fff] p-1 px-2"
-        >
-          {currentLanguage.live_event_filter_clearFilter_button_text}
-        </button>
+        <SheetClose>
+          <button
+            onClick={async () => {
+              const response = await axios?.post(`/api/liveEvent/filter`, {
+                ...getEvent,
+                startDateTime,
+                endDateTime,
+              });
+              setLiveEvent(response?.data);
+            }}
+            className="border-1 cursor-pointer rounded border border-[#fff] p-1 px-2"
+          >
+            {currentLanguage.live_event_filter_applyFilter_button_text}
+          </button>
+        </SheetClose>
+        <SheetClose>
+          <button
+            onClick={async () => {
+              const response = await axios?.get(`/api/liveEvent`);
+              setLiveEvent(response?.data);
+            }}
+            className="border-1 cursor-pointer rounded border border-[#fff] p-1 px-2"
+          >
+            {currentLanguage.live_event_filter_clearFilter_button_text}
+          </button>
+        </SheetClose>
       </div>
     </div>
   );
