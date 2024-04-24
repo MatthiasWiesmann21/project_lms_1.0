@@ -74,7 +74,8 @@ export async function POST(req: Request, res: NextApiResponse) {
     const id = formData.get("id")?.toString();
 
     let parentKey = null;
-    if (id) {
+    // console.log("!!id", !!id, !id, id, id !== undefined, id !== "undefined");
+    if (id !== "undefined") {
       const keyData = await db.folder.findFirst({
         select: {
           key: true,
