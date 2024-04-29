@@ -4,9 +4,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import PathMaker from "../../_components/path-maker";
 import { useParams } from "next/navigation";
-import { auth } from "@clerk/nextjs";
-import { useIsAdmin, useIsOperator } from "@/lib/roleCheck";
-import { NextResponse } from "next/server";
 import { useLanguage } from "@/lib/check-language";
 
 type Params = {
@@ -24,15 +21,6 @@ const DocumentCreatePage = () => {
     /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   const encodedObj = useParams()?.id as string;
   const currentLanguage = useLanguage();
-
-  // const isAdmin = useIsAdmin();
-  // const isOperator = useIsOperator();
-
-  // const canAccess = isAdmin || isOperator;
-
-  // if (!canAccess) {
-  // return new NextResponse("Unauthorized", { status: 401 });
-  // }
 
   // Initialize id and action with default values
   let id: string | string[];
@@ -83,7 +71,6 @@ const DocumentCreatePage = () => {
   };
 
   const handleFileUpload = async () => {
-    console.log("here");
     if (file == null) {
       return;
     }
@@ -118,7 +105,6 @@ const DocumentCreatePage = () => {
     if (!id || !isEdit) return;
     const getFileDetails = async () => {
       const response = await axios?.get(`/api/documents/get/file?id=${id}`);
-      console.log(response.data.data);
       setFileName(response?.data?.data?.name);
       setPublic(response?.data?.data?.isPublic);
       setParentId(response?.data?.data?.folderId);
@@ -133,7 +119,11 @@ const DocumentCreatePage = () => {
       </div>
       <div className="my-2 sm:flex-auto">
         <h1 className="text-2xl font-semibold leading-6 text-gray-600 dark:text-gray-300">
-          {`${isEdit ? `${currentLanguage.edit_file}` : `${currentLanguage.add_file}`}`}
+          {`${
+            isEdit
+              ? `${currentLanguage.edit_file}`
+              : `${currentLanguage.add_file}`
+          }`}
         </h1>
       </div>
       <div>

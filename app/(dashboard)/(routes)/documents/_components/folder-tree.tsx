@@ -25,21 +25,21 @@ const FolderTree: React.FC<DocumentFolderTree> = ({
   const pathname = usePathname();
   const [downloading, setDownloading] = useState(false);
 
-  const handleDownload = useCallback(async (key: string , name:string) => {
+  const handleDownload = useCallback(async (key: string, name: string) => {
     //TODO: Download logic here
     setDownloading(true);
     const response = await axios.get(`/api/documents/download/file?key=${key}`);
     console.log(response.data.data);
 
     const downloadURL = response.data.data.downloadUrl;
-    const downloadLink = document.createElement('a');
+    const downloadLink = document.createElement("a");
     downloadLink.href = downloadURL;
     downloadLink.download = name;
     document.body.appendChild(downloadLink);
-    console.log(downloadLink)
+    console.log(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);
-    
+
     setDownloading(false);
   }, []);
 
@@ -58,14 +58,13 @@ const FolderTree: React.FC<DocumentFolderTree> = ({
             </div>
             {
               <Button
-               disabled ={downloading}
-              className="ml-2 bg-white font-bold text-black hover:bg-black hover:text-white"
-              onClick={() => handleDownload(item.key,item.name)}
-            >
-              Download
-            </Button>
+                disabled={downloading}
+                className="ml-2 bg-white font-bold text-black hover:bg-black hover:text-white"
+                onClick={() => handleDownload(item.key, item.name)}
+              >
+                Download
+              </Button>
             }
-         
           </div>
         );
       })}

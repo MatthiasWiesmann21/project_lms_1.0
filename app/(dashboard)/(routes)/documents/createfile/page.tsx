@@ -4,10 +4,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import PathMaker from "../_components/path-maker";
 import { useParams } from "next/navigation";
-import FolderTree, { FolderTreeProps } from "../_components/folder-tree";
-import AssetsTable from "../_components/asset-table";
-import { useIsAdmin, useIsOperator } from "@/lib/roleCheck";
-import { NextResponse } from "next/server";
 import { useLanguage } from "@/lib/check-language";
 
 type Params = {
@@ -18,7 +14,6 @@ type Params = {
 const DocumentCreatePage = () => {
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState("");
-  const [folderName, setFolderName] = useState("");
   const [parentId, setParentId] = useState("");
   const [isPublic, setPublic] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -26,15 +21,6 @@ const DocumentCreatePage = () => {
     /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   const encodedObj = useParams()?.id as string;
   const currentLanguage = useLanguage();
-
-  // const isAdmin = useIsAdmin();
-  // const isOperator = useIsOperator();
-
-  // const canAccess = isAdmin || isOperator;
-
-  // if (!canAccess) {
-  //  return new NextResponse("Unauthorized", { status: 401 });
-  // }
 
   // Initialize id and action with default values
   let id: string | string[];
@@ -136,7 +122,9 @@ const DocumentCreatePage = () => {
       <div className="my-2 sm:flex-auto">
         <h1 className="text-2xl font-semibold leading-6 text-gray-600 dark:text-gray-300">
           {`${
-            isEdit ? `${currentLanguage.edit_file}` : `${currentLanguage.create_file}`
+            isEdit
+              ? `${currentLanguage.edit_file}`
+              : `${currentLanguage.create_file}`
           }`}
         </h1>
       </div>
