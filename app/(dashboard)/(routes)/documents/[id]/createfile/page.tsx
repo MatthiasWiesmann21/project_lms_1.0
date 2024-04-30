@@ -12,7 +12,7 @@ type Params = {
 };
 
 const DocumentCreatePage = () => {
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<any>(null);
   const [fileName, setFileName] = useState("");
   const [parentId, setParentId] = useState("");
   const [isPublic, setPublic] = useState(true);
@@ -188,10 +188,7 @@ const DocumentCreatePage = () => {
         htmlFor="email"
         className="block text-sm font-medium leading-6 text-gray-900"
       >
-        {
-          //@ts-ignore
-          file?.name
-        }
+        {file?.name}
       </label>
       <div className="my-2 flex items-center">
         <button

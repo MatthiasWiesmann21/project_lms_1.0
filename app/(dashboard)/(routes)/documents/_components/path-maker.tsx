@@ -10,7 +10,6 @@ type Params = {
   action: string;
 };
 
-const basePath = process.env.BASE_PATH ?? "http://localhost:3000/";
 const PathMaker = () => {
   const uuidPattern =
     /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;

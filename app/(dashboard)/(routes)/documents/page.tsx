@@ -54,7 +54,6 @@ const DocumentPage = () => {
   } else
     return (
       <div className="ml-2 h-full">
-        {/* @ts-ignore */}
         <AssetsTable folderStructure={folderStructure} />
       </div>
     );

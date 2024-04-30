@@ -15,6 +15,7 @@ export interface FolderTreeProps {
   name: string;
   childrens?: FolderTreeProps[] | null;
   id: string;
+  isPublic: any;
 }
 
 const customStyles = {
@@ -29,8 +30,13 @@ const customStyles = {
   },
 };
 
+interface AssetsTableProps {
+  folderStructure: any;
+  root?: boolean;
+}
+
 const currentDocPath = "/documents/";
-const AssetsTable: React.FC = (props: any) => {
+const AssetsTable: React.FC<AssetsTableProps> = (props) => {
   const { folderStructure } = props;
   const { userId } = useAuth();
   const [downloading, setDownloading] = useState(false);
@@ -75,7 +81,6 @@ const AssetsTable: React.FC = (props: any) => {
           ? `/api/documents/edit/file`
           : `/api/documents/edit/folder`,
         {
-          //@ts-ignore
           isPublic: renamingItem.isPublic,
           id: renamingItem.id,
           ...(!isRenameFolder

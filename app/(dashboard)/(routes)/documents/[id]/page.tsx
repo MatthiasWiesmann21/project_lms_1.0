@@ -35,11 +35,7 @@ const DocumentPage = () => {
       <div className="my-4 ">
         <PathMaker />
       </div>
-      <AssetsTable
-        //@ts-ignore
-        folderStructure={folderStructure}
-        root={false}
-      ></AssetsTable>
+      <AssetsTable folderStructure={folderStructure} root={false}></AssetsTable>
     </div>
   );
 };
