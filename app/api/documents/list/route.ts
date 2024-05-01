@@ -63,7 +63,6 @@ async function getFolderAndFiles(
 
   if (isOwner(userId)) {
     if (key == null) {
-      console.log("key", { key, userId });
       folder = await db.folder.findFirst({
         where: {
           parentFolderId: null,
@@ -107,20 +106,6 @@ async function getFolderAndFiles(
         },
       });
     }
-
-    // if (key != null && isPublicDirectory) {
-    //   folder = await db.folder.findFirst({
-    //     where: { key: key },
-    //     include: {
-    //       subFolders: {
-    //         where: { isPublic: true },
-    //       },
-    //       files: {
-    //         where: { isPublic: true },
-    //       },
-    //     },
-    //   });
-    // }
   } else {
     if (key == null) {
       folder = await db.folder.findFirst({
@@ -134,9 +119,6 @@ async function getFolderAndFiles(
               containerId: process.env.CONTAINER_ID,
               OR: [{ isPublic: true }, { userId: userId }],
             },
-            // include: {
-            //   container: true,
-            // },
           },
           files: {
             where: {
@@ -181,10 +163,6 @@ async function getFolderAndFiles(
   return folder;
 }
 
-type QueryParams = {
-  key: string;
-};
-
 export async function GET(req: any) {
   // POST /api/upload
   try {
@@ -201,7 +179,6 @@ export async function GET(req: any) {
         },
         where: { id: id, containerId: process.env.CONTAINER_ID },
       });
-      //@ts-ignore
       key = keyData?.key;
     }
 

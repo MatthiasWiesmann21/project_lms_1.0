@@ -14,7 +14,7 @@ export async function POST(req: Request) {
 
     const { id, fileName, isPublic } = requestBody;
 
-      const existingFile = await db.file.findFirst({
+    const existingFile = await db.file.findFirst({
       where: {
         id: id,
         userId: userId,

@@ -2,7 +2,7 @@ import createFolder from "@/app/vendor/aws/s3/createFolder";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
-import { v4 as uuidv4, v4 } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import { getS3Client } from "@/app/vendor/aws/s3/getS3Client";
 import { Upload } from "@aws-sdk/lib-storage";
 import { NextApiResponse } from "next";
@@ -59,8 +59,7 @@ export async function POST(req: Request, res: NextApiResponse) {
 
     const formData = await req.formData();
 
-    const formFile = formData.get("file");
-    //@ts-ignore
+    const formFile: any = formData.get("file");
     const fileExtension = formFile.name.split(".").pop();
     const formIsPublic = formData.get("isPublic");
     const formFileName = formData.get("name");
@@ -80,11 +79,9 @@ export async function POST(req: Request, res: NextApiResponse) {
         select: {
           key: true,
         },
-        //@ts-ignore
         where: { id: id },
       });
-      //@ts-ignore
-      parentKey = keyData.key;
+      if (keyData) parentKey = keyData.key;
     }
 
     if (formFile == null) {
@@ -93,8 +90,6 @@ export async function POST(req: Request, res: NextApiResponse) {
 
     const fileName =
       typeof formFileName === "string" ? formFileName : `${formFileName}`;
-
-    //const fileName = formFileName === null ? '' : formFileName;
 
     // parentKey null means it will upload in root folder
 
