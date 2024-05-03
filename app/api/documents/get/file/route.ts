@@ -1,13 +1,9 @@
 import { db } from "@/lib/db";
-import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 export async function GET(req: any) {
   // POST /api/upload
   try {
-    const { userId } = auth();
-    // console.log
-
     const id = req.nextUrl.searchParams.get("id");
     let key = null;
     const keyData = await db.file.findFirst({
@@ -15,12 +11,11 @@ export async function GET(req: any) {
         key: true,
         name: true,
         isPublic: true,
-        folderId: true
+        folderId: true,
       },
       where: { id: id },
     });
-    //@ts-ignore
-    key = keyData.key;
+    if (keyData) key = keyData.key;
 
     return NextResponse.json({ data: keyData });
   } catch (error) {

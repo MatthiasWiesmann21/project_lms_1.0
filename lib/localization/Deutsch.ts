@@ -385,4 +385,7 @@ nav_admin_item_analytics: "Analytik",
 nav_admin_item_settings: "Einstellungen",
 customize_ImageFormDark_title: "Containerbild Dunkelmodus",
 settings_Container_IconForm_title: "Container-Symbol",
+privacy_policy_title: "Datenschutzrichtlinie & Nutzungsbedingungen",
+privacy_policy_description: "Um unsere Plattform weiterhin zu nutzen, überprüfen und akzeptieren Sie bitte unsere Datenschutzrichtlinie und Nutzungsbedingungen. Ihre Akzeptanz stellt sicher, dass Sie gelesen und verstanden haben, wie Ihre Daten behandelt werden, und dass Sie den Regeln unserer Plattform zustimmen. Wir schätzen Ihre Privatsphäre und bemühen uns, allen Nutzern eine sichere Umgebung zu bieten.",
+privacy_policy_button: "Ich habe es gelesen und akzeptiere es",
 };

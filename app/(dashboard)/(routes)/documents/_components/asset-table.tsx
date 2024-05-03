@@ -2,7 +2,6 @@
 
 import React, { useCallback, useState } from "react";
 import axios from "axios";
-import AppSVGIcon from "@/components/appsvgicon";
 import { isOwner } from "@/lib/owner";
 import { useAuth } from "@clerk/nextjs";
 import FlyoutMenuCreate from "./flyout-menu-create";
@@ -16,6 +15,7 @@ export interface FolderTreeProps {
   name: string;
   childrens?: FolderTreeProps[] | null;
   id: string;
+  isPublic: any;
 }
 
 const customStyles = {
@@ -30,8 +30,13 @@ const customStyles = {
   },
 };
 
+interface AssetsTableProps {
+  folderStructure: any;
+  root?: boolean;
+}
+
 const currentDocPath = "/documents/";
-const AssetsTable: React.FC = (props: any) => {
+const AssetsTable: React.FC<AssetsTableProps> = (props) => {
   const { folderStructure } = props;
   const { userId } = useAuth();
   const [downloading, setDownloading] = useState(false);
@@ -76,7 +81,6 @@ const AssetsTable: React.FC = (props: any) => {
           ? `/api/documents/edit/file`
           : `/api/documents/edit/folder`,
         {
-          //@ts-ignore
           isPublic: renamingItem.isPublic,
           id: renamingItem.id,
           ...(!isRenameFolder
@@ -284,12 +288,7 @@ const AssetsTable: React.FC = (props: any) => {
             canAccess ? "block" : "hidden"
           } mt-4 sm:ml-16 sm:mt-0 sm:flex-none`}
         >
-          <FlyoutMenuCreate
-            // index={i}
-            key={`flyout-create-0`}
-            // currentlyOpenIndex={currentlyOpenCreateFlyoutIndex}
-            // setCurrentlyOpenIndex={setCurrentlyOpenCreateFlyoutIndex}
-          />
+          <FlyoutMenuCreate key={`flyout-create-0`} />
         </div>
       </div>
       <div className="mt-8 flow-root">
@@ -300,7 +299,6 @@ const AssetsTable: React.FC = (props: any) => {
                 <thead>
                   <tr>
                     <th scope="col" className="relative px-8 sm:w-12 sm:px-6">
-                      {/* <input type="checkbox" className="absolute left-1 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" /> */}
                       <span className="min-w-[12rem] py-3 text-sm font-semibold text-gray-900 dark:text-gray-300">
                         {currentLanguage.type}
                       </span>
@@ -326,7 +324,6 @@ const AssetsTable: React.FC = (props: any) => {
                       (canAccess ? true : item?.isPublic) && (
                         <tr key={i}>
                           <td className="relative px-7 sm:w-12 sm:px-6">
-                            {/* <input type="checkbox" className="absolute left-1 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" /> */}
                             <div
                               onClick={() =>
                                 (location.href = `${currentDocPath}${item.id}`)
@@ -382,7 +379,6 @@ const AssetsTable: React.FC = (props: any) => {
                       (canAccess ? true : item?.isPublic) && (
                         <tr key={i}>
                           <td className="relative px-7 sm:w-12 sm:px-6">
-                            {/* <input type="checkbox" className="absolute left-1 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" /> */}
                             <div className="m-1 mr-3 cursor-not-allowed rounded bg-slate-300 p-3 dark:bg-slate-600">
                               <File />
                             </div>

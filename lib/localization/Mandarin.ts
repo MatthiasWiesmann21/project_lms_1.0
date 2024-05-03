@@ -382,4 +382,7 @@ nav_admin_item_analytics: "分析",
 nav_admin_item_settings: "设置",
 customize_ImageFormDark_title: "容器暗黑模式图像",
 settings_Container_IconForm_title: "容器图标",
+privacy_policy_title: "隐私政策和条款与条件",
+privacy_policy_description: "要继续使用我们的平台，请查看并接受我们的隐私政策和条款与条件。您的接受确保您已阅读并理解如何处理您的数据，并同意管理我们平台的规则。我们重视您的隐私，并努力为所有用户提供安全的环境。",
+privacy_policy_button: "我已阅读并接受",
 };

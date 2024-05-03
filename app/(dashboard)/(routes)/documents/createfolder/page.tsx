@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, usePathname } from "next/navigation";
 import PathMaker from "../_components/path-maker";
-import { useIsAdmin, useIsOperator } from "@/lib/roleCheck";
-import { NextResponse } from "next/server";
 import { useLanguage } from "@/lib/check-language";
 
 type Params = {
@@ -15,26 +13,14 @@ type Params = {
 
 const DocumentCreatePage = () => {
   const currentLanguage = useLanguage();
-  console.log(currentLanguage);
   const [folderName, setFolderName] = useState("");
   const [isPublic, setPublic] = useState(true);
   const [loading, setLoading] = useState(false);
   const [parentId, setParentId] = useState("");
 
-  const parentKey = usePathname();
-
   const uuidPattern =
     /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   const encodedObj = useParams()?.id as string;
-
-  // const isAdmin = useIsAdmin();
-  // const isOperator = useIsOperator();
-
-  // const canAccess = isAdmin || isOperator;
-
-  // if (!canAccess) {
-  //  return new NextResponse("Unauthorized", { status: 401 });
-  // }
 
   // Initialize id and action with default values
   let id: string | string[];
@@ -89,7 +75,6 @@ const DocumentCreatePage = () => {
               }),
         }
       );
-      // console.log(response)
       location.href = isEdit
         ? `/documents/${response.data.data.parentFolderId || ""}`
         : `/documents/${response.data.data.parentFolderId || ""}`;
@@ -109,7 +94,9 @@ const DocumentCreatePage = () => {
       <div className="my-2 sm:flex-auto">
         <h1 className="text-2xl font-semibold leading-6 text-gray-600 dark:text-gray-300">
           {`${
-            isEdit ? `${currentLanguage.edit_folder}` : `${currentLanguage.create_folder}`
+            isEdit
+              ? `${currentLanguage.edit_folder}`
+              : `${currentLanguage.create_folder}`
           }`}
         </h1>
       </div>

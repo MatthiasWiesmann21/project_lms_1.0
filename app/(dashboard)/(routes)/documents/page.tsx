@@ -1,15 +1,10 @@
 "use client";
 
-import FolderTree, { FolderTreeProps } from "./_components/folder-tree";
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 import AssetsTable from "./_components/asset-table";
-import Tabs from "./_components/tabs";
-import PublicAssetsTable from "./_components/public-asset-table";
 import Image from "next/image";
 import noFolder from "../../../../assets/icons/no folder.png";
-import { useParams, usePathname } from "next/navigation";
 import { Loader2 } from "lucide-react";
 
 export type DocumentFolderTree = {
@@ -28,27 +23,8 @@ export type DocumentFile = {
 
 const DocumentPage = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [file, setFile] = useState(null);
-  const [folderName, setFolderName] = useState("");
-  const [currentTab, setCurrentTab] = useState(1);
   const [folderStructure, setFolderStructure] = useState<any>(null);
-  const [publicFolderStructure, setPublicFolderStructure] =
-    useState<DocumentFolderTree | null>(null);
 
-  const createFolder = async () => {
-    if (folderName == null || folderName.length < 1) {
-      return;
-    }
-    try {
-      const response = await axios.post(`/api/documents/upload/folder`, {
-        folderName: folderName,
-      });
-      setFolderName("");
-      await getFolder();
-    } catch (e) {
-      console.log(e);
-    }
-  };
   const getFolder = async () => {
     try {
       const response = await axios.get(`/api/documents/list`);
@@ -58,50 +34,17 @@ const DocumentPage = () => {
       setIsLoading(false);
     }
   };
-  const getPublicFolder = async () => {
-    const response = await axios.get(`/api/documents/publiclist`);
-    if (response) setIsLoading(false);
-    console.log(response);
-    setPublicFolderStructure(response.data.data);
-  };
+
   useEffect(() => {
     getFolder();
-    //getPublicFolder();
   }, []);
 
-  const handleFolderNameChange = (event: any) => {
-    setFolderName(event.target.value);
-  };
-  const handleFileChange = (event: any) => {
-    setFile(event.target.files[0]);
-  };
-  const handleFileUpload = async () => {
-    if (file == null) {
-      return;
-    }
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
-
-      // formData.append('parentKey', )
-      const response = await axios.post(
-        `/api/documents/upload/file`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      await getFolder();
-    } catch (e) {
-      console.log(e);
-    }
-  };
   if (isLoading) {
-    return <div className="flex justify-center items-center min-h-screen">
-      <Loader2 className="h-8 w-8 animate-spin"/>
-      </div>;
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
   } else if (folderStructure == null) {
     return (
       <div className="flex h-full w-full items-center justify-around">
@@ -111,60 +54,7 @@ const DocumentPage = () => {
   } else
     return (
       <div className="ml-2 h-full">
-        {/* <div className=" my-4  flex flex-col">
-        <form className="flex">
-          <input
-            required
-            type="file"
-            className=" mr-6  w-2/6"
-            onChange={handleFileChange}
-          />
-          <button
-            className="flex items-center justify-center rounded-md bg-emerald-400  px-10 py-2 text-lg text-white hover:bg-emerald-400/80"
-            onClick={handleFileUpload}
-          >
-            Upload File
-          </button>
-        </form>
-        <form className="my-4 flex ">
-          <input
-            type="text"
-            value={folderName}
-            className=" mr-6   w-2/6 border-2 border-black"
-            onChange={handleFolderNameChange}
-            required
-          />
-          <button
-            type="submit"
-            className="flex items-center justify-center rounded-md bg-emerald-400 px-10 py-2 text-lg text-white hover:bg-emerald-400/80"
-            onClick={createFolder}
-          >
-            Create Folder
-          </button>
-        </form>
-      </div>
-      <h1 className="mb-4 font-bold">Root</h1>
-
-      <div className="  ">
-        <FolderTree
-          name={folderStructure.name}
-          id={folderStructure.id}
-          subFolders={folderStructure.subFolders}
-          files={folderStructure.files}
-          key={folderStructure.key}
-        />
-      </div> */}
-        {/* <Tabs currentTab={currentTab} setCurrentTab={setCurrentTab}></Tabs> */}
-
-        <AssetsTable
-          //@ts-ignore
-          folderStructure={folderStructure}
-        ></AssetsTable>
-        {/* {currentTab == 2 && (
-        <PublicAssetsTable
-        folderStructureList={publicFolderStructure}
-        ></PublicAssetsTable>
-      )} */}
+        <AssetsTable folderStructure={folderStructure} />
       </div>
     );
 };

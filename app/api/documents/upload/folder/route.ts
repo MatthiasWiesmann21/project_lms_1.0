@@ -30,7 +30,6 @@ const getOrCreateParentFolder = async (
     },
   });
   if (rootFolder == null) {
-    // const { userId } = auth();
     if (userId == null) {
       throw new Error("Login first to access");
     }
@@ -72,8 +71,7 @@ export async function POST(req: Request) {
         },
         where: { id: id },
       });
-      //@ts-ignore
-      parentKey = keyData.key;
+      if (keyData) parentKey = keyData.key;
     }
 
     // create or  get a folder if not exist
