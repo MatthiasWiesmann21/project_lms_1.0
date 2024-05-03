@@ -48,7 +48,7 @@ export const Sidebar = async () => {
         <div className="flex flex-grow items-end justify-center pb-5">
         <div className="flex items-center">
           <span className="text-sm font-medium text-gray-600">
-            Made by Test
+            Made by
           </span>
           <svg
             width="120"
