@@ -382,4 +382,7 @@ nav_admin_item_analytics: "Análisis",
 nav_admin_item_settings: "Configuraciones",
 customize_ImageFormDark_title: "Imagen del contenedor en modo oscuro",
 settings_Container_IconForm_title: "Icono del contenedor",
+privacy_policy_title: "Política de Privacidad y Términos y Condiciones",
+privacy_policy_description: "Para continuar usando nuestra plataforma, revise y acepte nuestra Política de Privacidad y Términos y Condiciones. Su aceptación garantiza que ha leído y comprendido cómo se manejarán sus datos y que acepta las reglas que rigen nuestra plataforma. Valoramos su privacidad y nos esforzamos por proporcionar un entorno seguro para todos los usuarios.",
+privacy_policy_button: "Lo he leído y lo acepto",
 };

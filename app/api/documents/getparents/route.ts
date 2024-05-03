@@ -40,7 +40,6 @@ export async function GET(req: any) {
 
     return NextResponse.json({ data: parentFolders });
   } catch (error) {
-    //console.log("[SUBSCRIPTION]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

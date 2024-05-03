@@ -381,4 +381,7 @@ nav_admin_item_analytics: "Analytics",
 nav_admin_item_settings: "Settings",
 customize_ImageFormDark_title: "Container Image Darkmode",
 settings_Container_IconForm_title: "Container Icon",
+privacy_policy_title: "Privacy Policy & Terms and Conditions",
+privacy_policy_description: "To continue using our platform, please review and accept our Privacy Policy and Terms and Conditions. Your acceptance ensures that you read & understand how your data will be handled and agree to the rules governing our platform. We value your privacy and strive to provide a secure environment for all users.",
+privacy_policy_button: "I've read it and accept it",
 };

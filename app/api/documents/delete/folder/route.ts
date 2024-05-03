@@ -1,11 +1,8 @@
 import { db } from "@/lib/db";
-import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 export async function POST(req: any, res: any) {
   try {
-    const { userId } = auth();
-
     // Authenticate User here for downloading different files
     const requestBody = await req.json();
     const { id } = requestBody;
@@ -17,10 +14,7 @@ export async function POST(req: any, res: any) {
       },
       where: { id: id },
     });
-    //@ts-ignore
-    key = keyData.key;
-
-    //const removeFile = await deleteFile(key);
+    if (keyData) key = keyData.key;
 
     const result = await db.folder.delete({
       where: { id: id },

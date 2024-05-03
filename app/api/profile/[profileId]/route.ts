@@ -48,11 +48,8 @@ export async function PATCH(
     const { profileId } = params;
     const values = await req.json();
 
-    const isRoleAdmins = await isAdmin();
-    const isRoleOperator = await isOperator();
-    const canAccess = isRoleAdmins || isRoleOperator || isOwner(userId);
-
-    if (!userId || !canAccess) {
+    
+    if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
