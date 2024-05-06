@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { Image, LayoutGridIcon } from "lucide-react";
+import { AlertTriangle, User2Icon } from "lucide-react";
 
 import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
@@ -55,13 +55,10 @@ const UserIdPage = async ({ params }: { params: { profileId: string } }) => {
         <div className="mt-16 grid grid-cols-2 gap-6 md:grid-cols-2">
           <div>
             <div className="flex items-center gap-x-2">
-              <IconBadge icon={LayoutGridIcon} />
+              <IconBadge icon={User2Icon} />
               <h2 className="text-xl">
                 {currentLanguage.user_setup_customize_title}
               </h2>
-              <span className="pl-1 text-xs text-rose-600">
-                {currentLanguage.requiredFields}
-              </span>
             </div>
             <ShowUserName initialData={profile} profileId={profile.id} />
             <ShowUserMail initialData={profile} profileId={profile.id} />
@@ -78,20 +75,17 @@ const UserIdPage = async ({ params }: { params: { profileId: string } }) => {
           </div>
           <div>
           <div className="flex items-center gap-x-2">
-              <IconBadge icon={LayoutGridIcon} />
+              <IconBadge variant="danger" icon={AlertTriangle} />
               <h2 className="text-xl">
                 {currentLanguage.user_setup_settings_title}
               </h2>
-              <span className="pl-1 text-xs text-rose-600">
-                {currentLanguage.requiredFields}
-              </span>
             </div>
             <IsBannedForm
               initialData={profile}
               profileId={profile.id}
               options={[
-                { label: "BANNED", value: "true" },
-                { label: "NOT BANNED", value: "false" },
+                { label: "BANNED", value: "BANNED" },
+                { label: "NOT BANNED", value: "NOT BANNED" },
               ]}
             />
           </div>

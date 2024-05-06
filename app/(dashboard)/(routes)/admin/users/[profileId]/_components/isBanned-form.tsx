@@ -53,7 +53,7 @@ export const IsBannedForm = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      isBanned: initialData?.isBanned || ""
+      isBanned: initialData?.isBanned!
     },
   });
 
@@ -70,20 +70,20 @@ export const IsBannedForm = ({
     }
   }
 
-  const selectedOption = options.find((option) => option.value === initialData.role);
+  const selectedOption = options.find((option) => option.value === initialData.isBanned);
 
   return (
-    <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
+    <div className="mt-6 border bg-slate-200 dark:bg-slate-700 border-red-600 dark:border-red-600 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        {currentLanguage.user_RoleForm_title}
+        {currentLanguage.user_isBannedForm_title}
         {canAccess && (
           <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>{currentLanguage.user_RoleForm_cancel}</>
+            <>{currentLanguage.user_isBannedForm_cancel}</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              {currentLanguage.user_RoleForm_edit}
+              {currentLanguage.user_isBannedForm_edit}
             </>
           )}
         </Button>
@@ -94,7 +94,7 @@ export const IsBannedForm = ({
           "text-sm mt-2",
           !initialData.isBanned && "text-slate-500 italic"
         )}>
-          {selectedOption?.label || "No category"}
+          {selectedOption?.label || "No Info"}
         </p>
       )}
       {isEditing && (
@@ -105,7 +105,7 @@ export const IsBannedForm = ({
           >
             <FormField
               control={form.control}
-              name="role"
+              name="isBanned"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -123,7 +123,7 @@ export const IsBannedForm = ({
                 disabled={!isValid || isSubmitting}
                 type="submit"
               >
-                {currentLanguage.user_RoleForm_save}
+                {currentLanguage.user_isBannedForm_save}
               </Button>
             </div>
           </form>
