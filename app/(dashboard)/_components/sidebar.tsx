@@ -4,7 +4,6 @@ import { SidebarRoutes } from "./sidebar-routes";
 import { languageServer } from "@/lib/check-language-server";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
-import IsBannedView from "@/components/modals/isBannedView";
 
 export const Sidebar = async () => {
   const { userId } = auth();
