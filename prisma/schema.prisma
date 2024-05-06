@@ -69,6 +69,7 @@ model Profile {
   email    String  @db.Text
   language String? @db.Text
   role     String  @default("USER")
+  isBanned Boolean @default(false)
   acceptedPrivacyPolicy Boolean @default(false)
 
   containerId String

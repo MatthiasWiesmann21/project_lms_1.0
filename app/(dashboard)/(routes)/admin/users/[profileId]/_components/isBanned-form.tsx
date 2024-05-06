@@ -26,7 +26,7 @@ import { isOwner } from "@/lib/owner";
 import { auth } from "@clerk/nextjs";
 import { useLanguage } from "@/lib/check-language";
 
-interface RoleFormProps {
+interface isBannedFormProps {
   initialData: Profile;
   profileId: string;
   options: { label: string; value: string; }[];
@@ -36,11 +36,11 @@ const formSchema = z.object({
   role: z.string().min(1),
 });
 
-export const RoleForm = ({
+export const isBannedForm = ({
   initialData,
   profileId,
   options,
-}: RoleFormProps) => {
+}: isBannedFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const isAdmin = useIsAdmin();
   const currentLanguage = useLanguage();
