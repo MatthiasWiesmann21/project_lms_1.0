@@ -9,7 +9,7 @@ import { Actions } from "./_components/actions";
 import { ShowUserName } from "./_components/title-form";
 import { ShowUserMail } from "./_components/showUserMail";
 import { RoleForm } from "./_components/role-form";
-import { isBannedForm } from "./_components/isBanned-form";
+import { IsBannedForm } from "./_components/isBanned-form";
 import { languageServer } from "@/lib/check-language-server";
 
 const UserIdPage = async ({ params }: { params: { profileId: string } }) => {
@@ -77,7 +77,16 @@ const UserIdPage = async ({ params }: { params: { profileId: string } }) => {
             />
           </div>
           <div>
-            <isBannedForm
+          <div className="flex items-center gap-x-2">
+              <IconBadge icon={LayoutGridIcon} />
+              <h2 className="text-xl">
+                {currentLanguage.user_setup_settings_title}
+              </h2>
+              <span className="pl-1 text-xs text-rose-600">
+                {currentLanguage.requiredFields}
+              </span>
+            </div>
+            <IsBannedForm
               initialData={profile}
               profileId={profile.id}
               options={[

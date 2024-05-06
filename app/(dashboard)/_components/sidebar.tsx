@@ -4,6 +4,7 @@ import { SidebarRoutes } from "./sidebar-routes";
 import { languageServer } from "@/lib/check-language-server";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
+import IsBannedView from "@/components/modals/isBannedView";
 
 export const Sidebar = async () => {
   const { userId } = auth();
@@ -29,6 +30,7 @@ export const Sidebar = async () => {
   return (
     <div className="flex h-full flex-col overflow-y-auto border-r bg-white shadow-sm dark:bg-[#1e1f22]">
       <PrivacyPolicyModal profile={profile} />
+      <IsBannedView profile={profile} />
       <div className="px-4 py-2 pt-2">
         <Logo
           imageUrl={container?.imageUrl || ""}

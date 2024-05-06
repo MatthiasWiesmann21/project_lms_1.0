@@ -36,7 +36,7 @@ const formSchema = z.object({
   role: z.string().min(1),
 });
 
-export const isBannedForm = ({
+export const IsBannedForm = ({
   initialData,
   profileId,
   options,
@@ -53,7 +53,7 @@ export const isBannedForm = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      role: initialData?.role || ""
+      isBanned: initialData?.isBanned || ""
     },
   });
 
@@ -92,7 +92,7 @@ export const isBannedForm = ({
       {!isEditing && (
         <p className={cn(
           "text-sm mt-2",
-          !initialData.role && "text-slate-500 italic"
+          !initialData.isBanned && "text-slate-500 italic"
         )}>
           {selectedOption?.label || "No category"}
         </p>
