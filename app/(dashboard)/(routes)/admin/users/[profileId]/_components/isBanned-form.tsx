@@ -33,7 +33,7 @@ interface isBannedFormProps {
 };
 
 const formSchema = z.object({
-  role: z.string().min(1),
+  isBanned: z.string().min(1),
 });
 
 export const IsBannedForm = ({
