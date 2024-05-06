@@ -62,7 +62,7 @@ export const NavbarRoutes = () => {
           </Link>
         ) : null}
         <UserButton
-          afterSignOutUrl="/dashboard"
+          afterSignOutUrl="/sign-in"
         />
       </div>
     </>
