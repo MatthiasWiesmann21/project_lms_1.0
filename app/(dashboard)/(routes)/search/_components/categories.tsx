@@ -3,8 +3,13 @@
 import { Category } from "@prisma/client";
 import { CategoryItem } from "./category-item";
 
+interface EnhancedCategory extends Category {
+  _count: {
+    courses: number;
+  };
+}
 interface CategoriesProps {
-  items: Category[];
+  items: EnhancedCategory[];
 }
 
 export const Categories = ({
@@ -18,6 +23,7 @@ export const Categories = ({
           label={item.name}
           value={item.id}
           colorCode={item.colorCode}
+          categoryAmmount={item._count.courses}
         />
       ))}
     </div>

@@ -57,6 +57,23 @@ const SearchPage = async ({
     }
   });
 
+  const categoriesWithCourseCounts = await db.category.findMany({
+    where: {
+      isPublished: true,
+      isCourseCategory: true,
+      containerId: process.env.CONTAINER_ID
+    },
+    orderBy: {
+      name: "asc"
+    },
+    include: {
+      _count: {
+        select: { courses: true }  // Ensure 'courses' matches your schema relation name
+      }
+    }
+  });
+  
+
   const courses = await getCourses({
     userId,
     ...searchParams,
@@ -68,7 +85,7 @@ const SearchPage = async ({
       <div className="p-6 space-y-4">
         <CourseCounter maxCourses={container?.maxCourses ?? 0} courses={existingCourses}  />
         <Categories
-          items={categories}
+          items={categoriesWithCourseCounts}
         />
         <CoursesList items={courses} />
       </div>

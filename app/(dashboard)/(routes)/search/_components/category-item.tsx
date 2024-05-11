@@ -14,12 +14,14 @@ interface CategoryItemProps {
   label: string;
   value?: string;
   colorCode: string;
+  categoryAmmount: number;
 };
 
 export const CategoryItem = ({
   label,
   value,
   colorCode,
+  categoryAmmount,
 }: CategoryItemProps) => {
   const pathname = usePathname();
   const router = useRouter();
@@ -58,6 +60,9 @@ export const CategoryItem = ({
       )}
       <div className="truncate">
         {label}
+      </div>
+      <div>
+        ({categoryAmmount})
       </div>
     </button>
   )
