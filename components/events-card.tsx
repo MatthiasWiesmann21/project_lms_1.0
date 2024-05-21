@@ -53,7 +53,8 @@ export const EventCard = ({
         <div className="flex pt-2">
           <div className="flex flex-col">
             <div className="py-2">
-              <CategoryItem label={category} colorCode={categoryColorCode} />
+              {/* @mathtias Fix this soon */}
+              <CategoryItem label={category} colorCode={categoryColorCode} categoryAmmount={0} />
             </div>
           </div>
           <div className="flex flex-1 flex-col items-center justify-evenly">
