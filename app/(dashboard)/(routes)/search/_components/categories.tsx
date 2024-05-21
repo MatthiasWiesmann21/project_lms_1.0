@@ -10,13 +10,23 @@ interface EnhancedCategory extends Category {
 }
 interface CategoriesProps {
   items: EnhancedCategory[];
+  defaultColor: string | any;
 }
 
-export const Categories = ({
-  items,
-}: CategoriesProps) => {
+export const Categories = ({ items, defaultColor }: CategoriesProps) => {
+  const all =
+    items
+      ?.map((each) => each?._count?.courses ?? 0)
+      ?.reduce((accumulator, currentValue) => accumulator + currentValue, 0) ??
+    0;
+
   return (
     <div className="flex items-center gap-x-2 overflow-x-auto pb-2">
+      <CategoryItem
+        label={"All"}
+        colorCode={defaultColor}
+        categoryAmmount={all}
+      />
       {items.map((item) => (
         <CategoryItem
           key={item.id}
@@ -27,5 +37,5 @@ export const Categories = ({
         />
       ))}
     </div>
-  )
-}
+  );
+};
