@@ -10,6 +10,9 @@ import { getSearchCourses } from "@/actions/get-searchcourses";
 import exp from "constants";
 import { db } from "@/lib/db";
 import { languageServer } from "@/lib/check-language-server";
+import PolygonChar from "./_components/polygonChar";
+import { getCourses } from "@/actions/get-courses";
+import CourseTable from "./_components/courseTable";
 
 interface SearchPageProps {
   searchParams: {
@@ -19,13 +22,14 @@ interface SearchPageProps {
 }
 
 const Dashboard = async ({ searchParams }: SearchPageProps) => {
+  console.log("Dashboard =============");
   const { userId } = auth();
 
   if (!userId) {
     return redirect("/");
   }
 
-  const currentLanguage = await languageServer()
+  const currentLanguage = await languageServer();
 
   const { completedCourses, coursesInProgress } = await getDashboardCourses(
     userId
@@ -38,8 +42,23 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
 
   const purchasedCourses = courses.filter((course) => course.isPurchased);
 
+  const container = await db.container.findUnique({
+    where: {
+      id: process.env.CONTAINER_ID,
+    },
+  });
+
+  const _courses = await getCourses({
+    userId,
+    ...searchParams,
+    containerId: process?.env?.CONTAINER_ID,
+  });
+
   return (
-    <div className="space-y-4 p-6 dark:bg-[#313338]">
+    <div
+      className="space-y-4 p-6 dark:bg-[#313338]"
+      style={{ border: "5px solid red" }}
+    >
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <InfoCard
           icon={Clock}
@@ -53,8 +72,9 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
           variant="success"
         />
       </div>
-    
-      <CoursesList items={purchasedCourses}/>
+      <CoursesList items={purchasedCourses} />
+      <PolygonChar color={container?.navDarkBackgroundColor} />
+      <CourseTable courses={_courses} />
     </div>
   );
 };

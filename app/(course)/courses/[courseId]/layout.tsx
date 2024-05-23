@@ -4,8 +4,8 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { getProgress } from "@/actions/get-progress";
 
-import { CourseSidebar } from "./_components/course-sidebar";
 import { CourseNavbar } from "./_components/course-navbar";
+import { Sidebar } from "@/app/(dashboard)/_components/sidebar";
 
 const CourseLayout = async ({
   children,
@@ -56,7 +56,7 @@ const CourseLayout = async ({
         <CourseNavbar course={course} progressCount={progressCount} />
       </div>
       <div className="fixed inset-y-0 z-50 hidden h-full w-80 flex-col md:flex">
-        <CourseSidebar course={course} progressCount={progressCount} />
+        <Sidebar />
       </div>
       <main className="h-full pt-[80px] md:pl-80">{children}</main>
     </div>

@@ -5,11 +5,45 @@ import { db } from "@/lib/db";
 import { isOwner } from "@/lib/owner";
 import { isAdmin, isOperator } from "@/lib/roleCheckServer";
 
-export async function POST(
-  req: Request,
-) {
+const { userId } = auth();
+
+export async function GET(req: any): Promise<void | Response> {
   try {
-    const { userId } = auth();
+    if (!userId) return new NextResponse("Unauthorized", { status: 401 });
+    const courseId = new URL(req?.url)?.pathname?.split("/")[2];
+    const course = await db?.course?.findUnique({
+      where: {
+        id: courseId,
+        containerId: process?.env?.CONTAINER_ID,
+      },
+      include: {
+        chapters: {
+          where: {
+            isPublished: true,
+          },
+          include: {
+            userProgress: {
+              where: {
+                userId,
+              },
+            },
+          },
+          orderBy: {
+            position: "asc",
+          },
+        },
+      },
+    });
+    return NextResponse?.json(course);
+  } catch (error) {
+    console.log("[COURSES]", error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}
+
+export async function POST(req: Request) {
+  try {
+    // const { userId } = auth();
     const { title } = await req.json();
 
     const isRoleAdmins = await isAdmin();
@@ -29,12 +63,16 @@ export async function POST(
     const courses = await db.course.count({
       where: {
         containerId: process.env.CONTAINER_ID,
-      }
+      },
     });
 
     console.log("[COURSES]", courses, container?.maxCourses);
 
-    if (container && container.maxCourses !== null && courses >= container.maxCourses) {
+    if (
+      container &&
+      container.maxCourses !== null &&
+      courses >= container.maxCourses
+    ) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
@@ -42,8 +80,8 @@ export async function POST(
       data: {
         userId,
         title,
-        containerId: process.env.CONTAINER_ID || '',
-      }
+        containerId: process.env.CONTAINER_ID || "",
+      },
     });
 
     return NextResponse.json(course);

@@ -16,6 +16,7 @@
     "@aws-sdk/s3-presigned-post": "^3.470.0",
     "@aws-sdk/s3-request-presigner": "^3.474.0",
     "@aws-sdk/signature-v4-crt": "^3.470.0",
+    "@canvasjs/react-charts": "^1.0.2",
     "@clerk/nextjs": "^4.23.5",
     "@clerk/themes": "^1.7.9",
     "@emoji-mart/data": "^1.1.2",
