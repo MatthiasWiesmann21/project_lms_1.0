@@ -389,4 +389,5 @@ user_isBannedForm_cancel: "Cancel",
 user_isBannedForm_edit: "Edit",
 user_isBannedForm_save: "Save",
 user_setup_settings_title: "Danger Zone",
+post_setup_category_title: "Customize your Post Category",
 };

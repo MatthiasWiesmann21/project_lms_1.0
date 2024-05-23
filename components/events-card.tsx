@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { PlayCircle } from "lucide-react";
 import moment from "moment";
-import { CategoryItem } from "@/app/(dashboard)/(routes)/search/_components/category-item";
 import { cn } from "@/lib/utils";
+import { CategoryItemCard } from "@/app/(dashboard)/(routes)/live-event/_components/category-item-card";
 
 interface EventsCardProps {
   id: string;
@@ -53,8 +53,7 @@ export const EventCard = ({
         <div className="flex pt-2">
           <div className="flex flex-col">
             <div className="py-2">
-              {/* @mathtias Fix this soon */}
-              <CategoryItem label={category} colorCode={categoryColorCode} categoryAmmount={0} />
+              <CategoryItemCard label={category} colorCode={categoryColorCode} />
             </div>
           </div>
           <div className="flex flex-1 flex-col items-center justify-evenly">

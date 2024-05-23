@@ -75,8 +75,8 @@ const NewsPage = () => {
               key={item?.id}
               id={item?.id}
               title={item?.title}
-              imageUrl={item?.imageUrl!}
-              category={item?.category?.name!}
+              imageUrl={item?.imageUrl??""}
+              category={item?.category?.name??""}
               description={item?.description ?? ""}
               createdAt={new Date(item?.createdAt).toDateString()}
               publisherName={item?.publisherName!}
