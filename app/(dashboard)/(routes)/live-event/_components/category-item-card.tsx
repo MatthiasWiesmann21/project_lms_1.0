@@ -16,7 +16,7 @@ interface CategoryItemProps {
   colorCode: string;
 };
 
-export const CategoryItem = ({
+export const CategoryItemCard = ({
   label,
   value,
   colorCode,
@@ -46,11 +46,9 @@ export const CategoryItem = ({
   return (
     <button
     onClick={onClick}
-    className={`flex items-center gap-x-1 rounded-full border border-slate-300 p-3 text-sm transition hover:border-sky-700`}
+    className={`flex items-center gap-x-1 rounded-full border border-slate-300 p-2 text-sm transition hover:border-sky-700`}
     style={
-      isSelected ?
       { borderColor: colorCode, background: colorCode }
-      : { borderColor: "#cbd5e1" }
     }
     type="button"
   >

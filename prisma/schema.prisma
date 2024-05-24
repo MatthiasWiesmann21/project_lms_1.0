@@ -19,9 +19,9 @@ model Container {
   clientPackage String? @db.Text
   maxCourses    Int?    @default(0)
 
-  navPrimaryColor String? @default("#0369a0")
-  navBackgroundColor String? @default("#ffffff")
-  navDarkPrimaryColor String? @default("#ffffff")
+  navPrimaryColor        String? @default("#0369a0")
+  navBackgroundColor     String? @default("#ffffff")
+  navDarkPrimaryColor    String? @default("#ffffff")
   navDarkBackgroundColor String? @default("#0369a0")
 
   courses    Course[]
@@ -62,14 +62,14 @@ model Server {
 }
 
 model Profile {
-  id       String  @id @default(uuid())
-  userId   String  @unique
-  name     String  @db.Text
-  imageUrl String  @db.Text
-  email    String  @db.Text
-  language String? @db.Text
-  role     String  @default("USER")
-  isBanned String  @default("NOT BANNED")
+  id                    String  @id @default(uuid())
+  userId                String  @unique
+  name                  String  @db.Text
+  imageUrl              String  @db.Text
+  email                 String  @db.Text
+  language              String? @db.Text
+  role                  String  @default("USER")
+  isBanned              String  @default("NOT BANNED")
   acceptedPrivacyPolicy Boolean @default(false)
 
   containerId String
@@ -127,6 +127,7 @@ model Course {
   description String? @db.Text
   imageUrl    String? @db.Text
   price       Float?  @default(0)
+  author      String? @db.Text
   isPublished Boolean @default(false)
 
   containerId String
