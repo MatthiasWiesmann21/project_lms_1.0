@@ -100,6 +100,7 @@ const LiveEventIdPage = async ({
               initialData={{
                 ...liveEvent,
                 price: null,
+                author: null,
               }}
               liveEventId={liveEvent.id}
               options={categories.map((category) => ({
