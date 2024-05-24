@@ -105,6 +105,13 @@ const PostIdPage = async ({
               initialData={post}
               postId={post.id}
             />
+            <div className="flex items-center gap-x-2 mt-5">
+              <IconBadge icon={LayoutGridIcon} />
+              <h2 className="text-xl">
+                {currentLanguage.post_setup_category_title}
+              </h2>
+              <span className="pl-1 text-xs text-rose-600">{currentLanguage.requiredFields}</span>
+            </div>
             <CategoryForm
               initialData={post}
               postId={post.id}

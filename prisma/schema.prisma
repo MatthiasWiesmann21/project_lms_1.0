@@ -127,6 +127,7 @@ model Course {
   description String? @db.Text
   imageUrl    String? @db.Text
   price       Float?  @default(0)
+  author      String? @db.Text
   isPublished Boolean @default(false)
 
   containerId String

@@ -59,23 +59,25 @@ export const PostCard = ({
           </div>
         </div>
         <Separator />
-        <div className="mt-2 flex w-fit items-center gap-x-2 rounded-full border border-slate-300 px-1 py-1 pr-2 text-xs">
           {colorCode && (
-            <div
-              style={{ backgroundColor: colorCode }}
-              className="h-5 w-5 rounded-full"
-            />
+            <div className="mt-2 flex w-fit items-center gap-x-2 rounded-full border border-slate-300 px-1 py-1 pr-2 text-xs">
+                <div
+                  style={{ backgroundColor: colorCode }}
+                  className="h-5 w-5 rounded-full"
+                />
+              <div className="truncate">{category}</div>
+            </div>
           )}
-          <div className="truncate">{category}</div>
-        </div>
         <div className="text-lg font-bold md:text-lg">{title}</div>
       </div>
       <div>
         <Preview value={description!} />
       </div>
-      <div className="relative aspect-video rounded-md p-2">
-        <Image fill className="object-contain" alt={title} src={imageUrl} />
-      </div>
+      {imageUrl && (
+        <div className="relative aspect-video rounded-md p-2">
+          <Image fill className="object-contain" alt={title} src={imageUrl} />
+        </div>
+      )}
     </div>
     <LikeComment
       id={id}
