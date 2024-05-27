@@ -56,8 +56,7 @@ export const NavbarRoutes = () => {
         ) : canAccess ? (
           <Link href="/admin/courses">
             <Button size="default" variant="ghost">
-              <Settings className="h-4 w-4 mr-2" />
-              {currentLanguage.navigation_administration_button_text}
+              <Settings className="h-5 w-5" />
             </Button>
           </Link>
         ) : null}
