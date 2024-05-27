@@ -43,13 +43,13 @@ export const NavbarRoutes = () => {
         {isLiveEventPage && (<div className="hidden md:block">
           <SearchInput />
         </div> )}
-      <div className="flex gap-x-3 ml-auto">
+      <div className="flex gap-x-1 ml-auto">
           <LanguageToggle />
           <ModeToggle />
         {isAdministrationPage || isCoursePage ? (
           <Link href="/dashboard">
             <Button size="default" variant="ghost">
-              <LogOut className="h-4 w-4 mr-2" />
+              <LogOut className="h-5 w-5 mr-2" />
               {currentLanguage.navigation_administration_button_text_exit}
             </Button>
           </Link>
@@ -60,7 +60,7 @@ export const NavbarRoutes = () => {
             </Button>
           </Link>
         ) : null}
-        <div className="flex justify-center items-center">
+        <div className="flex m-1 justify-center items-center">
         <UserButton
           afterSignOutUrl="/sign-in"
         />

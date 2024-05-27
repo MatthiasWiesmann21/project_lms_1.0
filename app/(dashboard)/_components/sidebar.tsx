@@ -31,7 +31,7 @@ export const Sidebar = async () => {
     <div className="flex h-full flex-col overflow-y-auto border-r bg-white shadow-sm dark:bg-[#0A0118]">
       <PrivacyPolicyModal profile={profile} />
       <IsBannedView profile={profile} />
-      <div className="px-4 py-2 pt-2">
+      <div className="p-2">
         <Logo
           imageUrl={container?.imageUrl || ""}
           imageUrlDark={container?.imageUrlDark || ""}
@@ -49,10 +49,10 @@ export const Sidebar = async () => {
       {container?.clientPackage != "EXPERT" && (
         <div className="flex flex-grow items-end justify-center pb-5">
           <div className="flex items-center">
-            <span className="text-sm font-medium text-gray-600">Made by</span>
+            <span className="text-xs font-medium text-gray-600">Made by</span>
             <svg
-              width="120"
-              height="80"
+              width="100"
+              height="60"
               viewBox="0 0 800 450"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
