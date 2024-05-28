@@ -20,10 +20,10 @@ const CourseLayout = async ({
     return redirect("/");
   }
 
-  const course = await db.course.findUnique({
+  const course = await db?.course?.findUnique({
     where: {
-      id: params.courseId,
-      containerId: process.env.CONTAINER_ID,
+      id: params?.courseId,
+      containerId: process?.env?.CONTAINER_ID,
     },
     include: {
       chapters: {

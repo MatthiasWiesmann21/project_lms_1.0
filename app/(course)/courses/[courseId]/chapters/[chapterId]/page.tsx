@@ -13,6 +13,9 @@ import { CourseProgressButton } from "./_components/course-progress-button";
 import { getProgress } from "@/actions/get-progress";
 import { CourseSidebar } from "../../_components/course-sidebar";
 import { db } from "@/lib/db";
+import Love from "./_components/heart";
+import Files from "./_components/files";
+import Comments from "./_components/comments";
 
 const ChapterIdPage = async ({
   params,
@@ -112,6 +115,19 @@ const ChapterIdPage = async ({
                 />
               )}
             </div>
+            <div className="flex flex-col items-center justify-between p-4 md:flex-row">
+              <div>
+                <h2 className="mb-2 text-[24px] font-semibold">
+                  {chapter?.title}
+                </h2>
+                <span className="flex items-center text-[14px] text-gray-500">
+                  John Smith
+                  <span className="mx-1.5 rounded-full border-[3px] border-gray-500" />
+                  Sr. Product Designer
+                </span>
+              </div>
+              <Love />
+            </div>
             <Separator />
             <div>
               <Preview value={chapter.description!} />
@@ -134,6 +150,8 @@ const ChapterIdPage = async ({
                 </div>
               </>
             )}
+            <Files />
+            <Comments />
           </div>
         </div>
       </div>
