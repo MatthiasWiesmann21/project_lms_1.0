@@ -19,16 +19,13 @@ export const InfoCard = async ({
   const currentLanguage = await languageServer();
 
   return (
-    <div className="flex items-center gap-x-2 rounded-md border p-3 dark:border-[#ffffff] ">
+    <div className="flex items-center gap-x-2 rounded-md border p-3 dark:border-[#221b2e] dark:bg-[#0D071A]">
       <IconBadge variant={variant} icon={Icon} />
       <div>
-        <p className="font-medium">{label}</p>
-        <p className="text-sm text-gray-500">
-          {numberOfItems}{" "}
-          {numberOfItems === 1
-            ? `${currentLanguage?.infocard_course}`
-            : `${currentLanguage?.infocard_courses}`}
-        </p>
+        <p className="text-sm text-gray-500">{label}</p>
+        <p className="font-medium">{`${
+          numberOfItems < 10 && 0
+        }${numberOfItems}`}</p>
       </div>
     </div>
   );

@@ -55,15 +55,24 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
   });
 
   return (
-    <div
-      className="space-y-4 p-6 dark:bg-[#313338]"
-      style={{ border: "5px solid red" }}
-    >
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div className="space-y-4 p-6 dark:bg-[#110524]">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-4">
         <InfoCard
           icon={Clock}
           label={currentLanguage?.infocard_inprogress}
           numberOfItems={coursesInProgress.length}
+        />
+        <InfoCard
+          icon={CheckCircle}
+          label={currentLanguage?.infocard_completed}
+          numberOfItems={completedCourses.length}
+          variant="success"
+        />
+        <InfoCard
+          icon={CheckCircle}
+          label={currentLanguage?.infocard_completed}
+          numberOfItems={completedCourses.length}
+          variant="success"
         />
         <InfoCard
           icon={CheckCircle}

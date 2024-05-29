@@ -29,9 +29,9 @@ const doughntOptions = {
       //   indexLabel: "{name}: {y}",
       //   yValueFormatString: "#,###'%'",
       dataPoints: [
-        { name: "Complete", y: 20, color: "rgba(18, 183, 106, 1)" },
-        { name: "Inprogress", y: 30, color: "rgba(247, 144, 9, 1)" },
-        { name: "Not Started", y: 40, color: "rgba(132, 202, 255, 1)" },
+        { name: "Complete", y: 20, color: "#12b76a" },
+        { name: "Inprogress", y: 30, color: "#f79009" },
+        { name: "Not Started", y: 40, color: "#84caff" },
       ],
     },
   ],
@@ -72,18 +72,51 @@ const PolygonChar = ({ color }: { color: string | any }) => {
     ],
   };
   return (
-    <div className="flex items-center" style={{ border: "10px solid blue" }}>
-      <div style={{ border: "10px solid green" }} className="w-[70%]">
+    <div className="flex justify-between">
+      <div className="w-[65%] rounded border px-4 dark:border-[#221b2e] dark:bg-[#0D071A]">
+        <div className="my-3 flex">
+          <p className="text-[18px]">
+            Time Spending
+            <span className="ml-5 mr-2 text-[32px] font-[600]">18h</span>
+            <span className="text-[14px]">20m</span>
+          </p>
+        </div>
         <CanvasJSChart
           options={polygonOptions}
           /* onRef={ref => this.chart = ref} */
         />
       </div>
-      <div style={{ border: "10px solid coral" }} className="w-[30%]">
+      <div className="w-[30%] rounded border px-4 dark:border-[#221b2e] dark:bg-[#0D071A]">
+        <p className="mt-3 text-[18px]">Course Statistics</p>
         <CanvasJSChart
           options={doughntOptions}
           /* onRef={ref => this.chart = ref} */
         />
+        <div className="flex justify-between">
+          <div className="flex items-start">
+            <div className="mr-1 mt-1 rounded-full border border-[7px] border-[#12b76a]" />
+            <div className="">
+              <p className="m-0 text-[14px] text-gray-500">Complete</p>
+              <p className="m-0 text-[18px] font-[900]">20%</p>
+            </div>
+          </div>
+          <div className="border-1 my-[2%] border-r border-gray-500" />
+          <div className="flex items-start">
+            <div className="mr-1 mt-1 rounded-full border border-[7px] border-[#f79009]" />
+            <div className="">
+              <p className="m-0 text-[14px] text-gray-500">Inprogress</p>
+              <p className="m-0 text-[18px] font-[900]">20%</p>
+            </div>
+          </div>
+          <div className="border-1 my-[2%] border-r border-gray-500" />
+          <div className="flex items-start">
+            <div className="mr-1 mt-1 rounded-full border border-[7px] border-[#84caff]" />
+            <div className="">
+              <p className="m-0 text-[14px] text-gray-500">Not Started</p>
+              <p className="m-0 text-[18px] font-[900]">20%</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
