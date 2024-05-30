@@ -13,6 +13,7 @@ interface EventsCardProps {
   categoryColorCode: string;
   startDateTime: Date | null | any;
   endDateTime: Date | null | any;
+  color: string;
 }
 
 export const EventCard = ({
@@ -23,6 +24,7 @@ export const EventCard = ({
   categoryColorCode,
   startDateTime,
   endDateTime,
+  color,
 }: EventsCardProps) => {
   const isLive =
     new Date(startDateTime) <= new Date() &&
@@ -32,7 +34,7 @@ export const EventCard = ({
 
   return (
     <Link href={`/live-event/${id}`}>
-      <div className="group h-full overflow-hidden rounded-lg border p-2 transition hover:shadow-sm dark:border-[#ffffff]">
+      <div className="group h-full overflow-hidden rounded-lg border p-2 transition hover:shadow-sm dark:border-[#1f182b] dark:bg-[#0D0619]">
         <div
           className={cn(
             "relative aspect-video w-full overflow-hidden rounded-md",
@@ -45,25 +47,26 @@ export const EventCard = ({
               <PlayCircle className="pl-1" />
             </p>
           )}
-          <Image fill className="object-cover" alt={title} src={imageUrl} />
+          <Image
+            fill
+            className="rounded object-cover"
+            alt={title}
+            src={imageUrl}
+          />
         </div>
-        <div className="line-clamp-2 py-2 text-lg font-medium transition group-hover:text-sky-500 md:text-base">
-          {title}
-        </div>
-        <div className="flex pt-2">
-          <div className="flex flex-col">
-            <div className="py-2">
-              <CategoryItemCard label={category} colorCode={categoryColorCode} />
-            </div>
+        <div className="mt-3 p-2">
+          <div>
+            <CategoryItemCard label={category} colorCode={color} />
           </div>
-          <div className="flex flex-1 flex-col items-center justify-evenly">
-            <p className="text-xs">{`Starts: ${moment(startDateTime)?.format(
-              "DD-MM-YY HH:mm"
-            )}`}</p>
-            <p className="text-xs">{`Ends: ${moment(endDateTime)?.format(
-              "DD-MM-YY HH:mm"
-            )}`}</p>
+          <div className="line-clamp-2 py-2 text-[16px] font-medium transition group-hover:text-sky-500 md:text-base">
+            {title}
           </div>
+          <p className="text-[12px] text-gray-500">{`Starts: ${moment(
+            startDateTime
+          )?.format("DD-MM-YY HH:mm")}`}</p>
+          <p className="text-[12px] text-gray-500">{`Ends: ${moment(
+            endDateTime
+          )?.format("DD-MM-YY HH:mm")}`}</p>
         </div>
       </div>
     </Link>
