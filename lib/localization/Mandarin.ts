@@ -396,4 +396,6 @@ courses_authorForm_save: "保存",
 courses_authorForm_placeholder: "例如 '马克斯·穆斯特曼'",
 courses_authorForm_title: "作者姓名",
 courses_authorForm_empty: "空的",
+infocard_completedChapters: "已完成的章节",
+infocard_currentOnlineUsers: "当前在线用户",
 };
