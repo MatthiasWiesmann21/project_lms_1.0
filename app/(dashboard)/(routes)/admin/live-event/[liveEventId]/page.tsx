@@ -99,7 +99,6 @@ const LiveEventIdPage = async ({
             <CategoryForm
               initialData={{
                 ...liveEvent,
-                price: null,
               }}
               liveEventId={liveEvent.id}
               options={categories.map((category) => ({

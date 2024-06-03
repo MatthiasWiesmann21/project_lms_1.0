@@ -53,7 +53,7 @@ const DocumentPage = () => {
     );
   } else
     return (
-      <div className="ml-2 h-full">
+      <div className="h-full">
         <AssetsTable folderStructure={folderStructure} />
       </div>
     );
