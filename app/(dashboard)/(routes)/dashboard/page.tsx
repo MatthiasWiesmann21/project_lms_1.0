@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { CheckCircle, Clock } from "lucide-react";
+import { CheckCircle, Clock, ListChecks, Users, Users2 } from "lucide-react";
 
 import { getDashboardCourses } from "@/actions/get-dashboard-courses";
 import { CoursesList } from "@/components/courses-list";
@@ -56,7 +56,7 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
 
   return (
     <div className="space-y-4 p-6 dark:bg-[#110524]">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 sm:grid-cols-2">
         <InfoCard
           icon={Clock}
           label={currentLanguage?.infocard_inprogress}
@@ -69,16 +69,16 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
           variant="success"
         />
         <InfoCard
-          icon={CheckCircle}
-          label={currentLanguage?.infocard_completed}
+          icon={ListChecks}
+          label={currentLanguage?.infocard_completedChapters}
           numberOfItems={completedCourses.length}
-          variant="success"
+          variant="default"
         />
         <InfoCard
-          icon={CheckCircle}
-          label={currentLanguage?.infocard_completed}
+          icon={Users}
+          label={currentLanguage?.infocard_currentOnlineUsers}
           numberOfItems={completedCourses.length}
-          variant="success"
+          variant="default"
         />
       </div>
       <CoursesList items={purchasedCourses} />

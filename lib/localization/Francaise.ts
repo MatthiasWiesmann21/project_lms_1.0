@@ -396,4 +396,6 @@ courses_authorForm_save: "Sauvegarder",
 courses_authorForm_placeholder: "p.ex. 'Max Mustermann'",
 courses_authorForm_title: "Nom de l'Auteur",
 courses_authorForm_empty: "vide",
+infocard_completedChapters: "Chapitres Complétés",
+infocard_currentOnlineUsers: "Utilisateurs en Ligne Actuels",
 };
