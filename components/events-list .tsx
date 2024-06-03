@@ -24,6 +24,7 @@ export const EventsList = ({ items }: EventsListProps) => {
             categoryColorCode={item?.category?.colorCode!}
             startDateTime={item?.startDateTime}
             endDateTime={item?.endDateTime}
+            color={item?.color}
           />
         ))}
       </div>

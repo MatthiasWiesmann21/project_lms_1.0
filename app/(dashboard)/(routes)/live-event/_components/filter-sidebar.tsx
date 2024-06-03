@@ -13,7 +13,7 @@ import {
 import { DateandTime } from "./date&time";
 import { useAuth } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
-import { Filter } from "lucide-react";
+import { SlidersHorizontal } from "lucide-react";
 import { useLanguage } from "@/lib/check-language";
 
 const EventFilterSidebar = ({
@@ -29,11 +29,11 @@ const EventFilterSidebar = ({
     <Sheet>
       <SheetTrigger>
         <Button
-          className="h-[42px] w-[96px] items-center justify-center rounded-xl"
+          className="border-5 h-[50px] w-[110px] items-center justify-center rounded-full border border-[#EA2088] bg-transparent text-white dark:hover:text-black hover:bg-[#EA2088] transition duration-500 ease-in-out"
           variant="default"
           size="sm"
         >
-          <Filter className="pr-1" size={28} />
+          <SlidersHorizontal className="pr-1 hover:text-black" size={28} />
           {currentLanguage.live_event_filter_button_text}
         </Button>
       </SheetTrigger>

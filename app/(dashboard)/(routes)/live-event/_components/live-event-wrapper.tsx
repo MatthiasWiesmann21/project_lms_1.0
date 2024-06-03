@@ -6,8 +6,14 @@ import { EventsList } from "@/components/events-list ";
 import { useAuth } from "@clerk/nextjs";
 import EventFilterSidebar from "./filter-sidebar";
 import { PastandFuture } from "./past&future";
+import { db } from "@/lib/db";
 
-const LiveEventWrapper = ({ liveEvents, categories, searchParams }: any) => {
+const LiveEventWrapper = ({
+  liveEvents,
+  categories,
+  searchParams,
+  container,
+}: any) => {
   const { userId } = useAuth();
   const [liveEvent, setLiveEvent] = useState([]);
 
@@ -29,8 +35,16 @@ const LiveEventWrapper = ({ liveEvents, categories, searchParams }: any) => {
         />
         <EventFilterSidebar liveEvent={liveEvent} setLiveEvent={setLiveEvent} />
       </div>
-      <Categories items={categories} />
-      <EventsList items={liveEvent} />
+      <Categories
+        items={categories}
+        defaultColor={container?.navDarkBackgroundColor}
+      />
+      <EventsList
+        items={liveEvent?.map((each: any) => ({
+          ...each,
+          color: container?.navDarkBackgroundColor,
+        }))}
+      />
     </div>
   );
 };

@@ -396,4 +396,6 @@ courses_authorForm_save: "Сохранить",
 courses_authorForm_placeholder: "например, 'Макс Мустерманн'",
 courses_authorForm_title: "Имя автора",
 courses_authorForm_empty: "пусто",
+infocard_completedChapters: "Завершенные главы",
+infocard_currentOnlineUsers: "Текущие онлайн-пользователи",
 };
