@@ -5,12 +5,12 @@ import { Separator } from "@/components/ui/separator";
 import { Preview } from "@/components/preview";
 import { VideoPlayer } from "./_components/video-player";
 import moment from "moment";
-import { CategoryItem } from "../_components/category-item";
 import Chat from "./_components/chat";
 import EventModal from "./_components/eventModal";
 import Like from "./_components/like";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { CategoryItem } from "./_components/category-item";
 
 const LiveEventIdPage = ({ params }: { params: { liveEventId: string } }) => {
   const { userId } = useAuth();
