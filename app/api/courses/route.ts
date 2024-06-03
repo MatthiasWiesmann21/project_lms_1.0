@@ -5,9 +5,8 @@ import { db } from "@/lib/db";
 import { isOwner } from "@/lib/owner";
 import { isAdmin, isOperator } from "@/lib/roleCheckServer";
 
-const { userId } = auth();
-
 export async function GET(req: any): Promise<void | Response> {
+  const { userId } = auth();
   try {
     if (!userId) return new NextResponse("Unauthorized", { status: 401 });
     const courseId = new URL(req?.url)?.pathname?.split("/")[2];
@@ -42,6 +41,7 @@ export async function GET(req: any): Promise<void | Response> {
 }
 
 export async function POST(req: Request) {
+  const { userId } = auth();
   try {
     // const { userId } = auth();
     const { title } = await req.json();
