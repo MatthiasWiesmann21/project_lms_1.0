@@ -10,7 +10,7 @@ interface CategoryItemProps {
   label: string;
   value?: string;
   colorCode: string;
-  count: string;
+  count?: string;
 }
 
 export const CategoryItem = ({

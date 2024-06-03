@@ -56,8 +56,8 @@ const Comments = () => (
   <div className="mt-5 py-4 pl-4">
     <div>{`${arr?.length} Comments`}</div>
     <Comment />
-    {arr?.map((each) => (
-      <Comment comment={each} />
+    {arr?.map((each, index) => (
+      <Comment key={index} comment={each} />
     ))}
   </div>
 );
