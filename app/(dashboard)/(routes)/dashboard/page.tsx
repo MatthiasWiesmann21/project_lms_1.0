@@ -23,6 +23,7 @@ interface SearchPageProps {
 
 const Dashboard = async ({ searchParams }: SearchPageProps) => {
   console.log("Dashboard =============");
+  
   const { userId } = auth();
 
   if (!userId) {
@@ -54,6 +55,21 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
     containerId: process?.env?.CONTAINER_ID,
   });
 
+  const UserProgressCompletedChapters = await db.userProgress.count({
+    where: {
+      userId,
+      isCompleted: true,
+    },
+  });
+  console.log("UserProgressCompletedChapters", UserProgressCompletedChapters);
+
+  const CurrentOnlineUser = await db.profile.findMany({
+    where: {
+      isOnline: true,
+    },
+  });
+
+
   return (
     <div className="space-y-4 p-6 dark:bg-[#110524]">
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 sm:grid-cols-2">
@@ -71,13 +87,13 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
         <InfoCard
           icon={ListChecks}
           label={currentLanguage?.infocard_completedChapters}
-          numberOfItems={completedCourses.length}
+          numberOfItems={UserProgressCompletedChapters}
           variant="default"
         />
         <InfoCard
           icon={Users}
           label={currentLanguage?.infocard_currentOnlineUsers}
-          numberOfItems={completedCourses.length}
+          numberOfItems={CurrentOnlineUser.length}
           variant="default"
         />
       </div>

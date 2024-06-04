@@ -68,6 +68,7 @@ model Profile {
   imageUrl              String  @db.Text
   email                 String  @db.Text
   language              String? @db.Text
+  isOnline              Boolean @default(false)
   role                  String  @default("USER")
   isBanned              String  @default("NOT BANNED")
   acceptedPrivacyPolicy Boolean @default(false)
