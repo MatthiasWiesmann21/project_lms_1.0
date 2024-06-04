@@ -3,7 +3,6 @@ import { Navbar } from "./_components/navbar";
 import { Sidebar } from "./_components/sidebar";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  console.log("DashboardLayout =============");
   return (
     <div className="flex h-full flex-col">
       <div

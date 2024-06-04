@@ -9,7 +9,10 @@ import { ChatInputPost } from "./chatInput";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/check-language";
 
-const SubReply = ({ val, updateLikeComment }: any) => (
+const SubReply = ({
+  val,
+}: //  updateLikeComment
+any) => (
   <div>
     <div className="flex justify-around">
       <UserAvatar
@@ -30,8 +33,8 @@ const SubReply = ({ val, updateLikeComment }: any) => (
               const response = await axios?.post(`/api/like/create`, {
                 commentId: val?.id,
               });
-              if (response?.status === 200)
-                updateLikeComment(response?.data?.post);
+              // if (response?.status === 200)
+              //   updateLikeComment(response?.data?.post);
             }}
             className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
           >
@@ -50,11 +53,11 @@ const SubReply = ({ val, updateLikeComment }: any) => (
 const Reply = ({
   val,
   id,
-  updateLikeComment,
-}: {
+}: // updateLikeComment,
+{
   val: any;
   id: string;
-  updateLikeComment: any;
+  // updateLikeComment: any;
 }) => {
   const user = useSelector((state: any) => state?.user);
   const [showReplyInput, setShowReplyInput] = useState(false);
@@ -80,8 +83,8 @@ const Reply = ({
                 const response = await axios?.post(`/api/like/create`, {
                   commentId: val?.id,
                 });
-                if (response?.status === 200)
-                  updateLikeComment(response?.data?.post);
+                // if (response?.status === 200)
+                //   updateLikeComment(response?.data?.post);
               }}
               className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
             >
@@ -113,7 +116,7 @@ const Reply = ({
                     parentCommentId: val?.id,
                   }}
                   className="-mt-[3%]"
-                  updateLikeComment={updateLikeComment}
+                  // updateLikeComment={updateLikeComment}
                 />
               </div>
             </div>
@@ -122,7 +125,7 @@ const Reply = ({
             <SubReply
               key={val?.id}
               val={val}
-              updateLikeComment={updateLikeComment}
+              // updateLikeComment={updateLikeComment}
             />
           ))}
         </div>
@@ -137,14 +140,12 @@ const LikeComment = ({
   currentLike,
   commentsWithLikes,
   commentsCount,
-  updateLikeComment,
 }: {
   id: string;
   likesCount: number;
   currentLike: boolean;
   commentsWithLikes: any;
   commentsCount: number;
-  updateLikeComment: any;
 }) => {
   const user = useSelector((state: any) => state?.user);
   const [commentCount, setCommentCount] = useState(3);
@@ -158,8 +159,8 @@ const LikeComment = ({
             const response = await axios?.post(`/api/like/create`, {
               postId: id,
             });
-            if (response?.status === 200)
-              updateLikeComment(response?.data?.post);
+            // if (response?.status === 200)
+            // updateLikeComment(response?.data?.post);
           }}
           className="m-2 flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
         >
@@ -190,7 +191,7 @@ const LikeComment = ({
               parentCommentId: null,
             }}
             className=""
-            updateLikeComment={updateLikeComment}
+            // updateLikeComment={updateLikeComment}
           />
           {isShowComments && (
             <>
@@ -202,7 +203,7 @@ const LikeComment = ({
                         key={val?.id}
                         val={val}
                         id={id}
-                        updateLikeComment={updateLikeComment}
+                        // updateLikeComment={updateLikeComment}
                       />
                     )
                 )}

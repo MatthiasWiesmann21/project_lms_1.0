@@ -10,13 +10,13 @@ type PostWithProgressWithCategory = Post & {
 };
 
 type GetPosts = {
-  // userId?: string;
+  userId?: string;
   title?: string;
   categoryId?: string;
 };
 
 export const getPosts = async ({
-  // userId,
+  userId,
   title,
   categoryId,
 }: GetPosts): Promise<PostWithProgressWithCategory[]> => {
@@ -77,16 +77,22 @@ export const getPosts = async ({
       const commentsWithLikes = post.comments.map((comment) => ({
         ...comment,
         commentLikesCount: comment.likes.length,
-        currentCommentLike: comment.likes.some((like) => like.profileId === profile.id),
+        currentCommentLike: comment.likes.some(
+          (like) => like.profileId === profile.id
+        ),
         subCommentsWithLikes: comment.subComment.map((subcomment) => ({
           ...subcomment,
           commentLikesCount: subcomment.likes.length,
-          currentCommentLike: subcomment.likes.some((like) => like.profileId === profile.id),
-        }))
+          currentCommentLike: subcomment.likes.some(
+            (like) => like.profileId === profile.id
+          ),
+        })),
       }));
 
       // Check if the current profile has liked the post
-      const currentLike = post.likes.some((like) => like.profileId === profile.id);
+      const currentLike = post.likes.some(
+        (like) => like.profileId === profile.id
+      );
 
       // Return the post data along with the calculated counts and like state
       return {

@@ -19,7 +19,7 @@ interface ChatInputProps {
   query: Record<string, any>;
   className?: string;
   placeHolder?: string;
-  updateLikeComment?: any;
+  // updateLikeComment?: any;
   getPosts?: any;
 }
 
@@ -32,8 +32,8 @@ export const ChatInputPost = ({
   query,
   className,
   placeHolder,
-  updateLikeComment,
-}: ChatInputProps) => {
+}: // updateLikeComment,
+ChatInputProps) => {
   const { onOpen } = useModal();
   const router = useRouter();
 
@@ -58,7 +58,7 @@ export const ChatInputPost = ({
       });
       form.reset();
       router.refresh();
-      updateLikeComment(response?.data?.post);
+      // updateLikeComment(response?.data?.post);
       setSending(false);
     } catch (error) {
       console.log(error);
