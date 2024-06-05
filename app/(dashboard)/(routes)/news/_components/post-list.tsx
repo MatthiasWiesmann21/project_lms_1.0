@@ -27,11 +27,12 @@ export const PostList = ({ items, isLoading }: PostListProps) => {
       <div className="w-full max-w-2xl px-5">
         {sortedItems?.map((item) => (
           <PostCard
-            key={item.id}
-            title={item.title}
-            imageUrl={item.imageUrl!}
+            key={item?.id}
+            id={item?.id}
+            title={item?.title}
+            imageUrl={item?.imageUrl!}
             category={item?.category?.name!}
-            description={item.description ?? ""}
+            description={item?.description ?? ""}
             colorCode={item?.category?.colorCode!}
           />
         ))}

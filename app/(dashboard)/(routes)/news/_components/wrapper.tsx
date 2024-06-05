@@ -17,6 +17,7 @@ const Wrapper = ({ posts, categories, container }: any) => {
         {posts?.map((item: any) => (
           <PostCard
             key={item?.id}
+            id={item?.id}
             title={item?.title}
             imageUrl={item?.imageUrl ?? ""}
             category={item?.category?.name ?? ""}
