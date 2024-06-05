@@ -13,17 +13,26 @@ import { ModeToggle } from "./mode-toggle";
 import { LanguageToggle } from "./language-toggle";
 import { useIsAdmin, useIsOperator } from "@/lib/roleCheck";
 import { useLanguage } from "@/lib/check-language";
+import ProfileButton from "./profile-button";
 
-export const NavbarRoutes = () => {
+interface NavbarRoutesProps {
+  profileId: string;
+  profileName: string;
+  profileImageUrl: string;
+}
+
+export const NavbarRoutes = ({
+  profileId,
+  profileName,
+  profileImageUrl,
+}: NavbarRoutesProps) => {
   const { userId } = useAuth();
   const pathname = usePathname();
   const currentLanguage = useLanguage();
 
-
   const isAdmin = useIsAdmin();
   const isOperator = useIsOperator();
-  
-  
+
   const canAccess = isAdmin || isOperator || isOwner(userId);
 
   const isAdministrationPage = pathname?.startsWith("/admin");
@@ -34,22 +43,28 @@ export const NavbarRoutes = () => {
 
   return (
     <>
-      {isSearchPage && (<div className="hidden md:block">
+      {isSearchPage && (
+        <div className="hidden md:block">
           <SearchInput />
-        </div> )}
-        {isDashboardPage && (<div className="hidden md:block">
+        </div>
+      )}
+      {isDashboardPage && (
+        <div className="hidden md:block">
           <SearchInput />
-        </div> )}
-        {isLiveEventPage && (<div className="hidden md:block">
+        </div>
+      )}
+      {isLiveEventPage && (
+        <div className="hidden md:block">
           <SearchInput />
-        </div> )}
-      <div className="flex gap-x-1 ml-auto">
-          <LanguageToggle />
-          <ModeToggle />
+        </div>
+      )}
+      <div className="ml-auto flex gap-x-1">
+        <LanguageToggle />
+        <ModeToggle />
         {isAdministrationPage || isCoursePage ? (
           <Link href="/dashboard">
             <Button size="default" variant="ghost">
-              <LogOut className="h-5 w-5 mr-2" />
+              <LogOut className="mr-2 h-5 w-5" />
               {currentLanguage.navigation_administration_button_text_exit}
             </Button>
           </Link>
@@ -60,12 +75,10 @@ export const NavbarRoutes = () => {
             </Button>
           </Link>
         ) : null}
-        <div className="flex m-1 justify-center items-center">
-        <UserButton
-          afterSignOutUrl="/sign-in"
-        />
+        <div className="m-2 flex items-center justify-center">
+          <ProfileButton profileId={profileId} profileName={profileName} profileImageUrl={profileImageUrl} />
         </div>
       </div>
     </>
-  )
-}
+  );
+};

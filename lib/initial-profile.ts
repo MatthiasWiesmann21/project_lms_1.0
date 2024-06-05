@@ -22,7 +22,6 @@ export const initialProfile = async () => {
         userId: user.id,
       },
       data: {
-        name: `${user.username}`,
         imageUrl: user.imageUrl,
         email: user.emailAddresses[0].emailAddress,
         isOnline: true,
@@ -35,7 +34,7 @@ export const initialProfile = async () => {
     const newProfile = await db.profile.create({
       data: {
         userId: user.id,
-        name: `${user.username}`,
+        name: `${user.username}` || "User",
         imageUrl: user.imageUrl,
         email: user.emailAddresses[0].emailAddress,
         containerId: process.env.CONTAINER_ID!,

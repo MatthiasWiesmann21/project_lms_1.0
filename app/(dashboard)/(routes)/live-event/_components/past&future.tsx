@@ -14,7 +14,7 @@ export const PastandFuture = ({
   liveEvent: any[];
 }) => {
   const currentLanguage = useLanguage();
-  const [state, setState] = useState("");
+  const [state, setState] = useState("past");
   return (
     <div className="flex items-center justify-between">
       <div

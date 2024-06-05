@@ -29,6 +29,16 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
     return redirect("/");
   }
 
+  const profile = await db.profile.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  if (profile?.name === null) {
+    return redirect("/profile/manageUsername");
+  }
+
   const container = await db.container.findUnique({
     where: {
       id: process.env.CONTAINER_ID,
