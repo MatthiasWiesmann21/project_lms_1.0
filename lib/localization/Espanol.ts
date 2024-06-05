@@ -398,4 +398,12 @@ courses_authorForm_title: "Nombre del autor",
 courses_authorForm_empty: "vacio",
 infocard_completedChapters: "Capítulos Completados",
 infocard_currentOnlineUsers: "Usuarios en Línea Actuales",
+profile_manageAccount: "Gestionar cuenta",
+profile_signOut: "Cerrar sesión",
+profile_change_customize_username: "Cambiar tu nombre de usuario",
+profile_TitleForm_title: "Nombre de usuario",
+profile_TitleForm_cancel: "Cancelar",
+profile_TitleForm_edit: "Editar",
+profile_TitleForm_placeholder: "NombreDeUsuario123",
+profile_TitleForm_save: "Guardar"
 };

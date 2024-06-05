@@ -401,4 +401,12 @@ courses_authorForm_title: "Authorenname",
 courses_authorForm_empty: "leer",
 infocard_completedChapters: "Abgeschlossene Kapitel",
 infocard_currentOnlineUsers: "Aktuelle Online-Benutzer",
+profile_manageAccount: "Konto verwalten",
+profile_signOut: "Abmelden",
+profile_change_customize_username: "Benutzernamen ändern",
+profile_TitleForm_title: "Benutzername",
+profile_TitleForm_cancel: "Abbrechen",
+profile_TitleForm_edit: "Bearbeiten",
+profile_TitleForm_placeholder: "Benutzername123",
+profile_TitleForm_save: "Speichern"
 };

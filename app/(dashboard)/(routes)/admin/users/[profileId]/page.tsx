@@ -60,7 +60,7 @@ const UserIdPage = async ({ params }: { params: { profileId: string } }) => {
                 {currentLanguage.user_setup_customize_title}
               </h2>
             </div>
-            <ShowUserName initialData={profile} profileId={profile.id} />
+            <ShowUserName initialData={{ name: profile.name || "" }} profileId={profile.id} />
             <ShowUserMail initialData={profile} profileId={profile.id} />
             <RoleForm
               initialData={profile}
