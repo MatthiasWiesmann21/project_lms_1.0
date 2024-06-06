@@ -37,7 +37,7 @@ export const NavbarRoutes = ({
 
   const isAdministrationPage = pathname?.startsWith("/admin");
   const isCoursePage = pathname?.includes("/courses");
-  const isDashboardPage = pathname === "/dashboard";
+  const isCourseListPage = pathname === "/dashboard/course-list";
   const isSearchPage = pathname === "/search";
   const isLiveEventPage = pathname === "/live-event";
 
@@ -48,7 +48,7 @@ export const NavbarRoutes = ({
           <SearchInput />
         </div>
       )}
-      {isDashboardPage && (
+      {isCourseListPage && (
         <div className="hidden md:block">
           <SearchInput />
         </div>

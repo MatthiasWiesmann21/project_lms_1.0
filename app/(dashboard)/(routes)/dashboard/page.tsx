@@ -49,12 +49,6 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
     },
   });
 
-  const _courses = await getCourses({
-    userId,
-    ...searchParams,
-    containerId: process?.env?.CONTAINER_ID,
-  });
-
   const UserProgressCompletedChapters = await db.userProgress.count({
     where: {
       userId,
@@ -97,9 +91,8 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
           variant="default"
         />
       </div>
-      <CoursesList items={purchasedCourses} />
       <PolygonChar color={container?.navDarkBackgroundColor} />
-      <CourseTable courses={_courses} />
+      <CourseTable courses={purchasedCourses} />
     </div>
   );
 };
