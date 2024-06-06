@@ -3,7 +3,7 @@ import { languageServer } from "@/lib/check-language-server";
 import { Hash } from "lucide-react";
 
 interface ChatWelcomeProps {
-  name: string;
+  name: string | null;
   type: "channel" | "conversation";
 };
 
