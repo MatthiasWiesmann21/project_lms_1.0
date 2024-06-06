@@ -20,7 +20,7 @@ interface ServerSearchProps {
     type: "channel" | "member",
     data: {
       icon: React.ReactNode;
-      name: string;
+      name: string | null;
       id: string;
     }[] | undefined
   }[]
