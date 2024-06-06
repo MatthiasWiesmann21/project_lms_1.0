@@ -13,6 +13,7 @@ import { ChapterAccessForm } from "./_components/chapter-access-form";
 import { ChapterVideoForm } from "./_components/chapter-video-form";
 import { ChapterActions } from "./_components/chapter-actions";
 import { languageServer } from "@/lib/check-language-server";
+import { AuthorForm } from "./_components/author-form";
 
 const ChapterIdPage = async ({
   params
@@ -103,6 +104,11 @@ const ChapterIdPage = async ({
                 initialData={chapter}
                 courseId={params.courseId}
                 chapterId={params.chapterId}
+              />
+              <AuthorForm
+                initialData={chapter}
+                courseId={params.courseId}
+                chapterId={params.chapterId} 
               />
             </div>
             <div>

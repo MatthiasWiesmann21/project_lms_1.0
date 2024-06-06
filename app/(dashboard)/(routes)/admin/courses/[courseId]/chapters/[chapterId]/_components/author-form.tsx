@@ -8,7 +8,7 @@ import { Pencil } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Course } from "@prisma/client";
+import { Chapter } from "@prisma/client";
 
 import {
   Form,
@@ -23,8 +23,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { useLanguage } from "@/lib/check-language";
 
 interface AuthorFormProps {
-  initialData: Course;
+  initialData: Chapter;
   courseId: string;
+  chapterId: string;
 };
 
 const formSchema = z.object({
@@ -35,7 +36,8 @@ const formSchema = z.object({
 
 export const AuthorForm = ({
   initialData,
-  courseId
+  courseId,
+  chapterId,
 }: AuthorFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const currentLanguage = useLanguage();
@@ -54,8 +56,8 @@ export const AuthorForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/courses/${courseId}`, values);
-      toast.success("Course updated");
+      await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values);
+      toast.success("Chapter updated");
       toggleEdit();
       router.refresh();
     } catch {

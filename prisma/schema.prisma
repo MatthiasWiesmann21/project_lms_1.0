@@ -64,7 +64,7 @@ model Server {
 model Profile {
   id                    String  @id @default(uuid())
   userId                String  @unique
-  name                  String?  @db.Text
+  name                  String? @db.Text
   imageUrl              String  @db.Text
   email                 String  @db.Text
   language              String? @db.Text
@@ -128,7 +128,6 @@ model Course {
   description String? @db.Text
   imageUrl    String? @db.Text
   price       Float?  @default(0)
-  author      String? @db.Text
   isPublished Boolean @default(false)
 
   containerId String
@@ -195,6 +194,7 @@ model Chapter {
   position    Int
   isPublished Boolean @default(false)
   isFree      Boolean @default(false)
+  author      String? @db.Text
 
   courseId String
   course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)

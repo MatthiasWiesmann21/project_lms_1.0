@@ -7,6 +7,7 @@ import { useLanguage } from "@/lib/check-language";
 
 const CourseTable = ({ courses }: { courses: any[] }) => {
   const currentLanguage = useLanguage();
+  const maxCourses = 5;
 
   return (
   <div className="rounded-md border dark:border-[#221b2e] dark:bg-[#0D071A]">
@@ -23,7 +24,7 @@ const CourseTable = ({ courses }: { courses: any[] }) => {
       <p className="w-[10%]">{currentLanguage.dashboard_courseTable_chapter}</p>
       <p className="w-[15%]">{currentLanguage.dashboard_courseTable_action}</p>
     </div>
-    {courses?.map((each: any, index: number) => {
+    {courses?.slice(0, maxCourses).map((each: any, index: number) => {
       return (
         <div
           key={each?.id}

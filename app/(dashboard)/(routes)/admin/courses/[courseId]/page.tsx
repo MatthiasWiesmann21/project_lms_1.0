@@ -15,7 +15,6 @@ import { AttachmentForm } from "./_components/attachment-form";
 import { ChaptersForm } from "./_components/chapters-form";
 import { Actions } from "./_components/actions";
 import { languageServer } from "@/lib/check-language-server";
-import { AuthorForm } from "./_components/author-form";
 
 const CourseIdPage = async ({
   params
@@ -128,10 +127,6 @@ const CourseIdPage = async ({
                 label: category.name,
                 value: category.id,
               }))}
-            />
-            <AuthorForm
-              initialData={course}
-              courseId={course.id}
             />
           </div>
           <div className="space-y-6">
