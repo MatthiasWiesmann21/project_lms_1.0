@@ -22,6 +22,7 @@ import { cn } from "@/lib/utils";
 import { Editor } from "@/components/editor";
 import { Preview } from "@/components/preview";
 import { useLanguage } from "@/lib/check-language";
+import { ChapterPreviewAdmin } from "@/components/chapter-preview-admin";
 
 interface ChapterDescriptionFormProps {
   initialData: Chapter;
@@ -86,9 +87,7 @@ export const ChapterDescriptionForm = ({
         )}>
           {!initialData.description && `${currentLanguage.chapter_chapterDescriptionForm_noDescription}`}
           {initialData.description && (
-            <Preview
-              value={initialData.description}
-            />
+            <ChapterPreviewAdmin value={initialData.description} />
           )}
         </div>
       )}

@@ -103,6 +103,8 @@ const ChapterIdPage = async ({
           <div>
             <div className="flex flex-col items-center justify-between px-4 py-2 md:flex-row">
               <h2 className="mb-2 text-2xl font-semibold">{chapter.title}</h2>
+              <div className="flex items-center space-x-2">
+              <Love />
               {purchase ? (
                 <CourseProgressButton
                   chapterId={params.chapterId}
@@ -116,6 +118,7 @@ const ChapterIdPage = async ({
                   price={course.price!}
                 />
               )}
+              </div>
             </div>
             <div className="flex flex-col items-center justify-between px-4 md:flex-row">
               <div>
@@ -123,7 +126,7 @@ const ChapterIdPage = async ({
                   {chapter.author}
                 </span>
               </div>
-              <Love />
+              
             </div>
             <Separator />
             <div className="p-4">

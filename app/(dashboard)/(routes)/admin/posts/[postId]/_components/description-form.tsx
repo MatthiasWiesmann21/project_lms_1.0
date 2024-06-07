@@ -22,6 +22,7 @@ import { cn } from "@/lib/utils";
 import { Editor } from "@/components/editor";
 import { Preview } from "@/components/preview";
 import { useLanguage } from "@/lib/check-language";
+import { PostPreview } from "@/components/post-preview";
 
 interface DescriptionFormProps {
   initialData: Post;
@@ -84,8 +85,8 @@ export const DescriptionForm = ({
         )}>
           {!initialData.description && `${currentLanguage.post_DescriptionForm_noDescription}`}
           {initialData.description && (
-            <Preview
-              value={initialData.description}
+            <PostPreview
+              value={initialData.description} 
             />
           )}
         </div>

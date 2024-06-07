@@ -5,6 +5,8 @@ import { getSearchCourses } from "@/actions/get-searchcourses";
 import { languageServer } from "@/lib/check-language-server";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { Categories } from "../_components/categories";
+import { db } from "@/lib/db";
 
 interface SearchPageProps {
   searchParams: {
@@ -29,6 +31,28 @@ const CourseListPage = async ({ searchParams }: SearchPageProps) => {
     ...searchParams,
   });
 
+  const categoriesWithCourseCounts = await db.category.findMany({
+    where: {
+      isPublished: true,
+      isCourseCategory: true,
+      containerId: process.env.CONTAINER_ID,
+    },
+    orderBy: {
+      name: "asc",
+    },
+    include: {
+      _count: {
+        select: { courses: true } // Ensure 'courses' matches your schema relation name
+      },
+    },
+  });
+
+  const containerColors = await db?.container?.findUnique({
+    where: {
+      id: process.env.CONTAINER_ID,
+    },
+  });
+
   const purchasedCourses = courses.filter((course) => course.isPurchased);
 
   return (
@@ -40,6 +64,10 @@ const CourseListPage = async ({ searchParams }: SearchPageProps) => {
         <ArrowLeft className="mr-2 h-4 w-4" />
         {currentLanguage.courses_list_backToDashboard_button_text}
       </Link>
+      <Categories
+          items={categoriesWithCourseCounts}
+          defaultColor={containerColors?.navDarkBackgroundColor}
+        />
       <CoursesList items={purchasedCourses} />
     </div>
   );

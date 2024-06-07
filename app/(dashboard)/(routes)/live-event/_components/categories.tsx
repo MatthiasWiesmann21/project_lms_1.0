@@ -13,10 +13,9 @@ export const Categories = ({ items, defaultColor }: CategoriesProps) => {
       ?.reduce((accumulator, currentValue) => accumulator + currentValue, 0) ??
     0;
   return (
-    <div className="flex items-center gap-x-2 overflow-x-auto pb-2">
+    <div className="flex items-center gap-x-2 overflow-x-auto pb-2 no-scrollbar">
       <CategoryItem label={"all"} colorCode={defaultColor} count={all} />
       {items.map((item) => {
-        console.log("12121212121212", item);
         return (
           <CategoryItem
             key={item.id}
