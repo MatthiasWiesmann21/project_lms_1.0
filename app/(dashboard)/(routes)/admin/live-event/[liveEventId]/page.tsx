@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { LayoutDashboard, ListChecks } from "lucide-react";
+import { ArrowLeft, LayoutDashboard, ListChecks } from "lucide-react";
 
 import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
@@ -15,6 +15,7 @@ import { VideoForm } from "./_components/event-video-form";
 import { StartDateTimeForm } from "./_components/startDateTime-form";
 import { EndDateTimeForm } from "./_components/endDateTime-form";
 import { languageServer } from "@/lib/check-language-server";
+import Link from "next/link";
 
 const LiveEventIdPage = async ({
   params,
@@ -71,6 +72,13 @@ const LiveEventIdPage = async ({
         <Banner label={currentLanguage.liveEvent_unpublish_banner} />
       )}
       <div className="p-6">
+      <Link
+        href={`/admin/live-event`}
+        className="mb-6 flex items-center text-sm transition hover:opacity-75"
+      >
+        <ArrowLeft className="mr-2 h-4 w-4" />
+        {currentLanguage.liveEvent_setup_backToEventAdminList_button_text}
+      </Link>
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2">
             <h1 className="text-2xl font-medium">{currentLanguage.liveEvent_setup_title}</h1>

@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { CircleDollarSign, File, LayoutDashboard, ListChecks } from "lucide-react";
+import { ArrowLeft, CircleDollarSign, File, LayoutDashboard, ListChecks } from "lucide-react";
 
 import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
@@ -15,6 +15,7 @@ import { AttachmentForm } from "./_components/attachment-form";
 import { ChaptersForm } from "./_components/chapters-form";
 import { Actions } from "./_components/actions";
 import { languageServer } from "@/lib/check-language-server";
+import Link from "next/link";
 
 const CourseIdPage = async ({
   params
@@ -84,6 +85,13 @@ const CourseIdPage = async ({
         />
       )}
       <div className="p-6">
+      <Link
+        href={`/admin/courses`}
+        className="mb-6 flex items-center text-sm transition hover:opacity-75"
+      >
+        <ArrowLeft className="mr-2 h-4 w-4" />
+        {currentLanguage.courses_setup_backToCourseAdminList_button_text}
+      </Link>
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2">
             <h1 className="text-2xl font-medium">

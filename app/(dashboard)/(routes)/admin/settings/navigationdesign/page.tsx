@@ -46,7 +46,7 @@ const CustomizeSettingsPage = async () => {
         href={"/admin/settings"}
         className="flex items-center text-sm hover:opacity-75 transition mb-6">
           <ArrowLeft className="h-4 w-4 mr-2" />
-            {currentLanguage.settings_backToMenu_button_text}
+            {currentLanguage.settings_backToAdminSettings_button_text}
         </Link>
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2">

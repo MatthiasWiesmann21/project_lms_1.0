@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { LayoutGridIcon } from "lucide-react";
+import { ArrowLeft, LayoutGridIcon } from "lucide-react";
 
 import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
@@ -11,6 +11,7 @@ import { Actions } from "./_components/actions";
 import { ColorForm } from "./_components/color-form";
 import { CategoryTypeForm } from "./_components/categorytype-form";
 import { languageServer } from "@/lib/check-language-server";
+import Link from "next/link";
 
 const CategoryIdPage = async ({
   params
@@ -53,6 +54,13 @@ const CategoryIdPage = async ({
         />
       )}
       <div className="p-6">
+      <Link
+        href={`/admin/categories`}
+        className="mb-6 flex items-center text-sm transition hover:opacity-75"
+      >
+        <ArrowLeft className="mr-2 h-4 w-4" />
+        {currentLanguage.category_setup_backToCategoryAdminList_button_text}
+      </Link>
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2">
             <h1 className="text-2xl font-medium">
