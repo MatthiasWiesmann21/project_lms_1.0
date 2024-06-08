@@ -423,4 +423,8 @@ liveEvent_setup_backToEventAdminList_button_text: "返回直播事件概览",
 category_setup_backToCategoryAdminList_button_text: "返回类别概览",
 user_setup_backToUserAdminList_button_text: "返回用户概览",
 settings_backToAdminSettings_button_text: "返回设置概览",
+navigation_language_tooltip: "语言",
+navigation_mode_tooltip: "模式",
+navigation_administration_tooltip: "管理",
+navigation_profile_tooltip: "个人资料",
 };

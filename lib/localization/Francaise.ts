@@ -423,4 +423,8 @@ liveEvent_setup_backToEventAdminList_button_text: "Retour à la Vue d'ensemble d
 category_setup_backToCategoryAdminList_button_text: "Retour à la Vue d'ensemble des Catégories",
 user_setup_backToUserAdminList_button_text: "Retour à la Vue d'ensemble des Utilisateurs",
 settings_backToAdminSettings_button_text: "Retour à la Vue d'ensemble des Paramètres",
+navigation_language_tooltip: "Langues",
+navigation_mode_tooltip: "Mode",
+navigation_administration_tooltip: "Administration",
+navigation_profile_tooltip: "Profil",
 };

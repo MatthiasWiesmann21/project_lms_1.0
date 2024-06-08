@@ -423,4 +423,8 @@ liveEvent_setup_backToEventAdminList_button_text: "Back to Live-Event Overview",
 category_setup_backToCategoryAdminList_button_text: "Back to Category Overview",
 user_setup_backToUserAdminList_button_text: "Back to User Overview",
 settings_backToAdminSettings_button_text: "Back to Settings Overview",
+navigation_language_tooltip: "Languages",
+navigation_mode_tooltip: "Mode",
+navigation_administration_tooltip: "Administration",
+navigation_profile_tooltip: "Profile",
 };

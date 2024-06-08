@@ -423,4 +423,8 @@ liveEvent_setup_backToEventAdminList_button_text: "Вернуться к Обз�
 category_setup_backToCategoryAdminList_button_text: "Вернуться к Обзору Категорий",
 user_setup_backToUserAdminList_button_text: "Вернуться к Обзору Пользователей",
 settings_backToAdminSettings_button_text: "Вернуться к Обзору Настроек",
+navigation_language_tooltip: "Языки",
+navigation_mode_tooltip: "Режим",
+navigation_administration_tooltip: "Администрация",
+navigation_profile_tooltip: "Профиль",
 };

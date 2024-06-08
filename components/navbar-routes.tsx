@@ -15,6 +15,13 @@ import { useIsAdmin, useIsOperator } from "@/lib/roleCheck";
 import { useLanguage } from "@/lib/check-language";
 import ProfileButton from "./profile-button";
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 interface NavbarRoutesProps {
   profileId: string;
   profileName: string;
@@ -59,25 +66,52 @@ export const NavbarRoutes = ({
         </div>
       )}
       <div className="ml-auto flex gap-x-1">
-        <LanguageToggle />
-        <ModeToggle />
-        {isAdministrationPage || isCoursePage ? (
-          <Link href="/dashboard">
-            <Button size="default" variant="ghost">
-              <LogOut className="mr-2 h-5 w-5" />
-              {currentLanguage.navigation_administration_button_text_exit}
-            </Button>
-          </Link>
-        ) : canAccess ? (
-          <Link href="/admin/courses">
-            <Button size="default" variant="ghost">
-              <Settings className="h-5 w-5" />
-            </Button>
-          </Link>
-        ) : null}
-        <div className="m-2 flex items-center justify-center">
-          <ProfileButton profileId={profileId} profileName={profileName} profileImageUrl={profileImageUrl} />
-        </div>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <LanguageToggle />
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              {currentLanguage.navigation_language_tooltip}
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger>
+              <ModeToggle />
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              {currentLanguage.navigation_mode_tooltip}
+            </TooltipContent>
+          </Tooltip>
+          {isAdministrationPage || isCoursePage ? (
+            <Link href="/dashboard">
+              <Button size="default" variant="ghost">
+                <LogOut className="mr-2 h-5 w-5" />
+                {currentLanguage.navigation_administration_button_text_exit}
+              </Button>
+            </Link>
+          ) : canAccess ? (
+            <Tooltip>
+              <TooltipTrigger>
+                <Link href="/admin/courses">
+                  <Button size="default" variant="ghost">
+                    <Settings className="h-5 w-5" />
+                  </Button>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">
+                {currentLanguage.navigation_administration_tooltip}
+              </TooltipContent>
+            </Tooltip>
+          ) : null}
+          <div className="m-2 mt-6 flex items-center justify-center">
+            <ProfileButton
+              profileId={profileId}
+              profileName={profileName}
+              profileImageUrl={profileImageUrl}
+            />
+          </div>
+        </TooltipProvider>
       </div>
     </>
   );
