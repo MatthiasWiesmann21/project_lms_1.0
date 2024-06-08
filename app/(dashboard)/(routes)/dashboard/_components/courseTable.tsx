@@ -9,6 +9,8 @@ const CourseTable = ({ courses }: { courses: any[] }) => {
   const currentLanguage = useLanguage();
   const maxCourses = 5;
 
+  const sortedCourses = courses.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
   return (
   <div className="rounded-md border dark:border-[#221b2e] dark:bg-[#0D071A]">
     <div className="flex items-center justify-between p-2 text-lg">
@@ -24,7 +26,7 @@ const CourseTable = ({ courses }: { courses: any[] }) => {
       <p className="w-[10%]">{currentLanguage.dashboard_courseTable_chapter}</p>
       <p className="w-[15%]">{currentLanguage.dashboard_courseTable_action}</p>
     </div>
-    {courses?.slice(0, maxCourses).map((each: any, index: number) => {
+    {sortedCourses?.slice(0, maxCourses).map((each: any) => {
       return (
         <div
           key={each?.id}
@@ -51,8 +53,8 @@ const CourseTable = ({ courses }: { courses: any[] }) => {
           </div>
           <div className="w-[15%] pr-5">
             <Line
-              percent={(index + 1) * 20}
-              strokeWidth={5}
+              percent={each?.progress || 0}
+              strokeWidth={3}
               strokeColor="#EA2088"
             />
           </div>
