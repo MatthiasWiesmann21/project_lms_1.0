@@ -36,6 +36,7 @@ export async function GET(req: any): Promise<void | Response> {
   try {
     const { userId } = auth();
     const page = req?.nextUrl?.searchParams?.get("page") || "1";
+    const categoryId = req?.nextUrl?.searchParams?.get("categoryId") || "";
     const pageSize = 5;
     const skip = (parseInt(page) - 1) * pageSize;
 
@@ -53,33 +54,35 @@ export async function GET(req: any): Promise<void | Response> {
     if (profile === null)
       return new NextResponse("Profile not found", { status: 404 });
 
-    const posts = await db?.post?.findMany({
-      where: {
-        isPublished: true,
-        containerId: process.env.CONTAINER_ID,
-      },
-      include: {
-        category: true,
-        comments: {
-          include: {
-            likes: true,
-            subComment: {
-              include: {
-                likes: true,
-                profile: true,
-              },
-            },
-            profile: true,
-          },
-          where: {
-            parentComment: null,
-          },
+    const posts =
+      (await db?.post?.findMany({
+        where: {
+          isPublished: true,
+          containerId: process.env.CONTAINER_ID,
+          ...(categoryId && { categoryId: categoryId }),
         },
-        likes: true,
-      },
-      take: pageSize,
-      skip: skip,
-    });
+        include: {
+          category: true,
+          comments: {
+            include: {
+              likes: true,
+              subComment: {
+                include: {
+                  likes: true,
+                  profile: true,
+                },
+              },
+              profile: true,
+            },
+            where: {
+              parentComment: null,
+            },
+          },
+          likes: true,
+        },
+        take: pageSize,
+        skip: skip,
+      })) || [];
 
     const postsWithData = posts?.map((post) => {
       const commentsCount = post?.comments?.length;
