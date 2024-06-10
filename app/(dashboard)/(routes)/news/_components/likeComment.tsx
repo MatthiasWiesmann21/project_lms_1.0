@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { UserAvatar } from "@/components/user-avatar";
 import axios from "axios";
 import moment from "moment";
-import { MessageSquareText } from "lucide-react";
+import { MessageSquare } from "lucide-react";
 import { ChatInputPost } from "./chatInput";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/check-language";
@@ -172,7 +172,7 @@ const LikeComment = ({
           className="font-500 flex cursor-pointer items-center rounded-full p-4 text-[14px]"
           onClick={() => setShowComments(!isShowComments)}
         >
-          <MessageSquareText className="mr-1 h-[18px] w-[18px]" />
+          <MessageSquare className="mr-1 h-[18px] w-[18px]" />
           {`${commentsCount} ${currentLanguage.news_comments_button_label}`}
         </div>
       </div>
