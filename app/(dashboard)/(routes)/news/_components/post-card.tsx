@@ -10,6 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import { Preview } from "@/components/preview";
 import { useState } from "react";
 import LikeComment from "./likeComment";
+import { PostPreview } from "@/components/post-preview";
 
 interface PostCardProps {
   id: string;
@@ -46,7 +47,7 @@ export const PostCard = ({
 }: PostCardProps) => (
   <div className="group my-5 h-full overflow-hidden rounded-lg border bg-[#f6f8fa] py-1 hover:shadow-sm dark:border-[#2e3135] dark:bg-[#1b1f23]">
     <div className="group h-full overflow-hidden hover:shadow-sm">
-      <div className="m-5 flex flex-col">
+      <div className="m-4 flex flex-col">
         <div
           className="flex items-start justify-between"
           // style={{ border: "2px solid red" }}
@@ -57,17 +58,14 @@ export const PostCard = ({
           >
             <UserAvatar
               src={publisherImageUrl}
-              className="max-h-[64px] min-h-[64px] min-w-[64px] max-w-[64px]"
+              className="max-h-64 min-h-64 min-w-64 max-w-64"
             />
             <div
               className="ml-2 flex flex-col justify-center"
               // style={{ border: "3px solid green" }}
             >
-              <div className="font-600 text-[16px] text-black dark:text-white">
+              <div className="font-600 text-base text-black dark:text-white">
                 {publisherName}
-              </div>
-              <div className="text-xs text-black text-muted-foreground dark:text-white">
-                European Fintech | Business Consulting
               </div>
               <div className="text-xs text-black text-muted-foreground dark:text-white">
                 {createdAt}
@@ -75,7 +73,7 @@ export const PostCard = ({
             </div>
           </div>
           <div
-            className={`flex items-center gap-x-1 rounded-full border border-slate-300 px-3 py-1 text-[12px] font-[600] transition hover:border-sky-700`}
+            className={`flex items-center gap-x-1 rounded-full border px-3 py-2 text-xs font-[600] transition`}
             style={{ borderColor: colorCode }}
           >
             <div className="truncate">{category}</div>
@@ -83,9 +81,9 @@ export const PostCard = ({
         </div>
         <div
           // style={{ border: "2px solid indigo" }}
-          className="font-400 mt-5 text-[16px]"
+          className="font-400 text-sm text-black dark:text-white"
         >
-          {description}
+          <PostPreview value={description}/>
         </div>
         {/* <div></div> */}
         {/* <Separator /> */}

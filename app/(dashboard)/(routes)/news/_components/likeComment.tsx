@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { UserAvatar } from "@/components/user-avatar";
 import axios from "axios";
 import moment from "moment";
-import { MessageSquare } from "lucide-react";
+import { MessageSquare, ThumbsUp } from "lucide-react";
 import { ChatInputPost } from "./chatInput";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/check-language";
@@ -15,7 +15,7 @@ const SubReply = ({ val, updateLikeComment }: any) => (
   <div>
     <div className="flex justify-between">
       <UserAvatar
-        className="mr-3 max-h-[48px] min-h-[48px] min-w-[48px] max-w-[48px]"
+        className="mr-3 max-h-64 min-h-64 min-w-64 max-w-64"
         src={val?.profile.imageUrl}
       />
       <div className="w-full">
@@ -63,7 +63,7 @@ const Reply = ({
     <div>
       <div className="flex justify-between">
         <UserAvatar
-          className="mr-3 max-h-[48px] min-h-[48px] min-w-[48px] max-w-[48px]"
+          className="mr-3 max-h-64 min-h-64 min-w-64 max-w-64"
           src={val?.profile?.imageUrl}
         />
         <div className="w-full">
@@ -109,7 +109,7 @@ const Reply = ({
           {showReplyInput && (
             <div className="flex items-center justify-between">
               <UserAvatar
-                className="mr-3 max-h-[48px] min-h-[48px] min-w-[48px] max-w-[48px]"
+                className="mr-3 max-h-64 min-h-64 min-w-64 max-w-64"
                 src={user?.imageUrl}
               />
               <div className="w-full">
@@ -162,24 +162,25 @@ const LikeComment = ({
             if (response?.status === 200)
               updateLikeComment(response?.data?.post);
           }}
-          className="m-2 flex cursor-pointer items-center justify-around"
+          
+          className="m-2 flex cursor-pointer items-center justify-around "
         >
-          <Image alt="thumb" src={thumb} className="w-[24px]" />
+          <ThumbsUp className={!!currentLike ? "text-[#0a66c2] transition duration-200 ease-in-out" : "border-black transition duration-200 ease-in-out"} fill={!!currentLike ? "#0a66c2" : "transparent"}/>
           <span className="ml-2 mr-1">{likesCount}</span>
           Like
         </div>
         <div
-          className="font-500 flex cursor-pointer items-center rounded-full p-4 text-[14px]"
+          className="font-500 flex cursor-pointer items-center rounded-full p-3 text-sm bg-slate-200 hover:bg-slate-300 dark:bg-slate-800/50 dark:hover:bg-slate-700/80 transition duration-500 ease-in-out"
           onClick={() => setShowComments(!isShowComments)}
         >
-          <MessageSquare className="mr-1 h-[18px] w-[18px]" />
+          <MessageSquare className="mr-1 h-5 w-6" />
           {`${commentsCount} ${currentLanguage.news_comments_button_label}`}
         </div>
       </div>
       <div className="flex items-center justify-between">
         <UserAvatar
           src={user?.imageUrl}
-          className="mr-3 max-h-[48px] min-h-[48px] min-w-[48px] max-w-[48px]"
+          className="mr-3 max-h-64 min-h-64 min-w-64 max-w-64"
         />
         <div className="w-full">
           <ChatInputPost
@@ -213,7 +214,7 @@ const LikeComment = ({
             <div className="flex items-center justify-center p-2">
               <Button
                 onClick={() => setCommentCount(commentCount + 3)}
-                className="cursor-pointer rounded-full p-6 text-center"
+                className="cursor-pointer rounded-full p-4 text-center"
                 variant="secondary"
                 size="lg"
               >

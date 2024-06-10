@@ -21,7 +21,7 @@ export const Categories = ({ items, defaultColor }: CategoriesProps) => {
     0;
 
   return (
-    <div className="flex w-full items-center gap-x-2 overflow-x-auto pb-2">
+    <div className="flex w-full items-center gap-x-2 overflow-x-auto pb-2 no-scrollbar">
       <button
         onClick={() => {
           router?.push(
@@ -38,7 +38,7 @@ export const Categories = ({ items, defaultColor }: CategoriesProps) => {
             )
           );
         }}
-        className={`flex items-center gap-x-1 rounded-full border border-slate-300 px-3 py-1 text-[12px] font-[600] transition hover:border-sky-700`}
+        className={`flex items-center gap-x-1 rounded-full border border-slate-300 px-3 py-2 text-[12px] font-[600] transition hover:border-sky-700`}
         style={
           !currentCategoryId
             ? { borderColor: defaultColor, background: defaultColor }
@@ -70,7 +70,7 @@ export const Categories = ({ items, defaultColor }: CategoriesProps) => {
         return (
           <button
             onClick={onClick}
-            className={`flex items-center gap-x-1 rounded-full border border-slate-300 px-3 py-1 text-[12px] font-[600] transition hover:border-sky-700`}
+            className={`flex items-center gap-x-1 rounded-full border border-slate-300 px-3 py-2 text-xs font-600 transition hover:border-sky-700`}
             style={
               isSelected
                 ? { borderColor: item?.colorCode, background: item?.colorCode }

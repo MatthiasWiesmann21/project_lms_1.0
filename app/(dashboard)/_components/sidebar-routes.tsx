@@ -7,17 +7,10 @@ import {
   FolderOpen,
   Globe2,
   Layout,
-  LayoutDashboard,
   LayoutGridIcon,
   ListIcon,
-  Mail,
-  MailIcon,
   MessageCircle,
   NewspaperIcon,
-  PaletteIcon,
-  PinIcon,
-  Server,
-  ServerIcon,
   Settings,
   UserCircle2Icon,
   Video,
@@ -26,8 +19,6 @@ import { usePathname } from "next/navigation";
 
 import { SidebarItem } from "./sidebar-item";
 import { useSelector } from "react-redux";
-import { use } from "react";
-import { currentUser } from "@clerk/nextjs";
 import { useLanguage } from "@/lib/check-language";
 
 interface NavColor {

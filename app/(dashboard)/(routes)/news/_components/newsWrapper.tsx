@@ -104,7 +104,7 @@ const NewsWrapper = ({
   }, [hasMore, isLoading, categoryId]); // Re-run effect when hasMore or isLoading changes
 
   return (
-    <div className="space-y-4 pt-2 dark:bg-[#110524]">
+    <div className="space-y-4 pt-4 px-4 dark:bg-[#110524]">
       <div className="flex flex-col items-center justify-center">
         <div className="w-full max-w-4xl">
           <Categories items={categories} defaultColor={defaultColor} />
