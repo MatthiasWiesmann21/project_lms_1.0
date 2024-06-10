@@ -174,7 +174,7 @@ const AssetsTable: React.FC<AssetsTableProps> = (props) => {
   };
 
   return (
-    <div className="overflow-hidden px-2 py-4 dark:bg-[#313338] sm:px-2 lg:px-2">
+    <div className="overflow-hidden px-2 py-4 bg-transparent sm:px-2 lg:px-2">
       <Modal
         isOpen={modalIsOpen && renamingItem !== null}
         onRequestClose={closeModal}
@@ -294,18 +294,18 @@ const AssetsTable: React.FC<AssetsTableProps> = (props) => {
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full overflow-y-scroll py-2 align-middle sm:px-6 lg:px-8">
-            <div className="relative h-[29rem]">
-              <table className="min-w-full table-fixed divide-y divide-gray-300 dark:divide-[#313338]">
+            <div className="h-full">
+              <table className="w-full table-fixed divide-y divide-gray-300">
                 <thead>
                   <tr>
-                    <th scope="col" className="relative px-8 sm:w-12 sm:px-6">
-                      <span className="min-w-[12rem] py-3 text-sm font-semibold text-gray-900 dark:text-gray-300">
+                    <th scope="col" className="relative px-4 sm:w-18 sm:px-8">
+                      <span className="w-full py-3 text-sm font-semibold text-gray-900 dark:text-gray-300">
                         {currentLanguage.type}
                       </span>
                     </th>
                     <th
                       scope="col"
-                      className="min-w-[12rem] py-3.5 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-300"
+                      className="py-3.5 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-300"
                     >
                       {currentLanguage.name}
                     </th>
@@ -317,18 +317,19 @@ const AssetsTable: React.FC<AssetsTableProps> = (props) => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="h-full divide-y divide-gray-200 bg-white dark:bg-[#313338]">
+                <tbody className="h-full divide-y divide-gray-200 bg-transparent">
                   {folderStructure?.subFolders?.map(
                     (item: any, i: number) =>
                       // isPublic
                       (canAccess ? true : item?.isPublic) && (
                         <tr key={i}>
-                          <td className="relative px-7 sm:w-12 sm:px-6">
+                          <td className="relative px-5 sm:w-12 lg:w-12">
                             <div
                               onClick={() =>
                                 (location.href = `${currentDocPath}${item.id}`)
                               }
-                              className="m-1 mr-3 cursor-pointer rounded bg-slate-300 p-3 dark:bg-slate-600"
+                              className="m-1 mr-3 cursor-pointer rounded bg-slate-300 p-3 dark:bg-slate-600 flex items-center justify-center"
+                              style={{ width: '50px', height: '50px' }}
                             >
                               <FolderOpen />
                             </div>
@@ -378,9 +379,11 @@ const AssetsTable: React.FC<AssetsTableProps> = (props) => {
                       // isPublic
                       (canAccess ? true : item?.isPublic) && (
                         <tr key={i}>
-                          <td className="relative px-7 sm:w-12 sm:px-6">
-                            <div className="m-1 mr-3 cursor-not-allowed rounded bg-slate-300 p-3 dark:bg-slate-600">
-                              <File />
+                          <td className="relative px-5 sm:w-12 lg:w-12">
+                            <div className="m-1 mr-3 cursor-not-allowed rounded bg-slate-300 p-3 dark:bg-slate-600 flex items-center justify-center"
+                            style={{ width: '50px', height: '50px' }}
+                            >
+                              <File className="w-6 h-6" />
                             </div>
                           </td>
                           <td className="cursor-not-allowed whitespace-nowrap py-4 pr-3 text-sm font-medium text-gray-900 dark:text-gray-200">

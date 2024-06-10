@@ -45,7 +45,7 @@ export const CourseCard = async ({
         style={{
           background: "rgba(0, 0, 0, 0.3)",
         }}
-        className="group h-full w-[300px] overflow-hidden rounded-lg border p-3 transition hover:shadow-sm dark:border-[#1e172a]"
+        className="group h-full w-full overflow-hidden rounded-lg border p-3 transition hover:shadow-sm dark:border-[#1e172a]"
       >
         <div className="relative aspect-video w-full overflow-hidden rounded-md">
           <Image fill className="object-cover" alt={title} src={imageUrl} />

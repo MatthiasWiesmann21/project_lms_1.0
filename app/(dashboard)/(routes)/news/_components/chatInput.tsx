@@ -2,10 +2,8 @@
 
 import * as z from "zod";
 import axios from "axios";
-import qs from "query-string";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
@@ -68,7 +66,10 @@ export const ChatInputPost = ({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        // style={{ border: "2px solid coral" }}
+      >
         <FormField
           control={form.control}
           name="content"
@@ -78,14 +79,14 @@ export const ChatInputPost = ({
                 <div className={`relative flex items-center py-4 ${className}`}>
                   <Input
                     disabled={isLoading}
-                    className="flex h-10 w-[94%] rounded-md border-none border-input bg-zinc-200/90 px-2 py-2 text-sm text-zinc-600 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 dark:bg-zinc-700/75 dark:text-zinc-200"
+                    className="text-sm flex w-full rounded-3xl border-none border-input bg-zinc-200/90 px-2 py-2 pr-10 text-zinc-600 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 dark:bg-zinc-700/75 dark:text-zinc-200"
                     placeholder={placeHolder}
                     {...field}
                   />
-                  <div className="absolute right-0">
+                  <div className="absolute right-2 mt-1">
                     <EmojiPicker
                       onChange={(emoji: string) =>
-                        field.onChange(`${field.value}${emoji}`)
+                        field?.onChange(`${field?.value}${emoji}`)
                       }
                     />
                   </div>

@@ -14,7 +14,7 @@ export const EventsList = ({ items }: EventsListProps) => {
   return (
     <div>
       <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4">
-        {items.map((item) => (
+        {items.map((item: any) => (
           <EventCard
             key={item.id}
             id={item.id}
@@ -24,6 +24,7 @@ export const EventsList = ({ items }: EventsListProps) => {
             categoryColorCode={item?.category?.colorCode!}
             startDateTime={item?.startDateTime}
             endDateTime={item?.endDateTime}
+            color={item?.color}
           />
         ))}
       </div>

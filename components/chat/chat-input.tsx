@@ -17,7 +17,7 @@ import { useLanguage } from "@/lib/check-language";
 interface ChatInputProps {
   apiUrl: string;
   query: Record<string, any>;
-  name: string;
+  name: string | null;
   type: "conversation" | "channel";
 }
 

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useLanguage } from "@/lib/check-language";
+import { Button } from "../ui/button";
 
 interface PrivacyPolicyModalProps {
   profile: { id: string; acceptedPrivacyPolicy: boolean } | null;
@@ -35,24 +36,25 @@ export default function PrivacyPolicyModal({
         <h2 className="text-xl font-bold text-black mb-2">
           {currentLanguage.privacy_policy_title}
         </h2>
-        <p className="text-black">
+        <p className="text-black text-sm">
           {currentLanguage.privacy_policy_description}
         </p>
         <div className="flex justify-between items-center mt-2">
           <div className="flex space-x-4 mt-4">
-            <a href="https://google.com" target="_blank" className="text-blue-500">
-              Privacy Policy
+            <a href="https://google.com" target="_blank" className="text-[#e72192]">
+              {currentLanguage.privacy_policy_link}
             </a>
-            <a href="https://google.com" target="_blank" className="text-blue-500">
-              Terms of Service
+            <a href="https://google.com" target="_blank" className="text-[#e72192]">
+              {currentLanguage.privacy_termsOfService_link}
             </a>
           </div>
-          <button
-            className="ml-auto mt-4 bg-blue-500 text-white px-4 py-2 rounded-md"
+          <Button
+            className="ml-auto mt-4 bg-[#e72192] text-white px-4 py-2 rounded-md"
             onClick={acceptedPrivacyPolicy}
+            variant="secondary"
           >
             {currentLanguage.privacy_policy_button}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

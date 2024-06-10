@@ -10,7 +10,7 @@ import { MobileSidebarChat } from "@/app/(dashboard)/_components/mobile_sidebar_
 
 interface ChatHeaderProps {
   serverId: string;
-  name: string;
+  name: string | null;
   type: "channel" | "conversation";
   imageUrl?: string;
 }

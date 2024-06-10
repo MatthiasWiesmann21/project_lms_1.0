@@ -33,6 +33,11 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
     orderBy: {
       name: "asc",
     },
+    include: {
+      _count: {
+        select: { LiveEvent: true },
+      },
+    },
   });
 
   const liveEvents = await getEvents({
@@ -41,11 +46,18 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
     containerId: process.env.CONTAINER_ID,
   });
 
+  const container = await db?.container?.findUnique({
+    where: {
+      id: process.env.CONTAINER_ID,
+    },
+  });
+
   return (
     <LiveEventWrapper
       liveEvents={liveEvents}
       categories={categories}
       searchParams={searchParams}
+      container={container}
     />
   );
 };

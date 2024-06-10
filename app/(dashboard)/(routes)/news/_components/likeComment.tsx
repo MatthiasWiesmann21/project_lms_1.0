@@ -4,26 +4,28 @@ import { useSelector } from "react-redux";
 import { UserAvatar } from "@/components/user-avatar";
 import axios from "axios";
 import moment from "moment";
-import { MessageCircle, ThumbsUp } from "lucide-react";
+import { MessageSquare, ThumbsUp } from "lucide-react";
 import { ChatInputPost } from "./chatInput";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/check-language";
+import thumb from "@/assets/icons/thumb.png";
+import Image from "next/image";
 
 const SubReply = ({ val, updateLikeComment }: any) => (
   <div>
-    <div className="flex justify-around">
+    <div className="flex justify-between">
       <UserAvatar
-        className="mr-1 h-5 w-5 md:h-7 md:w-7"
+        className="mr-3 max-h-64 min-h-64 min-w-64 max-w-64"
         src={val?.profile.imageUrl}
       />
-      <div className="w-[90%]">
-        <p>
-          {val?.profile?.name}
-          <span className="ml-5 text-[12px]">
+      <div className="w-full">
+        <div>
+          <span className="font-500 text-[16px]">{val?.profile?.name}</span>
+          <span className="ml-3 text-[12px]">
             {moment(new Date(val?.createdAt))?.fromNow()}
           </span>
-        </p>
-        <p className="break-words">{val?.text}</p>
+        </div>
+        <p className="break-words text-[14px]">{val?.text}</p>
         <div className="my-2 flex items-center">
           <div
             onClick={async () => {
@@ -33,13 +35,11 @@ const SubReply = ({ val, updateLikeComment }: any) => (
               if (response?.status === 200)
                 updateLikeComment(response?.data?.post);
             }}
-            className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
+            className="font-500 flex cursor-pointer items-center justify-between text-[14px]"
           >
-            <ThumbsUp
-              fill={val?.currentCommentLike ? "blue" : "#ffffff00"}
-              className="mr-2"
-            />
-            {val?.likes?.length}
+            <Image alt="thumb" src={thumb} className="w-[20px]" />
+            <span className="ml-2 mr-1">{val?.likes?.length}</span>
+            Like
           </div>
         </div>
       </div>
@@ -61,19 +61,21 @@ const Reply = ({
   const currentLanguage = useLanguage();
   return (
     <div>
-      <div className="flex justify-around">
+      <div className="flex justify-between">
         <UserAvatar
-          className="mr-1 h-5 w-5 md:h-7 md:w-7"
-          src={val?.profile.imageUrl}
+          className="mr-3 max-h-64 min-h-64 min-w-64 max-w-64"
+          src={val?.profile?.imageUrl}
         />
-        <div className="w-[90%] pr-[1%]">
-          <p>
-            {val?.profile?.name}
-            <span className="ml-5 text-[12px]">
-              {moment(new Date(val?.createdAt))?.fromNow()}
-            </span>
-          </p>
-          <text className="break-words">{val?.text}</text>
+        <div className="w-full">
+          <div>
+            <div>
+              <span className="font-500 text-[16px]">{val?.profile?.name}</span>
+              <span className="ml-3 text-[12px]">
+                {moment(new Date(val?.createdAt))?.fromNow()}
+              </span>
+            </div>
+            <text className="break-words text-[14px]">{val?.text}</text>
+          </div>
           <div className="my-2 flex items-center">
             <div
               onClick={async () => {
@@ -83,41 +85,20 @@ const Reply = ({
                 if (response?.status === 200)
                   updateLikeComment(response?.data?.post);
               }}
-              className="flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
+              className="font-500 flex cursor-pointer items-center justify-between text-[14px]"
             >
-              <ThumbsUp
-                fill={val?.currentCommentLike ? "blue" : "#ffffff00"}
-                className="mr-2"
-              />
-              {val?.likes?.length}
+              <Image alt="thumb" src={thumb} className="w-[20px]" />
+              <span className="ml-2 mr-1">{val?.likes?.length}</span>
+              Like
             </div>
-            <p
-              className="m-0 ml-[1.25rem] cursor-pointer"
+            <div
+              className="font-500 m-0 ml-[1.25rem] cursor-pointer text-[14px]"
               onClick={() => setShowReplyInput(!showReplyInput)}
             >
-              {currentLanguage.news_comments_reply_button_label}
-            </p>
-          </div>
-          {showReplyInput && (
-            <div className="flex justify-center">
-              <UserAvatar
-                className="mr-1 mt-[2.5%] h-5 w-5 md:h-7 md:w-7"
-                src={user?.imageUrl}
-              />
-              <div className="my-1 flex w-full flex-col">
-                <ChatInputPost
-                  placeHolder={currentLanguage.news_comments_input_placeholder}
-                  apiUrl="/api/comment/create"
-                  query={{
-                    postId: id,
-                    parentCommentId: val?.id,
-                  }}
-                  className="-mt-[3%]"
-                  updateLikeComment={updateLikeComment}
-                />
-              </div>
+              {`${val?.subCommentsWithLikes?.length} ${currentLanguage?.news_comments_reply_button_label}`}
             </div>
-          )}
+          </div>
+
           {val?.subCommentsWithLikes?.map((val: any) => (
             <SubReply
               key={val?.id}
@@ -125,6 +106,26 @@ const Reply = ({
               updateLikeComment={updateLikeComment}
             />
           ))}
+          {showReplyInput && (
+            <div className="flex items-center justify-between">
+              <UserAvatar
+                className="mr-3 max-h-64 min-h-64 min-w-64 max-w-64"
+                src={user?.imageUrl}
+              />
+              <div className="w-full">
+                <ChatInputPost
+                  placeHolder={currentLanguage.news_comments_input_placeholder}
+                  apiUrl="/api/comment/create"
+                  query={{
+                    postId: id,
+                    parentCommentId: val?.id,
+                  }}
+                  className="w-full"
+                  updateLikeComment={updateLikeComment}
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -148,10 +149,10 @@ const LikeComment = ({
 }) => {
   const user = useSelector((state: any) => state?.user);
   const [commentCount, setCommentCount] = useState(3);
-  const [isShowComments, setShowComments] = useState(false);
+  const [isShowComments, setShowComments] = useState(true);
   const currentLanguage = useLanguage();
   return (
-    <div>
+    <div className="mx-3">
       <div className="flex items-center justify-between py-3">
         <div
           onClick={async () => {
@@ -161,29 +162,29 @@ const LikeComment = ({
             if (response?.status === 200)
               updateLikeComment(response?.data?.post);
           }}
-          className="m-2 flex cursor-pointer items-center justify-around rounded-[20px] border border-[#fff] p-[1%] px-[3%]"
+          
+          className="m-2 flex cursor-pointer items-center justify-around "
         >
-          <ThumbsUp
-            fill={!!currentLike ? "blue" : "#ffffff00"}
-            className="mr-2"
-          />
-          {likesCount}
+          <ThumbsUp className={!!currentLike ? "text-[#0a66c2] transition duration-200 ease-in-out" : "border-black transition duration-200 ease-in-out"} fill={!!currentLike ? "#0a66c2" : "transparent"}/>
+          <span className="ml-2 mr-1">{likesCount}</span>
+          Like
         </div>
-        <Button
-          className="cursor-pointer rounded-full p-4"
-          size="lg"
-          variant="secondary"
-          onClick={() => setShowComments(true)}
+        <div
+          className="font-500 flex cursor-pointer items-center rounded-full p-3 text-sm bg-slate-200 hover:bg-slate-300 dark:bg-slate-800/50 dark:hover:bg-slate-700/80 transition duration-500 ease-in-out"
+          onClick={() => setShowComments(!isShowComments)}
         >
-          <MessageCircle className="mr-1" />
+          <MessageSquare className="mr-1 h-5 w-6" />
           {`${commentsCount} ${currentLanguage.news_comments_button_label}`}
-        </Button>
+        </div>
       </div>
-      <div className="flex justify-around">
-        <UserAvatar src={user?.imageUrl} className="mr-2 mt-4" />
-        <div className="w-[90%]">
+      <div className="flex items-center justify-between">
+        <UserAvatar
+          src={user?.imageUrl}
+          className="mr-3 max-h-64 min-h-64 min-w-64 max-w-64"
+        />
+        <div className="w-full">
           <ChatInputPost
-            placeHolder={currentLanguage.news_comments_input_placeholder}
+            placeHolder={currentLanguage?.news_comments_input_placeholder}
             apiUrl="/api/comment/create"
             query={{
               postId: id,
@@ -192,37 +193,37 @@ const LikeComment = ({
             className=""
             updateLikeComment={updateLikeComment}
           />
-          {isShowComments && (
-            <>
-              <div className="w-full">
-                {commentsWithLikes?.map(
-                  (val: any, index: number) =>
-                    index < commentCount && (
-                      <Reply
-                        key={val?.id}
-                        val={val}
-                        id={id}
-                        updateLikeComment={updateLikeComment}
-                      />
-                    )
-                )}
-              </div>
-              {commentCount < commentsWithLikes?.length - 1 && (
-                <div className="flex items-center justify-center p-2">
-                  <Button
-                    onClick={() => setCommentCount(commentCount + 3)}
-                    className="cursor-pointer rounded-full p-6 text-center"
-                    variant="secondary"
-                    size="lg"
-                  >
-                    {currentLanguage.news_comments_showmore_label}
-                  </Button>
-                </div>
-              )}
-            </>
-          )}
         </div>
       </div>
+      {isShowComments && (
+        <>
+          <div className="w-full">
+            {commentsWithLikes?.map(
+              (val: any, index: number) =>
+                index < commentCount && (
+                  <Reply
+                    key={val?.id}
+                    val={val}
+                    id={id}
+                    updateLikeComment={updateLikeComment}
+                  />
+                )
+            )}
+          </div>
+          {commentCount < commentsWithLikes?.length - 1 && (
+            <div className="flex items-center justify-center p-2">
+              <Button
+                onClick={() => setCommentCount(commentCount + 3)}
+                className="cursor-pointer rounded-full p-4 text-center"
+                variant="secondary"
+                size="lg"
+              >
+                {currentLanguage.news_comments_showmore_label}
+              </Button>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 };

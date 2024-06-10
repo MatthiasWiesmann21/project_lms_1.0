@@ -17,7 +17,7 @@ type GetEvents = {
 export const getEvents = async ({
   userId,
   title,
-  categoryId
+  categoryId,
 }: GetEvents): Promise<EventWithProgressWithCategory[]> => {
   try {
     const liveEvent = await db.liveEvent.findMany({
@@ -34,25 +34,26 @@ export const getEvents = async ({
       },
       orderBy: {
         createdAt: "desc",
-      }
+      },
     });
 
-    const eventsWithProgress: EventWithProgressWithCategory[] = await Promise.all(
-      liveEvent.map(async liveEvent => {
-        if (liveEvent.isPublished === true) {
+    const eventsWithProgress: EventWithProgressWithCategory[] =
+      await Promise.all(
+        liveEvent.map(async (liveEvent) => {
+          if (liveEvent.isPublished === true) {
+            return {
+              ...liveEvent,
+            };
+          }
           return {
             ...liveEvent,
-          }
-        }
-        return {
-          ...liveEvent,
-        };
-      })
-    );
+          };
+        })
+      );
 
     return eventsWithProgress;
   } catch (error) {
     console.log("[GET_COURSES]", error);
     return [];
   }
-}
+};

@@ -1,7 +1,7 @@
 "use client";
 import * as z from "zod";
 import axios from "axios";
-import { Pencil, PlusCircle, Video } from "lucide-react";
+import { Pencil, PlusCircle, Upload, Video } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -16,6 +16,7 @@ import UniversalPlayer from "@/pages/components/universalPlayer";
 import { useTheme } from "next-themes";
 import EventModal from "./eventModal";
 import { UploadButton } from "@/utils/uploadthing";
+import AppSVGIcon from "@/components/appsvgicon";
 
 interface VideoFormProps {
   initialData: LiveEvent;
@@ -31,8 +32,8 @@ const options = [
     value: "https://vimeo.com/",
     label: (
       <div className="flex items-center">
-        <Image className="mr-2 w-[50px]" alt="vimeo" src={vimeo} />
-        <p className="m-0">vimeo</p>
+        <AppSVGIcon icon={"vimeo"} customclass={"w-12 h-6"} />
+        <p className="m-2">Vimeo</p>
       </div>
     ),
   },
@@ -40,8 +41,8 @@ const options = [
     value: "https://www.youtube.com/",
     label: (
       <div className="flex items-center">
-        <Image className="mr-2 w-[50px]" alt="youtube" src={youtube} />
-        <p className="m-0">youtube</p>
+        <AppSVGIcon icon={"youtube"} customclass={"w-12 h-6"} />
+        <p className="m-2">YouTube</p>
       </div>
     ),
   },
@@ -49,8 +50,8 @@ const options = [
     value: "https://utfs.io/",
     label: (
       <div className="flex items-center">
-        <Image className="mr-2 w-[50px]" alt="utfs" src={utfs} />
-        <p className="m-0">Uploadthing</p>
+        <Upload className="h-6 w-6" />
+        <p className="m-2">Upload Video</p>
       </div>
     ),
   },

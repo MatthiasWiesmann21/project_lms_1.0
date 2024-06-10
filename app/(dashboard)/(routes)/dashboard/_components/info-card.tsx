@@ -1,6 +1,6 @@
 import { LucideIcon } from "lucide-react";
 
-import { IconBadge } from "@/components/icon-badge"
+import { IconBadge } from "@/components/icon-badge";
 import { languageServer } from "@/lib/check-language-server";
 
 interface InfoCardProps {
@@ -19,19 +19,14 @@ export const InfoCard = async ({
   const currentLanguage = await languageServer();
 
   return (
-    <div className="border dark:border-[#ffffff] rounded-md flex items-center gap-x-2 p-3 ">
-      <IconBadge
-        variant={variant}
-        icon={Icon}
-      />
+    <div className="flex items-center gap-x-2 rounded-md border p-3 dark:border-[#221b2e] dark:bg-[#0D071A]">
+      <IconBadge variant={variant} icon={Icon} />
       <div>
-        <p className="font-medium">
-          {label}
-        </p>
-        <p className="text-gray-500 text-sm">
-          {numberOfItems} {numberOfItems === 1 ? `${currentLanguage?.infocard_course}` : `${currentLanguage?.infocard_courses}`}
-        </p>
+        <p className="text-sm text-gray-500">{label}</p>
+        <p className="font-medium">{`${
+          numberOfItems < 10 && 0
+        }${numberOfItems}`}</p>
       </div>
     </div>
-  )
-}
+  );
+};

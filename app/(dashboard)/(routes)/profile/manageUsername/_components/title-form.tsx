@@ -8,7 +8,6 @@ import { Pencil } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Course } from "@prisma/client";
 
 import {
   Form,
@@ -17,26 +16,26 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { Textarea } from "@/components/ui/textarea";
 import { useLanguage } from "@/lib/check-language";
+import { Profile } from "@prisma/client";
 
-interface AuthorFormProps {
-  initialData: Course;
-  courseId: string;
+interface TitleFormProps {
+  initialData: Profile;
+  profileId: string;
 };
 
 const formSchema = z.object({
-  author: z.string().min(1, {
-    message: "Author is required",
+  name: z.string().min(1, {
+    message: "Name is required",
   }),
 });
 
-export const AuthorForm = ({
+export const TitleForm = ({
   initialData,
-  courseId
-}: AuthorFormProps) => {
+  profileId
+}: TitleFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const currentLanguage = useLanguage();
   const toggleEdit = () => setIsEditing((current) => !current);
@@ -45,17 +44,15 @@ export const AuthorForm = ({
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      author: initialData?.author || ""
-    },
+    defaultValues: {name: initialData.name || ""}
   });
 
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/courses/${courseId}`, values);
-      toast.success("Course updated");
+      await axios.patch(`/api/profile/${profileId}`, values);
+      toast.success("Username updated");
       toggleEdit();
       router.refresh();
     } catch {
@@ -66,24 +63,21 @@ export const AuthorForm = ({
   return (
     <div className="mt-6 border bg-slate-200 dark:bg-slate-700 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        {currentLanguage.courses_authorForm_title}
+        {currentLanguage.profile_TitleForm_title}
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>{currentLanguage.courses_authorForm_cancel}</>
+            <>{currentLanguage.profile_TitleForm_cancel}</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              {currentLanguage.courses_authorForm_edit}
+              {currentLanguage.profile_TitleForm_edit}
             </>
           )}
         </Button>
       </div>
       {!isEditing && (
-        <p className={cn(
-          "text-sm mt-2",
-          !initialData.author && "text-slate-500 italic"
-        )}>
-          {initialData.author || `${currentLanguage.courses_authorForm_empty}`}
+        <p className="text-sm mt-2">
+          {initialData.name}
         </p>
       )}
       {isEditing && (
@@ -94,13 +88,13 @@ export const AuthorForm = ({
           >
             <FormField
               control={form.control}
-              name="author"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Textarea
+                    <Input
                       disabled={isSubmitting}
-                      placeholder={currentLanguage.courses_authorForm_placeholder}
+                      placeholder={currentLanguage.profile_TitleForm_placeholder}
                       {...field}
                     />
                   </FormControl>
@@ -113,7 +107,7 @@ export const AuthorForm = ({
                 disabled={!isValid || isSubmitting}
                 type="submit"
               >
-                {currentLanguage.courses_authorForm_save}
+                {currentLanguage.profile_TitleForm_save}
               </Button>
             </div>
           </form>
