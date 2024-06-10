@@ -429,4 +429,7 @@ navigation_administration_tooltip: "Administration",
 navigation_profile_tooltip: "Profil",
 privacy_policy_link: "Politique de Confidentialité",
 privacy_termsOfService_link: "Conditions d'Utilisation",
+nav_item_career: "Carrière",
+nav_item_calendar: "Calendrier",
+nav_item_knowledgeHub: "Centre de Connaissances",
 };
