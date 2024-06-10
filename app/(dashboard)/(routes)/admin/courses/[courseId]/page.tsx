@@ -16,6 +16,8 @@ import { ChaptersForm } from "./_components/chapters-form";
 import { Actions } from "./_components/actions";
 import { languageServer } from "@/lib/check-language-server";
 import Link from "next/link";
+import { isAdmin, isOperator } from "@/lib/roleCheckServer";
+import { isOwner } from "@/lib/owner";
 
 const CourseIdPage = async ({
   params
@@ -58,8 +60,12 @@ const CourseIdPage = async ({
     },
   });
 
-  if (!course) {
-    return redirect("/");
+  const isRoleAdmins = await isAdmin();
+  const isRoleOperator = await isOperator();
+  const canAccess = isRoleAdmins || isRoleOperator || isOwner(userId);
+
+  if (!course ||!userId || !canAccess) {
+   return redirect("/");
   }
 
   const requiredFields = [

@@ -430,4 +430,6 @@ navigation_language_tooltip: "Sprachen",
 navigation_mode_tooltip: "Modus",
 navigation_administration_tooltip: "Administration",
 navigation_profile_tooltip: "Profil",
+privacy_policy_link: "Datenschutzerklärung",
+privacy_termsOfService_link: "Nutzungsbedingungen",
 };

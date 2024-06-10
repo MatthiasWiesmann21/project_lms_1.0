@@ -85,8 +85,8 @@ export const NavbarRoutes = ({
           </Tooltip>
           {isAdministrationPage || isCoursePage ? (
             <Link href="/dashboard">
-              <Button size="default" variant="ghost">
-                <LogOut className="mr-2 h-5 w-5" />
+              <Button size="default" className="mt-4" variant="ghost">
+                <LogOut className="h-5 w-5" />
                 {currentLanguage.navigation_administration_button_text_exit}
               </Button>
             </Link>

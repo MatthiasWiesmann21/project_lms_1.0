@@ -427,4 +427,6 @@ navigation_language_tooltip: "Языки",
 navigation_mode_tooltip: "Режим",
 navigation_administration_tooltip: "Администрация",
 navigation_profile_tooltip: "Профиль",
+privacy_policy_link: "Политика конфиденциальности",
+privacy_termsOfService_link: "Условия обслуживания",
 };

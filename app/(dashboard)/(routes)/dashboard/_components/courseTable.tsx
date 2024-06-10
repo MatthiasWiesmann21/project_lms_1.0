@@ -20,11 +20,11 @@ const CourseTable = ({ courses }: { courses: any[] }) => {
       </Link>
     </div>
     <div className="flex items-center justify-between p-2 bg-slate-100 dark:bg-[#150D22]">
-      <p className="w-[45%]">{currentLanguage.dashboard_courseTable_courseName}</p>
-      <p className="w-[10%]">{currentLanguage.dashboard_courseTable_paid}</p>
-      <p className="w-[15%]">{currentLanguage.dashboard_courseTable_progress}</p>
-      <p className="w-[10%]">{currentLanguage.dashboard_courseTable_chapter}</p>
-      <p className="w-[15%]">{currentLanguage.dashboard_courseTable_action}</p>
+      <p className="w-[45%] text-sm">{currentLanguage.dashboard_courseTable_courseName}</p>
+      <p className="w-[10%] text-sm">{currentLanguage.dashboard_courseTable_paid}</p>
+      <p className="w-[15%] text-sm">{currentLanguage.dashboard_courseTable_progress}</p>
+      <p className="w-[10%] text-sm">{currentLanguage.dashboard_courseTable_chapter}</p>
+      <p className="w-[15%] text-sm">{currentLanguage.dashboard_courseTable_action}</p>
     </div>
     {sortedCourses?.slice(0, maxCourses).map((each: any) => {
       return (

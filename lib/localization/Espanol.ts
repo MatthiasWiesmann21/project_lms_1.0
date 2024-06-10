@@ -427,4 +427,6 @@ navigation_language_tooltip: "Idiomas",
 navigation_mode_tooltip: "Modo",
 navigation_administration_tooltip: "Administración",
 navigation_profile_tooltip: "Perfil",
+privacy_policy_link: "Política de Privacidad",
+privacy_termsOfService_link: "Términos de Servicio",
 };

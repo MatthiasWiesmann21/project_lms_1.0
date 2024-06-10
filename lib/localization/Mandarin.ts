@@ -427,4 +427,6 @@ navigation_language_tooltip: "语言",
 navigation_mode_tooltip: "模式",
 navigation_administration_tooltip: "管理",
 navigation_profile_tooltip: "个人资料",
+privacy_policy_link: "隐私政策",
+privacy_termsOfService_link: "服务条款",
 };

@@ -5,8 +5,6 @@ export default async function Home() {
   const profile = await initialProfile();
 
   if (profile) {
-      return redirect("/search");
-    } else {
-    return redirectToSignIn();
-  }
+      return redirect("/dashboard");
+    }
 }
