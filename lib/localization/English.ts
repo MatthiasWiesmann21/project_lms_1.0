@@ -430,4 +430,7 @@ navigation_profile_tooltip: "Profile",
 privacy_policy_link: "Privacy Policy",
 privacy_termsOfService_link: "Terms of Service",
 chapter_attachments_NoDocuments: "No Documents",
+nav_item_career: "Career",
+nav_item_calendar: "Calendar",
+nav_item_knowledgeHub: "Knowledge-Hub",
 };

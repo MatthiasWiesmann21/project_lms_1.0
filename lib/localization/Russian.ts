@@ -430,4 +430,7 @@ navigation_profile_tooltip: "Профиль",
 privacy_policy_link: "Политика конфиденциальности",
 privacy_termsOfService_link: "Условия обслуживания",
 chapter_attachments_NoDocuments: "Нет документов",
+nav_item_career: "Карьера",
+nav_item_calendar: "Календарь",
+nav_item_knowledgeHub: "Центр знаний",
 };

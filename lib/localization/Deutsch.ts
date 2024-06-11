@@ -433,4 +433,7 @@ navigation_profile_tooltip: "Profil",
 privacy_policy_link: "Datenschutzerklärung",
 privacy_termsOfService_link: "Nutzungsbedingungen",
 chapter_attachments_NoDocuments: "Keine Dokumente",
+nav_item_career: "Karriere",
+nav_item_calendar: "Kalender",
+nav_item_knowledgeHub: "Wissensbibliothek",
 };
