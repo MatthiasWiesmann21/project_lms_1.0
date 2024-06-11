@@ -338,7 +338,7 @@ const AssetsTable: React.FC<AssetsTableProps> = (props) => {
                             onClick={() =>
                               (location.href = `${currentDocPath}${item.id}`)
                             }
-                            className="cursor-pointer whitespace-nowrap py-4 pr-3 text-sm font-medium text-gray-900 dark:text-gray-200"
+                            className="cursor-pointer whitespace-nowrap py-4 pr-3 text-sm font-medium overflow-auto no-scrollbar text-gray-900 dark:text-gray-200"
                           >
                             {item.name}
                           </td>
@@ -386,7 +386,7 @@ const AssetsTable: React.FC<AssetsTableProps> = (props) => {
                               <File className="w-6 h-6" />
                             </div>
                           </td>
-                          <td className="cursor-not-allowed whitespace-nowrap py-4 pr-3 text-sm font-medium text-gray-900 dark:text-gray-200">
+                          <td className="cursor-not-allowed whitespace-nowrap overflow-auto no-scrollbar py-4 pr-3 text-sm font-medium text-gray-900 dark:text-gray-200">
                             {item.name}
                           </td>
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-200">

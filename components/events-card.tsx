@@ -56,7 +56,7 @@ export const EventCard = ({
         </div>
         <div className="mt-3 p-2">
           <div>
-            <CategoryItemCard label={category} colorCode={color} />
+            <CategoryItemCard label={category} colorCode={categoryColorCode} />
           </div>
           <div className="line-clamp-2 py-2 text-[16px] font-medium transition group-hover:text-sky-500 md:text-base">
             {title}
