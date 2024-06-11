@@ -24,7 +24,8 @@ const CourseTable = ({ courses }: { courses: any[] }) => {
       <p className="w-[10%] text-sm">{currentLanguage.dashboard_courseTable_paid}</p>
       <p className="w-[15%] text-sm">{currentLanguage.dashboard_courseTable_progress}</p>
       <p className="w-[10%] text-sm">{currentLanguage.dashboard_courseTable_chapter}</p>
-      <p className="w-[15%] text-sm">{currentLanguage.dashboard_courseTable_action}</p>
+      <div className="w-[15%]">
+      </div>
     </div>
     {sortedCourses?.slice(0, maxCourses).map((each: any) => {
       return (
@@ -37,8 +38,8 @@ const CourseTable = ({ courses }: { courses: any[] }) => {
               alt="img"
               src={each?.imageUrl}
               objectFit="contain"
-              width={60}
-              height={60}
+              width={65}
+              height={65}
               className="rounded-sm"
             />
             <div className="ml-2">
@@ -58,14 +59,16 @@ const CourseTable = ({ courses }: { courses: any[] }) => {
               strokeColor="#EA2088"
             />
           </div>
-          <div className="w-[10%]">
+          <div className="w-[5%]">
             <p>{each?.chapters?.length}</p>
           </div>
-          <Link className="w-[15%]" href={`/courses/${each.id}`}>
-            <span className="border-1 rounded-full border px-4 py-1 border-[#EA2088] hover:bg-[#EA2088] dark:hover:bg-[#EA2088] hover:text-white transition duration-500 ease-in-out">
+          <div className="w-[20%] flex justify-end px-2">
+          <Link href={`/courses/${each.id}`}>
+            <span className="border-1 text-xs rounded-full border px-2 py-2 border-[#EA2088] hover:bg-[#EA2088] dark:hover:bg-[#EA2088] hover:text-white transition duration-500 ease-in-out">
               {currentLanguage.dashboard_courseTable_viewCourse_button_text}
             </span>
           </Link>
+          </div>
         </div>
       );
     })}

@@ -429,4 +429,5 @@ navigation_administration_tooltip: "Администрация",
 navigation_profile_tooltip: "Профиль",
 privacy_policy_link: "Политика конфиденциальности",
 privacy_termsOfService_link: "Условия обслуживания",
+chapter_attachments_NoDocuments: "Нет документов",
 };

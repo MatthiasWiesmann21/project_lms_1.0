@@ -432,4 +432,5 @@ navigation_administration_tooltip: "Administration",
 navigation_profile_tooltip: "Profil",
 privacy_policy_link: "Datenschutzerklärung",
 privacy_termsOfService_link: "Nutzungsbedingungen",
+chapter_attachments_NoDocuments: "Keine Dokumente",
 };

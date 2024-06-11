@@ -429,4 +429,5 @@ navigation_administration_tooltip: "Administration",
 navigation_profile_tooltip: "Profile",
 privacy_policy_link: "Privacy Policy",
 privacy_termsOfService_link: "Terms of Service",
+chapter_attachments_NoDocuments: "No Documents",
 };
