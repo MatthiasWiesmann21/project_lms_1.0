@@ -1,23 +1,19 @@
-"use client";
-
-import { Calendar } from "@/components/ui/calendar";
-
-import * as React from "react";
+import CalendarWidget from "./_components/calendar";
+import WidgetList from "./_components/widgetList";
 
 const CalendarPage = () => {
-  const [date, setDate] = React.useState<Date | undefined>(new Date());
 
   return (
-    <div>
-      <h1>Calendar Page</h1>
-      <p>In Development for Motu</p>
-      <div>
-        <Calendar
-          mode="single"
-          selected={date}
-          onSelect={setDate}
-          className="rounded-md border"
-        />
+    <div className="flex min-h-screen flex-col m-2w">
+      <div className="mx-auto w-full max-w-2xl p-4">
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          <div className="col-span-1 w-full">
+            <CalendarWidget />
+          </div>
+          <div className="col-span-1">
+            <WidgetList />
+          </div>
+        </div>
       </div>
     </div>
   );
