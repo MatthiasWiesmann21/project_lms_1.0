@@ -31,11 +31,12 @@ export const initialProfile = async () => {
     return updatedProfile;
   } else {
     // If the profile does not exist, create a new one
-    const newProfile = await db.profile.create({
+
+    const newProfile = await db?.profile?.create({
       data: {
         userId: user.id,
-        name: `${user.username}` || "User",
-        imageUrl: user.imageUrl,
+        name: !!user?.username ? `${user?.username}` : "User",
+        imageUrl: user?.imageUrl,
         email: user.emailAddresses[0].emailAddress,
         containerId: process.env.CONTAINER_ID!,
         isOnline: true,
