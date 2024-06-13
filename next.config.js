@@ -10,12 +10,21 @@ const nextConfig = {
   },
   images: {
     domains: [
-      "utfs.io", "localhost:3000/", "uploadthings.io"
+      "utfs.io", "localhost:3000", "uploadthings.io"
     ]
   },
   eslint: {
     ignoreDuringBuilds: true, // Add this line to ignore ESLint warnings during the build
   },
+  async redirects() {
+    return [
+      {
+        source: '/profile/sign-in',
+        destination: '/profile/manageUsername', // Replace with your existing page
+        permanent: true,
+      },
+    ]
+  },
 }
 
-module.exports = nextConfig
+module.exports = nextConfig;

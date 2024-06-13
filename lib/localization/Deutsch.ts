@@ -442,4 +442,5 @@ profile_OnlineStatus_DoNotDisturb: "Bitte nicht stören",
 profile_OnlineStatus_Invisible: "Unsichtbar",
 profile_OnlineStatus_Offline: "Offline",
 profile_status_text: "Status",
+profile_help: "Hilfe",
 };

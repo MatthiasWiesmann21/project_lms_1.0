@@ -56,8 +56,8 @@ export const Actions = ({
       await axios.delete(`/api/liveEvent/${liveEventId}`);
 
       toast.success("Course deleted");
-      router.refresh();
       router.push(`/admin/live-event`);
+      router.refresh();
     } catch {
       toast.error("Something went wrong");
     } finally {

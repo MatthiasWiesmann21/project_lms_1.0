@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { redirect, useRouter } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/check-language";
-import { LogOutIcon, UserCog2Icon } from "lucide-react";
+import { HelpCircle, LogOutIcon, UserCog2Icon } from "lucide-react";
 import { UserAvatar } from "./user-avatar";
 import { useClerk } from "@clerk/nextjs";
 import {
@@ -22,6 +22,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/tooltip";
+import { useDispatch } from "react-redux";
 import { db } from "@/lib/db";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -52,6 +53,8 @@ const ProfileButton = ({
   const router = useRouter();
   const user = useClerk();
 
+  
+
   const updateProfileStatus = async (isOnline: string) => {
     try {
       await axios.patch(`/api/profile/${profileId}`, { isOnline });
@@ -62,10 +65,19 @@ const ProfileButton = ({
   };
 
   const handleSignOut = async () => {
-    await updateProfileStatus("Offline");
+    dispatch({ type: "SetUser", payload: {} });
     signOut(() => router.push("sign-in"));
+    await updateProfileStatus("Offline");
   };
 
+
+  useEffect(() => {
+    if (user && profileOnlineStatus === "Offline") {
+      updateProfileStatus("Online");
+    }
+  }, [user, profileOnlineStatus]);
+
+  const dispatch = useDispatch();
   return (
     <TooltipProvider>
       <Tooltip>
@@ -94,7 +106,7 @@ const ProfileButton = ({
                 <DropdownMenuSubTrigger>
                   <div className="flex items-center">
                     <div
-                      className={`mr-3 ml-1 h-4 w-4 rounded-lg ${
+                      className={`ml-1 mr-3 h-4 w-4 rounded-lg ${
                         statusColors[profileOnlineStatus] || "bg-gray-400"
                       }`}
                     />
@@ -106,19 +118,19 @@ const ProfileButton = ({
                     <DropdownMenuItem
                       onClick={() => updateProfileStatus("Online")}
                     >
-                      <div className="mr-1 h-4 w-4 rounded-lg border border-green-500 bg-green-500" />
+                      <div className="mr-2 h-4 w-4 rounded-lg border border-green-500 bg-green-500" />
                       <span>{currentLanguage.profile_OnlineStatus_Online}</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => updateProfileStatus("Not Available")}
                     >
-                      <div className="mr-1 h-4 w-4 rounded-lg border border-yellow-400 bg-yellow-400" />
+                      <div className="mr-2 h-4 w-4 rounded-lg border border-yellow-400 bg-yellow-400" />
                       <span>{currentLanguage.profile_OnlineStatus_Away}</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => updateProfileStatus("Do Not Disturb")}
                     >
-                      <div className="mr-1 h-4 w-4 rounded-lg border border-red-600 bg-red-600" />
+                      <div className="mr-2 h-4 w-4 rounded-lg border border-red-600 bg-red-600" />
                       <span>
                         {currentLanguage.profile_OnlineStatus_DoNotDisturb}
                       </span>
@@ -126,31 +138,29 @@ const ProfileButton = ({
                     <DropdownMenuItem
                       onClick={() => updateProfileStatus("Invisible")}
                     >
-                      <div className="mr-1 h-4 w-4 rounded-lg border border-slate-400 bg-transparent" />
+                      <div className="mr-2 h-4 w-4 rounded-lg border border-slate-400 bg-transparent" />
                       <span>
                         {currentLanguage.profile_OnlineStatus_Invisible}
                       </span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => updateProfileStatus("Offline")}
-                    >
-                      <div className="mr-1 h-4 w-4 rounded-lg border border-slate-400 bg-slate-400" />
-                      <span>
-                        {currentLanguage.profile_OnlineStatus_Offline}
-                      </span>
-                    </DropdownMenuItem>
+                    </DropdownMenuItem> 
                   </DropdownMenuSubContent>
                 </DropdownMenuPortal>
               </DropdownMenuSub>
+              <DropdownMenuItem
+                onClick={() =>
+                  window.open("https://docs.clubyte.live", "_blank")
+                }
+              >
+                <HelpCircle className="mr-2 h-6 w-6" />
+                {currentLanguage.profile_help}
+              </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => router.push("/profile/manageProfile")}
               >
                 <UserCog2Icon className="mr-2 h-6 w-6" />
                 {currentLanguage.profile_manageAccount}
               </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={handleSignOut}
-              >
+              <DropdownMenuItem onClick={handleSignOut}>
                 <LogOutIcon className="mr-2 h-6 w-6" />
                 {currentLanguage.profile_signOut}
               </DropdownMenuItem>

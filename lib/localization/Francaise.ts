@@ -439,4 +439,5 @@ profile_OnlineStatus_DoNotDisturb: "Ne pas déranger",
 profile_OnlineStatus_Invisible: "Invisible",
 profile_OnlineStatus_Offline: "Hors ligne",
 profile_status_text: "Statut",
+profile_help: "Aide",
 };

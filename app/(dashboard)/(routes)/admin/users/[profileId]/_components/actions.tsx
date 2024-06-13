@@ -31,8 +31,8 @@ export const Actions = ({
       await axios.delete(`/api/profile/${profileId}`);
 
       toast.success("Profile deleted");
-      router.refresh();
       router.push(`/admin/users`);
+      router.refresh();
     } catch {
       toast.error("Something went wrong");
     } finally {
