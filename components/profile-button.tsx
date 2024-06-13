@@ -62,8 +62,8 @@ const ProfileButton = ({
   };
 
   const handleSignOut = async () => {
-    await updateProfileStatus("Offline");
     signOut(() => router.push("sign-in"));
+    await updateProfileStatus("Offline");
   };
 
   return (
