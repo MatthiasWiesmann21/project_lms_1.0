@@ -13,16 +13,28 @@ const PG = ({ children }: any) => {
 
   const persistedUser = useSelector((state: any) => state?.user);
   const getUser = async () => {
-    if (!authUser.isSignedIn) { return }
+    console.log("authUser", authUser);
+    console.log("!authUser.isSignedIn", !authUser.isSignedIn);
+    console.log("JSON.stringify(persistedUser)", JSON.stringify(persistedUser));
+    if (!authUser.isSignedIn) {
+      return;
+    }
     const user = await axios?.get("/api/user");
+    console.log("user", user);
     if (persistedUser) {
       if (JSON.stringify(persistedUser) === JSON.stringify(user.data)) {
-        return
+        return;
       } else {
-        dispatch({ type: "SetUser", payload: user?.data });
+        dispatch({
+          type: "SetUser",
+          payload: { ...persistedUser, ...user?.data },
+        });
       }
     } else {
-      dispatch({ type: "SetUser", payload: user?.data });
+      dispatch({
+        type: "SetUser",
+        payload: { ...persistedUser, ...user?.data },
+      });
     }
   };
 
