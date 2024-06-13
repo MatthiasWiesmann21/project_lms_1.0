@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { redirect, useRouter } from "next/navigation";
 import {
   DropdownMenu,
@@ -53,6 +53,8 @@ const ProfileButton = ({
   const router = useRouter();
   const user = useClerk();
 
+  
+
   const updateProfileStatus = async (isOnline: string) => {
     try {
       await axios.patch(`/api/profile/${profileId}`, { isOnline });
@@ -67,6 +69,13 @@ const ProfileButton = ({
     signOut(() => router.push("sign-in"));
     await updateProfileStatus("Offline");
   };
+
+
+  useEffect(() => {
+    if (user && profileOnlineStatus === "Offline") {
+      updateProfileStatus("Online");
+    }
+  }, [user, profileOnlineStatus]);
 
   const dispatch = useDispatch();
   return (
@@ -109,19 +118,19 @@ const ProfileButton = ({
                     <DropdownMenuItem
                       onClick={() => updateProfileStatus("Online")}
                     >
-                      <div className="mr-1 h-4 w-4 rounded-lg border border-green-500 bg-green-500" />
+                      <div className="mr-2 h-4 w-4 rounded-lg border border-green-500 bg-green-500" />
                       <span>{currentLanguage.profile_OnlineStatus_Online}</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => updateProfileStatus("Not Available")}
                     >
-                      <div className="mr-1 h-4 w-4 rounded-lg border border-yellow-400 bg-yellow-400" />
+                      <div className="mr-2 h-4 w-4 rounded-lg border border-yellow-400 bg-yellow-400" />
                       <span>{currentLanguage.profile_OnlineStatus_Away}</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => updateProfileStatus("Do Not Disturb")}
                     >
-                      <div className="mr-1 h-4 w-4 rounded-lg border border-red-600 bg-red-600" />
+                      <div className="mr-2 h-4 w-4 rounded-lg border border-red-600 bg-red-600" />
                       <span>
                         {currentLanguage.profile_OnlineStatus_DoNotDisturb}
                       </span>
@@ -129,19 +138,11 @@ const ProfileButton = ({
                     <DropdownMenuItem
                       onClick={() => updateProfileStatus("Invisible")}
                     >
-                      <div className="mr-1 h-4 w-4 rounded-lg border border-slate-400 bg-transparent" />
+                      <div className="mr-2 h-4 w-4 rounded-lg border border-slate-400 bg-transparent" />
                       <span>
                         {currentLanguage.profile_OnlineStatus_Invisible}
                       </span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => updateProfileStatus("Offline")}
-                    >
-                      <div className="mr-1 h-4 w-4 rounded-lg border border-slate-400 bg-slate-400" />
-                      <span>
-                        {currentLanguage.profile_OnlineStatus_Offline}
-                      </span>
-                    </DropdownMenuItem>
+                    </DropdownMenuItem> 
                   </DropdownMenuSubContent>
                 </DropdownMenuPortal>
               </DropdownMenuSub>
