@@ -439,4 +439,5 @@ profile_OnlineStatus_DoNotDisturb: "Не беспокоить",
 profile_OnlineStatus_Invisible: "Невидимый",
 profile_OnlineStatus_Offline: "Не в сети",
 profile_status_text: "Статус",
+profile_help: "Помощь",
 };

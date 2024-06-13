@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/check-language";
-import { LogOutIcon, UserCog2Icon } from "lucide-react";
+import { HelpCircle, LogOutIcon, UserCog2Icon } from "lucide-react";
 import { UserAvatar } from "./user-avatar";
 import { useClerk } from "@clerk/nextjs";
 import {
@@ -94,7 +94,7 @@ const ProfileButton = ({
                 <DropdownMenuSubTrigger>
                   <div className="flex items-center">
                     <div
-                      className={`mr-3 ml-1 h-4 w-4 rounded-lg ${
+                      className={`ml-1 mr-3 h-4 w-4 rounded-lg ${
                         statusColors[profileOnlineStatus] || "bg-gray-400"
                       }`}
                     />
@@ -142,15 +142,17 @@ const ProfileButton = ({
                   </DropdownMenuSubContent>
                 </DropdownMenuPortal>
               </DropdownMenuSub>
+              <DropdownMenuItem onClick={() => window.open("https://docs.clubyte.live", "_blank")}>
+                  <HelpCircle className="mr-2 h-6 w-6" />
+                  {currentLanguage.profile_help}
+              </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => router.push("/profile/manageProfile")}
+                onClick={() => router.push("/profile/manageAccount")}
               >
                 <UserCog2Icon className="mr-2 h-6 w-6" />
                 {currentLanguage.profile_manageAccount}
               </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={handleSignOut}
-              >
+              <DropdownMenuItem onClick={handleSignOut}>
                 <LogOutIcon className="mr-2 h-6 w-6" />
                 {currentLanguage.profile_signOut}
               </DropdownMenuItem>

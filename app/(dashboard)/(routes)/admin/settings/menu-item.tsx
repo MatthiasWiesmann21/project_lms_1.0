@@ -26,7 +26,7 @@ const onClick = () => {
 
   return (
     <button onClick={onClick} className="group">
-      <div className="hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full dark:border-[#ffffff] bg-[#e7e7e9] dark:bg-[#2a2c30]">
+      <div className="hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full dark:border-[#ffffff] bg-[#e7e7e9] dark:bg-transparent">
         <div className="relative w-full rounded-md overflow-hidden">
         <div className="flex items-center justify-center py-6">
           <Icon size={64} />

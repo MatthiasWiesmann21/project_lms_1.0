@@ -439,4 +439,5 @@ profile_OnlineStatus_DoNotDisturb: "请勿打扰",
 profile_OnlineStatus_Invisible: "隐身",
 profile_OnlineStatus_Offline: "离线",
 profile_status_text: "状态",
+profile_help: "帮助",
 };
