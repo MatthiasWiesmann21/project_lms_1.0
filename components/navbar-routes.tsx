@@ -21,9 +21,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { profile } from "console";
+
 
 interface NavbarRoutesProps {
   profileId: string;
@@ -54,10 +53,9 @@ export const NavbarRoutes = ({
   const isSearchPage = pathname === "/search";
   const isLiveEventPage = pathname === "/live-event";
 
-  useEffect(() => {
-    if (!profileName) window?.location?.reload();
-    console.log("0000000000000000", !profileName, profileName);
-  }, []);
+    if (!profileName) {
+      router.push("/sign-in");
+    }
 
   return (
     <>
