@@ -23,17 +23,20 @@ import {
 } from "@/components/ui/tooltip";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { profile } from "console";
 
 interface NavbarRoutesProps {
   profileId: string;
   profileName: string;
   profileImageUrl: string;
+  profileOnlineStatus: string;
 }
 
 export const NavbarRoutes = ({
   profileId,
   profileName,
   profileImageUrl,
+  profileOnlineStatus,
 }: NavbarRoutesProps) => {
   const router = useRouter();
   const { userId } = useAuth();
@@ -117,6 +120,7 @@ export const NavbarRoutes = ({
               profileId={profileId}
               profileName={profileName}
               profileImageUrl={profileImageUrl}
+              profileOnlineStatus={profileOnlineStatus}
             />
           </div>
         </TooltipProvider>

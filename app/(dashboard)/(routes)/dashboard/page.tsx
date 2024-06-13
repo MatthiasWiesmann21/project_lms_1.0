@@ -13,6 +13,9 @@ import { languageServer } from "@/lib/check-language-server";
 import PolygonChar from "./_components/polygonChar";
 import { getCourses } from "@/actions/get-courses";
 import CourseTable from "./_components/courseTable";
+import { currentProfile } from "@/lib/current-profile";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 interface SearchPageProps {
   searchParams: {
@@ -22,15 +25,12 @@ interface SearchPageProps {
 }
 
 const Dashboard = async ({ searchParams }: SearchPageProps) => {
-  console.log("Dashboard =============");
-  
+  const currentLanguage = await languageServer();
   const { userId } = auth();
 
   if (!userId) {
     return redirect("/");
   }
-
-  const currentLanguage = await languageServer();
 
   const { completedCourses, coursesInProgress } = await getDashboardCourses(
     userId
@@ -57,16 +57,17 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
   });
   console.log("UserProgressCompletedChapters", UserProgressCompletedChapters);
 
-  const CurrentOnlineUser = await db.profile.findMany({
+  const CurrentOnlineUser = await db.profile.count({
     where: {
-      isOnline: true,
+      isOnline: {
+        in: ["Online", "Not Available", "Do Not Disturb"],
+      },
     },
   });
 
-
   return (
     <div className="space-y-4 p-6 dark:bg-[#110524]">
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <InfoCard
           icon={Clock}
           label={currentLanguage?.infocard_inprogress}
@@ -87,7 +88,7 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
         <InfoCard
           icon={Users}
           label={currentLanguage?.infocard_currentOnlineUsers}
-          numberOfItems={CurrentOnlineUser.length}
+          numberOfItems={CurrentOnlineUser}
           variant="default"
         />
       </div>

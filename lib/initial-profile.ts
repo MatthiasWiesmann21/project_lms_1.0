@@ -15,6 +15,8 @@ export const initialProfile = async () => {
     },
   });
 
+  
+
   // If the profile exists, update it
   if (existingProfile) {
     const updatedProfile = await db.profile.update({
@@ -24,7 +26,7 @@ export const initialProfile = async () => {
       data: {
         imageUrl: user.imageUrl,
         email: user.emailAddresses[0].emailAddress,
-        isOnline: true,
+        isOnline: "Online",
         // You may update other fields as needed
       },
     });
@@ -39,7 +41,7 @@ export const initialProfile = async () => {
         imageUrl: user?.imageUrl,
         email: user.emailAddresses[0].emailAddress,
         containerId: process.env.CONTAINER_ID!,
-        isOnline: true,
+        isOnline: "Online",
         isBanned: "NOT BANNED",
       },
     });

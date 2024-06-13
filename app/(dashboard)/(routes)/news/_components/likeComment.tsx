@@ -15,7 +15,7 @@ const SubReply = ({ val, updateLikeComment }: any) => (
   <div>
     <div className="flex justify-between">
       <UserAvatar
-        className="mr-3 max-h-64 min-h-64 min-w-64 max-w-64"
+        className="min-h-64 min-w-64 max-w-64 mr-3 max-h-64"
         src={val?.profile.imageUrl}
       />
       <div className="w-full">
@@ -37,9 +37,9 @@ const SubReply = ({ val, updateLikeComment }: any) => (
             }}
             className="font-500 flex cursor-pointer items-center justify-between text-[14px]"
           >
-            <Image alt="thumb" src={thumb} className="w-[20px]" />
+            <ThumbsUp size={18}/>
             <span className="ml-2 mr-1">{val?.likes?.length}</span>
-            Like
+            Likes
           </div>
         </div>
       </div>
@@ -61,20 +61,22 @@ const Reply = ({
   const currentLanguage = useLanguage();
   return (
     <div>
-      <div className="flex justify-between">
+      <div className="my-4 flex justify-between rounded-lg border p-4 dark:bg-[#131618]">
         <UserAvatar
-          className="mr-3 max-h-64 min-h-64 min-w-64 max-w-64"
+          className="min-h-64 min-w-64 max-w-64 mr-3 max-h-64"
           src={val?.profile?.imageUrl}
         />
         <div className="w-full">
           <div>
             <div>
-              <span className="font-500 text-[16px]">{val?.profile?.name}</span>
-              <span className="ml-3 text-[12px]">
+              <span className="font-500 text-base font-bold">
+                {val?.profile?.name}
+              </span>
+              <span className="ml-3 text-xs">
                 {moment(new Date(val?.createdAt))?.fromNow()}
               </span>
             </div>
-            <text className="break-words text-[14px]">{val?.text}</text>
+            <text className="break-words text-sm">{val?.text}</text>
           </div>
           <div className="my-2 flex items-center">
             <div
@@ -85,11 +87,11 @@ const Reply = ({
                 if (response?.status === 200)
                   updateLikeComment(response?.data?.post);
               }}
-              className="font-500 flex cursor-pointer items-center justify-between text-[14px]"
+              className="font-500 flex cursor-pointer items-center justify-between text-sm"
             >
-              <Image alt="thumb" src={thumb} className="w-[20px]" />
+              <ThumbsUp size={18} />
               <span className="ml-2 mr-1">{val?.likes?.length}</span>
-              Like
+              Likes
             </div>
             <div
               className="font-500 m-0 ml-[1.25rem] cursor-pointer text-[14px]"
@@ -109,7 +111,7 @@ const Reply = ({
           {showReplyInput && (
             <div className="flex items-center justify-between">
               <UserAvatar
-                className="mr-3 max-h-64 min-h-64 min-w-64 max-w-64"
+                className="min-h-64 min-w-64 max-w-64 mr-3 max-h-64"
                 src={user?.imageUrl}
               />
               <div className="w-full">
@@ -162,15 +164,21 @@ const LikeComment = ({
             if (response?.status === 200)
               updateLikeComment(response?.data?.post);
           }}
-          
           className="m-2 flex cursor-pointer items-center justify-around "
         >
-          <ThumbsUp className={!!currentLike ? "text-[#0a66c2] transition duration-200 ease-in-out" : "border-black transition duration-200 ease-in-out"} fill={!!currentLike ? "#0a66c2" : "transparent"}/>
+          <ThumbsUp
+            className={
+              !!currentLike
+                ? "text-[#0a66c2] transition duration-200 ease-in-out"
+                : "border-black transition duration-200 ease-in-out"
+            }
+            fill={!!currentLike ? "#0a66c2" : "transparent"}
+          />
           <span className="ml-2 mr-1">{likesCount}</span>
-          Like
+          Likes
         </div>
         <div
-          className="font-500 flex cursor-pointer items-center rounded-full p-3 text-sm bg-slate-200 hover:bg-slate-300 dark:bg-slate-800/50 dark:hover:bg-slate-700/80 transition duration-500 ease-in-out"
+          className="font-500 flex cursor-pointer items-center rounded-full bg-slate-200 p-3 text-sm transition duration-500 ease-in-out hover:bg-slate-300 dark:bg-slate-800/50 dark:hover:bg-slate-700/80"
           onClick={() => setShowComments(!isShowComments)}
         >
           <MessageSquare className="mr-1 h-5 w-6" />
@@ -180,7 +188,7 @@ const LikeComment = ({
       <div className="flex items-center justify-between">
         <UserAvatar
           src={user?.imageUrl}
-          className="mr-3 max-h-64 min-h-64 min-w-64 max-w-64"
+          className="min-h-64 min-w-64 max-w-64 mr-3 max-h-64"
         />
         <div className="w-full">
           <ChatInputPost
