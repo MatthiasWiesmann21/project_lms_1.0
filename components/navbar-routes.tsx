@@ -21,7 +21,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { profile } from "console";
+import { useRouter } from "next/navigation";
+
 
 interface NavbarRoutesProps {
   profileId: string;
@@ -36,6 +37,7 @@ export const NavbarRoutes = ({
   profileImageUrl,
   profileOnlineStatus,
 }: NavbarRoutesProps) => {
+  const router = useRouter();
   const { userId } = useAuth();
   const pathname = usePathname();
   const currentLanguage = useLanguage();
@@ -50,6 +52,10 @@ export const NavbarRoutes = ({
   const isCourseListPage = pathname === "/dashboard/course-list";
   const isSearchPage = pathname === "/search";
   const isLiveEventPage = pathname === "/live-event";
+
+    if (!profileName) {
+      router.push("/sign-in");
+    }
 
   return (
     <>

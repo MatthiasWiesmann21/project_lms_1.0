@@ -23,7 +23,7 @@ export default function PrivacyPolicyModal({
     });
 
     if (response.status === 200) {
-      window.location.reload();
+      window.location.pathname = "/profile/manageUsername";
     }
   };
 
@@ -49,7 +49,7 @@ export default function PrivacyPolicyModal({
             </a>
           </div>
           <Button
-            className="ml-auto mt-4 bg-[#e72192] text-white px-4 py-2 rounded-md"
+            className="ml-auto mt-4 bg-[#e72192] text-white px-4 py-2 rounded-md transition ease-in-out duration-300"
             onClick={acceptedPrivacyPolicy}
             variant="secondary"
           >

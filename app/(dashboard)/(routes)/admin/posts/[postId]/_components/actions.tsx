@@ -57,8 +57,8 @@ export const Actions = ({
       await axios.delete(`/api/posts/${postId}`);
 
       toast.success("Post deleted");
-      router.refresh();
       router.push(`/admin/posts`);
+      router.refresh();
     } catch {
       toast.error("Something went wrong");
     } finally {
