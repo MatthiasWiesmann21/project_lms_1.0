@@ -16,6 +16,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/tooltip";
+import { useDispatch } from "react-redux";
 
 interface ProfileButtonProps {
   profileId: string;
@@ -31,6 +32,7 @@ const ProfileButton = ({
   const { signOut } = useClerk();
   const router = useRouter();
 
+  const dispatch = useDispatch();
   return (
     <TooltipProvider>
       <Tooltip>
@@ -62,7 +64,12 @@ const ProfileButton = ({
                 {currentLanguage.profile_manageAccount}
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => signOut(() => router.push("sign-in"))}
+                onClick={() =>
+                  signOut(() => {
+                    dispatch({ type: "SetUser", payload: {} });
+                    router.push("sign-in");
+                  })
+                }
               >
                 <LogOutIcon className="mr-2 h-6 w-6" />
                 {currentLanguage.profile_signOut}
