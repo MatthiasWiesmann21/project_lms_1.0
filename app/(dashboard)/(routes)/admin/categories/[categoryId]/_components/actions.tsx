@@ -57,8 +57,8 @@ export const Actions = ({
       await axios.delete(`/api/category/${categoryId}`);
 
       toast.success("Category deleted");
-      router.refresh();
       router.push(`/admin/categories`);
+      router.refresh();
     } catch {
       toast.error("Something went wrong");
     } finally {
