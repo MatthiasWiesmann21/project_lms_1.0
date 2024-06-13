@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { File } from "lucide-react";
+import { File, FileX } from "lucide-react";
 
 import { getChapter } from "@/actions/get-chapter";
 import { Banner } from "@/components/banner";
@@ -102,7 +102,7 @@ const ChapterIdPage = async ({
           </div>
           <div>
             <div className="flex flex-col items-center justify-between px-4 py-2 md:flex-row">
-              <h2 className="mb-2 text-2xl font-semibold">{chapter.title}</h2>
+              <h2 className="mb-2 text-xl font-medium">{chapter.title}</h2>
               <div className="flex items-center space-x-2">
               <Love />
               {purchase ? (
@@ -137,7 +137,7 @@ const ChapterIdPage = async ({
               style={{ background: "rgba(0, 0, 0, 0.3)" }}
             >
               <span className="ml-4 text-[18px] font-bold">{currentLanguage.chapter_CourseDocuments_Title}</span>
-              <span className="text-gray-500">
+              <div className="text-gray-500">
                 {!!attachments.length && (
                   <>
                     <Separator />
@@ -156,7 +156,13 @@ const ChapterIdPage = async ({
                     </div>
                   </>
                 )}
-              </span>
+                {!attachments.length && (
+                  <div className="px-4 py-4 gap-2 justify-center flex items-center">
+                    <FileX />
+                    <p>{currentLanguage.chapter_attachments_NoDocuments}</p>
+                  </div>
+                )}
+              </div>
             </div>
             <Comments />
           </div>

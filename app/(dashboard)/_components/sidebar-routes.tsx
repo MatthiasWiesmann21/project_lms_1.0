@@ -2,6 +2,8 @@
 
 import {
   BarChartIcon,
+  BookMarked,
+  CalendarCheck2,
   ClapperboardIcon,
   Compass,
   FolderOpen,
@@ -12,6 +14,7 @@ import {
   MessageCircle,
   NewspaperIcon,
   Settings,
+  UserCircle,
   UserCircle2Icon,
   Video,
 } from "lucide-react";
@@ -71,6 +74,24 @@ export const SidebarRoutes = ({
       icon: FolderOpen,
       label: `${currentLanguage.nav_item_documents}`,
       href: "/documents",
+      isNew: false,
+    },
+    {
+      icon: UserCircle,
+      label: `${currentLanguage.nav_item_career}`,
+      href: "/career",
+      isNew: false,
+    },
+    {
+      icon: CalendarCheck2,
+      label: `${currentLanguage.nav_item_calendar}`,
+      href: "/calendar",
+      isNew: false,
+    },
+    {
+      icon: BookMarked,
+      label: `${currentLanguage.nav_item_knowledgeHub}`,
+      href: "/knowledge-hub",
       isNew: false,
     },
   ];

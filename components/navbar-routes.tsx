@@ -21,17 +21,20 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { profile } from "console";
 
 interface NavbarRoutesProps {
   profileId: string;
   profileName: string;
   profileImageUrl: string;
+  profileOnlineStatus: string;
 }
 
 export const NavbarRoutes = ({
   profileId,
   profileName,
   profileImageUrl,
+  profileOnlineStatus,
 }: NavbarRoutesProps) => {
   const { userId } = useAuth();
   const pathname = usePathname();
@@ -109,6 +112,7 @@ export const NavbarRoutes = ({
               profileId={profileId}
               profileName={profileName}
               profileImageUrl={profileImageUrl}
+              profileOnlineStatus={profileOnlineStatus}
             />
           </div>
         </TooltipProvider>
