@@ -155,7 +155,7 @@ const ProfileButton = ({
                 {currentLanguage.profile_help}
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => router.push("/profile/manageAccount")}
+                onClick={() => router.push("/profile/manageProfile")}
               >
                 <UserCog2Icon className="mr-2 h-6 w-6" />
                 {currentLanguage.profile_manageAccount}
