@@ -14,7 +14,6 @@ import { getProgress } from "@/actions/get-progress";
 import { CourseSidebar } from "../../_components/course-sidebar";
 import { db } from "@/lib/db";
 import Love from "./_components/heart";
-import Files from "./_components/files";
 import Comments from "./_components/comments";
 import { languageServer } from "@/lib/check-language-server";
 

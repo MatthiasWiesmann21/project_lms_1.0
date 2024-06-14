@@ -1,10 +1,7 @@
 "use client";
 
 import qs from "query-string";
-import { IconType } from "react-icons";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-
-import { cn } from "@/lib/utils";
 
 interface CategoryItemProps {
   label: string;
@@ -46,10 +43,10 @@ export const CategoryItem = ({
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-x-1 rounded-full border border-slate-300 p-2 text-sm transition hover:border-sky-700`}
+      className={`flex border-2 items-center gap-x-1 rounded-full border-slate-300 p-2 text-sm transition hover:border-sky-700`}
       style={
         isSelected
-          ? { borderColor: colorCode, background: colorCode }
+          ? { borderColor: colorCode }
           : { borderColor: "#cbd5e1" }
       }
       type="button"
