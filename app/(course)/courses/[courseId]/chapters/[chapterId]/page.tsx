@@ -101,42 +101,40 @@ const ChapterIdPage = async ({
             />
           </div>
           <div>
-            <div className="flex flex-col items-center justify-between px-4 py-2 md:flex-row">
+            <div className="flex flex-col items-center justify-between px-4 md:flex-row">
               <h2 className="mb-2 text-xl font-medium">{chapter.title}</h2>
               <div className="flex items-center space-x-2">
-              <Love />
-              {purchase ? (
-                <CourseProgressButton
-                  chapterId={params.chapterId}
-                  courseId={params.courseId}
-                  nextChapterId={nextChapter?.id}
-                  isCompleted={!!userProgress?.isCompleted}
-                />
-              ) : (
-                <CourseEnrollButton
-                  courseId={params.courseId}
-                  price={course.price!}
-                />
-              )}
+                <Love />
+                {purchase ? (
+                  <CourseProgressButton
+                    chapterId={params.chapterId}
+                    courseId={params.courseId}
+                    nextChapterId={nextChapter?.id}
+                    isCompleted={!!userProgress?.isCompleted}
+                  />
+                ) : (
+                  <CourseEnrollButton
+                    courseId={params.courseId}
+                    price={course.price!}
+                  />
+                )}
               </div>
             </div>
-            <div className="flex flex-col items-center justify-between px-4 md:flex-row">
+            <div className="flex flex-col items-center justify-between px-4 pb-2 md:flex-row">
               <div>
                 <span className="flex items-center text-[14px] text-gray-500">
-                  {chapter.author}
+                  {currentLanguage.course_chapter_author_text} {chapter.author}
                 </span>
               </div>
-              
             </div>
             <Separator />
             <div className="p-4">
               <Preview value={chapter.description!} />
             </div>
-            <div
-              className="mt-5 pt-4 m-4 rounded-lg"
-              style={{ background: "rgba(0, 0, 0, 0.3)" }}
-            >
-              <span className="ml-4 text-[18px] font-bold">{currentLanguage.chapter_CourseDocuments_Title}</span>
+            <div className="m-4 mt-5 rounded-lg bg-slate-100/60 pt-4 dark:bg-[#0c0319]">
+              <span className="ml-4 text-[18px] font-bold">
+                {currentLanguage.chapter_CourseDocuments_Title}
+              </span>
               <div className="text-gray-500">
                 {!!attachments.length && (
                   <>
@@ -157,8 +155,8 @@ const ChapterIdPage = async ({
                   </>
                 )}
                 {!attachments.length && (
-                  <div className="px-4 py-4 gap-2 justify-center flex items-center">
-                    <FileX />
+                  <div className="flex items-center justify-center gap-2 px-4 py-4">
+                    <FileX className="text-slate-400 dark:text-slate-600"/>
                     <p>{currentLanguage.chapter_attachments_NoDocuments}</p>
                   </div>
                 )}

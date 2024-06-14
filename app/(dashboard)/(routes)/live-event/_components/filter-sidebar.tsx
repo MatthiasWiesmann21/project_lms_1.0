@@ -29,12 +29,15 @@ const EventFilterSidebar = ({
     <Sheet>
       <SheetTrigger>
         <Button
-          className="border-5 h-[50px] w-[110px] items-center justify-center rounded-full border border-[#EA2088] bg-transparent text-white dark:hover:text-black hover:bg-[#EA2088] transition duration-500 ease-in-out"
+          className="border-5 h-12 w-28 items-center justify-center rounded-full border border-[#EA2088] bg-transparent text-gray-700 transition duration-500 ease-in-out hover:bg-[#EA2088] dark:hover:text-white"
           variant="default"
           size="sm"
         >
-          <SlidersHorizontal className="pr-1 hover:text-black" size={28} />
-          {currentLanguage.live_event_filter_button_text}
+          <SlidersHorizontal
+            className="pr-1 text-gray-700 dark:text-white"
+            size={28}
+          />
+          <p className="text-gray-700 dark:text-white">{currentLanguage.live_event_filter_button_text}</p>
         </Button>
       </SheetTrigger>
       <SheetContent>

@@ -440,4 +440,5 @@ profile_OnlineStatus_Invisible: "隐身",
 profile_OnlineStatus_Offline: "离线",
 profile_status_text: "状态",
 profile_help: "帮助",
+course_chapter_author_text: "作者 -",
 };
