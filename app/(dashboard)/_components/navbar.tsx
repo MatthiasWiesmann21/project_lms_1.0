@@ -2,7 +2,6 @@ import { NavbarRoutes } from "@/components/navbar-routes";
 
 import { MobileSidebar } from "./mobile-sidebar";
 import { currentProfile } from "@/lib/current-profile";
-import { redirect } from "next/navigation";
 
 export const Navbar = async () => {
   const profile = await currentProfile();

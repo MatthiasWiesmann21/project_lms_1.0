@@ -1,12 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
-import { DateandTime } from "./date&time";
 import { Categories } from "./categories";
 import { EventsList } from "@/components/events-list ";
 import { useAuth } from "@clerk/nextjs";
 import EventFilterSidebar from "./filter-sidebar";
 import { PastandFuture } from "./past&future";
-import { db } from "@/lib/db";
 
 const LiveEventWrapper = ({
   liveEvents,

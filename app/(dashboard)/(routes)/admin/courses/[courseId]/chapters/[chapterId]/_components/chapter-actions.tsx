@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { Trash } from "lucide-react";
-import { use, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
