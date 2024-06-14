@@ -1,6 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import folderIcon from '../assets/icons/folderIcon.svg'
 
 const AppSVGIcon = ({ icon, customclass }: { icon: string, customclass: string }) => {
     const iconPath = `../assets/icons/${icon}.svg`;

@@ -1,6 +1,5 @@
-import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { AlertTriangle, User2Icon } from "lucide-react";
+import { User2Icon } from "lucide-react";
 
 import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
@@ -8,8 +7,6 @@ import { IconBadge } from "@/components/icon-badge";
 import { TitleForm } from "./_components/title-form";
 import { languageServer } from "@/lib/check-language-server";
 import { currentProfile } from "@/lib/current-profile";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 
 const UserNamePage = async () => {
   const user = await currentProfile();

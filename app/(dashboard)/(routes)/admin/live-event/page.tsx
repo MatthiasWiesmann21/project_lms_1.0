@@ -7,7 +7,6 @@ import { DataTable } from "./_components/data-table";
 import { columns } from "./_components/columns";
 import { isAdmin, isOperator } from "@/lib/roleCheckServer";
 import { isOwner } from "@/lib/owner";
-import { useSelector } from "react-redux";
 import { languageServer } from "@/lib/check-language-server";
 import { Button } from "@/components/ui/button";
 

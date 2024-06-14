@@ -1,12 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BookOpen } from "lucide-react";
-
-import { IconBadge } from "@/components/icon-badge";
 import { formatPrice } from "@/lib/format";
 import { CourseProgress } from "@/components/course-progress";
-import { CategoryItem } from "@/app/(dashboard)/(routes)/search/_components/category-item";
-import { db } from "@/lib/db";
 import book from "@/assets/icons/book.png";
 
 interface CourseCardProps {
@@ -24,7 +19,7 @@ export const FreeText = () => {
   return <p className="text-md font-medium text-slate-700 md:text-sm">Free</p>;
 };
 
-export const CourseCard = async ({
+export const CourseCard = ({
   id,
   title,
   imageUrl,
@@ -34,11 +29,6 @@ export const CourseCard = async ({
   category,
   categoryColorCode,
 }: CourseCardProps) => {
-  const containerColors: any = await db?.container?.findUnique({
-    where: {
-      id: process.env.CONTAINER_ID,
-    },
-  });
   return (
     <Link href={`/courses/${id}`}>
       <div
@@ -49,7 +39,7 @@ export const CourseCard = async ({
         </div>
         <div className="mt-3 flex items-center justify-between">
           <span
-            style={{ borderColor: containerColors?.navDarkBackgroundColor }}
+            style={{ borderColor: `${categoryColorCode}` }}
             className={`flex items-center rounded-[12px] border-2 px-3 py-1 text-[12px]`}
           >
             {category}
