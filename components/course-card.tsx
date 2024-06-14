@@ -42,18 +42,15 @@ export const CourseCard = async ({
   return (
     <Link href={`/courses/${id}`}>
       <div
-        style={{
-          background: "rgba(0, 0, 0, 0.3)",
-        }}
-        className="group h-full w-full overflow-hidden rounded-lg border p-3 transition hover:shadow-sm dark:border-[#1e172a]"
+        className="bg-slate-100/60 dark:bg-[#0c0319] group h-full w-full overflow-hidden rounded-lg border p-2 transition hover:shadow-sm dark:border-[#1e172a]"
       >
-        <div className="relative aspect-video w-full overflow-hidden rounded-md">
+        <div className="relative aspect-video w-full overflow-hidden rounded-md border-slate-300/50 dark:border-slate-700/60 border-2">
           <Image fill className="object-cover" alt={title} src={imageUrl} />
         </div>
         <div className="mt-3 flex items-center justify-between">
           <span
             style={{ borderColor: containerColors?.navDarkBackgroundColor }}
-            className={`border-1 flex items-center rounded-[12px] border px-3 py-1 text-[12px]`}
+            className={`flex items-center rounded-[12px] border-2 px-3 py-1 text-[12px]`}
           >
             {category}
           </span>
@@ -72,7 +69,7 @@ export const CourseCard = async ({
           </div>
         </div>
         <div className="flex flex-col pt-2">
-          <div className="my-2 line-clamp-2 text-[16px] font-semibold transition group-hover:text-sky-500">
+          <div className="my-2 line-clamp-2 text-[16px] font-semibold transition ease-in-out duration-300 group-hover:text-sky-500">
             {title}
           </div>
           {progress !== null ? (

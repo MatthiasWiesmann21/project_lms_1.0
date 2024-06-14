@@ -7,10 +7,11 @@ import { VideoPlayer } from "./_components/video-player";
 import moment from "moment";
 import Chat from "./_components/chat";
 import EventModal from "./_components/eventModal";
-import Like from "./_components/like";
+import Like from "./_components/love";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { CategoryItem } from "./_components/category-item";
+import Love from "./_components/love";
 
 const LiveEventIdPage = ({ params }: { params: { liveEventId: string } }) => {
   const { userId } = useAuth();
@@ -34,7 +35,7 @@ const LiveEventIdPage = ({ params }: { params: { liveEventId: string } }) => {
   }
 
   return (
-    <div className="flex items-center justify-around">
+    <div className="flex items-center">
       <div className="flex w-[60%] flex-col pb-20">
         <div className="flex flex-col items-end justify-between p-4 pt-6 md:flex-row">
           <CategoryItem
@@ -54,7 +55,6 @@ const LiveEventIdPage = ({ params }: { params: { liveEventId: string } }) => {
           <VideoPlayer
             // @ts-ignore remove this
             liveEventId={params?.liveEventId}
-            // @ts-ignore
             videoUrl={liveEvent?.videoUrl} // Hier fügen wir die Vimeo-URL aus den chapter Daten hinzu.
             startDateTime={liveEvent?.startDateTime}
             endDateTime={liveEvent?.endDateTime}
@@ -65,15 +65,17 @@ const LiveEventIdPage = ({ params }: { params: { liveEventId: string } }) => {
             getLiveEvent={getLiveEvent}
             isEnded={liveEvent?.isEnded}
           />
-          <Like liveEvent={liveEvent} getLiveEvent={getLiveEvent} />
         </div>
 
         <div>
           <div className="flex flex-col items-center justify-between p-4 md:flex-row">
-            <h2 className="mb-2 text-2xl font-semibold">{liveEvent?.title}</h2>
+            <h2 className="mb-2 text-xl font-medium">{liveEvent?.title}</h2>
+            <div className="flex items-center space-x-2">
+              <Love liveEvent={liveEvent} getLiveEvent={getLiveEvent} />
+            </div>
           </div>
           <Separator />
-          <div>
+          <div className="p-4">
             <Preview value={liveEvent?.description!} />
           </div>
         </div>

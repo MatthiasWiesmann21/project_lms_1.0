@@ -48,7 +48,7 @@ export const CategoryItem = ({
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-x-1 rounded-full border border-slate-300 p-3 text-sm transition hover:border-sky-700`}
+      className={`flex items-center gap-x-1 rounded-full border border-slate-300 p-2 text-xs font-medium transition hover:border-sky-700`}
       style={
         isSelected
           ? { borderColor: colorCode, background: colorCode }

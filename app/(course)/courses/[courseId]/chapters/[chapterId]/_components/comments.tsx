@@ -54,6 +54,7 @@ const Comment = ({ comment }: any) => {
 
 const Comments = () => (
   <div className="mt-5 py-4 pl-4">
+    <div>"In Development"</div>
     <div>{`${arr?.length} Comments`}</div>
     <Comment />
     {arr?.map((each, index) => (
