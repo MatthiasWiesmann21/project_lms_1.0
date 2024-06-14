@@ -8,8 +8,6 @@ import { MessageSquare, ThumbsUp } from "lucide-react";
 import { ChatInputPost } from "./chatInput";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/check-language";
-import thumb from "@/assets/icons/thumb.png";
-import Image from "next/image";
 
 const SubReply = ({ val, updateLikeComment }: any) => (
   <div>

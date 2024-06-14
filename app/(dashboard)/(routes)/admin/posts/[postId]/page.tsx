@@ -1,6 +1,6 @@
-import { auth, currentUser } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { ArrowLeft, CircleDollarSign, File, Image, LayoutDashboard, LayoutGridIcon, ListChecks } from "lucide-react";
+import { ArrowLeft, Image, LayoutGridIcon } from "lucide-react";
 
 import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";

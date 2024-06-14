@@ -8,8 +8,6 @@ import { ChatInput } from "@/components/chat/chat-input";
 import { ChatMessages } from "@/components/chat/chat-messages";
 import { MediaRoom } from "@/components/media-room";
 import { db } from "@/lib/db";
-import leftArrow from "../../../../../../../../../assets/icons/left arrow.png";
-import Image from "next/image";
 
 interface ChannelIdPageProps {
   params: {

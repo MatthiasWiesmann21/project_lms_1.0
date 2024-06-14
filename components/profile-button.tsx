@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { redirect, useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,9 +23,7 @@ import {
   TooltipTrigger,
 } from "./ui/tooltip";
 import { useDispatch } from "react-redux";
-import { db } from "@/lib/db";
 import axios from "axios";
-import toast from "react-hot-toast";
 
 interface ProfileButtonProps {
   profileId: string;

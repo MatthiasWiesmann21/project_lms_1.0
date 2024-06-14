@@ -1,14 +1,11 @@
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { ArrowLeft, CircleDollarSign, File, Image, LayoutDashboard, LayoutGridIcon, ListChecks, PaletteIcon } from "lucide-react";
+import { ArrowLeft, PaletteIcon } from "lucide-react";
 
 import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
-import { Banner } from "@/components/banner";
 
 
-import { ImageForm } from "../containersetting/_components/image-form";
-import { LinkForm } from "../containersetting/_components/link-form";
 import { PrimaryNavColorForm } from "./_components/nav-primary-color-form";
 import { isAdmin, isOperator } from "@/lib/roleCheckServer";
 import { isOwner } from "@/lib/owner";

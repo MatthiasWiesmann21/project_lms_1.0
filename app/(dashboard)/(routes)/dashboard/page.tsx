@@ -1,21 +1,15 @@
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { CheckCircle, Clock, ListChecks, Users, Users2 } from "lucide-react";
+import { CheckCircle, Clock, ListChecks, Users } from "lucide-react";
 
 import { getDashboardCourses } from "@/actions/get-dashboard-courses";
-import { CoursesList } from "@/components/courses-list";
 
 import { InfoCard } from "./_components/info-card";
 import { getSearchCourses } from "@/actions/get-searchcourses";
-import exp from "constants";
 import { db } from "@/lib/db";
 import { languageServer } from "@/lib/check-language-server";
 import PolygonChar from "./_components/polygonChar";
-import { getCourses } from "@/actions/get-courses";
 import CourseTable from "./_components/courseTable";
-import { currentProfile } from "@/lib/current-profile";
-import axios from "axios";
-import toast from "react-hot-toast";
 
 interface SearchPageProps {
   searchParams: {

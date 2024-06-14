@@ -1,10 +1,5 @@
-import { useEffect, useState, useRef } from "react";
-import axios from "axios";
 import dynamic from "next/dynamic";
-import { PostCard } from "./_components/post-card";
 import { Category, Post } from "@prisma/client";
-import { Loader2 } from "lucide-react";
-import { useLanguage } from "@/lib/check-language";
 import NewsWrapper from "./_components/newsWrapper";
 import { db } from "@/lib/db";
 

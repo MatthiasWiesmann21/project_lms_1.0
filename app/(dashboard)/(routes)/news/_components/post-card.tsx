@@ -1,14 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
-import { BookOpen } from "lucide-react";
-
-import { IconBadge } from "@/components/icon-badge";
 import { UserAvatar } from "@/components/user-avatar";
-import { db } from "@/lib/db";
-import { auth } from "@clerk/nextjs";
-import { Separator } from "@/components/ui/separator";
-import { Preview } from "@/components/preview";
-import { useState } from "react";
 import LikeComment from "./likeComment";
 import { PostPreview } from "@/components/post-preview";
 

@@ -2,7 +2,7 @@
 
 import { useLanguage } from "@/lib/check-language";
 import axios from "axios";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 export const PastandFuture = ({
   setLiveEvent,
