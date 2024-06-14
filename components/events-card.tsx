@@ -34,7 +34,7 @@ export const EventCard = ({
 
   return (
     <Link href={`/live-event/${id}`}>
-      <div className="group h-full overflow-hidden rounded-lg border p-2 transition hover:shadow-sm dark:border-[#1f182b] dark:bg-[#0D0619]">
+      <div className="group h-full overflow-hidden rounded-lg border p-2 transition hover:shadow-sm dark:border-[#1f182b] bg-slate-100/60 dark:bg-[#0c0319]">
         <div
           className={cn(
             "relative aspect-video w-full overflow-hidden rounded-md",
@@ -58,7 +58,7 @@ export const EventCard = ({
           <div>
             <CategoryItemCard label={category} colorCode={categoryColorCode} />
           </div>
-          <div className="line-clamp-2 py-2 text-[16px] font-medium transition group-hover:text-sky-500 md:text-base">
+          <div className="line-clamp-2 py-2 text-sm font-medium transition ease-in-out duration-300 group-hover:text-sky-500 md:text-base">
             {title}
           </div>
           <p className="text-[12px] text-gray-500">{`Starts: ${moment(

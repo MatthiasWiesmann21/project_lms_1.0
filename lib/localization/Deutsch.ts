@@ -443,4 +443,5 @@ profile_OnlineStatus_Invisible: "Unsichtbar",
 profile_OnlineStatus_Offline: "Offline",
 profile_status_text: "Status",
 profile_help: "Hilfe",
+course_chapter_author_text: "Autor -",
 };

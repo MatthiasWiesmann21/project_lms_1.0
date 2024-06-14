@@ -18,8 +18,8 @@ export const Preview = ({ value }: PreviewProps) => {
   const currentLanguage = useLanguage();
 
   return (
-    <div className="mt-5 pt-4 rounded-lg" style={{ background: "rgba(0, 0, 0, 0.3)" }}>
-      <span className="ml-4 text-[18px] font-bold">{currentLanguage.chapter_aboutcourse_title}</span>
+    <div className="mt-5 pt-4 rounded-lg bg-slate-100/60 dark:bg-[#0c0319]">
+      <span className="ml-4 text-sm font-bold">{currentLanguage.chapter_aboutcourse_title}</span>
       <span className="text-gray-500">
         <ReactQuill theme="bubble" value={value} readOnly />
       </span>

@@ -45,7 +45,7 @@ export const CategoryItemCard = ({
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-x-1 rounded-full border border-slate-300 p-1 px-3 text-[10px] transition hover:border-sky-700`}
+      className={`flex items-center gap-x-1 rounded-full border-2 border-slate-300 p-1 px-3 text-[10px] transition hover:border-sky-700`}
       style={{ borderColor: colorCode }}
       type="button"
     >

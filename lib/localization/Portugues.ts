@@ -440,4 +440,5 @@ profile_OnlineStatus_Invisible: "Invisível",
 profile_OnlineStatus_Offline: "Offline",
 profile_status_text: "Status",
 profile_help: "Ajuda",
+course_chapter_author_text: "Autor -",
 };
