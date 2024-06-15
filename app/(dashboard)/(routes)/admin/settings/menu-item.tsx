@@ -26,13 +26,13 @@ const onClick = () => {
 
   return (
     <button onClick={onClick} className="group">
-      <div className="hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full dark:border-[#ffffff] bg-[#e7e7e9] dark:bg-transparent">
+      <div className="hover:shadow-sm transition overflow-hidden border-2 rounded-lg p-3 h-full dark:border-[#ffffff] bg-transparent dark:bg-transparent">
         <div className="relative w-full rounded-md overflow-hidden">
         <div className="flex items-center justify-center py-6">
           <Icon size={64} />
         </div>
         <div className="py-1 flex ">
-            <h2 className="text-lg font-medium group-hover:text-sky-500">{label}</h2>
+            <h2 className="text-lg font-medium group-hover:text-sky-500 transition ease-in-out duration-300">{label}</h2>
         </div>
         </div>
         <div className="flex justify-start">
