@@ -441,4 +441,7 @@ profile_OnlineStatus_Offline: "Offline",
 profile_status_text: "Status",
 profile_help: "Help",
 course_chapter_author_text: "Author -",
+live_event_filter_start_date_text: "Start Date",
+live_event_filter_end_date_text: "End Date",
+chapter_aboutevent_title: "About the Event",
 };

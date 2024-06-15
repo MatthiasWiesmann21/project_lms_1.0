@@ -34,10 +34,10 @@ const EventFilterSidebar = ({
           size="sm"
         >
           <SlidersHorizontal
-            className="pr-1 text-gray-700 dark:text-white"
+            className="pr-1 text-gray-800 dark:text-white"
             size={28}
           />
-          <p className="text-gray-700 dark:text-white">{currentLanguage.live_event_filter_button_text}</p>
+          <p className="text-gray-800 dark:text-white">{currentLanguage.live_event_filter_button_text}</p>
         </Button>
       </SheetTrigger>
       <SheetContent>

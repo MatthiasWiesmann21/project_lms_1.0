@@ -441,4 +441,7 @@ profile_OnlineStatus_Offline: "Не в сети",
 profile_status_text: "Статус",
 profile_help: "Помощь",
 course_chapter_author_text: "Автор -",
+live_event_filter_start_date_text: "Дата начала",
+live_event_filter_end_date_text: "Дата окончания",
+chapter_aboutevent_title: "О главе",
 };

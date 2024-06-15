@@ -441,4 +441,7 @@ profile_OnlineStatus_Offline: "Offline",
 profile_status_text: "Stato",
 profile_help: "Aiuto",
 course_chapter_author_text: "Autore -",
+live_event_filter_start_date_text: "Data di inizio",
+live_event_filter_end_date_text: "Data di fine",
+chapter_aboutevent_title: "Informazioni sul Capitolo",
 };

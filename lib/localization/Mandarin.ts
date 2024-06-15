@@ -441,4 +441,7 @@ profile_OnlineStatus_Offline: "离线",
 profile_status_text: "状态",
 profile_help: "帮助",
 course_chapter_author_text: "作者 -",
+live_event_filter_start_date_text: "开始日期",
+live_event_filter_end_date_text: "结束日期",
+chapter_aboutevent_title: "关于活动",
 };

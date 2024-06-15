@@ -131,7 +131,7 @@ const ChapterIdPage = async ({
               <Preview value={chapter.description!} />
             </div>
             <div className="m-4 mt-5 rounded-lg bg-slate-100/60 pt-4 dark:bg-[#0c0319]">
-              <span className="ml-4 text-[18px] font-bold">
+              <span className="ml-4 text-sm font-bold">
                 {currentLanguage.chapter_CourseDocuments_Title}
               </span>
               <div className="text-gray-500">
