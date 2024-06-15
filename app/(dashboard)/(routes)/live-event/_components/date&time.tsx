@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { SheetClose } from "@/components/ui/sheet";
 import { useLanguage } from "@/lib/check-language";
 import axios from "axios";
@@ -25,6 +26,7 @@ export const DateandTime = ({
     <div className="mt-4 flex w-full flex-col space-y-4">
       <div className="flex flex-col items-start gap-2">
         <div className="relative mb-2 w-full overflow-hidden">
+          <div className="text-sm">{currentLanguage.live_event_filter_start_date_text}</div>
           <input
             type="datetime-local"
             ref={startDateInputRef}
@@ -43,10 +45,11 @@ export const DateandTime = ({
                 ? moment(startDateTime)?.format("YYYY-MM-DD HH:mm")
                 : ""
             }
-            className="border-1 z-[1] w-full cursor-pointer rounded border border-white px-2"
+            className="border-1 z-[1] w-full cursor-pointer rounded border border-black dark:border-white px-2"
           />
         </div>
         <div className="relative mb-2 w-full overflow-hidden">
+          <div className="text-sm">{currentLanguage.live_event_filter_end_date_text}</div>
           <input
             type="datetime-local"
             ref={endDateInputRef}
@@ -63,13 +66,13 @@ export const DateandTime = ({
             value={
               endDateTime ? moment(endDateTime)?.format("YYYY-MM-DD HH:mm") : ""
             }
-            className="border-1 z-[1] w-full cursor-pointer rounded border border-white px-2"
+            className="border-1 z-[1] w-full cursor-pointer rounded border border-black dark:border-white px-2"
           />
         </div>
       </div>
       <div className="flex items-center space-x-4">
         <SheetClose>
-          <button
+          <Button
             onClick={async () => {
               const response = await axios?.post(`/api/liveEvent/filter`, {
                 ...getEvent,
@@ -78,21 +81,23 @@ export const DateandTime = ({
               });
               setLiveEvent(response?.data);
             }}
-            className="border-1 cursor-pointer rounded border border-[#fff] p-1 px-2"
+            variant="success"
+            className="border-1 cursor-pointer rounded-lg border p-1 px-2"
           >
             {currentLanguage.live_event_filter_applyFilter_button_text}
-          </button>
+          </Button>
         </SheetClose>
         <SheetClose>
-          <button
+          <Button
             onClick={async () => {
               const response = await axios?.get(`/api/liveEvent`);
               setLiveEvent(response?.data);
             }}
-            className="border-1 cursor-pointer rounded border border-[#fff] p-1 px-2"
+            variant="default"
+            className="border-1 cursor-pointer rounded-lg border p-1 px-2"
           >
             {currentLanguage.live_event_filter_clearFilter_button_text}
-          </button>
+          </Button>
         </SheetClose>
       </div>
     </div>

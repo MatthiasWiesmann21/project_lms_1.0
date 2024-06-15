@@ -2,7 +2,6 @@
 import { useAuth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
-import { Preview } from "@/components/preview";
 import { VideoPlayer } from "./_components/video-player";
 import moment from "moment";
 import Chat from "./_components/chat";
@@ -11,6 +10,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { CategoryItem } from "./_components/category-item";
 import Love from "./_components/love";
+import { EventPreview } from "@/components/event-preview";
 
 const LiveEventIdPage = ({ params }: { params: { liveEventId: string } }) => {
   const { userId } = useAuth();
@@ -75,7 +75,7 @@ const LiveEventIdPage = ({ params }: { params: { liveEventId: string } }) => {
           </div>
           <Separator />
           <div className="p-4">
-            <Preview value={liveEvent?.description!} />
+            <EventPreview value={liveEvent?.description!} />
           </div>
         </div>
       </div>

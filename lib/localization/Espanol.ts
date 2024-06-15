@@ -441,4 +441,7 @@ profile_OnlineStatus_Offline: "Desconectado",
 profile_status_text: "Estado",
 profile_help: "Ayuda",
 course_chapter_author_text: "Autor -",
+live_event_filter_start_date_text: "Fecha de Inicio",
+live_event_filter_end_date_text: "Fecha de Finalización",
+chapter_aboutevent_title: "Sobre el Evento",
 };
