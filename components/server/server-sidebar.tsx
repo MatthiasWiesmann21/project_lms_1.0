@@ -1,5 +1,6 @@
 import { ChannelType, MemberRole } from "@prisma/client";
 import { redirect } from "next/navigation";
+// @ts-ignore
 import { Hash, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -21,23 +22,36 @@ interface ServerSidebarProps {
 const iconMap = {
   [ChannelType.TEXT]: <Hash className="mr-2 h-4 w-4" />,
   [ChannelType.AUDIO]: <Mic className="mr-2 h-4 w-4" />,
-  [ChannelType.VIDEO]: <Video className="mr-2 h-4 w-4" />
+  [ChannelType.VIDEO]: <Video className="mr-2 h-4 w-4" />,
 };
 
 const roleIconMap = {
   [MemberRole.GUEST]: null,
-  [MemberRole.MODERATOR]: <ShieldCheck className="h-4 w-4 mr-2 text-indigo-500" />,
-  [MemberRole.ADMIN]: <ShieldAlert className="h-4 w-4 mr-2 text-rose-500" />
-}
+  [MemberRole.MODERATOR]: (
+    <ShieldCheck className="mr-2 h-4 w-4 text-indigo-500" />
+  ),
+  [MemberRole.ADMIN]: <ShieldAlert className="mr-2 h-4 w-4 text-rose-500" />,
+};
 
-export const ServerSidebar = async ({
-  serverId
-}: ServerSidebarProps) => {
+export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
   const profile = await currentProfile();
   const currentLanguage = await languageServer();
   if (!profile) {
     return redirect("/");
   }
+
+  const servers = await db.server.findMany({
+    orderBy: {
+      createdAt: "asc",
+    },
+    where: {
+      members: {
+        some: {
+          profileId: profile.id,
+        },
+      },
+    },
+  });
 
   const server = await db.server.findUnique({
     where: {
@@ -56,29 +70,41 @@ export const ServerSidebar = async ({
         },
         orderBy: {
           role: "asc",
-        }
-      }
-    }
+        },
+      },
+    },
   });
 
-
-  const textChannels = server?.channels.filter((channel) => channel.type === ChannelType.TEXT)
-  const audioChannels = server?.channels.filter((channel) => channel.type === ChannelType.AUDIO)
-  const videoChannels = server?.channels.filter((channel) => channel.type === ChannelType.VIDEO)
-  const members = server?.members.filter((member) => member.profileId !== profile.id)
+  const textChannels = server?.channels.filter(
+    (channel) => channel.type === ChannelType.TEXT
+  );
+  const audioChannels = server?.channels.filter(
+    (channel) => channel.type === ChannelType.AUDIO
+  );
+  const videoChannels = server?.channels.filter(
+    (channel) => channel.type === ChannelType.VIDEO
+  );
+  const members = server?.members.filter(
+    (member) => member.profileId !== profile.id
+  );
 
   if (!server) {
     return redirect("/");
   }
 
-  const role = server.members.find((member) => member.profileId === profile.id)?.role;
+  const role = server.members.find(
+    (member) => member.profileId === profile.id
+  )?.role;
+
+  // console.log("----------", server);
 
   return (
-    <div className="flex flex-col h-full text-primary w-full dark:bg-[#2B2D31] bg-[#F2F3F5]">
-      <ServerHeader
-        server={server}
-        role={role}
-      />
+    <div
+      className="flex h-full w-full flex-col bg-[#ffffff] text-primary dark:bg-[#0A0118]"
+      // style={{ border: "10px solid red" }}
+    >
+      <ServerHeader servers={servers} server={server} role={role} />
+      <Separator />
       <ScrollArea className="flex-1 px-3">
         <div className="mt-2">
           <ServerSearch
@@ -90,7 +116,7 @@ export const ServerSidebar = async ({
                   id: channel.id,
                   name: channel.name,
                   icon: iconMap[channel.type],
-                }))
+                })),
               },
               {
                 label: `${currentLanguage.serverSidebar_videoChannel}`,
@@ -99,7 +125,7 @@ export const ServerSidebar = async ({
                   id: channel.id,
                   name: channel.name,
                   icon: iconMap[channel.type],
-                }))
+                })),
               },
               {
                 label: `${currentLanguage.serverSidebar_audioChannel}`,
@@ -108,7 +134,7 @@ export const ServerSidebar = async ({
                   id: channel.id,
                   name: channel.name,
                   icon: iconMap[channel.type],
-                }))
+                })),
               },
               {
                 label: `${currentLanguage.serverSidebar_member}`,
@@ -117,12 +143,12 @@ export const ServerSidebar = async ({
                   id: member.id,
                   name: member.profile.name,
                   icon: roleIconMap[member.role],
-                }))
+                })),
               },
             ]}
           />
         </div>
-        <Separator className="bg-zinc-200 dark:bg-zinc-700 rounded-md my-2" />
+        <Separator className="my-2 rounded-md bg-zinc-200 dark:bg-zinc-700" />
         {!!textChannels?.length && (
           <div className="mb-2">
             <ServerSection
@@ -193,16 +219,12 @@ export const ServerSidebar = async ({
             />
             <div className="space-y-[2px]">
               {members.map((member) => (
-                <ServerMember
-                  key={member.id}
-                  member={member}
-                  server={server}
-                />
+                <ServerMember key={member.id} member={member} server={server} />
               ))}
             </div>
           </div>
         )}
       </ScrollArea>
     </div>
-  )
-}
+  );
+};
