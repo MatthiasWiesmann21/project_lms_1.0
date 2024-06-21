@@ -76,9 +76,9 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
                   <button
                     type="button"
                     onClick={() => onOpen("messageFile", { apiUrl, query })}
-                    className="absolute right-[65px] top-7 flex h-[24px] w-[24px] items-center justify-center rounded-full p-1 transition-all duration-300 hover:bg-zinc-500 dark:hover:bg-zinc-300"
+                    className="absolute right-[65px] top-6 flex h-8 w-8 items-center justify-center rounded-full p-1"
                   >
-                    <Paperclip className="text-[#71717a] hover:text-white dark:text-[#a1a1aa] dark:hover:text-[#71717a]" />
+                    <Paperclip className="text-zinc-500 dark:text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition" />
                   </button>
                   <div className="absolute right-8 top-7">
                     <EmojiPicker

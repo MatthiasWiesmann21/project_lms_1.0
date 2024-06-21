@@ -50,7 +50,7 @@ export const ServerHeader = ({ servers, server, role }: ServerHeaderProps) => {
               width={24}
               height={24}
             />
-            <span className="mx-3 text-[16px] font-[600] dark:text-[#baa5c1]">
+            <span className="mx-2 text-sm font-semibold dark:text-[#baa5c1]">
               {server?.name}
             </span>
             <ChevronDown className="h-5 w-5" />
@@ -60,21 +60,29 @@ export const ServerHeader = ({ servers, server, role }: ServerHeaderProps) => {
           {servers?.map((each: ServerWithMembersWithProfiles) => (
             <DropdownMenuItem
               onClick={() => push(`/chat/servers/${each?.id}`)}
-              className="flex h-[40px] cursor-pointer items-center p-0 text-sm text-indigo-600 dark:text-indigo-400"
+              className="flex h-10 cursor-pointer items-center p-1 text-indigo-600 dark:text-indigo-400"
             >
               <Image
                 src={each?.imageUrl}
                 alt="each?.imageUrl"
                 objectFit="contain"
-                width={16}
-                height={16}
-                className="mr-3"
+                width={24}
+                height={24}
+                className="mr-2"
               />
-              <span className=" text-[16px] font-[600] dark:text-[#baa5c1]">
+              <span className=" text-sm font-semibold dark:text-[#baa5c1]">
                 {each?.name}
               </span>
             </DropdownMenuItem>
           ))}
+          <DropdownMenuItem onClick={() => onOpen("createServer")} className="flex h-10 cursor-pointer items-center p-1">
+            {isAdmin && (
+              <div className="flex h-8 cursor-pointer items-center text-indigo-600 dark:text-indigo-400">
+                <PlusCircle className="h-6 w-6" />
+                <p className="ml-2 text-sm font-semibold">{currentLanguage.chat_server_addServer}</p>
+              </div>
+            )}
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
       <div className="absolute right-0">
@@ -86,12 +94,12 @@ export const ServerHeader = ({ servers, server, role }: ServerHeaderProps) => {
           >
             <button
               // style={{ border: "2px solid blue" }}
-              className="text-md mr-2 flex items-center justify-center rounded-[100%] border border-2 border-[#ea2088] p-1 font-semibold transition hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50"
+              className="text-md mr-2 flex items-center justify-center rounded-full border-2 p-1 font-semibold transition duration-300 ease-in-out hover:border-[#ea2088] hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50"
             >
               <EllipsisVertical className="text-[gray] dark:text-[white]" />
             </button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56 space-y-[2px] text-xs font-medium text-black dark:text-neutral-400">
+          <DropdownMenuContent className="w-56 space-y-1 text-xs font-medium text-black dark:text-neutral-400">
             {isModerator && (
               <DropdownMenuItem
                 onClick={() => onOpen("invite", { server })}
@@ -143,7 +151,7 @@ export const ServerHeader = ({ servers, server, role }: ServerHeaderProps) => {
                 onClick={() => onOpen("leaveServer", { server })}
                 className="cursor-pointer px-3 py-2 text-sm text-rose-500"
               >
-                Leave Server
+                {currentLanguage.chat_server_leave}
                 <LogOut className="ml-auto h-4 w-4" />
               </DropdownMenuItem>
             )}
