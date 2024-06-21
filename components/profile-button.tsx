@@ -51,8 +51,6 @@ const ProfileButton = ({
   const router = useRouter();
   const user = useClerk();
 
-  
-
   const updateProfileStatus = async (isOnline: string) => {
     try {
       await axios.patch(`/api/profile/${profileId}`, { isOnline });
@@ -64,10 +62,9 @@ const ProfileButton = ({
 
   const handleSignOut = async () => {
     dispatch({ type: "SetUser", payload: {} });
-    signOut(() => router.push("sign-in"));
     await updateProfileStatus("Offline");
+    signOut(() => router.push("sign-in"));
   };
-
 
   useEffect(() => {
     if (user && profileOnlineStatus === "Offline") {
@@ -140,7 +137,7 @@ const ProfileButton = ({
                       <span>
                         {currentLanguage.profile_OnlineStatus_Invisible}
                       </span>
-                    </DropdownMenuItem> 
+                    </DropdownMenuItem>
                   </DropdownMenuSubContent>
                 </DropdownMenuPortal>
               </DropdownMenuSub>
