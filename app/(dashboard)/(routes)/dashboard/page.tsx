@@ -60,7 +60,7 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
   });
 
   return (
-    <div className="space-y-4 p-6 dark:bg-[#110524]">
+    <div className="space-y-4 p-4 dark:bg-[#110524]">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <InfoCard
           icon={Clock}

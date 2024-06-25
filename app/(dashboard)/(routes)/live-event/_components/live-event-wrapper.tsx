@@ -20,7 +20,7 @@ const LiveEventWrapper = ({
   }, [liveEvents]);
 
   return (
-    <div className="space-y-4 p-6">
+    <div className="space-y-4 p-4">
       <div className="mr-1 flex justify-between">
         <PastandFuture
           setLiveEvent={setLiveEvent}

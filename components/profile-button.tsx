@@ -24,6 +24,7 @@ import {
 } from "./ui/tooltip";
 import { useDispatch } from "react-redux";
 import axios from "axios";
+import { cn } from "@/lib/utils";
 
 interface ProfileButtonProps {
   profileId: string;
@@ -33,10 +34,10 @@ interface ProfileButtonProps {
 }
 
 const statusColors: { [key: string]: string } = {
-  Online: "bg-green-500",
+  "Online": "bg-green-500",
   "Not Available": "bg-yellow-400",
   "Do Not Disturb": "bg-red-600",
-  Invisible: "bg-transparent border border-slate-400",
+  "Invisible": "bg-slate-400",
   Offline: "bg-slate-400",
 };
 
@@ -84,6 +85,12 @@ const ProfileButton = ({
                 variant="ghost"
               >
                 <UserAvatar src={profileImageUrl} />
+                <div
+                  className={cn(
+                    "absolute bottom-4 right-4 z-10 h-4 w-4 rounded-full border-4 border-white dark:border-[#0a0118] md:h-4 md:w-4",
+                    statusColors[profileOnlineStatus]
+                  )}
+                ></div>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="p-1">
@@ -133,7 +140,7 @@ const ProfileButton = ({
                     <DropdownMenuItem
                       onClick={() => updateProfileStatus("Invisible")}
                     >
-                      <div className="mr-2 h-4 w-4 rounded-lg border border-slate-400 bg-transparent" />
+                      <div className="mr-2 h-4 w-4 rounded-lg bg-slate-400" />
                       <span>
                         {currentLanguage.profile_OnlineStatus_Invisible}
                       </span>
