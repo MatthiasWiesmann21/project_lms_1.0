@@ -98,7 +98,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
 
   return (
     <>
-      <div className="space-y-4 p-6">
+      <div className="space-y-4 p-4">
         <CourseCounter
           maxCourses={container?.maxCourses ?? 0}
           courses={existingCourses}

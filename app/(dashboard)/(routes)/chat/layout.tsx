@@ -10,11 +10,8 @@ export const metadata: Metadata = {
 
 const MainLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="h-full">
-      <div className="fixed inset-y-0 z-30 mt-[80px] hidden h-full w-[72px] flex-col md:flex">
-        <NavigationSidebar />
-      </div>
-      <main className="h-full">
+    <div className="flex h-full w-full items-center justify-center">
+      <main className="mx-2 h-[96%] w-full overflow-hidden rounded-[16px] dark:bg-[#0A0118]">
         <SocketProvider>
           <ModalProvider />
           <QueryProvider>{children}</QueryProvider>
