@@ -5,7 +5,7 @@ import axios from "axios";
 import qs from "query-string";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Plus } from "lucide-react";
+import { Paperclip } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
@@ -65,21 +65,21 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
             <FormItem>
               <FormControl>
                 <div className="relative p-4 pb-6">
+                  <Input
+                    disabled={isLoading}
+                    className="border-0 border-none bg-[#ebedf0] py-6 pr-[90px] text-zinc-600 focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-[#192130] dark:text-zinc-200"
+                    placeholder={`${
+                      currentLanguage.chat_ChatInput_placeholder
+                    } ${type === "conversation" ? name : "#" + name}`}
+                    {...field}
+                  />
                   <button
                     type="button"
                     onClick={() => onOpen("messageFile", { apiUrl, query })}
-                    className="absolute left-8 top-7 flex h-[24px] w-[24px] items-center justify-center rounded-full bg-[#e7e7e9] p-1 transition-all duration-300 hover:bg-zinc-500 dark:bg-[#3b3c43] dark:hover:bg-zinc-300"
+                    className="absolute right-[65px] top-6 flex h-8 w-8 items-center justify-center rounded-full p-1"
                   >
-                    <Plus className="text-[#71717a] dark:text-[#a1a1aa] hover:text-white dark:hover:text-[#71717a]" />
+                    <Paperclip className="text-zinc-500 dark:text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition" />
                   </button>
-                  <Input
-                    disabled={isLoading}
-                    className="border-0 border-none bg-zinc-200/90 px-14 py-6 text-zinc-600 focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-zinc-700/75 dark:text-zinc-200"
-                    placeholder={`${currentLanguage.chat_ChatInput_placeholder} ${
-                      type === "conversation" ? name : "#" + name
-                    }`}
-                    {...field}
-                  />
                   <div className="absolute right-8 top-7">
                     <EmojiPicker
                       onChange={(emoji: string) =>

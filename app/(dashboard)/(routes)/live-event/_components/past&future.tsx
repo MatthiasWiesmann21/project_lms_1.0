@@ -29,7 +29,7 @@ export const PastandFuture = ({
         }}
         className={`border-1 font-semibold mr-2 flex cursor-pointer items-center justify-center p-1 text-gray-600 dark:text-white ${
           state === "future" && "border-b-2 border-[#EA2088] text-black"
-        } hover:border-b-2 hover:border-[#EA2088] hover:text-gray-600 transition duration-500 ease-in-out`}
+        } hover:border-b-2 hover:border-[#EA2088] hover:text-gray-600 dark:hover:text-white transition duration-500 ease-in-out`}
       >
         {currentLanguage.live_event_futureAndPast_button_text_future}
       </div>
@@ -45,7 +45,7 @@ export const PastandFuture = ({
         }}
         className={`border-1 mr-2 font-semibold flex cursor-pointer items-center justify-center p-1 text-gray-600 dark:text-white ${
           state === "past" && "border-b-2 border-[#EA2088] text-black"
-        } hover:border-b-2 hover:border-[#EA2088] hover:text-gray-600 transition duration-500 ease-in-out`}
+        } hover:border-b-2 hover:border-[#EA2088] hover:text-gray-600 dark:hover:text-white transition duration-500 ease-in-out`}
       >
         {currentLanguage.live_event_futureAndPast_button_text_past}
       </div>
