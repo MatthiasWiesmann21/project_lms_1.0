@@ -12,7 +12,7 @@ const Love = ({ liveEvent, getLiveEvent }: any) => (
         });
         if (response?.status === 200) getLiveEvent();
       }}
-      className="my-2 mt-3 flex cursor-pointer items-center justify-around rounded-[10px] border border-[#fff] bg-slate-100/60 p-[1%] px-[3%] hover:shadow-sm dark:border-[#1e172a] dark:bg-[#0c0319]"
+      className="my-2 mt-3 flex cursor-pointer items-center justify-around rounded-[10px] border border-[#fff] bg-slate-100/60 p-1 px-2 hover:shadow-sm dark:border-[#1e172a] dark:bg-[#0c0319]"
     >
       {liveEvent?.likes?.length}
       <Heart
