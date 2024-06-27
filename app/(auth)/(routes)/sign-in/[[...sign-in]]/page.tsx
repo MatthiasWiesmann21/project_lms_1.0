@@ -11,8 +11,6 @@ export default function Page() {
     if (!hasRefreshed) {
       localStorage?.setItem(hasRefreshedKey, "true");
       window?.location?.reload();
-    } else {
-      localStorage?.removeItem(hasRefreshedKey);
     }
   }, []);
 
