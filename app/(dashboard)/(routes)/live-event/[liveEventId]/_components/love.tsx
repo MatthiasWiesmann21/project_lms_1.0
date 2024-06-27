@@ -18,8 +18,8 @@ const Love = ({ liveEvent, getLiveEvent }: any) => (
       <Heart
         size={24}
         fill={!!liveEvent?.currentLike ? "#f43f5e" : "#ffffff00"}
-        className="ml-2 transition ease-in-out duration-200 hover:scale-110"
-        style={!!liveEvent?.currentLike ? {color: "#f43f5e"} : {}}
+        className="ml-2 transition duration-200 ease-in-out hover:scale-110"
+        style={!!liveEvent?.currentLike ? { color: "#f43f5e" } : {}}
       />
     </div>
   </div>

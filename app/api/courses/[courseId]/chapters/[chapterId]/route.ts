@@ -2,6 +2,110 @@ import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
+import { Attachment, Chapter } from "@prisma/client";
+
+export async function GET(
+  req: Request,
+  { params }: { params: { courseId: string; chapterId: string } }
+) {
+  const { userId } = auth();
+  if (!userId) return new NextResponse("Unauthorized", { status: 401 });
+  try {
+    const { courseId, chapterId } = params;
+    const purchase = await db.purchase.findUnique({
+      where: {
+        userId_courseId: {
+          userId,
+          courseId,
+        },
+      },
+    });
+
+    const course = await db.course.findUnique({
+      where: {
+        isPublished: true,
+        id: courseId,
+        containerId: process.env.CONTAINER_ID,
+      },
+      select: {
+        price: true,
+      },
+    });
+
+    const chapter = await db.chapter.findUnique({
+      where: {
+        id: chapterId,
+        isPublished: true,
+      },
+      include: {
+        // @ts-ignore
+        likes: true,
+      },
+    });
+
+    if (!chapter || !course)
+      return new NextResponse("Chapter or Course not found..!!", {
+        status: 404,
+      });
+
+    let attachments: Attachment[] = [];
+    let nextChapter: Chapter | null = null;
+
+    if (purchase)
+      attachments = await db.attachment.findMany({
+        where: {
+          courseId: courseId,
+        },
+      });
+
+    if (chapter.isFree || purchase)
+      nextChapter = await db.chapter.findFirst({
+        where: {
+          courseId: courseId,
+          isPublished: true,
+          position: {
+            gt: chapter?.position,
+          },
+        },
+        orderBy: {
+          position: "asc",
+        },
+      });
+
+    const userProgress = await db.userProgress.findUnique({
+      where: {
+        userId_chapterId: {
+          userId,
+          chapterId,
+        },
+      },
+    });
+    const profile = await db?.profile?.findFirst({
+      select: {
+        id: true,
+      },
+      where: {
+        userId: userId,
+      },
+    });
+
+    const currentLike = chapter?.likes?.some(
+      (like) => like?.profileId === profile?.id
+    );
+
+    return NextResponse?.json({
+      chapter: { ...chapter, currentLike },
+      course,
+      attachments,
+      nextChapter,
+      userProgress,
+      purchase,
+    });
+  } catch (error) {
+    console.log("[CHAPTER]", error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}
 
 export async function DELETE(
   req: Request,
@@ -19,7 +123,7 @@ export async function DELETE(
         id: params.courseId,
         userId,
         containerId: process.env.CONTAINER_ID,
-      }
+      },
     });
 
     if (!ownCourse) {
@@ -30,7 +134,7 @@ export async function DELETE(
       where: {
         id: params.chapterId,
         courseId: params.courseId,
-      }
+      },
     });
 
     if (!chapter) {
@@ -39,15 +143,15 @@ export async function DELETE(
 
     const deletedChapter = await db.chapter.delete({
       where: {
-        id: params.chapterId
-      }
+        id: params.chapterId,
+      },
     });
 
     const publishedChaptersInCourse = await db.chapter.findMany({
       where: {
         courseId: params.courseId,
         isPublished: true,
-      }
+      },
     });
 
     if (!publishedChaptersInCourse.length) {
@@ -58,7 +162,7 @@ export async function DELETE(
         },
         data: {
           isPublished: false,
-        }
+        },
       });
     }
 
@@ -86,7 +190,7 @@ export async function PATCH(
         id: params.courseId,
         userId,
         containerId: process.env.CONTAINER_ID,
-      }
+      },
     });
 
     if (!ownCourse) {
@@ -100,12 +204,12 @@ export async function PATCH(
       },
       data: {
         ...values,
-      }
+      },
     });
 
     return NextResponse.json(chapter);
   } catch (error) {
     console.log("[COURSES_CHAPTER_ID]", error);
-    return new NextResponse("Internal Error", { status: 500 }); 
+    return new NextResponse("Internal Error", { status: 500 });
   }
 }

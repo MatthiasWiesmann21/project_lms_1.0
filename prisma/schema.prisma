@@ -204,6 +204,8 @@ model Chapter {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  likes Like[]
+
   @@index([courseId])
 }
 
@@ -415,12 +417,15 @@ model Like {
   comment     Comment?   @relation(fields: [commentId], references: [id])
   liveEventId String?
   liveEvent   LiveEvent? @relation(fields: [liveEventId], references: [id])
+  chapterId   String?
+  chapter     Chapter?   @relation(fields: [chapterId], references: [id])
 
   @@unique([profileId, postId, commentId, liveEventId])
   @@index([profileId])
   @@index([postId])
   @@index([commentId])
   @@index([liveEventId])
+  @@index([chapterId])
 }
 
 // TODO: Chat & Conversation Models
