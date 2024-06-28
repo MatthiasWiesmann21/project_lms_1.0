@@ -324,6 +324,7 @@ model Post {
   description String? @db.Text
   imageUrl    String? @db.Text
   isPublished Boolean @default(false)
+  scheduleDateTime DateTime?
 
   containerId String
   container   Container @relation(fields: [containerId], references: [id])
