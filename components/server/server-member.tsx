@@ -10,6 +10,7 @@ import { UserAvatar } from "@/components/user-avatar";
 interface ServerMemberProps {
   member: Member & { profile: Profile };
   server: Server;
+  profileOnlineStatus: string;
 }
 
 const roleIconMap = {
@@ -20,7 +21,15 @@ const roleIconMap = {
   [MemberRole.ADMIN]: <ShieldAlert className="ml-2 h-4 w-4 text-rose-500" />,
 };
 
-export const ServerMember = ({ member, server }: ServerMemberProps) => {
+const statusColors: { [key: string]: string } = {
+  "Online": "bg-green-500",
+  "Not Available": "bg-yellow-400",
+  "Do Not Disturb": "bg-red-600",
+  "Invisible": "bg-slate-400",
+  "Offline": "bg-slate-400",
+};
+
+export const ServerMember = ({ member, server, profileOnlineStatus }: ServerMemberProps) => {
   const params = useParams();
   const router = useRouter();
 
