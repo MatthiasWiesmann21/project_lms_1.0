@@ -6,13 +6,15 @@ export default function Page() {
   const hasRefreshedKey = "hasRefreshed";
 
   useEffect(() => {
-    const hasRefreshed = localStorage?.getItem(hasRefreshedKey);
+    const hasRefreshed = sessionStorage.getItem(hasRefreshedKey);
 
     if (!hasRefreshed) {
-      localStorage?.setItem(hasRefreshedKey, "true");
-      window?.location?.reload();
+      sessionStorage.setItem(hasRefreshedKey, "true");
+      setTimeout(() => {
+        window.location.href = window.location.href;
+      }, 10000); // Adding a slight delay to ensure state is updated
     } else {
-      localStorage?.removeItem(hasRefreshedKey);
+      sessionStorage.removeItem(hasRefreshedKey);
     }
   }, []);
 

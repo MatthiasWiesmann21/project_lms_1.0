@@ -22,8 +22,6 @@ export const getChapter = async ({
       },
     });
 
-    console.log("purchase", purchase);
-
     const course = await db.course.findUnique({
       where: {
         isPublished: true,

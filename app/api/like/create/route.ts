@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     }
     const requestBody = await req.json();
 
-    const { postId, commentId, liveEventId } = requestBody;
+    const { postId, commentId, liveEventId, chapterId } = requestBody;
 
     // Find the profile associated with the user ID
     const profile = await db.profile.findFirst({
@@ -44,10 +44,16 @@ export async function POST(req: Request) {
         profile: { connect: { id: profile.id } },
         liveEvent: { connect: { id: liveEventId } },
       };
+    } else if (chapterId) {
+      // If commentId exists, it means the like is on a comment
+      likeData = {
+        profile: { connect: { id: profile.id } },
+        chapter: { connect: { id: chapterId } },
+      };
     } else {
       // Handle the case where neither postId nor commentId is provided
       throw new Error(
-        "Invalid like data. Please provide either postId or commentId."
+        "Invalid like data. Please provide either postId, commentId, liveEventId or chapterId."
       );
     }
 
@@ -58,6 +64,7 @@ export async function POST(req: Request) {
         postId: postId,
         commentId: commentId,
         liveEventId,
+        chapterId,
       },
     });
 
