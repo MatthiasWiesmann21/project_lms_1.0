@@ -22,7 +22,6 @@ interface SearchPageProps {
 
 const SearchPage = async ({ searchParams }: SearchPageProps) => {
   const { userId } = auth();
-  let maxCoursesCount = 0;
 
   if (!userId) {
     return redirect("/");

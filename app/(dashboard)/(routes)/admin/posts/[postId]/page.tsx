@@ -13,6 +13,7 @@ import { CategoryForm } from "./_components/category-form";
 import { Actions } from "./_components/actions";
 import { languageServer } from "@/lib/check-language-server";
 import Link from "next/link";
+import { ScheduleDateForm } from "./_components/schedule-date-form";
 
 const PostIdPage = async ({
   params
@@ -140,6 +141,11 @@ const PostIdPage = async ({
             <ImageForm
               initialData={post}
               postId={post.id}
+              />
+            <ScheduleDateForm
+            // @ts-ignore
+               initialData={post}
+               postId={post.id}
               />
           </div>
         </div>

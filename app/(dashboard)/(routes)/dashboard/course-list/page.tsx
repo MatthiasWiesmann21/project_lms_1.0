@@ -16,8 +16,7 @@ interface SearchPageProps {
 }
 
 const CourseListPage = async ({ searchParams }: SearchPageProps) => {
-  console.log("Course-List =============");
-
+  
   const { userId } = auth();
 
   if (!userId) {
