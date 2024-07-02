@@ -92,7 +92,7 @@ const CourseWrapper: React.FC<CourseWrapperProps> = ({
     const response = await fetch(`/api/userhascourse/${params?.courseId}`);
     const data = await response?.json();
     setCourseProgress(data);
-    if (data?.status === "notStarted") {
+    if (data?.status === "notStarted" && !isLocked) {
       const res = await fetch(`/api/userhascourse/${data?.id}`, {
         method: "PATCH",
         body: JSON?.stringify({
@@ -108,6 +108,8 @@ const CourseWrapper: React.FC<CourseWrapperProps> = ({
 
   useEffect(() => {
     getCoursesProgress();
+  }, [data]);
+  useEffect(() => {
     getData();
   }, [params.courseId, params.chapterId]);
 
@@ -117,28 +119,29 @@ const CourseWrapper: React.FC<CourseWrapperProps> = ({
       {courseProgress?.status === "completed" && (
         <Banner variant="success" label="You already completed this chapter." />
       )}
-      {courseProgress?.status !== "completed" && (
-        <Banner
-          variant="warning"
-          label="Click here to mark this courses as completed."
-          className="cursor-pointer"
-          onClick={async () => {
-            const res = await fetch(
-              `/api/userhascourse/${courseProgress?.id}`,
-              {
-                method: "PATCH",
-                body: JSON?.stringify({
-                  userId: courseProgress?.userId,
-                  courseId: courseProgress?.courseId,
-                  status: "completed",
-                }),
-              }
-            );
-            const jsonData = await res?.json();
-            setCourseProgress(jsonData);
-          }}
-        />
-      )}
+      {courseProgress?.status !== "completed" &&
+        courseProgress?.status !== "notStarted" && (
+          <Banner
+            variant="warning"
+            label="Click here to mark this courses as completed."
+            className="cursor-pointer"
+            onClick={async () => {
+              const res = await fetch(
+                `/api/userhascourse/${courseProgress?.id}`,
+                {
+                  method: "PATCH",
+                  body: JSON?.stringify({
+                    userId: courseProgress?.userId,
+                    courseId: courseProgress?.courseId,
+                    status: "completed",
+                  }),
+                }
+              );
+              const jsonData = await res?.json();
+              setCourseProgress(jsonData);
+            }}
+          />
+        )}
       {isLocked && (
         <Banner
           variant="warning"
