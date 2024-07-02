@@ -64,6 +64,7 @@ const CourseWrapper: React.FC<CourseWrapperProps> = ({
   params,
   currentLanguage,
 }) => {
+  const [courseProgress, setCourseProgress] = useState(null);
   const [data, setData] = useState<DataState>({
     chapter: null,
     course: null,
@@ -87,14 +88,56 @@ const CourseWrapper: React.FC<CourseWrapperProps> = ({
     setData(data);
   };
 
+  const getCoursesProgress = async () => {
+    const response = await fetch(`/api/userhascourse/${params?.courseId}`);
+    const data = await response?.json();
+    setCourseProgress(data);
+    if (data?.status === "notStarted") {
+      const res = await fetch(`/api/userhascourse/${data?.id}`, {
+        method: "PATCH",
+        body: JSON?.stringify({
+          userId: data?.userId,
+          courseId: data?.courseId,
+          status: "inProgress",
+        }),
+      });
+      const jsonData = await res?.json();
+      setCourseProgress(jsonData);
+    }
+  };
+
   useEffect(() => {
+    getCoursesProgress();
     getData();
   }, [params.courseId, params.chapterId]);
 
   return (
     <div className="w-full">
-      {userProgress?.isCompleted && (
+      {/* {userProgress?.isCompleted && ( */}
+      {courseProgress?.status === "completed" && (
         <Banner variant="success" label="You already completed this chapter." />
+      )}
+      {courseProgress?.status !== "completed" && (
+        <Banner
+          variant="warning"
+          label="Click here to mark this courses as completed."
+          className="cursor-pointer"
+          onClick={async () => {
+            const res = await fetch(
+              `/api/userhascourse/${courseProgress?.id}`,
+              {
+                method: "PATCH",
+                body: JSON?.stringify({
+                  userId: courseProgress?.userId,
+                  courseId: courseProgress?.courseId,
+                  status: "completed",
+                }),
+              }
+            );
+            const jsonData = await res?.json();
+            setCourseProgress(jsonData);
+          }}
+        />
       )}
       {isLocked && (
         <Banner
