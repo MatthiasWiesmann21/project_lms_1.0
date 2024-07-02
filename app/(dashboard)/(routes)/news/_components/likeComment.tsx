@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { UserAvatar } from "@/components/user-avatar";
 import axios from "axios";
 import moment from "moment";
-import { MessageSquare, ThumbsUp } from "lucide-react";
+import { Heart, MessageSquare, ThumbsUp } from "lucide-react";
 import { ChatInputPost } from "./chatInput";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/check-language";
@@ -164,13 +164,13 @@ const LikeComment = ({
           }}
           className="m-2 flex cursor-pointer items-center justify-around "
         >
-          <ThumbsUp
+          <Heart
             className={
               !!currentLike
-                ? "text-[#0a66c2] transition duration-200 ease-in-out"
-                : "border-black transition duration-200 ease-in-out"
+                ? "text-[#f43f5e] transition duration-200 ease-in-out hover:scale-110"
+                : "border-black transition duration-200 ease-in-out hover:scale-110"
             }
-            fill={!!currentLike ? "#0a66c2" : "transparent"}
+            fill={!!currentLike ? "#f43f5e" : "transparent"}
           />
           <span className="ml-2 mr-1">{likesCount}</span>
           Likes

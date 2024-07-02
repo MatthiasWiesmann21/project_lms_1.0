@@ -62,6 +62,7 @@ const MemberIdPage = async ({ params, searchParams }: MemberIdPageProps) => {
         name={otherMember.profile.name}
         serverId={params.serverId}
         type="conversation"
+        profileOnlineStatus={profile.isOnline}
       />
       {searchParams.video && (
         <MediaRoom chatId={conversation.id} video={true} audio={true} />

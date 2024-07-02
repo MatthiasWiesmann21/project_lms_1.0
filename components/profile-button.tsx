@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/check-language";
 import { HelpCircle, LogOutIcon, UserCog2Icon } from "lucide-react";
 import { UserAvatar } from "./user-avatar";
-import { useClerk } from "@clerk/nextjs";
+import { useClerk, useUser } from "@clerk/nextjs";
 import {
   Tooltip,
   TooltipContent,
@@ -51,6 +51,7 @@ const ProfileButton = ({
   const { signOut } = useClerk();
   const router = useRouter();
   const user = useClerk();
+  const isSignedIn = useUser();
 
   const updateProfileStatus = async (isOnline: string) => {
     try {
@@ -68,10 +69,12 @@ const ProfileButton = ({
   };
 
   useEffect(() => {
-    if (user && profileOnlineStatus === "Offline") {
+    if (isSignedIn && profileOnlineStatus === "Offline") {
       updateProfileStatus("Online");
+    } else if (!isSignedIn) {
+      updateProfileStatus("Offline");
     }
-  }, [user, profileOnlineStatus]);
+  }, [isSignedIn, profileOnlineStatus]);
 
   const dispatch = useDispatch();
   return (

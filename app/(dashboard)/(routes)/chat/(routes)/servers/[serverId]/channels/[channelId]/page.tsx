@@ -48,6 +48,7 @@ const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
         name={channel.name}
         serverId={channel.serverId}
         type="channel"
+        profileOnlineStatus={profile.isOnline}
       />
       {channel.type === ChannelType.TEXT && (
         <>

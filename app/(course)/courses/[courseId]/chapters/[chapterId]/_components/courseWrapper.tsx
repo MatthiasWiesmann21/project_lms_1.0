@@ -177,11 +177,13 @@ const CourseWrapper: React.FC<CourseWrapperProps> = ({
             </div>
           </div>
           <div className="flex flex-col items-center justify-between px-4 pb-2 md:flex-row">
-            <div>
-              <span className="flex items-center text-[14px] text-gray-500">
-                {currentLanguage.course_chapter_author_text} {chapter?.author}
-              </span>
-            </div>
+            {chapter?.author && (
+              <div>
+                <span className="flex items-center text-[14px] text-gray-500">
+                  {currentLanguage.course_chapter_author_text} {chapter?.author}
+                </span>
+              </div>
+            )}
           </div>
           <Separator />
           <div className="p-4">
