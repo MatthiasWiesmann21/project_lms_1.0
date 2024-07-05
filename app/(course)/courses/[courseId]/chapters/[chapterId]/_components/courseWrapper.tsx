@@ -9,9 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { Preview } from "@/components/preview";
 import { File, FileX } from "lucide-react";
 import Comments from "./comments";
-import { CourseSidebar } from "../../../_components/course-sidebar";
 
-// Define types for the props and state
 interface Params {
   courseId: string;
   chapterId: string;
@@ -44,6 +42,10 @@ interface Course {
 
 interface UserProgress {
   isCompleted: boolean;
+  status: string;
+  id: string;
+  userId: string;
+  courseId: string;
 }
 
 interface CourseWrapperProps {
@@ -64,7 +66,9 @@ const CourseWrapper: React.FC<CourseWrapperProps> = ({
   params,
   currentLanguage,
 }) => {
-  const [courseProgress, setCourseProgress] = useState(null);
+  const [courseProgress, setCourseProgress] = useState<UserProgress | null>(
+    null
+  );
   const [data, setData] = useState<DataState>({
     chapter: null,
     course: null,
@@ -157,6 +161,7 @@ const CourseWrapper: React.FC<CourseWrapperProps> = ({
             completeOnEnd={completeOnEnd}
             courseId={params.courseId}
             chapterId={params.chapterId}
+            params={params}
           />
         </div>
         <div>
