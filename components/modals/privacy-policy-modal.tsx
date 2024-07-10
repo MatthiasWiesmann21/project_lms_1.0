@@ -41,10 +41,10 @@ export default function PrivacyPolicyModal({
         </p>
         <div className="flex justify-between items-center mt-2">
           <div className="flex space-x-4 mt-4">
-            <a href="https://google.com" target="_blank" className="text-[#e72192]">
+            <a href="https://clubyte.live/privacy-policy" target="_blank" className="text-[#e72192]">
               {currentLanguage.privacy_policy_link}
             </a>
-            <a href="https://google.com" target="_blank" className="text-[#e72192]">
+            <a href="https://clubyte.live/terms-of-service" target="_blank" className="text-[#e72192]">
               {currentLanguage.privacy_termsOfService_link}
             </a>
           </div>
