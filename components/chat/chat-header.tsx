@@ -41,7 +41,7 @@ export const ChatHeader = ({
           <UserAvatar src={imageUrl} className="mr-2 h-8 w-8 md:h-8 md:w-8" />
           <div
             className={cn(
-              "absolute bottom-1 left-2 z-10 h-4 w-4 rounded-full border-4 border-white dark:border-[#0a0118] md:h-4 md:w-4",
+              "absolute bottom-1 left-2 z-10 h-4 w-4 rounded-full border-4 border-white dark:border-[#101828] md:h-4 md:w-4",
               statusColors[profileOnlineStatus]
             )}
           ></div>

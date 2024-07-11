@@ -9,9 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { Preview } from "@/components/preview";
 import { File, FileX } from "lucide-react";
 import Comments from "./comments";
-import { CourseSidebar } from "../../../_components/course-sidebar";
 
-// Define types for the props and state
 interface Params {
   courseId: string;
   chapterId: string;
@@ -44,6 +42,10 @@ interface Course {
 
 interface UserProgress {
   isCompleted: boolean;
+  status: string;
+  id: string;
+  userId: string;
+  courseId: string;
 }
 
 interface CourseWrapperProps {
@@ -64,6 +66,9 @@ const CourseWrapper: React.FC<CourseWrapperProps> = ({
   params,
   currentLanguage,
 }) => {
+  const [courseProgress, setCourseProgress] = useState<UserProgress | null>(
+    null
+  );
   const [data, setData] = useState<DataState>({
     chapter: null,
     course: null,
@@ -87,15 +92,60 @@ const CourseWrapper: React.FC<CourseWrapperProps> = ({
     setData(data);
   };
 
+  const getCoursesProgress = async () => {
+    const response = await fetch(`/api/userhascourse/${params?.courseId}`);
+    const data = await response?.json();
+    setCourseProgress(data);
+    if (data?.status === "notStarted" && !isLocked) {
+      const res = await fetch(`/api/userhascourse/${data?.id}`, {
+        method: "PATCH",
+        body: JSON?.stringify({
+          userId: data?.userId,
+          courseId: data?.courseId,
+          status: "inProgress",
+        }),
+      });
+      const jsonData = await res?.json();
+      setCourseProgress(jsonData);
+    }
+  };
+
+  useEffect(() => {
+    getCoursesProgress();
+  }, [data]);
   useEffect(() => {
     getData();
   }, [params.courseId, params.chapterId]);
 
   return (
     <div className="w-full">
-      {userProgress?.isCompleted && (
+      {/* {userProgress?.isCompleted && ( */}
+      {courseProgress?.status === "completed" && (
         <Banner variant="success" label="You already completed this chapter." />
       )}
+      {courseProgress?.status !== "completed" &&
+        courseProgress?.status !== "notStarted" && (
+          <Banner
+            variant="warning"
+            label="Click here to mark this courses as completed."
+            className="cursor-pointer"
+            onClick={async () => {
+              const res = await fetch(
+                `/api/userhascourse/${courseProgress?.id}`,
+                {
+                  method: "PATCH",
+                  body: JSON?.stringify({
+                    userId: courseProgress?.userId,
+                    courseId: courseProgress?.courseId,
+                    status: "completed",
+                  }),
+                }
+              );
+              const jsonData = await res?.json();
+              setCourseProgress(jsonData);
+            }}
+          />
+        )}
       {isLocked && (
         <Banner
           variant="warning"
@@ -111,6 +161,7 @@ const CourseWrapper: React.FC<CourseWrapperProps> = ({
             completeOnEnd={completeOnEnd}
             courseId={params.courseId}
             chapterId={params.chapterId}
+            params={params}
           />
         </div>
         <div>
