@@ -445,4 +445,5 @@ live_event_filter_start_date_text: "Data de Início",
 live_event_filter_end_date_text: "Data de Término",
 chapter_aboutevent_title: "Sobre o Evento",
 chat_server_leave: "Sair Servidor",
+settings_menu_design_title: "Design",
 };

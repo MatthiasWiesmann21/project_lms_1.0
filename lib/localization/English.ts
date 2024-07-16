@@ -445,4 +445,5 @@ live_event_filter_start_date_text: "Start Date",
 live_event_filter_end_date_text: "End Date",
 chapter_aboutevent_title: "About the Event",
 chat_server_leave: "Leave Server",
+settings_menu_design_title: "Design",
 };

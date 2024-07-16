@@ -445,4 +445,5 @@ live_event_filter_start_date_text: "开始日期",
 live_event_filter_end_date_text: "结束日期",
 chapter_aboutevent_title: "关于活动",
 chat_server_leave: "离开服务器",
+settings_menu_design_title: "设计",
 };

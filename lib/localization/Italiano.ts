@@ -445,4 +445,5 @@ live_event_filter_start_date_text: "Data di inizio",
 live_event_filter_end_date_text: "Data di fine",
 chapter_aboutevent_title: "Informazioni sul Capitolo",
 chat_server_leave: "Lascia Server",
+settings_menu_design_title: "Design",
 };

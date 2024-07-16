@@ -445,4 +445,5 @@ live_event_filter_start_date_text: "Дата начала",
 live_event_filter_end_date_text: "Дата окончания",
 chapter_aboutevent_title: "О главе",
 chat_server_leave: "Покинуть сервер",
+settings_menu_design_title: "Дизайн",
 };
