@@ -87,7 +87,7 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
         />
       </div>
       <PolygonChar color={container?.navDarkBackgroundColor} />
-      <CourseTable courses={purchasedCourses} />
+      {container && <CourseTable courses={purchasedCourses} colors={container} />}
     </div>
   );
 };
