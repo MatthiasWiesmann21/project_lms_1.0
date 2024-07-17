@@ -31,7 +31,7 @@ const LiveEventWrapper = ({
           }}
           liveEvent={liveEvent}
         />
-        <EventFilterSidebar liveEvent={liveEvent} setLiveEvent={setLiveEvent} />
+        <EventFilterSidebar liveEvents={liveEvent} setLiveEvent={setLiveEvent} colors={container} categories={undefined} searchParams={undefined} />
       </div>
       <Categories
         items={categories}
