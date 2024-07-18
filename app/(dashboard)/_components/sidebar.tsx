@@ -8,11 +8,6 @@ import { auth } from "@clerk/nextjs";
 export const Sidebar = async () => {
   const { userId } = auth();
   const currentLanguage = await languageServer();
-  const navColor = await db.container.findUnique({
-    where: {
-      id: process.env.CONTAINER_ID,
-    },
-  });
 
   const container = await db.container.findUnique({
     where: {
@@ -38,10 +33,10 @@ export const Sidebar = async () => {
       </div>
       <div className="flex w-full flex-col border-t ">
         <SidebarRoutes
-          navPrimaryColor={navColor?.navPrimaryColor || "#ff00ff"}
-          navDarkPrimaryColor={navColor?.navDarkPrimaryColor || "#ff00ff"}
-          navBackgroundColor={navColor?.navBackgroundColor || "#ff00ff"}
-          navDarkBackgroundColor={navColor?.navDarkBackgroundColor || "#ff00ff"}
+          navPrimaryColor={container?.navPrimaryColor || "#ff00ff"}
+          navDarkPrimaryColor={container?.navDarkPrimaryColor || "#ff00ff"}
+          navBackgroundColor={container?.navBackgroundColor || "#ff00ff"}
+          navDarkBackgroundColor={container?.navDarkBackgroundColor || "#ff00ff"}
         />
       </div>
       {container?.clientPackage != "EXPERT" && (

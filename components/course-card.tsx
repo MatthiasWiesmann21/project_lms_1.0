@@ -30,7 +30,7 @@ export const CourseCard = ({
   categoryColorCode,
 }: CourseCardProps) => {
   return (
-    <Link href={`/courses/${id}`}>
+    <Link href={`/courses/${id}`} className="border-2 rounded-lg border-transparent transition duration-500 ease-in-out hover:border-[#ea2088]">
       <div
         className="bg-slate-100/60 dark:bg-[#0c0319] group h-full w-full overflow-hidden rounded-lg border p-2 transition hover:shadow-sm dark:border-[#1e172a]"
       >
@@ -59,7 +59,7 @@ export const CourseCard = ({
           </div>
         </div>
         <div className="flex flex-col pt-2">
-          <div className="my-2 line-clamp-2 text-[16px] font-semibold transition ease-in-out duration-300 group-hover:text-sky-500">
+          <div className="my-2 line-clamp-2 text-[16px] font-semibold">
             {title}
           </div>
           {progress !== null ? (

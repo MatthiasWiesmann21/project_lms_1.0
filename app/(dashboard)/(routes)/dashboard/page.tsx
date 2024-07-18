@@ -36,7 +36,7 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
     ...searchParams,
   });
 
-  // const purchasedCourses = courses.filter((course) => course.isPurchased);
+  const purchasedCourses = courses.filter((course) => course.isPurchased);
   console.log("purchasedCourses", courses);
 
   const container = await db.container.findUnique({
@@ -100,7 +100,9 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
         color={container?.navDarkBackgroundColor}
         courses={coursess}
       />
-      <CourseTable courses={coursess} />
+      {container && (
+        <CourseTable courses={purchasedCourses} colors={container} />
+      )}
     </div>
   );
 };

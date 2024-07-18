@@ -15,21 +15,37 @@ import { useAuth } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { SlidersHorizontal } from "lucide-react";
 import { useLanguage } from "@/lib/check-language";
+import { Container } from "@prisma/client";
+import { useState } from "react";
+
+interface EventFilterSidebarProps {
+  liveEvents: any;
+  categories: any;
+  searchParams: any;
+  setLiveEvent: any;
+  colors: Container;
+}
 
 const EventFilterSidebar = ({
   liveEvents,
   categories,
   searchParams,
   setLiveEvent,
-}: any) => {
+  colors,
+}: EventFilterSidebarProps) => {
   const { userId } = useAuth();
   const currentLanguage = useLanguage();
+  const [isViewAllHovered, setIsViewAllHovered] = useState(false);
 
   return (
     <Sheet>
       <SheetTrigger>
         <Button
-          className="border-5 h-12 w-28 items-center justify-center rounded-full border border-[#EA2088] bg-transparent text-gray-700 transition duration-500 ease-in-out hover:bg-[#EA2088] dark:hover:text-white"
+          onMouseEnter={() => setIsViewAllHovered(true)}
+          onMouseLeave={() => setIsViewAllHovered(false)}
+          style={{ borderColor: colors.PrimaryButtonColor || undefined, backgroundColor: isViewAllHovered ? colors.PrimaryButtonColor || undefined : "",
+          }}
+          className="border-5 h-12 w-28 items-center justify-center rounded-full border bg-transparent text-gray-700 transition duration-500 ease-in-out"
           variant="default"
           size="sm"
         >

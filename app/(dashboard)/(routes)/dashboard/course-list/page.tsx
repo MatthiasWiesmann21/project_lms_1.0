@@ -46,7 +46,7 @@ const CourseListPage = async ({ searchParams }: SearchPageProps) => {
     },
   });
 
-  const containerColors = await db?.container?.findUnique({
+  const container = await db?.container?.findUnique({
     where: {
       id: process.env.CONTAINER_ID,
     },
@@ -65,7 +65,7 @@ const CourseListPage = async ({ searchParams }: SearchPageProps) => {
       </Link>
       <Categories
           items={categoriesWithCourseCounts}
-          defaultColor={containerColors?.navDarkBackgroundColor}
+          defaultColor={container?.navDarkBackgroundColor}
         />
       <CoursesList items={purchasedCourses} />
     </div>
