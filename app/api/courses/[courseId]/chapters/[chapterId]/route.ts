@@ -38,7 +38,6 @@ export async function GET(
         isPublished: true,
       },
       include: {
-        // @ts-ignore
         likes: true,
       },
     });

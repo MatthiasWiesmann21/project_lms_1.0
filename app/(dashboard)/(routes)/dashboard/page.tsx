@@ -10,6 +10,7 @@ import { db } from "@/lib/db";
 import { languageServer } from "@/lib/check-language-server";
 import PolygonChar from "./_components/polygonChar";
 import CourseTable from "./_components/courseTable";
+import { getCourses } from "@/actions/get-courses";
 
 interface SearchPageProps {
   searchParams: {
@@ -35,7 +36,8 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
     ...searchParams,
   });
 
-  const purchasedCourses = courses.filter((course) => course.isPurchased);
+  // const purchasedCourses = courses.filter((course) => course.isPurchased);
+  console.log("purchasedCourses", courses);
 
   const container = await db.container.findUnique({
     where: {
@@ -49,7 +51,7 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
       isCompleted: true,
     },
   });
-  console.log("UserProgressCompletedChapters", UserProgressCompletedChapters);
+  // console.log("UserProgressCompletedChapters", UserProgressCompletedChapters);
 
   const CurrentOnlineUser = await db.profile.count({
     where: {
@@ -58,6 +60,14 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
       },
     },
   });
+
+  const coursess = await getCourses({
+    userId,
+    ...searchParams,
+    containerId: process.env.CONTAINER_ID,
+  });
+
+  // console.log("=-=--------", coursess[0]?.chapters[0]?.userProgress);
 
   return (
     <div className="space-y-4 p-4 dark:bg-[#110524]">
@@ -86,8 +96,11 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
           variant="default"
         />
       </div>
-      <PolygonChar color={container?.navDarkBackgroundColor} />
-      <CourseTable courses={purchasedCourses} />
+      <PolygonChar
+        color={container?.navDarkBackgroundColor}
+        courses={coursess}
+      />
+      <CourseTable courses={coursess} />
     </div>
   );
 };

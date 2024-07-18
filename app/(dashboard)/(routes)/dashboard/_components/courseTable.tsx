@@ -41,6 +41,11 @@ const CourseTable = ({ courses }: { courses: any[] }) => {
         <div className="w-[15%]"></div>
       </div>
       {sortedCourses?.slice(0, maxCourses).map((each: any) => {
+        const totalProgress =
+          each?.chapters?.reduce(
+            (acc: any, val: any) => acc + (val?.userProgress[0]?.progress || 0),
+            0
+          ) / each?.chapters?.length;
         return (
           <div
             key={each?.id}
@@ -67,7 +72,8 @@ const CourseTable = ({ courses }: { courses: any[] }) => {
             </div>
             <div className="w-[15%] pr-5">
               <Line
-                percent={each?.progress || 0}
+                // percent={each?.progress || 0}
+                percent={totalProgress}
                 strokeWidth={3}
                 strokeColor="#EA2088"
               />
@@ -86,7 +92,7 @@ const CourseTable = ({ courses }: { courses: any[] }) => {
         );
       })}
       {sortedCourses?.length === 0 && (
-        <div className="flex items-center justify-center h-16 text-sm text-muted-foreground">
+        <div className="flex h-16 items-center justify-center text-sm text-muted-foreground">
           <BookX className="m-1" size={24} />
           <span>{currentLanguage?.no_courses}</span>
         </div>
