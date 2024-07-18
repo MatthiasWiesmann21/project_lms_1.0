@@ -54,6 +54,13 @@ export const MenuRoutes = () => {
       isNew: true,
       somethingImportant: true,
     },
+    {
+      icon: PaletteIcon,
+      label: `${currentLanguage.settings_menu_themedesign_title}`,
+      href: "/admin/settings/themedesign",
+      isNew: true,
+      somethingImportant: true,
+    },
   ];
 
   const routes = MenuRoutesList;
