@@ -1,8 +1,8 @@
-import { Category, Course } from "@prisma/client";
+import { Category, Container, Course } from "@prisma/client";
 import { CourseCard } from "./course-card";
 import { languageServer } from "@/lib/check-language-server";
 
-type CourseWithProgressWithCategory = Course & {
+type CourseWithProgressWithCategory = Container & Course & {
   category: Category | null;
   chapters: { id: string }[];
   progress: number | null;
@@ -28,6 +28,7 @@ export const CoursesList = async ({ items }: CoursesListProps) => {
             progress={item.progress}
             chaptersLength={item.chapters.length}
             price={item.price!}
+            ThemOutlineColor={item.ThemeOutlineColor!}
           />
         ))}
       </div>

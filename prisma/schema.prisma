@@ -27,6 +27,9 @@ model Container {
   PrimaryButtonColor     String? @default("#0369a0")
   DarkPrimaryButtonColor String? @default("#ffffff")
 
+  ThemeOutlineColor           String? @default("#0369a0")
+  DarkThemeOutlineColor       String? @default("#ffffff")
+
   courses    Course[]
   categories Category[]
   posts      Post[]
