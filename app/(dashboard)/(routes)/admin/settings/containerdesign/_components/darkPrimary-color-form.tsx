@@ -69,14 +69,14 @@ export const DarkPrimaryButtonColorForm = ({ initialData, containerId }: DarkPri
   return (
     <div className="mt-6 rounded-md border bg-slate-200 p-4 dark:bg-slate-700">
       <div className="flex items-center justify-between font-medium">
-        {currentLanguage.customize_navDarkPrimaryColorForm_title}
+        {currentLanguage.customize_DarkPrimaryButtonColorForm_title}
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>{currentLanguage.customize_PrimaryColorForm_cancel}</>
+            <>{currentLanguage.customize_PrimaryButtonColorForm_cancel}</>
           ) : (
             <>
               <Pencil className="mr-2 h-4 w-4" />
-              {currentLanguage.customize_PrimaryColorForm_edit}
+              {currentLanguage.customize_PrimaryButtonColorForm_edit}
             </>
           )}
         </Button>
@@ -122,7 +122,7 @@ export const DarkPrimaryButtonColorForm = ({ initialData, containerId }: DarkPri
             />
             <div className="flex items-center gap-x-2">
               <Button disabled={!isValid || isSubmitting} type="submit">
-                {currentLanguage.customize_PrimaryColorForm_save}
+                {currentLanguage.customize_PrimaryButtonColorForm_save}
               </Button>
             </div>
           </form>

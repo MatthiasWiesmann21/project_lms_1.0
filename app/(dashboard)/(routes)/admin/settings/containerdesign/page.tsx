@@ -46,7 +46,7 @@ const DesignSettingsPage = async () => {
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2">
             <h1 className="text-2xl font-medium">
-              {currentLanguage?.customize_customizeNavigation_title}
+              {currentLanguage?.customize_customizeContainer_title}
             </h1>
           </div>
         </div>
@@ -54,7 +54,7 @@ const DesignSettingsPage = async () => {
             <div className="flex items-center gap-x-2">
               <IconBadge icon={PaletteIcon} />
               <h2 className="text-xl">
-                {currentLanguage.customize_NavColors_title}
+                {currentLanguage.customize_PrimaryButtonColors_title}
               </h2>
               <span className="pl-1 text-xs text-rose-600">{currentLanguage.requiredFields}</span>
             </div>
@@ -65,7 +65,7 @@ const DesignSettingsPage = async () => {
             <div className="flex items-center gap-x-2 pt-6">
               <IconBadge icon={PaletteIcon} />
               <h2 className="text-xl">
-                {currentLanguage.customize_NavColorsDark_title}
+                {currentLanguage.customize_PrimaryButtonColorsDark_title}
               </h2>
               <span className="pl-1 text-xs text-rose-600">{currentLanguage.requiredFields}</span>
             </div>
