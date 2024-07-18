@@ -1,14 +1,22 @@
 "use client";
 import { Line } from "rc-progress";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/lib/check-language";
 import { BookX } from "lucide-react";
+import { Container } from "@prisma/client";
 
-const CourseTable = ({ courses }: { courses: any[] }) => {
+interface CourseTableProps {
+  courses: any[];
+  colors: Container;
+}
+
+const CourseTable = ({ courses, colors }: CourseTableProps) => {
   const currentLanguage = useLanguage();
   const maxCourses = 5;
+  const [isViewAllHovered, setIsViewAllHovered] = useState(false);
+  const [hoveredCourse, setHoveredCourse] = useState<number | null>(null);
 
   const sortedCourses = courses.sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
@@ -19,8 +27,12 @@ const CourseTable = ({ courses }: { courses: any[] }) => {
       <div className="flex items-center justify-between p-2 text-lg">
         <div>{currentLanguage.dashboard_courseTable_CourseStatus_Title}</div>
         <Link
+          onMouseEnter={() => setIsViewAllHovered(true)}
+          onMouseLeave={() => setIsViewAllHovered(false)}
           href={`/dashboard/course-list`}
-          className="flex items-center justify-center rounded-full border px-4 py-2 text-sm transition duration-500 ease-in-out hover:bg-[#EA2088] hover:text-white dark:hover:bg-[#EA2088]"
+          className="flex items-center justify-center rounded-full border px-4 py-2 text-sm transition duration-300 ease-in-out"
+          style={{ borderColor: colors.PrimaryButtonColor || undefined, backgroundColor: isViewAllHovered ? colors.PrimaryButtonColor || undefined : "",
+          }}
         >
           {currentLanguage.dashboard_courseTable_viewAllCourses_button_text}
         </Link>
@@ -40,7 +52,7 @@ const CourseTable = ({ courses }: { courses: any[] }) => {
         </p>
         <div className="w-[15%]"></div>
       </div>
-      {sortedCourses?.slice(0, maxCourses).map((each: any) => {
+      {sortedCourses?.slice(0, maxCourses).map((each: any, index: number) => {
         return (
           <div
             key={each?.id}
@@ -77,7 +89,11 @@ const CourseTable = ({ courses }: { courses: any[] }) => {
             </div>
             <div className="flex w-[20%] justify-end px-2">
               <Link href={`/courses/${each.id}`}>
-                <span className="border-1 rounded-full border border-[#EA2088] px-2 py-2 text-xs transition duration-500 ease-in-out hover:bg-[#EA2088] hover:text-white dark:hover:bg-[#EA2088]">
+                <span
+                  onMouseEnter={() => setHoveredCourse(index)}
+                  onMouseLeave={() => setHoveredCourse(null)}
+                  className="border-1 rounded-full border px-2 py-2 text-xs transition duration-300 ease-in-out"
+                  style={{borderColor: colors.PrimaryButtonColor || undefined ,backgroundColor: hoveredCourse === index ? colors.PrimaryButtonColor || undefined : ""}}>
                   {currentLanguage.dashboard_courseTable_viewCourse_button_text}
                 </span>
               </Link>
