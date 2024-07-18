@@ -24,6 +24,9 @@ model Container {
   navDarkPrimaryColor    String? @default("#ffffff")
   navDarkBackgroundColor String? @default("#0369a0")
 
+  PrimaryButtonColor     String? @default("#0369a0")
+  DarkPrimaryButtonColor String? @default("#ffffff")
+
   courses    Course[]
   categories Category[]
   posts      Post[]
