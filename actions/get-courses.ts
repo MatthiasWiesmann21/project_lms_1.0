@@ -40,6 +40,21 @@ export const getCourses = async ({
           include: {
             userProgress: true,
             likes: true,
+            comments: {
+              include: {
+                likes: true,
+                subComment: {
+                  include: {
+                    likes: true,
+                    profile: true,
+                  },
+                },
+                profile: true,
+              },
+              where: {
+                parentComment: null,
+              },
+            },
           },
         },
         purchases: {

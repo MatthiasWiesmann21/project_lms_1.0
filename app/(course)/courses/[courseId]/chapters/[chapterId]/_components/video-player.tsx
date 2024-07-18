@@ -66,16 +66,6 @@ export const VideoPlayer = ({
           onProgress={async (state: any) => {
             const played = state.played;
             const playedPercent = played * 100;
-            console.log("playedPercent", playedPercent);
-            console.log(
-              "chapterProgress?.progress?.toString()?.",
-              chapterProgress?.progress?.toString()?.split(".")[0]
-            );
-            // return;
-            console.log(
-              playedPercent?.toString()?.split(".")[0] >
-                (chapterProgress?.progress?.toString()?.split(".")[0] || 0)
-            );
             if (
               playedPercent?.toString()?.split(".")[0] >
               (chapterProgress?.progress?.toString()?.split(".")[0] || 0)

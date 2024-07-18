@@ -11,7 +11,8 @@ export async function POST(req: Request) {
     }
     const requestBody = await req.json();
 
-    const { text, postId, parentCommentId, liveEventId } = requestBody;
+    const { text, postId, parentCommentId, liveEventId, chapterId } =
+      requestBody;
 
     const profile = await db.profile.findFirst({
       select: {
@@ -29,6 +30,7 @@ export async function POST(req: Request) {
         profileId: profile.id,
         parentCommentId: parentCommentId,
         liveEventId,
+        chapterId,
       },
     });
     const postDetails = await db?.post?.findFirst({

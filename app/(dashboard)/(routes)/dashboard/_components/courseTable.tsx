@@ -32,9 +32,9 @@ const CourseTable = ({ courses, colors }: CourseTableProps) => {
           href={`/dashboard/course-list`}
           className="flex items-center justify-center rounded-full border px-4 py-2 text-sm transition duration-300 ease-in-out"
           style={{
-            borderColor: colors.PrimaryButtonColor || undefined,
+            borderColor: colors?.PrimaryButtonColor || undefined,
             backgroundColor: isViewAllHovered
-              ? colors.PrimaryButtonColor || undefined
+              ? colors?.PrimaryButtonColor || undefined
               : "",
           }}
         >
@@ -56,7 +56,7 @@ const CourseTable = ({ courses, colors }: CourseTableProps) => {
         </p>
         <div className="w-[15%]"></div>
       </div>
-      {sortedCourses?.slice(0, maxCourses).map((each: any) => {
+      {sortedCourses?.slice(0, maxCourses).map((each: any, index) => {
         const totalProgress =
           each?.chapters?.reduce(
             (acc: any, val: any) => acc + (val?.userProgress[0]?.progress || 0),
@@ -104,10 +104,10 @@ const CourseTable = ({ courses, colors }: CourseTableProps) => {
                   onMouseLeave={() => setHoveredCourse(null)}
                   className="border-1 rounded-full border px-2 py-2 text-xs transition duration-300 ease-in-out"
                   style={{
-                    borderColor: colors.PrimaryButtonColor || undefined,
+                    borderColor: colors?.PrimaryButtonColor || undefined,
                     backgroundColor:
                       hoveredCourse === index
-                        ? colors.PrimaryButtonColor || undefined
+                        ? colors?.PrimaryButtonColor || undefined
                         : "",
                   }}
                 >

@@ -39,6 +39,21 @@ export async function GET(
       },
       include: {
         likes: true,
+        comments: {
+          include: {
+            likes: true,
+            subComment: {
+              include: {
+                likes: true,
+                profile: true,
+              },
+            },
+            profile: true,
+          },
+          where: {
+            parentComment: null,
+          },
+        },
       },
     });
 
@@ -92,8 +107,26 @@ export async function GET(
       (like) => like?.profileId === profile?.id
     );
 
+    const commentsWithLikes = chapter?.comments
+      ?.map((comment) => ({
+        ...comment,
+        commentLikesCount: comment?.likes?.length,
+        currentCommentLike: comment?.likes?.some(
+          (like) => like.profileId === profile?.id
+        ),
+        subCommentsWithLikes: comment?.subComment?.map((subcomment) => ({
+          ...subcomment,
+          commentLikesCount: subcomment?.likes?.length,
+          currentCommentLike: subcomment?.likes?.some(
+            (like) => like?.profileId === profile?.id
+          ),
+        })),
+      }))
+      //@ts-ignore
+      ?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
+
     return NextResponse?.json({
-      chapter: { ...chapter, currentLike },
+      chapter: { ...chapter, currentLike, commentsWithLikes },
       course,
       attachments,
       nextChapter,

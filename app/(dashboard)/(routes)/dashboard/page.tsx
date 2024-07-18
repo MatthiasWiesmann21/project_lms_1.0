@@ -67,7 +67,7 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
     containerId: process.env.CONTAINER_ID,
   });
 
-  // console.log("=-=--------", coursess[0]?.chapters[0]?.userProgress);
+  console.log("=-=--------", coursess?.length);
 
   return (
     <div className="space-y-4 p-4 dark:bg-[#110524]">
@@ -100,9 +100,7 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
         color={container?.navDarkBackgroundColor}
         courses={coursess}
       />
-      {container && (
-        <CourseTable courses={purchasedCourses} colors={container} />
-      )}
+      <CourseTable courses={coursess} colors={container} />
     </div>
   );
 };

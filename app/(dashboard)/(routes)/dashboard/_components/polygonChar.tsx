@@ -134,86 +134,74 @@ const PolygonChart = ({
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
 
+  const sortedChapters = courses.flatMap((course) =>
+    course.chapters
+      .map((chapter) => ({
+        ...course,
+        ...chapter,
+        courseName: course?.title,
+        totalCount:
+          (chapter.likes.length || 0) + (chapter.comments.length || 0),
+      }))
+      .sort((a, b) => (b.totalCount || 0) - (a.totalCount || 0))
+  );
+
   return (
     <div className="flex justify-between">
       <div className="w-[69%] rounded border dark:border-[#221b2e] dark:bg-[#0D071A]">
         <div className="flex items-center justify-between p-2 text-lg">
           <div>Most popular chapters</div>
-          {/* <Link
-          href={`/dashboard/course-list`}
-          className="flex items-center justify-center rounded-full border px-4 py-2 text-sm transition duration-500 ease-in-out hover:bg-[#EA2088] hover:text-white dark:hover:bg-[#EA2088]"
-        >
-          {currentLanguage.dashboard_courseTable_viewAllCourses_button_text}
-        </Link> */}
         </div>
         <div className="flex items-center justify-between bg-slate-100 p-2 dark:bg-[#150D22]">
-          <p className="w-[40%] text-sm">Course Name</p>
-          <p className="w-[15%] text-sm">Chapter Name</p>
+          <p className="w-[39%] text-sm">Chapter Name</p>
+          <p className="w-[15%] text-sm">Course Name</p>
           <p className="w-[15%] text-sm">Likes</p>
           <p className="w-[15%] text-sm">Comments</p>
-          <p className="w-[15%] text-sm">Action</p>
-          {/* <div className="w-[15%]"></div> */}
+          <p className="w-[10%] text-sm">Action</p>
         </div>
-        {sortedCourses?.slice(0, maxCourses).map((each: any) => {
-          console.log("each", each);
-          return each?.chapters?.map((val: any) => (
-            <div
-              key={each?.id}
-              className="my-1 flex items-center justify-between p-2"
-            >
-              <div className="items-cetner flex w-[45%] items-center">
-                <Image
-                  alt="img"
-                  src={each?.imageUrl}
-                  objectFit="contain"
-                  width={65}
-                  height={65}
-                  className="rounded-sm"
-                />
-                <div className="ml-2">
-                  <p className="m-0 text-sm">{val?.title}</p>
-                  <p className="m-0 text-xs text-gray-500">
-                    {each?.category?.name}
-                  </p>
-                </div>
-              </div>
-              <div className="w-[10%]">
-                <p>${each?.price}</p>
-              </div>
-              <div className="w-[15%] pr-5">
-                {/* <Line
-                  // percent={each?.progress || 0}
-                  percent={totalProgress}
-                  strokeWidth={3}
-                  strokeColor="#EA2088"
-                /> */}
-              </div>
-              <div className="w-[5%]">
-                <p>{each?.chapters?.length}</p>
-              </div>
-              <div className="w-[5%]">
-                <p>{each?.chapters?.length}</p>
-              </div>
-              <div className="flex w-[20%] justify-end px-2">
-                {/* <Link href={`/courses/${each.id}`}>
-                  <span className="border-1 rounded-full border border-[#EA2088] px-2 py-2 text-xs transition duration-500 ease-in-out hover:bg-[#EA2088] hover:text-white dark:hover:bg-[#EA2088]">
-                    {
-                      currentLanguage.dashboard_courseTable_viewCourse_button_text
-                    }
-                  </span>
-                </Link> */}
+        {/* {sortedCourses?.slice(0, maxCourses).map((each: any) => { */}
+        {sortedChapters.map((each: any) => (
+          <div
+            key={each?.id}
+            className="my-1 flex items-center justify-between p-2"
+          >
+            <div className="items-cetner flex w-[40%] items-center">
+              <Image
+                alt="img"
+                src={each?.imageUrl}
+                objectFit="contain"
+                width={65}
+                height={65}
+                className="rounded-sm"
+              />
+              <div className="ml-2">
+                <p className="m-0 text-sm">{each?.title}</p>
+                <p className="m-0 text-xs text-gray-500">
+                  {each?.category?.name}
+                </p>
               </div>
             </div>
-          ));
-        })}
-        {/* <div className="my-3 flex">
-          <p className="text-[18px]">
-            Time Spending
-            <span className="ml-5 mr-2 text-[32px] font-[600]">18h</span>
-            <span className="text-[14px]">20m</span>
-          </p>
-        </div> */}
-        {/* <CanvasJSChart options={polygonOptions} /> */}
+            <div className="w-[15%]">
+              <p>{each?.courseName}</p>
+            </div>
+            <div className="w-[15%]">
+              <p>{each?.likes?.length}</p>
+            </div>
+            <div className="w-[15%]">
+              <p>{each?.comments?.length}</p>
+            </div>
+            <div className="flex w-[10%]">
+              <span
+                className="border-1 rounded-full border px-2 py-2 text-xs transition duration-300 ease-in-out"
+                style={{
+                  borderColor: color?.PrimaryButtonColor || undefined,
+                }}
+              >
+                VIEW
+              </span>
+            </div>
+          </div>
+        ))}
       </div>
       <div className="w-[30%] rounded border px-4 dark:border-[#221b2e] dark:bg-[#0D071A]">
         <p className="mt-3 text-[18px]">Course Statistics</p>
