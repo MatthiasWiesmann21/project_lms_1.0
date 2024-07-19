@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 // @ts-ignore
 import CanvasJSReact from "@canvasjs/react-charts";
 import Image from "next/image";
+import { Container } from "@prisma/client";
 
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
@@ -12,7 +13,7 @@ const PolygonChart = ({
   color,
   courses,
 }: {
-  color: string | null | undefined;
+  color: Container | null;
   courses: any;
 }) => {
   const [coursesProgress, setCoursesProgress] = useState([]);
@@ -77,7 +78,7 @@ const PolygonChart = ({
     data: [
       {
         type: "line",
-        lineColor: color,
+        lineColor: color?.PrimaryButtonColor,
         dataPoints: weekdays.map((day, index) => ({
           x: index + 1,
           y: 60 + Math.floor(Math.random() * 5), // Example data
