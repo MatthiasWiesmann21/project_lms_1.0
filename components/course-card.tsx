@@ -13,6 +13,7 @@ interface CourseCardProps {
   progress: number | null;
   category: string;
   categoryColorCode: string;
+  ThemOutlineColor: string;
 }
 
 export const FreeText = () => {
@@ -28,9 +29,10 @@ export const CourseCard = ({
   progress,
   category,
   categoryColorCode,
+  ThemOutlineColor,
 }: CourseCardProps) => {
   return (
-    <Link href={`/courses/${id}`} className="border-2 rounded-lg border-transparent transition duration-500 ease-in-out hover:border-[#ea2088]">
+    <Link href={`/courses/${id}`} className="border-2 rounded-lg border-transparent transition duration-500 ease-in-out">
       <div
         className="bg-slate-100/60 dark:bg-[#0c0319] group h-full w-full overflow-hidden rounded-lg border p-2 transition hover:shadow-sm dark:border-[#1e172a]"
       >
