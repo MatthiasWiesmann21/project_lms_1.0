@@ -43,7 +43,11 @@ const EventFilterSidebar = ({
         <Button
           onMouseEnter={() => setIsViewAllHovered(true)}
           onMouseLeave={() => setIsViewAllHovered(false)}
-          style={{ borderColor: colors.PrimaryButtonColor || undefined, backgroundColor: isViewAllHovered ? colors.PrimaryButtonColor || undefined : "",
+          style={{
+            borderColor: colors?.PrimaryButtonColor || undefined,
+            backgroundColor: isViewAllHovered
+              ? colors.PrimaryButtonColor || undefined
+              : "",
           }}
           className="border-5 h-12 w-28 items-center justify-center rounded-full border bg-transparent text-gray-700 transition duration-500 ease-in-out"
           variant="default"
@@ -53,7 +57,9 @@ const EventFilterSidebar = ({
             className="pr-1 text-gray-800 dark:text-white"
             size={28}
           />
-          <p className="text-gray-800 dark:text-white">{currentLanguage.live_event_filter_button_text}</p>
+          <p className="text-gray-800 dark:text-white">
+            {currentLanguage.live_event_filter_button_text}
+          </p>
         </Button>
       </SheetTrigger>
       <SheetContent>

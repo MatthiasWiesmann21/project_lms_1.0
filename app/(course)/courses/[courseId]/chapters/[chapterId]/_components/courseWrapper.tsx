@@ -8,7 +8,7 @@ import { CourseEnrollButton } from "./course-enroll-button";
 import { Separator } from "@/components/ui/separator";
 import { Preview } from "@/components/preview";
 import { File, FileX } from "lucide-react";
-import Comments from "./comments";
+import LikeComment from "./likeComment";
 
 interface Params {
   courseId: string;
@@ -53,13 +53,33 @@ interface CourseWrapperProps {
   currentLanguage: CurrentLanguage;
 }
 
-interface DataState {
+interface Chapter {
+  id: string;
+  title: string;
+  description: string;
+  videoUrl: string;
+  position: number;
+  isPublished: boolean;
+  isFree: boolean;
+  author: string;
+  courseId: string;
+  createdAt: string;
+  updatedAt: string;
+  likes: any[]; // specify the type if possible
+  currentLike: boolean;
+}
+
+interface Course {
+  price: number;
+}
+
+interface DataObject {
   chapter: Chapter | null;
   course: Course | null;
-  attachments: Attachment[];
-  nextChapter: Chapter | null;
-  userProgress: UserProgress | null;
-  purchase: boolean | null;
+  attachments: any[]; // specify the type if possible
+  nextChapter: any; // specify the type if possible
+  userProgress: any; // specify the type if possible
+  purchase: any; // specify the type if possible
 }
 
 const CourseWrapper: React.FC<CourseWrapperProps> = ({
@@ -69,7 +89,7 @@ const CourseWrapper: React.FC<CourseWrapperProps> = ({
   const [courseProgress, setCourseProgress] = useState<UserProgress | null>(
     null
   );
-  const [data, setData] = useState<DataState>({
+  const [data, setData] = useState<DataObject>({
     chapter: null,
     course: null,
     attachments: [],
@@ -87,65 +107,38 @@ const CourseWrapper: React.FC<CourseWrapperProps> = ({
     const response = await fetch(
       `/api/courses/${params.courseId}/chapters/${params.chapterId}`
     );
-    const data: DataState = await response.json();
+    const data: DataObject = await response.json();
     console.log(data);
     setData(data);
   };
 
-  const getCoursesProgress = async () => {
-    const response = await fetch(`/api/userhascourse/${params?.courseId}`);
-    const data = await response?.json();
-    setCourseProgress(data);
-    if (data?.status === "notStarted" && !isLocked) {
-      const res = await fetch(`/api/userhascourse/${data?.id}`, {
-        method: "PATCH",
-        body: JSON?.stringify({
-          userId: data?.userId,
-          courseId: data?.courseId,
-          status: "inProgress",
-        }),
-      });
-      const jsonData = await res?.json();
-      setCourseProgress(jsonData);
-    }
-  };
+  // const getCoursesProgress = async () => {
+  //   const response = await fetch(`/api/userhascourse/${params?.courseId}`);
+  //   const data = await response?.json();
+  //   setCourseProgress(data);
+  //   if (data?.status === "notStarted" && !isLocked) {
+  //     const res = await fetch(`/api/userhascourse/${data?.id}`, {
+  //       method: "PATCH",
+  //       body: JSON?.stringify({
+  //         userId: data?.userId,
+  //         courseId: data?.courseId,
+  //         status: "inProgress",
+  //       }),
+  //     });
+  //     const jsonData = await res?.json();
+  //     setCourseProgress(jsonData);
+  //   }
+  // };
 
-  useEffect(() => {
-    getCoursesProgress();
-  }, [data]);
+  // useEffect(() => {
+  //   getCoursesProgress();
+  // }, [data]);
   useEffect(() => {
     getData();
   }, [params.courseId, params.chapterId]);
 
   return (
     <div className="w-full">
-      {/* {userProgress?.isCompleted && ( */}
-      {courseProgress?.status === "completed" && (
-        <Banner variant="success" label="You already completed this chapter." />
-      )}
-      {courseProgress?.status !== "completed" &&
-        courseProgress?.status !== "notStarted" && (
-          <Banner
-            variant="warning"
-            label="Click here to mark this courses as completed."
-            className="cursor-pointer"
-            onClick={async () => {
-              const res = await fetch(
-                `/api/userhascourse/${courseProgress?.id}`,
-                {
-                  method: "PATCH",
-                  body: JSON?.stringify({
-                    userId: courseProgress?.userId,
-                    courseId: courseProgress?.courseId,
-                    status: "completed",
-                  }),
-                }
-              );
-              const jsonData = await res?.json();
-              setCourseProgress(jsonData);
-            }}
-          />
-        )}
       {isLocked && (
         <Banner
           variant="warning"
@@ -228,7 +221,14 @@ const CourseWrapper: React.FC<CourseWrapperProps> = ({
               )}
             </div>
           </div>
-          <Comments />
+          <LikeComment
+            id={params.chapterId}
+            likesCount={data?.chapter?.likes?.length}
+            currentLike={data?.chapter?.currentLike}
+            commentsWithLikes={data?.chapter?.commentsWithLikes}
+            commentsCount={data?.chapter?.comments?.length}
+            updateLikeComment={getData}
+          />
         </div>
       </div>
     </div>
