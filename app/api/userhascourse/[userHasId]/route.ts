@@ -6,7 +6,7 @@ export async function GET(
   req: Request,
   { params }: { params: { userHasId: string } }
 ) {
-  const { userId } = auth();
+  const { userId }: any = auth();
   const { userHasId } = params;
   try {
     const userHasCourse = await db.userHasCourse.findFirst({

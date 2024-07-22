@@ -36,7 +36,10 @@ const formSchema = z.object({
   }),
 });
 
-export const PrimaryButtonColorForm = ({ initialData, containerId }: PrimaryButtonColorFormProps) => {
+export const PrimaryButtonColorForm = ({
+  initialData,
+  containerId,
+}: PrimaryButtonColorFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const currentLanguage = useLanguage();
   const toggleEdit = () => setIsEditing((current) => !current);
@@ -86,7 +89,9 @@ export const PrimaryButtonColorForm = ({ initialData, containerId }: PrimaryButt
           style={{ backgroundColor: initialData.PrimaryButtonColor }}
           className="mt-2 h-8 w-8 rounded-md"
         >
-          <p className="mt-3 p-1 pl-10 text-sm">{initialData.PrimaryButtonColor}</p>
+          <p className="mt-3 p-1 pl-10 text-sm">
+            {initialData.PrimaryButtonColor}
+          </p>
         </div>
       )}
       {isEditing && (
