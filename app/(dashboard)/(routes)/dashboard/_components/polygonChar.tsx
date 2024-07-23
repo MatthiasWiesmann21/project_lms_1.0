@@ -13,7 +13,7 @@ const PolygonChart = ({
   color,
   courses,
 }: {
-  color: Container | null;
+  color: Container | null | any;
   courses: any;
 }) => {
   const [coursesProgress, setCoursesProgress] = useState([]);
@@ -32,8 +32,6 @@ const PolygonChart = ({
     fetchCoursesProgress();
   }, []);
 
-  console.log("courses", courses);
-
   const progressArray = courses?.map(
     (each: any) =>
       each?.chapters?.reduce(
@@ -41,7 +39,9 @@ const PolygonChart = ({
         0
       ) / each?.chapters?.length
   );
-  // console.log("totalProgress", progressArray);
+
+  // console.log("progressArray", progressArray);
+
   const inProgress =
     (progressArray.filter((val: number) => val > 0 && val < 100)?.length /
       progressArray?.length) *
@@ -131,20 +131,20 @@ const PolygonChart = ({
 
   const maxCourses = 5;
 
-  const sortedCourses = courses.sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  );
+  // const sortedCourses = courses.sort(
+  //   (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  // );
 
-  const sortedChapters = courses.flatMap((course) =>
+  const sortedChapters = courses.flatMap((course: any) =>
     course.chapters
-      .map((chapter) => ({
+      .map((chapter: any) => ({
         ...course,
         ...chapter,
         courseName: course?.title,
         totalCount:
           (chapter.likes.length || 0) + (chapter.comments.length || 0),
       }))
-      .sort((a, b) => (b.totalCount || 0) - (a.totalCount || 0))
+      .sort((a: any, b: any) => (b.totalCount || 0) - (a.totalCount || 0))
   );
 
   return (
@@ -160,8 +160,7 @@ const PolygonChart = ({
           <p className="w-[15%] text-sm">Comments</p>
           <p className="w-[10%] text-sm">Action</p>
         </div>
-        {/* {sortedCourses?.slice(0, maxCourses).map((each: any) => { */}
-        {sortedChapters.map((each: any) => (
+        {sortedChapters?.slice(0, maxCourses).map((each: any) => (
           <div
             key={each?.id}
             className="my-1 flex items-center justify-between p-2"
@@ -204,7 +203,7 @@ const PolygonChart = ({
           </div>
         ))}
       </div>
-      <div className="w-[30%] rounded border px-4 dark:border-[#221b2e] dark:bg-[#0D071A]">
+      <div className="flex w-[30%] flex-col justify-around rounded border px-4 dark:border-[#221b2e] dark:bg-[#0D071A]">
         <p className="mt-3 text-[18px]">Course Statistics</p>
         <CanvasJSChart options={doughnutOptions} />
         <div className="flex justify-between">
@@ -232,10 +231,7 @@ const PolygonChart = ({
               />
               <div>
                 <p className="m-0 text-[14px] text-gray-500">{label}</p>
-                <p className="m-0 text-[18px] font-[900]">
-                  {/* {getCourseStatusPercentage(status)}% */}
-                  {value}%
-                </p>
+                <p className="m-0 text-[18px] font-[900]">{value}%</p>
               </div>
               <div className="border-1 mx-2 my-[2%] border-r border-gray-500" />
             </div>

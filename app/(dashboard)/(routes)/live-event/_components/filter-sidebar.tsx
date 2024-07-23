@@ -23,7 +23,7 @@ interface EventFilterSidebarProps {
   categories: any;
   searchParams: any;
   setLiveEvent: any;
-  colors: Container;
+  colors: Container | any;
 }
 
 const EventFilterSidebar = ({

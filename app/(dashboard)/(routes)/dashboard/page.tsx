@@ -39,7 +39,7 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
   const purchasedCourses = courses.filter((course) => course.isPurchased);
   console.log("purchasedCourses", courses);
 
-  const container = await db.container.findUnique({
+  const container: any = await db.container.findUnique({
     where: {
       id: process.env.CONTAINER_ID,
     },
@@ -67,7 +67,9 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
     containerId: process.env.CONTAINER_ID,
   });
 
-  console.log("=-=--------", coursess?.length);
+  // coursess?.map((each) =>
+  //   each?.chapters?.map((sub) => console.log("=-=--------", sub))
+  // );
 
   return (
     <div className="space-y-4 p-4 dark:bg-[#110524]">
@@ -97,7 +99,7 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
         />
       </div>
       <PolygonChar
-        color={container}
+        color={container?.navDarkBackgroundColor}
         courses={coursess}
       />
       <CourseTable courses={coursess} colors={container} />

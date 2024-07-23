@@ -2,14 +2,15 @@ import { Category, Container, Course } from "@prisma/client";
 import { CourseCard } from "./course-card";
 import { languageServer } from "@/lib/check-language-server";
 
-type CourseWithProgressWithCategory = Container & Course & {
-  category: Category | null;
-  chapters: { id: string }[];
-  progress: number | null;
-};
+type CourseWithProgressWithCategory = Container &
+  Course & {
+    category: Category | null;
+    chapters: { id: string }[];
+    progress: number | null;
+  };
 
 interface CoursesListProps {
-  items: CourseWithProgressWithCategory[];
+  items: CourseWithProgressWithCategory[] | any[];
 }
 
 export const CoursesList = async ({ items }: CoursesListProps) => {

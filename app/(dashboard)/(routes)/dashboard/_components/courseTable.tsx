@@ -9,7 +9,7 @@ import { Container } from "@prisma/client";
 
 interface CourseTableProps {
   courses: any[];
-  colors: Container | null;
+  colors: Container | any;
 }
 
 const CourseTable = ({ courses, colors }: CourseTableProps) => {

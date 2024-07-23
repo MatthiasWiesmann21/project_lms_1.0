@@ -153,28 +153,7 @@ const LikeComment = ({
   const currentLanguage = useLanguage();
   return (
     <div className="mx-3">
-      <div className="flex items-center justify-between py-3">
-        <div
-          onClick={async () => {
-            const response = await axios?.post(`/api/like/create`, {
-              chapterId: id,
-            });
-            if (response?.status === 200)
-              updateLikeComment(response?.data?.post);
-          }}
-          className="m-2 flex cursor-pointer items-center justify-around "
-        >
-          <Heart
-            className={
-              !!currentLike
-                ? "text-[#f43f5e] transition duration-200 ease-in-out hover:scale-110"
-                : "border-black transition duration-200 ease-in-out hover:scale-110"
-            }
-            fill={!!currentLike ? "#f43f5e" : "transparent"}
-          />
-          <span className="ml-2 mr-1">{likesCount}</span>
-          Likes
-        </div>
+      <div className="flex items-center justify-end py-3">
         <div
           className="font-500 flex cursor-pointer items-center rounded-full bg-slate-200 p-3 text-sm transition duration-500 ease-in-out hover:bg-slate-300 dark:bg-slate-800/50 dark:hover:bg-slate-700/80"
           onClick={() => setShowComments(!isShowComments)}

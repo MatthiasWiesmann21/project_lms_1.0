@@ -3,6 +3,16 @@ import { Lock } from "lucide-react";
 import UniversalPlayer from "@/pages/components/universalPlayer";
 import { useEffect, useState } from "react";
 
+interface Progress {
+  id: string;
+  userId: string;
+  chapterId: string;
+  isCompleted: boolean;
+  progress: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
 interface VideoPlayerProps {
   playbackId?: string;
   courseId: string;
@@ -28,23 +38,13 @@ export const VideoPlayer = ({
     return null;
   }
 
-  const [chapterProgress, setChapterProgress] = useState(null);
+  const [chapterProgress, setChapterProgress] = useState<Progress | null>(null);
 
   const getChapterProgress = async () => {
     const response = await fetch(
       `/api/progress/${params.courseId}/${params.chapterId}`
     );
     const data = await response?.json();
-    // console.log("data", data);
-    // {
-    //   "id": "1",
-    //   "userId": "user_2cPlDKbzzpYor9eUrapztp45Yfz",
-    //   "chapterId": "e07ee97e-b78b-4a51-b5d0-973d82d07386",
-    //   "isCompleted": false,
-    //   "progress": 0,
-    //   "createdAt": "2024-07-05T13:04:00.147Z",
-    //   "updatedAt": "2024-07-05T13:04:00.147Z"
-    // }
     setChapterProgress(data);
   };
 
@@ -88,7 +88,7 @@ export const VideoPlayer = ({
                   throw new Error("Failed to update progress");
                 }
                 const data = await response.json();
-                setChapterProgress(data); // Update local state if necessary
+                setChapterProgress(data);
               } catch (error) {
                 console.error("Error updating progress:", error);
               }
