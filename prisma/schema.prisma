@@ -221,7 +221,8 @@ model Chapter {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  likes Like[]
+  comments Comment[]
+  likes    Like[]
 
   @@index([courseId])
 }
@@ -234,7 +235,7 @@ model UserProgress {
   chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 
   isCompleted Boolean @default(false)
-  progress Float @default(0.0)
+  progress    Float   @default(0.0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -338,10 +339,10 @@ model Post {
   publisherName     String? @db.Text
   publisherImageUrl String? @db.Text
 
-  title       String  @db.Text
-  description String? @db.Text
-  imageUrl    String? @db.Text
-  isPublished Boolean @default(false)
+  title            String    @db.Text
+  description      String?   @db.Text
+  imageUrl         String?   @db.Text
+  isPublished      Boolean   @default(false)
   scheduleDateTime DateTime?
 
   containerId String
@@ -409,6 +410,9 @@ model Comment {
   profileId String
   profile   Profile @relation(fields: [profileId], references: [id])
 
+  chapterId String?
+  chapter   Chapter? @relation(fields: [chapterId], references: [id])
+
   parentCommentId String?
   parentComment   Comment? @relation("SubComment", fields: [parentCommentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
@@ -420,6 +424,7 @@ model Comment {
   @@index([profileId])
   @@index([parentCommentId])
   @@index([liveEventId])
+  @@index([chapterId])
 }
 
 model Like {

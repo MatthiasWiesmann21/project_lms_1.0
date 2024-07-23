@@ -42,8 +42,6 @@ export const CategoryItem = ({
     router.push(url);
   };
 
-  console.log("value", value);
-
   return (
     <button
       onClick={onClick}
