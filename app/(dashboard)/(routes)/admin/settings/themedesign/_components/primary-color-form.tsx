@@ -23,20 +23,20 @@ import { Input } from "@/components/ui/input";
 import { useDispatch } from "react-redux";
 import { useLanguage } from "@/lib/check-language";
 
-interface PrimaryButtonColorFormProps {
+interface ThemeOutlineColorFormProps {
   initialData: {
-    PrimaryButtonColor: string;
+    ThemeOutlineColor: string;
   };
   containerId: string;
 }
 
 const formSchema = z.object({
-  PrimaryButtonColor: z.string().min(1, {
+  ThemeOutlineColor: z.string().min(1, {
     message: "Color is required",
   }),
 });
 
-export const PrimaryButtonColorForm = ({ initialData, containerId }: PrimaryButtonColorFormProps) => {
+export const ThemeOutlineColorForm = ({ initialData, containerId }: ThemeOutlineColorFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const currentLanguage = useLanguage();
   const toggleEdit = () => setIsEditing((current) => !current);
@@ -69,24 +69,24 @@ export const PrimaryButtonColorForm = ({ initialData, containerId }: PrimaryButt
   return (
     <div className="mt-6 rounded-md border bg-slate-200 p-4 dark:bg-slate-700">
       <div className="flex items-center justify-between font-medium">
-        {currentLanguage.customize_PrimaryButtonColorForm_title}
+        {currentLanguage.customize_ThemeColorForm_title}
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>{currentLanguage.customize_PrimaryButtonColorForm_cancel}</>
+            <>{currentLanguage.customize_ThemeColorForm_cancel}</>
           ) : (
             <>
               <Pencil className="mr-2 h-4 w-4" />
-              {currentLanguage.customize_PrimaryButtonColorForm_edit}
+              {currentLanguage.customize_ThemeColorForm_edit}
             </>
           )}
         </Button>
       </div>
       {!isEditing && (
         <div
-          style={{ backgroundColor: initialData.PrimaryButtonColor }}
+          style={{ backgroundColor: initialData.ThemeOutlineColor }}
           className="mt-2 h-8 w-8 rounded-md"
         >
-          <p className="mt-3 p-1 pl-10 text-sm">{initialData.PrimaryButtonColor}</p>
+          <p className="mt-3 p-1 pl-10 text-sm">{initialData.ThemeOutlineColor}</p>
         </div>
       )}
       {isEditing && (
@@ -97,7 +97,7 @@ export const PrimaryButtonColorForm = ({ initialData, containerId }: PrimaryButt
           >
             <FormField
               control={form.control}
-              name="PrimaryButtonColor"
+              name="ThemeOutlineColor"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -114,7 +114,7 @@ export const PrimaryButtonColorForm = ({ initialData, containerId }: PrimaryButt
                     />
                   </FormControl>
                   <FormLabel className="p-1">
-                    {field.value || initialData.PrimaryButtonColor}
+                    {field.value || initialData.ThemeOutlineColor}
                   </FormLabel>
                   <FormMessage />
                 </FormItem>
@@ -122,7 +122,7 @@ export const PrimaryButtonColorForm = ({ initialData, containerId }: PrimaryButt
             />
             <div className="flex items-center gap-x-2">
               <Button disabled={!isValid || isSubmitting} type="submit">
-                {currentLanguage.customize_PrimaryButtonColorForm_save}
+                {currentLanguage.customize_ThemeColorForm_save}
               </Button>
             </div>
           </form>

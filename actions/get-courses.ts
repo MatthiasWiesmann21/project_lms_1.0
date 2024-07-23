@@ -19,7 +19,7 @@ type GetCourses = {
 export const getCourses = async ({
   userId,
   title,
-  categoryId
+  categoryId,
 }: GetCourses): Promise<CourseWithProgressWithCategory[]> => {
   try {
     const courses = await db.course.findMany({
@@ -37,42 +37,59 @@ export const getCourses = async ({
           where: {
             isPublished: true,
           },
-          select: {
-            id: true,
-          }
+          include: {
+            userProgress: true,
+            likes: true,
+            comments: {
+              include: {
+                likes: true,
+                subComment: {
+                  include: {
+                    likes: true,
+                    profile: true,
+                  },
+                },
+                profile: true,
+              },
+              where: {
+                parentComment: null,
+              },
+            },
+          },
         },
         purchases: {
           where: {
             userId,
-          }
-        }
+          },
+        },
       },
       orderBy: {
         createdAt: "desc",
-      }
+      },
     });
 
-    const coursesWithProgress: CourseWithProgressWithCategory[] = await Promise.all(
-      courses.map(async course => {
-        if (course.purchases.length === 0) {
+    const coursesWithProgress: CourseWithProgressWithCategory[] =
+      await Promise.all(
+        courses.map(async (course) => {
+          if (course.purchases.length === 0) {
+            return {
+              ...course,
+              progress: null,
+            };
+          }
+
+          const progressPercentage = await getProgress(userId, course.id);
+
           return {
             ...course,
-            progress: null,
-          }
-        }
-
-        const progressPercentage = await getProgress(userId, course.id);
-
-        return {
-          ...course,
-          progress: progressPercentage,
-        };
-      })
-    );
+            progress: progressPercentage,
+          };
+        })
+      );
 
     return coursesWithProgress;
   } catch (error) {
     console.log("[GET_COURSES]", error);
     return [];
   }
-}
+};

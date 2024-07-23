@@ -1,15 +1,16 @@
-import { Category, Course } from "@prisma/client";
+import { Category, Container, Course } from "@prisma/client";
 import { CourseCard } from "./course-card";
 import { languageServer } from "@/lib/check-language-server";
 
-type CourseWithProgressWithCategory = Course & {
-  category: Category | null;
-  chapters: { id: string }[];
-  progress: number | null;
-};
+type CourseWithProgressWithCategory = Container &
+  Course & {
+    category: Category | null;
+    chapters: { id: string }[];
+    progress: number | null;
+  };
 
 interface CoursesListProps {
-  items: CourseWithProgressWithCategory[];
+  items: CourseWithProgressWithCategory[] | any[];
 }
 
 export const CoursesList = async ({ items }: CoursesListProps) => {
@@ -28,6 +29,7 @@ export const CoursesList = async ({ items }: CoursesListProps) => {
             progress={item.progress}
             chaptersLength={item.chapters.length}
             price={item.price!}
+            ThemOutlineColor={item.ThemeOutlineColor!}
           />
         ))}
       </div>

@@ -17,7 +17,6 @@ export async function PATCH(
     const course = await db.course.findUnique({
       where: {
         id: params.courseId,
-        userId,
         containerId: process.env.CONTAINER_ID,
       },
     });
@@ -29,7 +28,6 @@ export async function PATCH(
     const unpublishedCourse = await db.course.update({
       where: {
         id: params.courseId,
-        userId,
         containerId: process.env.CONTAINER_ID,
       },
       data: {

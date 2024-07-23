@@ -19,14 +19,14 @@ const bannerVariants = cva(
   }
 );
 
-interface BannerProps extends VariantProps<typeof bannerVariants> {
+interface BannerProps extends VariantProps<typeof bannerVariants | any> {
   label: string;
-  variant: string;
+  variant?: string | any;
   className?: string;
   onClick?: any;
 }
 
-const iconMap = {
+const iconMap: any = {
   warning: AlertTriangle,
   success: CheckCircleIcon,
 };

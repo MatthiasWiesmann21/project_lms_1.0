@@ -9,9 +9,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: [
-      "utfs.io", "localhost:3000", "uploadthings.io"
-    ]
+    domains: ["utfs.io", "localhost:3000", "uploadthings.io", "img.clerk.com"],
   },
   eslint: {
     ignoreDuringBuilds: true, // Add this line to ignore ESLint warnings during the build
@@ -19,12 +17,12 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/profile/sign-in',
-        destination: '/profile/manageUsername', // Replace with your existing page
+        source: "/profile/sign-in",
+        destination: "/profile/manageUsername", // Replace with your existing page
         permanent: true,
       },
-    ]
+    ];
   },
-}
+};
 
 module.exports = nextConfig;

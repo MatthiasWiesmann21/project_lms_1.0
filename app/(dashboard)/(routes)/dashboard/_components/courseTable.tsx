@@ -9,7 +9,7 @@ import { Container } from "@prisma/client";
 
 interface CourseTableProps {
   courses: any[];
-  colors: Container;
+  colors: Container | any;
 }
 
 const CourseTable = ({ courses, colors }: CourseTableProps) => {
@@ -31,7 +31,11 @@ const CourseTable = ({ courses, colors }: CourseTableProps) => {
           onMouseLeave={() => setIsViewAllHovered(false)}
           href={`/dashboard/course-list`}
           className="flex items-center justify-center rounded-full border px-4 py-2 text-sm transition duration-300 ease-in-out"
-          style={{ borderColor: colors.PrimaryButtonColor || undefined, backgroundColor: isViewAllHovered ? colors.PrimaryButtonColor || undefined : "",
+          style={{
+            borderColor: colors?.PrimaryButtonColor || undefined,
+            backgroundColor: isViewAllHovered
+              ? colors?.PrimaryButtonColor || undefined
+              : "",
           }}
         >
           {currentLanguage.dashboard_courseTable_viewAllCourses_button_text}
@@ -52,7 +56,12 @@ const CourseTable = ({ courses, colors }: CourseTableProps) => {
         </p>
         <div className="w-[15%]"></div>
       </div>
-      {sortedCourses?.slice(0, maxCourses).map((each: any, index: number) => {
+      {sortedCourses?.slice(0, maxCourses).map((each: any, index) => {
+        const totalProgress =
+          each?.chapters?.reduce(
+            (acc: any, val: any) => acc + (val?.userProgress[0]?.progress || 0),
+            0
+          ) / each?.chapters?.length;
         return (
           <div
             key={each?.id}
@@ -79,7 +88,8 @@ const CourseTable = ({ courses, colors }: CourseTableProps) => {
             </div>
             <div className="w-[15%] pr-5">
               <Line
-                percent={each?.progress || 0}
+                // percent={each?.progress || 0}
+                percent={totalProgress}
                 strokeWidth={3}
                 strokeColor="#EA2088"
               />
@@ -93,7 +103,14 @@ const CourseTable = ({ courses, colors }: CourseTableProps) => {
                   onMouseEnter={() => setHoveredCourse(index)}
                   onMouseLeave={() => setHoveredCourse(null)}
                   className="border-1 rounded-full border px-2 py-2 text-xs transition duration-300 ease-in-out"
-                  style={{borderColor: colors.PrimaryButtonColor || undefined ,backgroundColor: hoveredCourse === index ? colors.PrimaryButtonColor || undefined : ""}}>
+                  style={{
+                    borderColor: colors?.PrimaryButtonColor || undefined,
+                    backgroundColor:
+                      hoveredCourse === index
+                        ? colors?.PrimaryButtonColor || undefined
+                        : "",
+                  }}
+                >
                   {currentLanguage.dashboard_courseTable_viewCourse_button_text}
                 </span>
               </Link>
@@ -102,7 +119,7 @@ const CourseTable = ({ courses, colors }: CourseTableProps) => {
         );
       })}
       {sortedCourses?.length === 0 && (
-        <div className="flex items-center justify-center h-16 text-sm text-muted-foreground">
+        <div className="flex h-16 items-center justify-center text-sm text-muted-foreground">
           <BookX className="m-1" size={24} />
           <span>{currentLanguage?.no_courses}</span>
         </div>
