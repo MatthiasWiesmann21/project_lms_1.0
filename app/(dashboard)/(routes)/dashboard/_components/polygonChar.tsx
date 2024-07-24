@@ -7,8 +7,6 @@ import { Container } from "@prisma/client";
 
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
 const PolygonChart = ({
   color,
   courses,
@@ -64,31 +62,6 @@ const PolygonChart = ({
     return (filteredCourses.length / coursesProgress.length) * 100 || 0;
   };
 
-  const polygonOptions = {
-    animationEnabled: true,
-    exportEnabled: true,
-    backgroundColor: "transparent",
-    theme: "dark1",
-    axisY: {
-      suffix: "h",
-    },
-    axisX: {
-      interval: 1,
-    },
-    data: [
-      {
-        type: "line",
-        lineColor: color?.PrimaryButtonColor,
-        dataPoints: weekdays.map((day, index) => ({
-          x: index + 1,
-          y: 60 + Math.floor(Math.random() * 5), // Example data
-          color,
-          label: day,
-        })),
-      },
-    ],
-  };
-
   const doughnutOptions = {
     animationEnabled: true,
     backgroundColor: "transparent",
@@ -136,15 +109,22 @@ const PolygonChart = ({
   // );
 
   const sortedChapters = courses.flatMap((course: any) =>
-    course.chapters
-      .map((chapter: any) => ({
+    course.chapters.map((chapter: any) => {
+      // console.log("qwerty", {
+      //   ...course,
+      //   ...chapter,
+      //   courseName: course?.title,
+      //   totalCount:
+      //     (chapter.likes.length || 0) + (chapter.comments.length || 0),
+      // });
+      return {
         ...course,
         ...chapter,
         courseName: course?.title,
         totalCount:
           (chapter.likes.length || 0) + (chapter.comments.length || 0),
-      }))
-      .sort((a: any, b: any) => (b.totalCount || 0) - (a.totalCount || 0))
+      };
+    })
   );
 
   return (
@@ -160,48 +140,51 @@ const PolygonChart = ({
           <p className="w-[15%] text-sm">Comments</p>
           <p className="w-[10%] text-sm">Action</p>
         </div>
-        {sortedChapters?.slice(0, maxCourses).map((each: any) => (
-          <div
-            key={each?.id}
-            className="my-1 flex items-center justify-between p-2"
-          >
-            <div className="items-cetner flex w-[40%] items-center">
-              <Image
-                alt="img"
-                src={each?.imageUrl}
-                objectFit="contain"
-                width={65}
-                height={65}
-                className="rounded-sm"
-              />
-              <div className="ml-2">
-                <p className="m-0 text-sm">{each?.title}</p>
-                <p className="m-0 text-xs text-gray-500">
-                  {each?.category?.name}
-                </p>
+        {sortedChapters
+          ?.sort((a: any, b: any) => (b.totalCount || 0) - (a.totalCount || 0))
+          ?.slice(0, maxCourses)
+          ?.map((each: any) => (
+            <div
+              key={each?.id}
+              className="my-1 flex items-center justify-between p-2"
+            >
+              <div className="items-cetner flex w-[40%] items-center">
+                <Image
+                  alt="img"
+                  src={each?.imageUrl}
+                  objectFit="contain"
+                  width={65}
+                  height={65}
+                  className="rounded-sm"
+                />
+                <div className="ml-2">
+                  <p className="m-0 text-sm">{each?.title}</p>
+                  <p className="m-0 text-xs text-gray-500">
+                    {each?.category?.name}
+                  </p>
+                </div>
+              </div>
+              <div className="w-[15%]">
+                <p>{each?.courseName}</p>
+              </div>
+              <div className="w-[15%]">
+                <p>{each?.likes?.length}</p>
+              </div>
+              <div className="w-[15%]">
+                <p>{each?.comments?.length}</p>
+              </div>
+              <div className="flex w-[10%]">
+                <span
+                  className="border-1 rounded-full border px-2 py-2 text-xs transition duration-300 ease-in-out"
+                  style={{
+                    borderColor: color?.PrimaryButtonColor || undefined,
+                  }}
+                >
+                  VIEW
+                </span>
               </div>
             </div>
-            <div className="w-[15%]">
-              <p>{each?.courseName}</p>
-            </div>
-            <div className="w-[15%]">
-              <p>{each?.likes?.length}</p>
-            </div>
-            <div className="w-[15%]">
-              <p>{each?.comments?.length}</p>
-            </div>
-            <div className="flex w-[10%]">
-              <span
-                className="border-1 rounded-full border px-2 py-2 text-xs transition duration-300 ease-in-out"
-                style={{
-                  borderColor: color?.PrimaryButtonColor || undefined,
-                }}
-              >
-                VIEW
-              </span>
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
       <div className="flex w-[30%] flex-col justify-around rounded border px-4 dark:border-[#221b2e] dark:bg-[#0D071A]">
         <p className="mt-3 text-[18px]">Course Statistics</p>
