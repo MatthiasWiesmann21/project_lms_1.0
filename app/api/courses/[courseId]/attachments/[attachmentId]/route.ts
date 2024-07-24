@@ -17,7 +17,6 @@ export async function DELETE(
     const courseOwner = await db.course.findUnique({
       where: {
         id: params.courseId,
-        userId: userId,
         containerId: process.env.CONTAINER_ID,
       }
     });
