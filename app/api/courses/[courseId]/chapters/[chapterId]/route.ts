@@ -153,7 +153,6 @@ export async function DELETE(
     const ownCourse = await db.course.findUnique({
       where: {
         id: params.courseId,
-        userId,
         containerId: process.env.CONTAINER_ID,
       },
     });
@@ -220,7 +219,6 @@ export async function PATCH(
     const ownCourse = await db.course.findUnique({
       where: {
         id: params.courseId,
-        userId,
         containerId: process.env.CONTAINER_ID,
       },
     });
