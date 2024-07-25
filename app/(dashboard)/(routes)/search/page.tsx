@@ -89,7 +89,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
     containerId: process.env.CONTAINER_ID,
   });
 
-  const containerColors = await db?.container?.findUnique({
+  const containerColors: any = await db?.container?.findUnique({
     where: {
       id: process.env.CONTAINER_ID,
     },
@@ -106,7 +106,11 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
           items={categoriesWithCourseCounts}
           defaultColor={containerColors?.navDarkBackgroundColor}
         />
-        <CoursesList items={courses} ThemOutlineColor={containerColors?.ThemeOutlineColor!} DarkThemeOutlineColor={containerColors?.DarkThemeOutlineColor!} />
+        <CoursesList
+          items={courses}
+          ThemOutlineColor={containerColors?.ThemeOutlineColor!}
+          DarkThemeOutlineColor={containerColors?.DarkThemeOutlineColor!}
+        />
       </div>
     </>
   );

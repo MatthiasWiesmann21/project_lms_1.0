@@ -42,9 +42,7 @@ const CourseTable = ({ courses, colors }: CourseTableProps) => {
           className="flex items-center justify-center rounded-full border px-4 py-2 text-sm transition duration-300 ease-in-out"
           style={{
             borderColor: getButtonColor(),
-            backgroundColor: isViewAllHovered
-              ? getButtonColor()
-              : "",
+            backgroundColor: isViewAllHovered ? getButtonColor() : "",
           }}
         >
           {currentLanguage.dashboard_courseTable_viewAllCourses_button_text}
@@ -68,7 +66,11 @@ const CourseTable = ({ courses, colors }: CourseTableProps) => {
       {sortedCourses?.slice(0, maxCourses).map((each: any, index) => {
         const totalProgress =
           each?.chapters?.reduce(
-            (acc: any, val: any) => acc + (val?.userProgress[0]?.progress || 0),
+            (acc: any, val: any) =>
+              acc +
+              (val?.userProgress?.length
+                ? val?.userProgress[0]?.progress || 0
+                : 0),
             0
           ) / each?.chapters?.length;
         return (
@@ -115,9 +117,7 @@ const CourseTable = ({ courses, colors }: CourseTableProps) => {
                   style={{
                     borderColor: getButtonColor(),
                     backgroundColor:
-                      hoveredCourse === index
-                        ? getButtonColor()
-                        : "",
+                      hoveredCourse === index ? getButtonColor() : "",
                   }}
                 >
                   {currentLanguage.dashboard_courseTable_viewCourse_button_text}

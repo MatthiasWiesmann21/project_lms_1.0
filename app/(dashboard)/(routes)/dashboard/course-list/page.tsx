@@ -16,7 +16,6 @@ interface SearchPageProps {
 }
 
 const CourseListPage = async ({ searchParams }: SearchPageProps) => {
-  
   const { userId } = auth();
 
   if (!userId) {
@@ -41,12 +40,12 @@ const CourseListPage = async ({ searchParams }: SearchPageProps) => {
     },
     include: {
       _count: {
-        select: { courses: true } // Ensure 'courses' matches your schema relation name
+        select: { courses: true }, // Ensure 'courses' matches your schema relation name
       },
     },
   });
 
-  const container = await db?.container?.findUnique({
+  const container: any = await db?.container?.findUnique({
     where: {
       id: process.env.CONTAINER_ID,
     },
@@ -64,10 +63,14 @@ const CourseListPage = async ({ searchParams }: SearchPageProps) => {
         {currentLanguage.courses_list_backToDashboard_button_text}
       </Link>
       <Categories
-          items={categoriesWithCourseCounts}
-          defaultColor={container?.navDarkBackgroundColor}
-        />
-      <CoursesList items={purchasedCourses} ThemOutlineColor={container?.ThemeOutlineColor!} DarkThemeOutlineColor={container?.DarkThemeOutlineColor!} />
+        items={categoriesWithCourseCounts}
+        defaultColor={container?.navDarkBackgroundColor}
+      />
+      <CoursesList
+        items={purchasedCourses}
+        ThemOutlineColor={container?.ThemeOutlineColor!}
+        DarkThemeOutlineColor={container?.DarkThemeOutlineColor!}
+      />
     </div>
   );
 };
