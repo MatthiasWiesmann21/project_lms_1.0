@@ -30,12 +30,15 @@ const LiveEventWrapper = ({
             containerId: process.env.CONTAINER_ID,
           }}
           liveEvent={liveEvent}
+          ThemeOutlineColor={container?.ThemeOutlineColor!}
+          DarkThemeOutlineColor={container?.DarkThemeOutlineColor!}
         />
-        <EventFilterSidebar liveEvents={liveEvent} setLiveEvent={setLiveEvent} colors={container} categories={undefined} searchParams={undefined} />
+        <EventFilterSidebar liveEvents={liveEvent} setLiveEvent={setLiveEvent} PrimaryButtonColor={container?.PrimaryButtonColor!} DarkPrimaryButtonColor={container?.DarkPrimaryButtonColor!} categories={undefined} searchParams={undefined} />
       </div>
       <Categories
         items={categories}
-        defaultColor={container?.navDarkBackgroundColor}
+        ThemeOutlineColor={container?.ThemeOutlineColor!}
+        DarkThemeOutlineColor={container?.DarkThemeOutlineColor!}
       />
       <EventsList
         items={liveEvent?.map((each: any) => ({

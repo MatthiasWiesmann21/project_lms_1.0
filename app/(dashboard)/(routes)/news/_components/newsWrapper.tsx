@@ -21,13 +21,15 @@ interface NewsWrapperProps {
     categoryId: string;
   };
   categories: any;
-  defaultColor: string;
+  ThemeOutlineColor: string;
+  DarkThemeOutlineColor: string;
 }
 
 const NewsWrapper = ({
   searchParams,
   categories,
-  defaultColor,
+  ThemeOutlineColor,
+  DarkThemeOutlineColor,
 }: NewsWrapperProps) => {
   const { categoryId } = searchParams;
   const [posts, setPosts] = useState<PostWithProgressWithCategory[]>([]);
@@ -107,7 +109,7 @@ const NewsWrapper = ({
     <div className="space-y-4 pt-4 px-4 dark:bg-[#110524]">
       <div className="flex flex-col items-center justify-center">
         <div className="w-full max-w-4xl">
-          <Categories items={categories} defaultColor={defaultColor} />
+          <Categories items={categories} ThemeOutlineColor={ThemeOutlineColor} DarkThemeOutlineColor={DarkThemeOutlineColor} />
           {posts?.map((item) => (
             <PostCard
               key={item?.id}
