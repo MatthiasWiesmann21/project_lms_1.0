@@ -37,7 +37,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
     return redirect("/profile/manageUsername");
   }
 
-  const container = await db.container.findUnique({
+  const container: any = await db.container.findUnique({
     where: {
       id: process.env.CONTAINER_ID,
       courses: {
@@ -89,7 +89,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
     containerId: process.env.CONTAINER_ID,
   });
 
-  const containerColors = await db?.container?.findUnique({
+  const containerColors: any = await db?.container?.findUnique({
     where: {
       id: process.env.CONTAINER_ID,
     },
@@ -104,9 +104,14 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
         />
         <Categories
           items={categoriesWithCourseCounts}
-          defaultColor={containerColors?.navDarkBackgroundColor}
+          ThemeOutlineColor={container?.ThemeOutlineColor!}
+          DarkThemeOutlineColor={container?.DarkThemeOutlineColor!}
         />
-        <CoursesList items={courses} />
+        <CoursesList
+          items={courses}
+          ThemOutlineColor={containerColors?.ThemeOutlineColor!}
+          DarkThemeOutlineColor={containerColors?.DarkThemeOutlineColor!}
+        />
       </div>
     </>
   );

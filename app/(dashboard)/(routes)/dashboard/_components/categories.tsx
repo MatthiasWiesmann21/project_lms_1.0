@@ -2,6 +2,7 @@
 
 import { Category } from "@prisma/client";
 import { CategoryItem } from "./category-item";
+import { useTheme } from "next-themes";
 
 interface EnhancedCategory extends Category {
   _count: {
@@ -10,21 +11,25 @@ interface EnhancedCategory extends Category {
 }
 interface CategoriesProps {
   items: EnhancedCategory[];
-  defaultColor: string | any;
+  ThemeOutlineColor: string;
+  DarkThemeOutlineColor: string;
 }
 
-export const Categories = ({ items, defaultColor }: CategoriesProps) => {
+export const Categories = ({ items, ThemeOutlineColor, DarkThemeOutlineColor }: CategoriesProps) => {
   const all =
     items
       ?.map((each) => each?._count?.courses ?? 0)
       ?.reduce((accumulator, currentValue) => accumulator + currentValue, 0) ??
     0;
-
+    const { theme } = useTheme();
+    const getThemeColor = () => {
+      return theme === "dark" ? DarkThemeOutlineColor : ThemeOutlineColor;
+    };
   return (
     <div className="flex items-center gap-x-2 overflow-x-auto pb-2 no-scrollbar">
       <CategoryItem
         label={"All"}
-        colorCode={defaultColor}
+        colorCode={getThemeColor()}
         categoryAmmount={all}
       />
       {items.map((item) => (

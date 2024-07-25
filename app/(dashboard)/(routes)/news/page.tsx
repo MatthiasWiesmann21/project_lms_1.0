@@ -34,7 +34,7 @@ const NewsPage = async ({ searchParams }: SearchPageProps) => {
     },
   });
 
-  const container: any = await db?.container?.findUnique({
+  const container: any = await db.container.findUnique({
     where: {
       id: process.env.CONTAINER_ID,
     },
@@ -44,7 +44,8 @@ const NewsPage = async ({ searchParams }: SearchPageProps) => {
     <NewsWrapper
       searchParams={searchParams}
       categories={categories}
-      defaultColor={container?.navDarkBackgroundColor}
+      ThemeOutlineColor={container?.ThemeOutlineColor!}
+      DarkThemeOutlineColor={container?.DarkThemeOutlineColor!}
     />
   );
 };

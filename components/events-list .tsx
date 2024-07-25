@@ -8,9 +8,11 @@ type EventsWithProgressWithCategory = LiveEvent & {
 
 interface EventsListProps {
   items: EventsWithProgressWithCategory[];
+  ThemeOutlineColor: string;
+  DarkThemeOutlineColor: string;
 }
 
-export const EventsList = ({ items }: EventsListProps) => {
+export const EventsList = ({ items, ThemeOutlineColor, DarkThemeOutlineColor }: EventsListProps) => {
   return (
     <div>
       <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4">
@@ -25,6 +27,8 @@ export const EventsList = ({ items }: EventsListProps) => {
             startDateTime={item?.startDateTime}
             endDateTime={item?.endDateTime}
             color={item?.color}
+            ThemOutlineColor={ThemeOutlineColor!}
+            DarkThemeOutlineColor={DarkThemeOutlineColor!}
           />
         ))}
       </div>

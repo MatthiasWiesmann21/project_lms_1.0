@@ -17,13 +17,15 @@ import { SlidersHorizontal } from "lucide-react";
 import { useLanguage } from "@/lib/check-language";
 import { Container } from "@prisma/client";
 import { useState } from "react";
+import { useTheme } from "next-themes";
 
 interface EventFilterSidebarProps {
   liveEvents: any;
   categories: any;
   searchParams: any;
   setLiveEvent: any;
-  colors: Container | any;
+  PrimaryButtonColor: string;
+  DarkPrimaryButtonColor: string;
 }
 
 const EventFilterSidebar = ({
@@ -31,11 +33,19 @@ const EventFilterSidebar = ({
   categories,
   searchParams,
   setLiveEvent,
-  colors,
+  PrimaryButtonColor,
+  DarkPrimaryButtonColor,
 }: EventFilterSidebarProps) => {
   const { userId } = useAuth();
   const currentLanguage = useLanguage();
   const [isViewAllHovered, setIsViewAllHovered] = useState(false);
+  const { theme } = useTheme();
+
+  const getPrimaryButtonColor = () => {
+    return theme === "dark"
+      ? DarkPrimaryButtonColor
+      : PrimaryButtonColor;
+  };
 
   return (
     <Sheet>
@@ -44,10 +54,8 @@ const EventFilterSidebar = ({
           onMouseEnter={() => setIsViewAllHovered(true)}
           onMouseLeave={() => setIsViewAllHovered(false)}
           style={{
-            borderColor: colors?.PrimaryButtonColor || undefined,
-            backgroundColor: isViewAllHovered
-              ? colors.PrimaryButtonColor || undefined
-              : "",
+            borderColor: getPrimaryButtonColor(),
+            backgroundColor: isViewAllHovered ? getPrimaryButtonColor() : "",
           }}
           className="border-5 h-12 w-28 items-center justify-center rounded-full border bg-transparent text-gray-700 transition duration-500 ease-in-out"
           variant="default"
