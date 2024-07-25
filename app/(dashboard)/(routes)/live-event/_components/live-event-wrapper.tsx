@@ -42,6 +42,8 @@ const LiveEventWrapper = ({
           ...each,
           color: container?.navDarkBackgroundColor,
         }))}
+        ThemeOutlineColor={container?.ThemeOutlineColor!}
+        DarkThemeOutlineColor={container?.DarkThemeOutlineColor!}
       />
     </div>
   );

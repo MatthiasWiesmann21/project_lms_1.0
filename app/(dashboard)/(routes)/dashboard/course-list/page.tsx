@@ -67,7 +67,7 @@ const CourseListPage = async ({ searchParams }: SearchPageProps) => {
           items={categoriesWithCourseCounts}
           defaultColor={container?.navDarkBackgroundColor}
         />
-      <CoursesList items={purchasedCourses} />
+      <CoursesList items={purchasedCourses} ThemOutlineColor={container?.ThemeOutlineColor!} DarkThemeOutlineColor={container?.DarkThemeOutlineColor!} />
     </div>
   );
 };
