@@ -102,7 +102,7 @@ const Dashboard = async ({ searchParams }: SearchPageProps) => {
         color={container?.navDarkBackgroundColor}
         courses={coursess}
       />
-      <CourseTable courses={coursess} colors={container} />
+      <CourseTable courses={purchasedCourses} colors={container} />
     </div>
   );
 };
