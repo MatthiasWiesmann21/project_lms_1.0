@@ -1,9 +1,13 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { PlayCircle } from "lucide-react";
 import moment from "moment";
 import { cn } from "@/lib/utils";
 import { CategoryItemCard } from "@/app/(dashboard)/(routes)/live-event/_components/category-item-card";
+import { useState } from "react";
+import { useTheme } from "next-themes";
 
 interface EventsCardProps {
   id: string;
@@ -14,6 +18,8 @@ interface EventsCardProps {
   startDateTime: Date | null | any;
   endDateTime: Date | null | any;
   color: string;
+  ThemOutlineColor: string;
+  DarkThemeOutlineColor: string;
 }
 
 export const EventCard = ({
@@ -25,16 +31,33 @@ export const EventCard = ({
   startDateTime,
   endDateTime,
   color,
+  ThemOutlineColor,
+  DarkThemeOutlineColor,
 }: EventsCardProps) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const { theme } = useTheme();
+
   const isLive =
     new Date(startDateTime) <= new Date() &&
     new Date(
       new Date(endDateTime)?.setMinutes(new Date(endDateTime)?.getMinutes() + 1)
     ) >= new Date();
 
+  const getBorderColor = () => {
+    return theme === "dark" ? DarkThemeOutlineColor : ThemOutlineColor;
+  };
+
   return (
-    <Link href={`/live-event/${id}`} className="border-2 rounded-lg border-transparent transition duration-500 ease-in-out hover:border-[#ea2088]">
-      <div className="group h-full overflow-hidden rounded-lg border p-2 transition hover:shadow-sm dark:border-[#1f182b] bg-slate-100/60 dark:bg-[#0c0319]">
+    <Link
+      href={`/live-event/${id}`}
+      className="border-2 rounded-lg transition duration-500 ease-in-out"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{
+        borderColor: isHovered ? getBorderColor() : "transparent",
+      }}
+    >
+      <div className="group h-full overflow-hidden rounded-lg p-2 transition hover:shadow-sm dark:border-[#1f182b] bg-slate-100/60 dark:bg-[#0c0319]">
         <div
           className={cn(
             "relative aspect-video w-full overflow-hidden rounded-md",

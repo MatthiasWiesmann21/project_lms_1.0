@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useLanguage } from "@/lib/check-language";
 import { BookX } from "lucide-react";
 import { Container } from "@prisma/client";
+import { useTheme } from "next-themes";
 
 interface CourseTableProps {
   courses: any[];
@@ -17,10 +18,18 @@ const CourseTable = ({ courses, colors }: CourseTableProps) => {
   const maxCourses = 5;
   const [isViewAllHovered, setIsViewAllHovered] = useState(false);
   const [hoveredCourse, setHoveredCourse] = useState<number | null>(null);
+  const { theme } = useTheme();
 
   const sortedCourses = courses.sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
+
+  const getButtonColor = () => {
+    if (theme === "dark") {
+      return colors?.DarkPrimaryButtonColor;
+    }
+    return colors?.PrimaryButtonColor;
+  };
 
   return (
     <div className="rounded-md border dark:border-[#221b2e] dark:bg-[#0D071A]">
@@ -32,10 +41,8 @@ const CourseTable = ({ courses, colors }: CourseTableProps) => {
           href={`/dashboard/course-list`}
           className="flex items-center justify-center rounded-full border px-4 py-2 text-sm transition duration-300 ease-in-out"
           style={{
-            borderColor: colors?.PrimaryButtonColor || undefined,
-            backgroundColor: isViewAllHovered
-              ? colors?.PrimaryButtonColor || undefined
-              : "",
+            borderColor: getButtonColor(),
+            backgroundColor: isViewAllHovered ? getButtonColor() : "",
           }}
         >
           {currentLanguage.dashboard_courseTable_viewAllCourses_button_text}
@@ -59,7 +66,11 @@ const CourseTable = ({ courses, colors }: CourseTableProps) => {
       {sortedCourses?.slice(0, maxCourses).map((each: any, index) => {
         const totalProgress =
           each?.chapters?.reduce(
-            (acc: any, val: any) => acc + (val?.userProgress[0]?.progress || 0),
+            (acc: any, val: any) =>
+              acc +
+              (val?.userProgress?.length
+                ? val?.userProgress[0]?.progress || 0
+                : 0),
             0
           ) / each?.chapters?.length;
         return (
@@ -104,11 +115,9 @@ const CourseTable = ({ courses, colors }: CourseTableProps) => {
                   onMouseLeave={() => setHoveredCourse(null)}
                   className="border-1 rounded-full border px-2 py-2 text-xs transition duration-300 ease-in-out"
                   style={{
-                    borderColor: colors?.PrimaryButtonColor || undefined,
+                    borderColor: getButtonColor(),
                     backgroundColor:
-                      hoveredCourse === index
-                        ? colors?.PrimaryButtonColor || undefined
-                        : "",
+                      hoveredCourse === index ? getButtonColor() : "",
                   }}
                 >
                   {currentLanguage.dashboard_courseTable_viewCourse_button_text}

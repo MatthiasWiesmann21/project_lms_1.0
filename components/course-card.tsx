@@ -1,8 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { formatPrice } from "@/lib/format";
 import { CourseProgress } from "@/components/course-progress";
 import book from "@/assets/icons/book.png";
+import { useState } from "react";
+import { useTheme } from "next-themes";
 
 interface CourseCardProps {
   id: string;
@@ -14,6 +18,7 @@ interface CourseCardProps {
   category: string;
   categoryColorCode: string;
   ThemOutlineColor: string;
+  DarkThemeOutlineColor: string;
 }
 
 export const FreeText = () => {
@@ -30,19 +35,35 @@ export const CourseCard = ({
   category,
   categoryColorCode,
   ThemOutlineColor,
+  DarkThemeOutlineColor,
 }: CourseCardProps) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const { theme } = useTheme();
+
+  const getBorderColor = () => {
+    return theme === "dark" ? DarkThemeOutlineColor : ThemOutlineColor;
+  };
+
   return (
-    <Link href={`/courses/${id}`} className="border-2 rounded-lg border-transparent transition duration-500 ease-in-out">
+    <Link
+      href={`/courses/${id}`}
+      className="border-2 rounded-lg transition duration-500 ease-in-out"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{
+        borderColor: isHovered ? getBorderColor() : "transparent",
+      }}
+    >
       <div
-        className="bg-slate-100/60 dark:bg-[#0c0319] group h-full w-full overflow-hidden rounded-lg border p-2 transition hover:shadow-sm dark:border-[#1e172a]"
+        className="bg-slate-100/60 dark:bg-[#0c0319] group h-full w-full overflow-hidden rounded-lg p-2 transition"
       >
-        <div className="relative aspect-video w-full overflow-hidden rounded-md border-slate-300/50 dark:border-slate-700/60 border-2">
+        <div className="relative aspect-video w-full overflow-hidden rounded-md border-2 border-slate-300/50 dark:border-slate-700/60">
           <Image fill className="object-cover" alt={title} src={imageUrl} />
         </div>
         <div className="mt-3 flex items-center justify-between">
           <span
-            style={{ borderColor: `${categoryColorCode}` }}
-            className={`flex items-center rounded-[12px] border-2 px-3 py-1 text-[12px]`}
+            style={{ borderColor: categoryColorCode }}
+            className="flex items-center rounded-[12px] border-2 px-3 py-1 text-[12px]"
           >
             {category}
           </span>
@@ -52,7 +73,6 @@ export const CourseCard = ({
                 alt="book"
                 src={book}
                 className="object-cover"
-                objectFit="contain"
               />
             </div>
             <span className="text-[12px]">
