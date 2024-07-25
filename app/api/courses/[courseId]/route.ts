@@ -17,7 +17,6 @@ export async function DELETE(
     const course = await db.course.findUnique({
       where: {
         id: params.courseId,
-        userId: userId,
         containerId: process.env.CONTAINER_ID,
       },
       include: {
@@ -61,7 +60,6 @@ export async function PATCH(
     const course = await db.course.update({
       where: {
         id: courseId,
-        userId,
         containerId: process.env.CONTAINER_ID,
       },
       data: {

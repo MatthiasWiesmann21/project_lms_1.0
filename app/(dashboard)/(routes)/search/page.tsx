@@ -106,7 +106,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
           items={categoriesWithCourseCounts}
           defaultColor={containerColors?.navDarkBackgroundColor}
         />
-        <CoursesList items={courses} />
+        <CoursesList items={courses} ThemOutlineColor={containerColors?.ThemeOutlineColor!} DarkThemeOutlineColor={containerColors?.DarkThemeOutlineColor!} />
       </div>
     </>
   );
