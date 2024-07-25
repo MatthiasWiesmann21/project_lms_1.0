@@ -64,9 +64,10 @@ const CourseListPage = async ({ searchParams }: SearchPageProps) => {
         {currentLanguage.courses_list_backToDashboard_button_text}
       </Link>
       <Categories
-          items={categoriesWithCourseCounts}
-          defaultColor={container?.navDarkBackgroundColor}
-        />
+        items={categoriesWithCourseCounts}
+        ThemeOutlineColor={container?.ThemeOutlineColor!}
+        DarkThemeOutlineColor={container?.DarkThemeOutlineColor!}
+      />
       <CoursesList items={purchasedCourses} ThemOutlineColor={container?.ThemeOutlineColor!} DarkThemeOutlineColor={container?.DarkThemeOutlineColor!} />
     </div>
   );
