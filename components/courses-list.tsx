@@ -30,6 +30,7 @@ export const CoursesList = async ({ items }: CoursesListProps) => {
             chaptersLength={item.chapters.length}
             price={item.price!}
             ThemOutlineColor={item.ThemeOutlineColor!}
+            DarkThemeOutlineColor={item.DarkThemeOutlineColor!}
           />
         ))}
       </div>

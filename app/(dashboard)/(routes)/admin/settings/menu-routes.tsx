@@ -43,7 +43,7 @@ export const MenuRoutes = () => {
     {
       icon: PaletteIcon,
       label: `${currentLanguage.settings_menu_design_title}`,
-      href: "/admin/settings/containerdesign",
+      href: "/admin/settings/buttondesign",
       isNew: true,
       somethingImportant: true,
     },
