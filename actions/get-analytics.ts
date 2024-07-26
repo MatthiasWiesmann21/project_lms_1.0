@@ -24,7 +24,7 @@ export const getAnalytics = async (userId: string) => {
     const purchases = await db.purchase.findMany({
       where: {
         course: {
-          userId: userId
+          isPublished: true,
         }
       },
       include: {
