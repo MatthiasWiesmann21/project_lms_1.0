@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
 import { isOwner } from "@/lib/owner";
-import { isAdmin, isOperator } from "@/lib/roleCheckServer";
+import { isAdmin } from "@/lib/roleCheckServer";
 
 export async function DELETE(
   req: Request,
@@ -12,9 +12,12 @@ export async function DELETE(
   try {
     const { userId } = auth();
 
-    if (!userId || !isOwner(userId)) {
-        return new NextResponse("Unauthorized", { status: 401 });
-      }
+    const isRoleAdmins = await isAdmin();
+    const canAccess = isRoleAdmins || isOwner(userId);
+
+    if (!userId || !canAccess) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
 
     const profile = await db.profile.findUnique({
       where: {
