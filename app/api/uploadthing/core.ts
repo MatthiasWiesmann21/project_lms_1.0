@@ -1,16 +1,13 @@
 import { createUploadthing, type FileRouter } from "uploadthing/next";
-import { UploadThingError } from "uploadthing/server";
 import { auth } from "@clerk/nextjs";
 
-import { isOwner } from "@/lib/owner";
 
 const f = createUploadthing();
 
 const handleAuth = () => {
   const { userId } = auth();
-  const isAuthorized = isOwner(userId);
 
-  if (!userId || !isAuthorized) throw new Error("Unauthorized");
+  if (!userId) throw new Error("Unauthorized");
   return { userId };
 };
 export const ourFileRouter = {
