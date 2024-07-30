@@ -99,8 +99,7 @@ const CourseTable = ({ courses, colors }: CourseTableProps) => {
             </div>
             <div className="w-[15%] pr-5">
               <Line
-                // percent={each?.progress || 0}
-                percent={totalProgress}
+                percent={each?.progress!}
                 strokeWidth={3}
                 strokeColor="#EA2088"
               />
