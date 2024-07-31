@@ -38,7 +38,7 @@ export const ShowUserMail = ({
       <div className="font-medium flex items-center justify-between">
         {currentLanguage.user_MailForm_title}
       </div>
-        <p className="text-sm mt-2">
+        <p className="text-sm mt-2 break-words">
           {initialData.email}
         </p>
     </div>

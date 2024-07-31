@@ -1,6 +1,12 @@
 import { auth } from "@clerk/nextjs";
 import { Chapter, Course, UserProgress } from "@prisma/client";
 import { redirect } from "next/navigation";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 import { db } from "@/lib/db";
 import { CourseProgress } from "@/components/course-progress";
@@ -36,27 +42,36 @@ export const CourseSidebar = async ({
   });
 
   return (
-    <div className="flex h-full flex-col m-3 rounded-xl overflow-y-auto border-r bg-slate-100/60 dark:bg-[#0c0319] shadow-sm">
-      <div className="flex flex-col border-b p-7">
-        <h1 className="font-semibold">{course?.title}</h1>
-        {purchase && (
-          <div className="mt-10">
-            <CourseProgress variant="success" value={progressCount} />
-          </div>
-        )}
+    <TooltipProvider>
+      <div className="flex h-full flex-col m-3 rounded-xl overflow-y-auto border-r bg-slate-100/60 dark:bg-[#0c0319] shadow-sm">
+        <div className="flex flex-col border-b p-7">
+          <Tooltip>
+            <TooltipTrigger>
+              <h1 className="font-semibold line-clamp-2">{course?.title}</h1>
+            </TooltipTrigger>
+            <TooltipContent className="max-w-xs p-2">
+              <h1 className="font-semibold whitespace-normal">{course?.title}</h1>
+            </TooltipContent>
+          </Tooltip>
+          {purchase && (
+            <div className="mt-10">
+              <CourseProgress variant="success" value={progressCount} />
+            </div>
+          )}
+        </div>
+        <div className="flex w-full flex-col">
+          {course?.chapters?.map((chapter) => (
+            <CourseSidebarItem
+              key={chapter?.id}
+              id={chapter?.id}
+              label={chapter?.title}
+              isCompleted={!!chapter.userProgress?.[0]?.isCompleted}
+              courseId={course.id}
+              isLocked={!chapter.isFree && !purchase}
+            />
+          ))}
+        </div>
       </div>
-      <div className="flex w-full flex-col">
-        {course?.chapters?.map((chapter) => (
-          <CourseSidebarItem
-            key={chapter?.id}
-            id={chapter?.id}
-            label={chapter?.title}
-            isCompleted={!!chapter.userProgress?.[0]?.isCompleted}
-            courseId={course.id}
-            isLocked={!chapter.isFree && !purchase}
-          />
-        ))}
-      </div>
-    </div>
+    </TooltipProvider>
   );
 };
