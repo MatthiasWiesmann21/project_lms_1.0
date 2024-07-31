@@ -47,7 +47,7 @@ export const CourseSidebar = async ({
         <div className="flex flex-col border-b p-7">
           <Tooltip>
             <TooltipTrigger>
-              <h1 className="font-semibold line-clamp-2">{course?.title}</h1>
+              <h1 className="font-semibold line-clamp-2 text-start">{course?.title}</h1>
             </TooltipTrigger>
             <TooltipContent className="max-w-xs p-2">
               <h1 className="font-semibold whitespace-normal">{course?.title}</h1>

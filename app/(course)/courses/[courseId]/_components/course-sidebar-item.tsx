@@ -50,13 +50,13 @@ export const CourseSidebarItem = ({
               isCompleted && isActive && "bg-emerald-200/20",
             )}
           >
-            <div className="flex items-center gap-x-2 py-4">
+            <div className="flex items-start py-4">
               <Icon
                 size={18}
                 className={cn(
-                  "text-black dark:text-white transition-all",
-                  isActive && "text-slate-500 w-24",
-                  isCompleted && "text-emerald-60 w-24"
+                  "text-black w-12 dark:text-white transition-all",
+                  isActive && "text-slate-500 w-12",
+                  isCompleted && "text-emerald-60 w-12"
                 )}
               />
               <p className="line-clamp-2 text-start">
