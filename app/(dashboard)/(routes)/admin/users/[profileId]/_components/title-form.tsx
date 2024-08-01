@@ -76,7 +76,7 @@ export const TitleForm = ({
         </Button>
       </div>
       {!isEditing && (
-        <p className="text-sm mt-2">
+        <p className="text-sm mt-2 break-words">
           {initialData.name}
         </p>
       )}
