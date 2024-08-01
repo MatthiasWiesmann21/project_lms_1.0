@@ -2,6 +2,12 @@
 
 import qs from "query-string";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/tooltip";
 
 interface CategoryItemProps {
   label: string;
@@ -40,13 +46,22 @@ export const CategoryItemCard = ({
   };
 
   return (
-    <button
-      onClick={onClick}
-      className={`flex items-center gap-x-1 rounded-full border-2 border-slate-300 p-1 px-3 text-[10px] transition hover:border-sky-700`}
-      style={{ borderColor: colorCode }}
-      type="button"
-    >
-      <div className="truncate">{label?.toUpperCase()}</div>
-    </button>
+    <TooltipProvider>
+      <button
+        onClick={onClick}
+        className={`flex items-center rounded-[12px] border-2 px-3 py-1 text-[12px]`}
+        style={{ borderColor: colorCode }}
+        type="button"
+      >
+        <Tooltip>
+          <TooltipTrigger>
+            <div className="line-clamp-1 text-start text-xs">{label}</div>
+          </TooltipTrigger>
+          <TooltipContent>
+            <div className="text-start text-xs whitespace-normal">{label}</div>
+          </TooltipContent>
+        </Tooltip>
+      </button>
+    </TooltipProvider>
   );
 };

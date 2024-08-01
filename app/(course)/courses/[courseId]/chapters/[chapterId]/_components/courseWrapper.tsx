@@ -10,6 +10,13 @@ import { Preview } from "@/components/preview";
 import { File, FileX } from "lucide-react";
 import LikeComment from "./likeComment";
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 interface Params {
   courseId: string;
   chapterId: string;
@@ -140,100 +147,109 @@ const CourseWrapper: React.FC<CourseWrapperProps> = ({
   }, [params.courseId, params.chapterId]);
 
   return (
-    <div className="w-full">
-      {isLocked && (
-        <Banner
-          variant="warning"
-          label="You need to purchase this course to watch this chapter."
-        />
-      )}
-      <div className="mx-auto flex flex-col pb-20">
-        <div className="p-4">
-          <VideoPlayer
-            videoUrl={chapter?.videoUrl || ""}
-            title={chapter?.title}
-            isLocked={isLocked}
-            completeOnEnd={completeOnEnd}
-            courseId={params.courseId}
-            chapterId={params.chapterId}
-            params={params}
+    <TooltipProvider>
+      <div className="w-full">
+        {isLocked && (
+          <Banner
+            variant="warning"
+            label="You need to purchase this course to watch this chapter."
           />
-        </div>
-        <div>
-          <div className="flex flex-col items-center justify-between px-4 md:flex-row">
-            <h2 className="mb-2 text-xl font-medium">{chapter?.title}</h2>
-            <div className="flex items-center space-x-2">
-              <Love chapter={chapter} getData={getData} />
-              {purchase ? (
-                <CourseProgressButton
-                  chapterId={params.chapterId}
-                  courseId={params.courseId}
-                  nextChapterId={nextChapter?.id}
-                  isCompleted={!!userProgress?.isCompleted}
-                />
-              ) : (
-                <CourseEnrollButton
-                  courseId={params?.courseId}
-                  price={course?.price!}
-                />
-              )}
-            </div>
-          </div>
-          <div className="flex flex-col items-center justify-between px-4 pb-2 md:flex-row">
-            {chapter?.author && (
-              <div>
-                <span className="flex items-center text-[14px] text-gray-500">
-                  {currentLanguage.course_chapter_author_text} {chapter?.author}
-                </span>
-              </div>
-            )}
-          </div>
-          <Separator />
+        )}
+        <div className="mx-auto flex flex-col pb-20">
           <div className="p-4">
-            <Preview value={chapter?.description!} />
+            <VideoPlayer
+              videoUrl={chapter?.videoUrl || ""}
+              title={chapter?.title}
+              isLocked={isLocked}
+              completeOnEnd={completeOnEnd}
+              courseId={params.courseId}
+              chapterId={params.chapterId}
+              params={params}
+            />
           </div>
-          <div className="m-4 mt-5 rounded-lg bg-slate-100/60 pt-4 dark:bg-[#0c0319]">
-            <span className="ml-4 text-sm font-bold">
-              {currentLanguage.chapter_CourseDocuments_Title}
-            </span>
-            <div className="text-gray-500">
-              {!!attachments.length && (
-                <>
-                  <Separator />
-                  <div className="p-4">
-                    {attachments.map((attachment: Attachment) => (
-                      <a
-                        href={attachment.url}
-                        target="_blank"
-                        key={attachment.id}
-                        className="flex w-full items-center rounded-md border bg-sky-200 p-3 text-sky-700 hover:underline"
-                      >
-                        <File />
-                        <p className="line-clamp-1">{attachment.name}</p>
-                      </a>
-                    ))}
-                  </div>
-                </>
-              )}
-              {!attachments.length && (
-                <div className="flex items-center justify-center gap-2 px-4 py-4">
-                  <FileX className="text-slate-400 dark:text-slate-600" />
-                  <p>{currentLanguage.chapter_attachments_NoDocuments}</p>
+          <div>
+            <div className="flex flex-col items-center justify-between px-4 md:flex-row">
+              <Tooltip>
+                <TooltipTrigger>
+                  <h2 className="mb-2 text-xl font-medium line-clamp-1">{chapter?.title}</h2>
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs p-2">
+                  <h2 className="font-semibold whitespace-normal">{chapter?.title}</h2>
+                </TooltipContent>
+              </Tooltip>
+              <div className="flex items-center space-x-2">
+                <Love chapter={chapter} getData={getData} />
+                {purchase ? (
+                  <CourseProgressButton
+                    chapterId={params.chapterId}
+                    courseId={params.courseId}
+                    nextChapterId={nextChapter?.id}
+                    isCompleted={!!userProgress?.isCompleted}
+                  />
+                ) : (
+                  <CourseEnrollButton
+                    courseId={params?.courseId}
+                    price={course?.price!}
+                  />
+                )}
+              </div>
+            </div>
+            <div className="flex flex-col items-center justify-between px-4 pb-2 md:flex-row">
+              {chapter?.author && (
+                <div>
+                  <span className="flex items-center text-[14px] text-gray-500">
+                    {currentLanguage.course_chapter_author_text} {chapter?.author}
+                  </span>
                 </div>
               )}
             </div>
+            <Separator />
+            <div className="p-4">
+              <Preview value={chapter?.description!} />
+            </div>
+            <div className="m-4 mt-5 rounded-lg bg-slate-100/60 pt-4 dark:bg-[#0c0319]">
+              <span className="ml-4 text-sm font-bold">
+                {currentLanguage.chapter_CourseDocuments_Title}
+              </span>
+              <div className="text-gray-500">
+                {!!attachments.length && (
+                  <>
+                    <Separator />
+                    <div className="p-4">
+                      {attachments.map((attachment: Attachment) => (
+                        <a
+                          href={attachment.url}
+                          target="_blank"
+                          key={attachment.id}
+                          className="flex w-full items-center rounded-md border bg-sky-200 p-3 text-sky-700 hover:underline"
+                        >
+                          <File />
+                          <p className="line-clamp-1">{attachment.name}</p>
+                        </a>
+                      ))}
+                    </div>
+                  </>
+                )}
+                {!attachments.length && (
+                  <div className="flex items-center justify-center gap-2 px-4 py-4">
+                    <FileX className="text-slate-400 dark:text-slate-600" />
+                    <p>{currentLanguage.chapter_attachments_NoDocuments}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+            <LikeComment
+              id={params.chapterId}
+              likesCount={data?.chapter?.likes?.length!}
+              currentLike={data?.chapter?.currentLike!}
+              commentsWithLikes={data?.chapter?.commentsWithLikes}
+              commentsCount={data?.chapter?.comments?.length!}
+              updateLikeComment={getData}
+            />
           </div>
-          <LikeComment
-            id={params.chapterId}
-            likesCount={data?.chapter?.likes?.length!}
-            currentLike={data?.chapter?.currentLike!}
-            commentsWithLikes={data?.chapter?.commentsWithLikes}
-            commentsCount={data?.chapter?.comments?.length!}
-            updateLikeComment={getData}
-          />
         </div>
       </div>
-    </div>
+    </TooltipProvider>
   );
 };
 

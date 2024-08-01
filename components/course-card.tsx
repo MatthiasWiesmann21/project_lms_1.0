@@ -8,6 +8,13 @@ import book from "@/assets/icons/book.png";
 import { useState } from "react";
 import { useTheme } from "next-themes";
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 interface CourseCardProps {
   id: string;
   title: string;
@@ -45,58 +52,72 @@ export const CourseCard = ({
   };
 
   return (
-    <Link
-      href={`/courses/${id}`}
-      className="border-2 rounded-lg transition duration-500 ease-in-out"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      style={{
-        borderColor: isHovered ? getBorderColor() : "transparent",
-      }}
-    >
-      <div
-        className="bg-slate-100/60 dark:bg-[#0c0319] group h-full w-full overflow-hidden rounded-lg p-2 transition"
+    <TooltipProvider>
+      <Link
+        href={`/courses/${id}`}
+        className="rounded-lg border-2 transition duration-500 ease-in-out"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        style={{
+          borderColor: isHovered ? getBorderColor() : "transparent",
+        }}
       >
-        <div className="relative aspect-video w-full overflow-hidden rounded-md border-2 border-slate-300/50 dark:border-slate-700/60">
-          <Image fill className="object-cover" alt={title} src={imageUrl} />
-        </div>
-        <div className="mt-3 flex items-center justify-between">
-          <span
-            style={{ borderColor: categoryColorCode }}
-            className="flex items-center rounded-[12px] border-2 px-3 py-1 text-[12px]"
-          >
-            {category}
-          </span>
-          <div className="flex items-center">
-            <div className="mr-2 h-[30px] w-[30px]">
-              <Image
-                alt="book"
-                src={book}
-                className="object-cover"
-              />
+        <div className="group h-full w-full overflow-hidden rounded-lg bg-slate-100/60 p-2 transition dark:bg-[#0c0319]">
+          <div className="relative aspect-video w-full overflow-hidden rounded-md border-2 border-slate-300/50 dark:border-slate-700/60">
+            <Image fill className="object-cover" alt={title} src={imageUrl} />
+          </div>
+          <div className="mt-3 flex items-center justify-between">
+            <Tooltip>
+              <TooltipTrigger>
+                <span
+                  style={{ borderColor: categoryColorCode }}
+                  className="flex items-center rounded-[12px] border-2 px-3 py-1 text-[12px]"
+                >
+                  {category}
+                </span>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="whitespace-normal text-sm font-semibold">
+                  {category}
+                </p>
+              </TooltipContent>
+            </Tooltip>
+            <div className="flex items-center">
+              <div className="mr-2 h-[30px] w-[30px]">
+                <Image alt="book" src={book} className="object-cover" />
+              </div>
+              <span className="text-[12px]">
+                {chaptersLength} {chaptersLength < 2 ? "Chapter" : "Chapters"}
+              </span>
             </div>
-            <span className="text-[12px]">
-              {chaptersLength} {chaptersLength < 2 ? "Chapter" : "Chapters"}
-            </span>
+          </div>
+          <div className="flex flex-col pt-2">
+            <Tooltip>
+              <TooltipTrigger>
+                <p className="my-2 line-clamp-2 text-start text-[16px] font-semibold">
+                  {title}
+                </p>
+              </TooltipTrigger>
+              <TooltipContent className="max-w-xs p-2">
+                <p className="whitespace-normal text-sm font-semibold">
+                  {title}
+                </p>
+              </TooltipContent>
+            </Tooltip>
+            {progress !== null ? (
+              <CourseProgress
+                variant={progress === 100 ? "success" : "default"}
+                size="sm"
+                value={progress}
+              />
+            ) : (
+              <p className="my-2 text-[16px] font-bold text-slate-700 dark:text-slate-200 md:text-sm">
+                {price === 0 ? "Free" : formatPrice(price)}
+              </p>
+            )}
           </div>
         </div>
-        <div className="flex flex-col pt-2">
-          <div className="my-2 line-clamp-2 text-[16px] font-semibold">
-            {title}
-          </div>
-          {progress !== null ? (
-            <CourseProgress
-              variant={progress === 100 ? "success" : "default"}
-              size="sm"
-              value={progress}
-            />
-          ) : (
-            <p className="my-2 text-[16px] font-bold text-slate-700 dark:text-slate-200 md:text-sm">
-              {price === 0 ? "Free" : formatPrice(price)}
-            </p>
-          )}
-        </div>
-      </div>
-    </Link>
+      </Link>
+    </TooltipProvider>
   );
 };
