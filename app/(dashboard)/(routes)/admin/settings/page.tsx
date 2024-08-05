@@ -37,7 +37,7 @@ const CustomizeMenuPage = async () => {
             </h1>
           </div>
         </div>
-            <MenuRoutes/>
+            <MenuRoutes container={container}/>
       </div>
     </>
   );

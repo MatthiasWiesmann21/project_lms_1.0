@@ -8,6 +8,13 @@ import { BookX } from "lucide-react";
 import { Container } from "@prisma/client";
 import { useTheme } from "next-themes";
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 interface CourseTableProps {
   courses: any[];
   colors: Container | any;
@@ -88,8 +95,17 @@ const CourseTable = ({ courses, colors }: CourseTableProps) => {
                 className="rounded-sm"
               />
               <div className="ml-2">
-                <p className="m-0 text-sm">{each?.title}</p>
-                <p className="m-0 text-xs text-gray-500">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <p className="m-0 text-start text-sm line-clamp-1 cursor-pointer">{each?.title}</p>
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-xs p-2">
+                      <p className="m-0 text-sm font-semibold whitespace-normal">{each?.title}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                <p className="m-0 text-xs text-gray-500 line-clamp-1">
                   {each?.category?.name}
                 </p>
               </div>
@@ -99,8 +115,7 @@ const CourseTable = ({ courses, colors }: CourseTableProps) => {
             </div>
             <div className="w-[15%] pr-5">
               <Line
-                // percent={each?.progress || 0}
-                percent={totalProgress}
+                percent={each?.progress!}
                 strokeWidth={3}
                 strokeColor="#EA2088"
               />

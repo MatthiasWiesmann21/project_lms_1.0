@@ -1,6 +1,12 @@
 import { auth } from "@clerk/nextjs";
 import { Chapter, Course, UserProgress } from "@prisma/client";
 import { redirect } from "next/navigation";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 import { db } from "@/lib/db";
 import { CourseProgress } from "@/components/course-progress";
@@ -46,28 +52,30 @@ export const CourseSidebar = async ({
   // console.log("======", progress);
 
   return (
-    <div className="m-3 flex h-full flex-col overflow-y-auto rounded-xl border-r bg-slate-100/60 shadow-sm dark:bg-[#0c0319]">
-      <div className="flex flex-col border-b p-7">
-        <h1 className="mb-2 font-semibold">{course?.title}</h1>
-        <Progress progress={progress} />
-        {purchase && (
-          <div className="mt-10">
-            <CourseProgress variant="success" value={progressCount} />
-          </div>
-        )}
+    <TooltipProvider>
+      <div className="m-3 flex h-full flex-col overflow-y-auto rounded-xl border-r bg-slate-100/60 shadow-sm dark:bg-[#0c0319]">
+        <div className="flex flex-col border-b p-7">
+          <h1 className="mb-2 font-semibold">{course?.title}</h1>
+          <Progress progress={progress} />
+          {purchase && (
+            <div className="mt-10">
+              <CourseProgress variant="success" value={progressCount} />
+            </div>
+          )}
+        </div>
+        <div className="flex w-full flex-col">
+          {course?.chapters?.map((chapter) => (
+            <CourseSidebarItem
+              key={chapter?.id}
+              id={chapter?.id}
+              label={chapter?.title}
+              isCompleted={!!chapter.userProgress?.[0]?.isCompleted}
+              courseId={course.id}
+              isLocked={!chapter.isFree && !purchase}
+            />
+          ))}
+        </div>
       </div>
-      <div className="flex w-full flex-col">
-        {course?.chapters?.map((chapter) => (
-          <CourseSidebarItem
-            key={chapter?.id}
-            id={chapter?.id}
-            label={chapter?.title}
-            isCompleted={!!chapter.userProgress?.[0]?.isCompleted}
-            courseId={course.id}
-            isLocked={!chapter.isFree && !purchase}
-          />
-        ))}
-      </div>
-    </div>
+    </TooltipProvider>
   );
 };

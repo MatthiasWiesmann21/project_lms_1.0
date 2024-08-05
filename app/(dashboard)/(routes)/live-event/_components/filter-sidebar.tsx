@@ -57,13 +57,13 @@ const EventFilterSidebar = ({
             borderColor: getPrimaryButtonColor(),
             backgroundColor: isViewAllHovered ? getPrimaryButtonColor() : "",
           }}
-          className="border-5 h-12 w-28 items-center justify-center rounded-full border bg-transparent text-gray-700 transition duration-500 ease-in-out"
+          className="border-5 h-10 w-24 items-center justify-center rounded-full border bg-transparent text-gray-700 transition duration-500 ease-in-out"
           variant="default"
           size="sm"
         >
           <SlidersHorizontal
             className="pr-1 text-gray-800 dark:text-white"
-            size={28}
+            size={24}
           />
           <p className="text-gray-800 dark:text-white">
             {currentLanguage.live_event_filter_button_text}

@@ -25,11 +25,16 @@ import {
 
 import { MenuItem } from "./menu-item";
 import { useLanguage } from "@/lib/check-language";
+import { Container } from "@prisma/client";
 
 
+interface SettingsMenuItemProps {
+  container: Container
+}
 
-
-export const MenuRoutes = () => {
+export const MenuRoutes = ({
+  container,
+}: SettingsMenuItemProps) => {
   const currentLanguage = useLanguage();
 
   const MenuRoutesList = [
@@ -75,6 +80,8 @@ export const MenuRoutes = () => {
           href={route.href}
           isNew={route.isNew}
           somethingImportant={route.somethingImportant}
+          ThemeOutlineColor={container?.ThemeOutlineColor!}
+          DarkThemeOutlineColor={container?.DarkThemeOutlineColor!}
         />
       ))}
     </div>
