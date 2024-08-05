@@ -128,8 +128,15 @@ const PolygonChart = ({
   );
 
   return (
-    <div className="flex justify-between">
-      <div className="w-[69%] rounded border dark:border-[#221b2e] dark:bg-[#0D071A]">
+    <div
+      className="graphParent flex justify-between"
+      // style={{ border: "2px solid red" }}
+    >
+      <div
+        // className="mr- w-full min-w-[400px] rounded border dark:border-[#221b2e] dark:bg-[#0D071A]"
+        className="mr-2 w-full min-w-[510px] rounded border dark:border-[#221b2e] dark:bg-[#0D071A]"
+        // style={{ border: "2px solid red" }}
+      >
         <div className="flex items-center justify-between p-2 text-lg">
           <div>Most popular chapters</div>
         </div>
@@ -186,10 +193,14 @@ const PolygonChart = ({
             </div>
           ))}
       </div>
-      <div className="flex w-[30%] flex-col justify-around rounded border px-4 dark:border-[#221b2e] dark:bg-[#0D071A]">
+      <div
+        // className="flex w-[30%] flex-col justify-around rounded border px-4 dark:border-[#221b2e] dark:bg-[#0D071A]"
+        className="doughnutParent flex w-[30%] min-w-[360px] max-w-full flex-col justify-around rounded border px-4 dark:border-[#221b2e] dark:bg-[#0D071A]"
+        // style={{ border: "10px solid" }}
+      >
         <p className="mt-3 text-[18px]">Course Statistics</p>
         <CanvasJSChart options={doughnutOptions} />
-        <div className="flex justify-between">
+        <div className="flex flex-wrap justify-between">
           {[
             {
               label: "Complete",
