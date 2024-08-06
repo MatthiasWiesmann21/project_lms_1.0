@@ -12,6 +12,8 @@ import { db } from "@/lib/db";
 import { CourseProgress } from "@/components/course-progress";
 
 import { CourseSidebarItem } from "./course-sidebar-item";
+import { Line } from "rc-progress";
+import Progress from "./progress";
 
 interface CourseSidebarProps {
   course: Course & {
@@ -41,18 +43,20 @@ export const CourseSidebar = async ({
     },
   });
 
+  const progress =
+    course?.chapters?.reduce(
+      (acc: any, val: any) => acc + (val?.userProgress[0]?.progress || 0),
+      0
+    ) / course?.chapters?.length;
+
+  // console.log("======", progress);
+
   return (
     <TooltipProvider>
-      <div className="flex h-full flex-col m-3 rounded-xl overflow-y-auto border-r bg-slate-100/60 dark:bg-[#0c0319] shadow-sm">
+      <div className="m-3 flex h-full flex-col overflow-y-auto rounded-xl border-r bg-slate-100/60 shadow-sm dark:bg-[#0c0319]">
         <div className="flex flex-col border-b p-7">
-          <Tooltip>
-            <TooltipTrigger>
-              <h1 className="font-semibold line-clamp-2 text-start">{course?.title}</h1>
-            </TooltipTrigger>
-            <TooltipContent className="max-w-xs p-2">
-              <h1 className="font-semibold whitespace-normal">{course?.title}</h1>
-            </TooltipContent>
-          </Tooltip>
+          <h1 className="mb-2 font-semibold">{course?.title}</h1>
+          <Progress progress={progress} />
           {purchase && (
             <div className="mt-10">
               <CourseProgress variant="success" value={progressCount} />
