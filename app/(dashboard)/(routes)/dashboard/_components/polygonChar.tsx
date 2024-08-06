@@ -38,28 +38,27 @@ const PolygonChart = ({
       ) / each?.chapters?.length
   );
 
-  // console.log("progressArray", progressArray);
-
-  const inProgress =
+  const inProgress = Math.round(
     (progressArray.filter((val: number) => val > 0 && val < 100)?.length /
       progressArray?.length) *
-    100;
-  const notStarted =
+    100
+  );
+  const notStarted = Math.round(
     (progressArray.filter((val: number) => val === 0)?.length /
       progressArray?.length) *
-    100;
-  const completed =
+    100
+  );
+  const completed = Math.round(
     (progressArray.filter((val: number) => val === 100)?.length /
       progressArray?.length) *
-    100;
-  // console.log("inProgress", inProgress);
-  // console.log("notStarted", notStarted);
-  // console.log("completed", completed);
+    100
+  );
+
   const getCourseStatusPercentage = (status: string) => {
     const filteredCourses = coursesProgress.filter(
       (course: { status: string }) => course.status === status
     );
-    return (filteredCourses.length / coursesProgress.length) * 100 || 0;
+    return Math.round((filteredCourses.length / coursesProgress.length) * 100) || 0;
   };
 
   const doughnutOptions = {
@@ -81,19 +80,16 @@ const PolygonChart = ({
         dataPoints: [
           {
             name: "Complete",
-            // y: getCourseStatusPercentage("completed"),
             y: completed,
             color: "#12b76a",
           },
           {
             name: "Inprogress",
-            // y: getCourseStatusPercentage("inProgress"),
             y: inProgress,
             color: "#f79009",
           },
           {
             name: "Not Started",
-            // y: getCourseStatusPercentage("notStarted"),
             y: notStarted,
             color: "#84caff",
           },
@@ -104,19 +100,8 @@ const PolygonChart = ({
 
   const maxCourses = 5;
 
-  // const sortedCourses = courses.sort(
-  //   (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  // );
-
   const sortedChapters = courses.flatMap((course: any) =>
     course.chapters.map((chapter: any) => {
-      // console.log("qwerty", {
-      //   ...course,
-      //   ...chapter,
-      //   courseName: course?.title,
-      //   totalCount:
-      //     (chapter.likes.length || 0) + (chapter.comments.length || 0),
-      // });
       return {
         ...course,
         ...chapter,
@@ -128,15 +113,8 @@ const PolygonChart = ({
   );
 
   return (
-    <div
-      className="graphParent flex justify-between"
-      // style={{ border: "2px solid red" }}
-    >
-      <div
-        // className="mr- w-full min-w-[400px] rounded border dark:border-[#221b2e] dark:bg-[#0D071A]"
-        className="mr-2 w-full min-w-[510px] rounded border dark:border-[#221b2e] dark:bg-[#0D071A]"
-        // style={{ border: "2px solid red" }}
-      >
+    <div className="graphParent flex justify-between">
+      <div className="mr-2 w-full min-w-[510px] rounded border dark:border-[#221b2e] dark:bg-[#0D071A]">
         <div className="flex items-center justify-between p-2 text-lg">
           <div>Most popular chapters</div>
         </div>
@@ -165,13 +143,13 @@ const PolygonChart = ({
                   className="rounded-sm"
                 />
                 <div className="ml-2">
-                  <p className="m-0 text-sm">{each?.title}</p>
-                  <p className="m-0 text-xs text-gray-500">
+                  <p className="m-0 text-sm line-clamp-2">{each?.title}</p>
+                  <p className="m-0 text-xs text-gray-500 line-clamp-2">
                     {each?.category?.name}
                   </p>
                 </div>
               </div>
-              <div className="w-[15%]">
+              <div className="w-[15%] line-clamp-2">
                 <p>{each?.courseName}</p>
               </div>
               <div className="w-[15%]">
@@ -193,11 +171,7 @@ const PolygonChart = ({
             </div>
           ))}
       </div>
-      <div
-        // className="flex w-[30%] flex-col justify-around rounded border px-4 dark:border-[#221b2e] dark:bg-[#0D071A]"
-        className="doughnutParent flex w-[30%] min-w-[360px] max-w-full flex-col justify-around rounded border px-4 dark:border-[#221b2e] dark:bg-[#0D071A]"
-        // style={{ border: "10px solid" }}
-      >
+      <div className="doughnutParent flex w-[30%] min-w-[360px] max-w-full flex-col justify-around rounded border px-4 dark:border-[#221b2e] dark:bg-[#0D071A]">
         <p className="mt-3 text-[18px]">Course Statistics</p>
         <CanvasJSChart options={doughnutOptions} />
         <div className="flex flex-wrap justify-between">
