@@ -12,6 +12,7 @@ import { RoleForm } from "./_components/role-form";
 import { IsBannedForm } from "./_components/isBanned-form";
 import { languageServer } from "@/lib/check-language-server";
 import Link from "next/link";
+import { MemberIDForm } from "./_components/memberID-form";
 
 const UserIdPage = async ({ params }: { params: { profileId: string } }) => {
   const { userId } = auth();
@@ -82,6 +83,10 @@ const UserIdPage = async ({ params }: { params: { profileId: string } }) => {
                 { label: "MODERATOR", value: "MODERATOR" },
                 { label: "USER", value: "USER" },
               ]}
+            />
+            <MemberIDForm
+              initialData={profile}
+              profileId={profile.id}
             />
           </div>
           <div>

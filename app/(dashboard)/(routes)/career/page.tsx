@@ -36,7 +36,7 @@ const CareerPage = async () => {
         </div>
       </div>
       <div>
-        <TabSwitcher />
+        <TabSwitcher memberId={profile?.name!} />
       </div>
     </div>
   );

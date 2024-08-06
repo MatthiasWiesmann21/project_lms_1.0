@@ -2,7 +2,13 @@
 
 import { useState } from 'react';
 
-const TabSwitcher = () => {
+interface TabSwitcherProps {
+  memberId: string;
+}
+
+const TabSwitcher = ({
+  memberId
+}: TabSwitcherProps) => {
   const [activeTab, setActiveTab] = useState('Boxen');
 
   return (
