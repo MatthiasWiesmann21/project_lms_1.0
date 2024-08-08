@@ -171,7 +171,7 @@ const CourseWrapper: React.FC<CourseWrapperProps> = ({
             <div className="flex flex-col items-center justify-between px-4 md:flex-row">
               <Tooltip>
                 <TooltipTrigger>
-                  <h2 className="mb-2 text-xl font-medium line-clamp-1">{chapter?.title}</h2>
+                  <h2 className="mb-2 text-xl font-medium line-clamp-1 text-start">{chapter?.title}</h2>
                 </TooltipTrigger>
                 <TooltipContent className="max-w-xs p-2">
                   <h2 className="font-semibold whitespace-normal">{chapter?.title}</h2>
@@ -204,10 +204,10 @@ const CourseWrapper: React.FC<CourseWrapperProps> = ({
               )}
             </div>
             <Separator />
-            <div className="p-4">
+            <div className="p-4 pt-0">
               <Preview value={chapter?.description!} />
             </div>
-            <div className="m-4 mt-5 rounded-lg bg-slate-100/60 pt-4 dark:bg-[#0c0319]">
+            <div className="m-4 mt-0 rounded-lg bg-slate-100/60 pt-4 dark:bg-[#0c0319]">
               <span className="ml-4 text-sm font-bold">
                 {currentLanguage.chapter_CourseDocuments_Title}
               </span>
@@ -231,7 +231,7 @@ const CourseWrapper: React.FC<CourseWrapperProps> = ({
                   </>
                 )}
                 {!attachments.length && (
-                  <div className="flex items-center justify-center gap-2 px-4 py-4">
+                  <div className="flex items-center justify-center gap-2 px-4 py-6">
                     <FileX className="text-slate-400 dark:text-slate-600" />
                     <p>{currentLanguage.chapter_attachments_NoDocuments}</p>
                   </div>
