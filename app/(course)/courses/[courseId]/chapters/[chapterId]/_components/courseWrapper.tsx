@@ -148,7 +148,7 @@ const CourseWrapper: React.FC<CourseWrapperProps> = ({
 
   return (
     <TooltipProvider>
-      <div className="w-[75%]">
+      <div className="w-full">
         {isLocked && (
           <Banner
             variant="warning"
