@@ -62,7 +62,7 @@ const ChapterIdPage = async ({
   return (
     <div className="flex justify-between">
       <CourseWrapper params={params} currentLanguage={currentLanguage} />
-      <div className="h-[300px] w-[25%]">
+      <div className="min-h-[350px] max-h-[400px] md:min-w-[270px] md:max-w-[350px] lg:min-w-[350px] lg:max-w-[400px]">
         <CourseSidebar course={_course} progressCount={progressCount} />
       </div>
     </div>

@@ -180,7 +180,7 @@ const PolygonChart = ({
                     </div>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p className="font-semibolb whitespace-normal">
+                    <p className="font-semibolb whitespace-normal max-w-[300px] h-full">
                       {each?.title}
                     </p>
                   </TooltipContent>
@@ -193,7 +193,7 @@ const PolygonChart = ({
                     </p>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p className="whitespace-normal font-semibold">
+                    <p className="whitespace-normal font-semibold max-w-[300px] h-full">
                       {each?.courseName}
                     </p>
                   </TooltipContent>

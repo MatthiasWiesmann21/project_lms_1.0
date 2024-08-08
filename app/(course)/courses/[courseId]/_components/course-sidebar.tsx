@@ -14,6 +14,7 @@ import { CourseProgress } from "@/components/course-progress";
 import { CourseSidebarItem } from "./course-sidebar-item";
 import { Line } from "rc-progress";
 import Progress from "./progress";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface CourseSidebarProps {
   course: Course & {
@@ -54,8 +55,15 @@ export const CourseSidebar = async ({
   return (
     <TooltipProvider>
       <div className="m-3 flex h-full flex-col overflow-y-auto rounded-xl border-r bg-slate-100/60 shadow-sm dark:bg-[#0c0319]">
-        <div className="flex flex-col border-b p-7">
-          <h1 className="mb-2 font-semibold">{course?.title}</h1>
+        <div className="flex flex-col border-b p-6">
+          <Tooltip>
+            <TooltipTrigger>
+              <h1 className="mb-2 font-semibold line-clamp-2 text-start whitespace-normal break-words">{course?.title}</h1>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              <h1 className="font-semibold whitespace-normal max-w-[300px] h-full">{course?.title}</h1>
+            </TooltipContent>
+          </Tooltip>
           <Progress progress={progress} />
           {purchase && (
             <div className="mt-10">
@@ -63,18 +71,20 @@ export const CourseSidebar = async ({
             </div>
           )}
         </div>
-        <div className="flex w-full flex-col">
-          {course?.chapters?.map((chapter) => (
-            <CourseSidebarItem
-              key={chapter?.id}
-              id={chapter?.id}
-              label={chapter?.title}
-              isCompleted={!!chapter.userProgress?.[0]?.isCompleted}
-              courseId={course.id}
-              isLocked={!chapter.isFree && !purchase}
-            />
-          ))}
-        </div>
+        <ScrollArea>
+          <div className="flex w-full flex-col">
+            {course?.chapters?.map((chapter) => (
+              <CourseSidebarItem
+                key={chapter?.id}
+                id={chapter?.id}
+                label={chapter?.title}
+                isCompleted={!!chapter.userProgress?.[0]?.isCompleted}
+                courseId={course.id}
+                isLocked={!chapter.isFree && !purchase}
+              />
+            ))}
+          </div>
+        </ScrollArea>
       </div>
     </TooltipProvider>
   );
