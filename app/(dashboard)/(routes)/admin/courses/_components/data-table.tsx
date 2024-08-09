@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -11,9 +11,9 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table"
-import Link from "next/link"
-import { PlusCircle } from "lucide-react"
+} from "@tanstack/react-table";
+import Link from "next/link";
+import { PlusCircle } from "lucide-react";
 
 import {
   Table,
@@ -22,15 +22,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { useIsAdmin } from "@/lib/roleCheck"
-import { useLanguage } from "@/lib/check-language"
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useIsAdmin } from "@/lib/roleCheck";
+import { useLanguage } from "@/lib/check-language";
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
 }
 
 export function DataTable<TData, TValue>({
@@ -38,7 +38,9 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  );
   const currentLanguage = useLanguage();
 
   const isAdmin = useIsAdmin();
@@ -56,24 +58,23 @@ export function DataTable<TData, TValue>({
       sorting,
       columnFilters,
     },
-  })
-
+  });
 
   return (
     <div>
-      <div className="flex items-center py-4 justify-between">
+      <div className="flex items-center justify-between py-4">
         <Input
           placeholder={currentLanguage.courses_searchCourses_placeholder}
           value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("title")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm mr-5 border-[#000000] dark:border-[#ffffff]"
+          className="mr-5 max-w-sm border-[#000000] dark:border-[#ffffff]"
         />
         {isAdmin && (
           <Link href="/admin/create/course">
             <Button>
-              <PlusCircle className="h-4 w-4 mr-2" />
+              <PlusCircle className="mr-2 h-4 w-4" />
               {currentLanguage.courses_createCourse_button_text}
             </Button>
           </Link>
@@ -83,10 +84,16 @@ export function DataTable<TData, TValue>({
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className="border-[#000000] dark:border-[#ffffff]">
+              <TableRow
+                key={headerGroup.id}
+                className="border-[#000000] dark:border-[#ffffff]"
+              >
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="text-[#000000] dark:text-[#ffffff]">
+                    <TableHead
+                      key={header.id}
+                      className="text-[#000000] dark:text-[#ffffff]"
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -94,7 +101,7 @@ export function DataTable<TData, TValue>({
                             header.getContext()
                           )}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
@@ -109,14 +116,22 @@ export function DataTable<TData, TValue>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      <div className="pl-4">
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </div>
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
                   {currentLanguage.courses_noCourses_text}
                 </TableCell>
               </TableRow>
@@ -143,5 +158,5 @@ export function DataTable<TData, TValue>({
         </Button>
       </div>
     </div>
-  )
+  );
 }

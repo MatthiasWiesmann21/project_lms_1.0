@@ -186,7 +186,7 @@ const DocumentCreatePage = () => {
 
       <label
         htmlFor="email"
-        className="block text-sm font-medium leading-6 text-gray-900"
+        className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
       >
         {file?.name}
       </label>

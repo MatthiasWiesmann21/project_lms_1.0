@@ -10,6 +10,7 @@ import Modal from "react-modal";
 import { Download, File, FileText, FolderOpen } from "lucide-react";
 import { useIsAdmin, useIsOperator } from "@/lib/roleCheck";
 import { useLanguage } from "@/lib/check-language";
+import { ScrollArea } from "@/components/scroll-area";
 
 export interface FolderTreeProps {
   name: string;
@@ -174,7 +175,7 @@ const AssetsTable: React.FC<AssetsTableProps> = (props) => {
   };
 
   return (
-    <div className="overflow-hidden px-2 py-4 bg-transparent sm:px-2 lg:px-2">
+    <div className="overflow-hidden px-4 py-4 bg-transparent">
       <Modal
         isOpen={modalIsOpen && renamingItem !== null}
         onRequestClose={closeModal}
@@ -276,7 +277,7 @@ const AssetsTable: React.FC<AssetsTableProps> = (props) => {
           </button>
         </div>
       </Modal>
-      <div className="my-2 sm:flex sm:items-center">
+      <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-2xl font-semibold leading-6 text-gray-600 dark:text-gray-200 ">
             {currentLanguage.document_hub}
@@ -291,6 +292,7 @@ const AssetsTable: React.FC<AssetsTableProps> = (props) => {
           <FlyoutMenuCreate key={`flyout-create-0`} />
         </div>
       </div>
+      <ScrollArea>
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full overflow-y-scroll py-2 align-middle sm:px-6 lg:px-8">
@@ -436,6 +438,7 @@ const AssetsTable: React.FC<AssetsTableProps> = (props) => {
           </div>
         </div>
       </div>
+      </ScrollArea>
     </div>
   );
 };
