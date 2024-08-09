@@ -35,7 +35,7 @@ const DocumentPage = () => {
       <div className="my-4 ">
         <PathMaker />
       </div>
-      <div className="m-4 rounded-lg h-screen bg-slate-100/60 dark:bg-[#0c0319]">
+      <div className="m-4 rounded-lg bg-slate-100/60 dark:bg-[#0c0319]">
       <AssetsTable folderStructure={folderStructure} root={false}></AssetsTable>
       </div>
     </div>
